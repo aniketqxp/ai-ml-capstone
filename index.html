@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Call Center Transcription Analytics</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05070f;
+            --surface-color: rgba(13, 17, 30, 0.7);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --secondary: #a855f7;
+            --secondary-glow: rgba(168, 85, 247, 0.15);
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+            --agent-color: #38bdf8;
+            --agent-glow: rgba(56, 189, 248, 0.15);
+            --customer-color: #fb7185;
+            --customer-glow: rgba(251, 113, 133, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-col: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+        }
+
+        header {
+            padding: 2rem 4rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(5, 7, 15, 0.5);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            background: linear-gradient(135deg, #f1f5f9 30%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        .tag {
+            padding: 0.35rem 0.85rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Player Control Bar */
+        .player-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .player-info-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #f8fafc;
+        }
+
+        .player-info-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .player-info-meta span strong {
+            color: #cbd5e1;
+        }
+
+        .custom-player {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 9999px;
+            outline: none;
+        }
+
+        /* Webkit Audio Player Styling overriding for dark look */
+        audio::-webkit-media-controls-enclosure {
+            background-color: #0e1324;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Columns Layout */
+        .transcript-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            min-height: 450px;
+        }
+
+        .column-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Glass Glow Overlay */
+        .column-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .agent-card::before {
+            background: var(--agent-color);
+        }
+
+        .customer-card::before {
+            background: var(--customer-color);
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            z-index: 1;
+        }
+
+        .column-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .agent-card .column-header h2 {
+            color: var(--agent-color);
+        }
+
+        .customer-card .column-header h2 {
+            color: var(--customer-color);
+        }
+
+        .channel-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+        }
+
+        .agent-card .channel-label {
+            background: var(--agent-glow);
+            color: var(--agent-color);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .customer-card .channel-label {
+            background: var(--customer-glow);
+            color: var(--customer-color);
+            border: 1px solid rgba(255, 113, 133, 0.2);
+        }
+
+        .transcript-body {
+            font-size: 1.1rem;
+            line-height: 1.85;
+            color: #cbd5e1;
+            z-index: 1;
+            overflow-y: auto;
+            max-height: 380px;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom Scrollbar */
+        .transcript-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .transcript-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .transcript-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+        }
+
+        /* Subtitle Words styling */
+        .word {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0 0.15rem;
+            border-radius: 4px;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #94a3b8;
+        }
+
+        .word:hover {
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Active word animation */
+        .word.active {
+            color: #ffffff !important;
+            transform: scale(1.04);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .agent-card .word.active {
+            background: rgba(56, 189, 248, 0.25);
+            box-shadow: 0 0 15px -3px rgba(56, 189, 248, 0.4);
+        }
+
+        .customer-card .word.active {
+            background: rgba(251, 113, 133, 0.25);
+            box-shadow: 0 0 15px -3px rgba(251, 113, 133, 0.4);
+        }
+
+        .tip-card {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px dashed rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            color: #a5b4fc;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        footer {
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(5, 7, 15, 0.5);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AI/ML Call Center Analytics</h1>
+        <div class="tag">Vite &amp; Whisper LFS Engine</div>
+    </header>
+
+    <main>
+        <!-- Custom Player Card -->
+        <div class="player-card">
+            <div class="player-info">
+                <div>
+                    <div class="player-info-title">Interactive Call Player (Stereo Mix)</div>
+                    <div style="font-size: 0.85rem; color: #a5b4fc; margin-top: 0.25rem;">
+                        Agent: Left Channel ➔ Customer: Right Channel
+                    </div>
+                </div>
+                <div class="player-info-meta">
+                    <span>Accent: <strong>en-CA (Canadian)</strong></span>
+                    <span>Domain: <strong>Banking &amp; Trust</strong></span>
+                    <span>Dataset: <strong>AppTek dialogues</strong></span>
+                </div>
+            </div>
+            
+            <div class="custom-player">
+                <audio id="audio-player" controls>
+                    <source src="./data/apptek/call_1_mixed.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="tip-card">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span><strong>Pro-Tip:</strong> Click on <strong>any word</strong> in the transcript to jump the audio player directly to that spoken millisecond timestamp!</span>
+            </div>
+        </div>
+
+        <!-- Transcript Double Columns -->
+        <div class="transcript-container">
+            <!-- Agent Column -->
+            <div class="column-card agent-card">
+                <div class="column-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Emily (Bank Agent)
+                    </h2>
+                    <span class="channel-label">Channel 1 (Left)</span>
+                </div>
+                <div class="transcript-body" id="agent-transcript">
+                    <!-- Words populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Customer Column -->
+            <div class="column-card customer-card">
+                <div class="column-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        James Carter (Customer)
+                    </h2>
+                    <span class="channel-label">Channel 2 (Right)</span>
+                </div>
+                <div class="transcript-body" id="customer-transcript">
+                    <!-- Words populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2026 AI/ML Capstone Infrastructure. All uncompressed audio and timing metadata synchronized successfully.
+    </footer>
+
+    <script>
+        // Word Timing Matrices parsed from the real Whisper transcription models
+        const transcriptData = {
+            "agent": [
+                {"word": "Oh,", "start": 13.52, "end": 14.0},
+                {"word": "good", "start": 14.1, "end": 14.3},
+                {"word": "afternoon.", "start": 14.3, "end": 14.7},
+                {"word": "Thank", "start": 15.02, "end": 15.38},
+                {"word": "you", "start": 15.38, "end": 15.58},
+                {"word": "for", "start": 15.58, "end": 15.72},
+                {"word": "calling", "start": 15.72, "end": 16.08},
+                {"word": "North", "start": 16.08, "end": 16.62},
+                {"word": "Star", "start": 16.62, "end": 16.86},
+                {"word": "Bank", "start": 16.86, "end": 17.1},
+                {"word": "customer", "start": 17.1, "end": 17.48},
+                {"word": "care.", "start": 17.48, "end": 18.14},
+                {"word": "My", "start": 18.66, "end": 18.72},
+                {"word": "name", "start": 18.72, "end": 18.9},
+                {"word": "is", "start": 18.9, "end": 19.04},
+                {"word": "Emily.", "start": 19.04, "end": 19.34},
+                {"word": "How", "start": 19.42, "end": 19.6},
+                {"word": "can", "start": 19.6, "end": 19.72},
+                {"word": "I", "start": 19.72, "end": 19.82},
+                {"word": "help", "start": 19.82, "end": 20.06},
+                {"word": "you", "start": 20.06, "end": 20.2},
+                {"word": "today?", "start": 20.2, "end": 20.62},
+                
+                {"word": "Absolutely,", "start": 40.48, "end": 41.02},
+                {"word": "Mr.", "start": 41.26, "end": 41.48},
+                {"word": "Carter.", "start": 41.62, "end": 41.74},
+                {"word": "I", "start": 41.98, "end": 41.98},
+                {"word": "can", "start": 41.98, "end": 42.16},
+                {"word": "help", "start": 42.16, "end": 42.32},
+                {"word": "you", "start": 42.32, "end": 42.54},
+                {"word": "with", "start": 42.54, "end": 42.64},
+                {"word": "that.", "start": 42.64, "end": 43.44},
+                {"word": "Before", "start": 43.84, "end": 44.08},
+                {"word": "we", "start": 44.08, "end": 44.4},
+                {"word": "start,", "start": 44.4, "end": 44.74},
+                {"word": "can", "start": 45.04, "end": 45.04},
+                {"word": "I", "start": 45.04, "end": 45.56},
+                {"word": "verify", "start": 45.56, "end": 45.98},
+                {"word": "your", "start": 45.98, "end": 46.32},
+                {"word": "identity", "start": 46.32, "end": 46.64},
+                {"word": "for", "start": 46.64, "end": 47.0},
+                {"word": "security", "start": 47.0, "end": 47.5},
+                {"word": "purposes?", "start": 47.5, "end": 48.4},
+                
+                {"word": "Could", "start": 49.5, "end": 49.62},
+                {"word": "you", "start": 49.62, "end": 49.86},
+                {"word": "confirm", "start": 49.86, "end": 50.3},
+                {"word": "your", "start": 50.3, "end": 50.58},
+                {"word": "date", "start": 50.58, "end": 50.8},
+                {"word": "of", "start": 50.8, "end": 51.0},
+                {"word": "birth", "start": 51.0, "end": 51.38},
+                {"word": "and", "start": 51.38, "end": 51.72},
+                {"word": "the", "start": 51.72, "end": 51.9},
+                {"word": "last", "start": 51.9, "end": 52.3},
+                {"word": "four", "start": 52.3, "end": 52.62},
+                {"word": "digits", "start": 52.62, "end": 52.96},
+                {"word": "of", "start": 52.96, "end": 53.22},
+                {"word": "your", "start": 53.22, "end": 53.38},
+                {"word": "checking", "start": 53.38, "end": 53.64},
+                {"word": "account", "start": 53.64, "end": 54.0},
+                {"word": "number?", "start": 54.0, "end": 54.52},
+                
+                {"word": "Perfect.", "start": 67.86, "end": 68.54},
+                {"word": "Thank", "start": 68.9, "end": 69.24},
+                {"word": "you", "start": 69.24, "end": 69.62},
+                {"word": "for", "start": 69.62, "end": 69.82},
+                {"word": "confirming", "start": 69.82, "end": 70.24},
+                {"word": "that.", "start": 70.24, "end": 71.22},
+                {"word": "So", "start": 72.24, "end": 72.4},
+                {"word": "I've", "start": 72.4, "end": 72.62},
+                {"word": "got", "start": 72.62, "end": 72.76},
+                {"word": "your", "start": 72.76, "end": 73.0},
+                {"word": "account", "start": 73.0, "end": 73.24},
+                {"word": "pulled", "start": 73.24, "end": 73.52},
+                {"word": "up", "start": 73.52, "end": 73.82}
+            ],
+            "customer": [
+                {"word": "I", "start": 21.64, "end": 22.6},
+                {"word": "have", "start": 22.6, "end": 23.56},
+                {"word": "a", "start": 23.56, "end": 27.82},
+                {"word": "checking", "start": 27.82, "end": 28.24},
+                {"word": "account", "start": 28.24, "end": 28.72},
+                {"word": "with", "start": 28.72, "end": 29.04},
+                {"word": "your", "start": 29.04, "end": 29.26},
+                {"word": "bank.", "start": 29.26, "end": 29.92},
+                
+                {"word": "I", "start": 33.44, "end": 34.2},
+                {"word": "want", "start": 34.2, "end": 34.5},
+                {"word": "to", "start": 34.5, "end": 34.58},
+                {"word": "set", "start": 34.58, "end": 34.92},
+                {"word": "up", "start": 34.92, "end": 35.68},
+                {"word": "an", "start": 35.68, "end": 35.96},
+                {"word": "automatic", "start": 35.96, "end": 36.78},
+                {"word": "monthly", "start": 36.78, "end": 37.26},
+                {"word": "transfer", "start": 37.26, "end": 37.64},
+                {"word": "between", "start": 37.64, "end": 37.98},
+                {"word": "the", "start": 37.98, "end": 38.24},
+                {"word": "two.", "start": 38.24, "end": 39.9},
+                
+                {"word": "My", "start": 56.2, "end": 57.0},
+                {"word": "date", "start": 57.0, "end": 57.3},
+                {"word": "of", "start": 57.3, "end": 57.44},
+                {"word": "birth", "start": 57.44, "end": 57.84},
+                {"word": "is", "start": 57.84, "end": 58.02},
+                {"word": "October", "start": 58.02, "end": 58.46},
+                {"word": "12,", "start": 58.46, "end": 59.3},
+                {"word": "1983,", "start": 61.04, "end": 61.04},
+                {"word": "and", "start": 63.06, "end": 63.08},
+                {"word": "the", "start": 63.08, "end": 63.2},
+                {"word": "last", "start": 63.2, "end": 63.44},
+                {"word": "four", "start": 63.44, "end": 63.66},
+                {"word": "digits", "start": 63.66, "end": 63.98},
+                {"word": "are", "start": 63.98, "end": 64.52},
+                {"word": "246.", "start": 64.52, "end": 66.12},
+                
+                {"word": "I", "start": 81.98, "end": 83.28},
+                {"word": "want", "start": 83.28, "end": 84.58},
+                {"word": "to", "start": 84.58, "end": 87.06},
+                {"word": "start", "start": 87.06, "end": 87.46},
+                {"word": "putting", "start": 87.46, "end": 87.96},
+                {"word": "some", "start": 87.96, "end": 88.28},
+                {"word": "money", "start": 88.28, "end": 88.5},
+                {"word": "aside", "start": 88.5, "end": 89.14},
+                {"word": "every", "start": 89.14, "end": 89.8},
+                {"word": "month", "start": 89.8, "end": 90.44},
+                {"word": "automatically.", "start": 90.44, "end": 91.48}
+            ]
+        };
+
+        const player = document.getElementById("audio-player");
+        const agentContainer = document.getElementById("agent-transcript");
+        const customerContainer = document.getElementById("customer-transcript");
+
+        // Render transcripts into HTML
+        function renderTranscript(channel, container) {
+            const words = transcriptData[channel];
+            container.innerHTML = "";
+            
+            words.forEach((item, index) => {
+                const span = document.createElement("span");
+                span.className = "word";
+                span.id = `${channel}-word-${index}`;
+                span.innerText = item.word;
+                
+                // Add click-to-seek logic
+                span.addEventListener("click", () => {
+                    player.currentTime = item.start;
+                    player.play();
+                });
+                
+                container.appendChild(span);
+                
+                // Add spacing
+                container.appendChild(document.createTextNode(" "));
+            });
+        }
+
+        renderTranscript("agent", agentContainer);
+        renderTranscript("customer", customerContainer);
+
+        // Track active highlights during audio playback
+        player.addEventListener("timeupdate", () => {
+            const currentTime = player.currentTime;
+            
+            // Highlight Agent Words
+            transcriptData.agent.forEach((item, index) => {
+                const span = document.getElementById(`agent-word-${index}`);
+                if (span) {
+                    if (currentTime >= item.start && currentTime <= item.end) {
+                        span.classList.add("active");
+                    } else {
+                        span.classList.remove("active");
+                    }
+                }
+            });
+
+            // Highlight Customer Words
+            transcriptData.customer.forEach((item, index) => {
+                const span = document.getElementById(`customer-word-${index}`);
+                if (span) {
+                    if (currentTime >= item.start && currentTime <= item.end) {
+                        span.classList.add("active");
+                    } else {
+                        span.classList.remove("active");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
