@@ -21,6 +21,11 @@ node_modules/
 ml-services/data/
 ml-services/models/
 
+# Prevent gigabytes of binary sound layers from being committed
+data/
+*.wav
+*.mp3
+
 # Operating system files
 .DS_Store
 Thumbs.db
