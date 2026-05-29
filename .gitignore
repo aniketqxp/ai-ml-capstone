@@ -1,0 +1,26 @@
+# Git rules local file
+.gitrules
+
+# Environments
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python caches and outputs
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Node dependencies
+node_modules/
+
+# Local ML data and models weight cache
+ml-services/data/
+ml-services/models/
+
+# Operating system files
+.DS_Store
+Thumbs.db
