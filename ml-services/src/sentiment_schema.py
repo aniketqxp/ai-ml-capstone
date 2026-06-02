@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 
 try:
     from src.sentiment_config import (
+        ConfidenceLevel,
         EmotionLabel,
         IntensityLevel,
         OverallSentiment,
@@ -20,6 +21,7 @@ try:
     )
 except ModuleNotFoundError:
     from sentiment_config import (
+        ConfidenceLevel,
         EmotionLabel,
         IntensityLevel,
         OverallSentiment,
@@ -153,6 +155,11 @@ class AudioSentimentResult(BaseModel):
     audio_escalation_score: float = Field(default=0.0, ge=0.0, le=1.0)
     risk_level: RiskLevel = RiskLevel.UNKNOWN
 
+    prediction_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    confidence_level: ConfidenceLevel = ConfidenceLevel.UNKNOWN
+    uncertain_prediction: bool = False
+    top_emotion_margin: float = Field(default=0.0, ge=0.0, le=1.0)
+
     peak_emotion: PeakEmotion = Field(default_factory=PeakEmotion)
     sentiment_timeline: List[SentimentSegment] = Field(default_factory=list)
 
@@ -228,3 +235,37 @@ def infer_risk_level(escalation_score: float) -> RiskLevel:
         return RiskLevel.MEDIUM
 
     return RiskLevel.LOW
+
+def infer_confidence_level(confidence: float) -> ConfidenceLevel:
+    """
+    Convert numeric prediction confidence into Low / Medium / High.
+
+    Confidence is the highest emotion probability returned by the model.
+    """
+    if confidence >= 0.75:
+        return ConfidenceLevel.HIGH
+
+    if confidence >= 0.50:
+        return ConfidenceLevel.MEDIUM
+
+    return ConfidenceLevel.LOW
+
+
+def is_uncertain_prediction(
+    confidence: float,
+    top_emotion_margin: float,
+) -> bool:
+    """
+    Decide whether the emotion prediction should be flagged as uncertain.
+
+    A prediction is considered uncertain if:
+        - the top class confidence is below 0.50, or
+        - the top two emotion probabilities are very close.
+    """
+    if confidence < 0.50:
+        return True
+
+    if top_emotion_margin < 0.10:
+        return True
+
+    return False

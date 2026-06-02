@@ -20,13 +20,22 @@ from src.data.audio_dataset import DEFAULT_SAMPLE_RATE, load_audio_file, resolve
 from src.features.inference_audio_features import extract_audio_feature_summary
 from src.sentiment_config import IntensityLevel, SentimentShift
 from src.sentiment_schema import (
-    AudioFeatureSummary,
     AudioSentimentResult,
     EmotionProbabilities,
     PeakEmotion,
+    infer_confidence_level,
     infer_overall_sentiment,
     infer_risk_level,
+    is_uncertain_prediction,
     seconds_to_timestamp,
+)
+from src.inference.sentiment_timeline import (
+    TimelineConfig,
+    build_sentiment_timeline,
+    calculate_audio_sentiment_shift,
+    calculate_emotional_volatility,
+    find_peak_emotion,
+    summarize_timeline_risk,
 )
 
 
@@ -135,6 +144,44 @@ class EmotionPredictor:
             neutral=probabilities.get("neutral", 0.0),
             sadness=probabilities.get("sadness", 0.0),
         )
+    @staticmethod
+    def _calculate_confidence_values(
+        probabilities: Dict[str, float],
+    ) -> tuple[float, float, bool]:
+        """
+        Calculate confidence, margin, and uncertainty flag.
+
+        Returns:
+            prediction_confidence:
+                Highest emotion probability.
+            top_emotion_margin:
+                Difference between top emotion and second emotion.
+            uncertain_prediction:
+                True if confidence is low or top classes are close.
+        """
+        if not probabilities:
+            return 0.0, 0.0, True
+
+        sorted_probabilities = sorted(
+            probabilities.values(),
+            reverse=True,
+        )
+
+        prediction_confidence = float(sorted_probabilities[0])
+
+        if len(sorted_probabilities) >= 2:
+            top_emotion_margin = float(
+                sorted_probabilities[0] - sorted_probabilities[1]
+            )
+        else:
+            top_emotion_margin = prediction_confidence
+
+        uncertain = is_uncertain_prediction(
+            confidence=prediction_confidence,
+            top_emotion_margin=top_emotion_margin,
+        )
+
+        return prediction_confidence, top_emotion_margin, uncertain
 
     @staticmethod
     def _calculate_basic_escalation_score(
@@ -159,19 +206,55 @@ class EmotionPredictor:
         self,
         audio_path: Path,
         call_id: str = "CALL_TEST_001",
+        build_timeline: bool = True,
     ) -> AudioSentimentResult:
         """
         Analyze one audio file and return the official sentiment result.
         """
         raw_probabilities = self.predict_probabilities(audio_path)
         probabilities = self._build_probability_schema(raw_probabilities)
+        (
+            prediction_confidence,
+            top_emotion_margin,
+            uncertain_prediction,
+        ) = self._calculate_confidence_values(raw_probabilities)
+
+        confidence_level = infer_confidence_level(prediction_confidence)
 
         dominant_emotion = probabilities.dominant_emotion()
         overall_sentiment = infer_overall_sentiment(probabilities)
 
         audio_feature_summary = extract_audio_feature_summary(audio_path)
 
-        escalation_score = self._calculate_basic_escalation_score(probabilities)
+        sentiment_timeline = []
+        emotional_volatility = IntensityLevel.LOW
+        audio_sentiment_shift = SentimentShift.UNCHANGED
+        peak_emotion = PeakEmotion(
+            time_seconds=0.0,
+            timestamp=seconds_to_timestamp(0.0),
+            emotion=dominant_emotion,
+            score=self._calculate_basic_escalation_score(probabilities),
+        )
+
+        if build_timeline:
+            sentiment_timeline = build_sentiment_timeline(
+                audio_path=audio_path,
+                probability_predictor=self.predict_probabilities,
+                config=TimelineConfig(
+                    segment_duration_seconds=5.0,
+                    min_segment_duration_seconds=1.0,
+                    max_duration_seconds=self.max_duration_seconds,
+                ),
+            )
+
+            emotional_volatility = calculate_emotional_volatility(sentiment_timeline)
+            audio_sentiment_shift = calculate_audio_sentiment_shift(sentiment_timeline)
+            peak_emotion = find_peak_emotion(sentiment_timeline)
+
+            escalation_score = summarize_timeline_risk(sentiment_timeline)
+        else:
+            escalation_score = self._calculate_basic_escalation_score(probabilities)
+
         risk_level = infer_risk_level(escalation_score)
 
         return AudioSentimentResult(
@@ -185,21 +268,21 @@ class EmotionPredictor:
             anxiety_probability=probabilities.fear,
             calm_probability=probabilities.calm_probability(),
             audio_features=audio_feature_summary,
-            emotional_volatility=IntensityLevel.UNKNOWN,
-            audio_sentiment_shift=SentimentShift.UNKNOWN,
+            emotional_volatility=emotional_volatility,
+            audio_sentiment_shift=audio_sentiment_shift,
             audio_escalation_score=escalation_score,
             risk_level=risk_level,
-            peak_emotion=PeakEmotion(
-                time_seconds=0.0,
-                timestamp=seconds_to_timestamp(0.0),
-                emotion=dominant_emotion,
-                score=escalation_score,
-            ),
-            sentiment_timeline=[],
+            prediction_confidence=prediction_confidence,
+            confidence_level=confidence_level,
+            uncertain_prediction=uncertain_prediction,
+            top_emotion_margin=top_emotion_margin,
+            peak_emotion=peak_emotion,
+            sentiment_timeline=sentiment_timeline,
             model_name="Emotion-pretrained Wav2Vec2 classifier",
             model_version="cremad-emotion-pretrained-v1",
             processing_status="success",
                         warnings=[
-                "This result uses emotion probabilities and single-clip audio features. Timeline analysis, sentiment shift, and peak timestamp detection will be added in later steps."
+                "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
+                "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
             ],
         )

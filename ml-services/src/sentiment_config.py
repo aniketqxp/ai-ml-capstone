@@ -59,6 +59,14 @@ class RiskLevel(str, Enum):
     CRITICAL = "Critical"
     UNKNOWN = "Unknown"
 
+class ConfidenceLevel(str, Enum):
+    """Confidence level for model predictions."""
+
+    LOW = "Low"
+    MEDIUM = "Medium"
+    HIGH = "High"
+    UNKNOWN = "Unknown"
+
 
 NEGATIVE_EMOTIONS = {
     EmotionLabel.ANGER,

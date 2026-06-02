@@ -33,6 +33,7 @@ def main() -> None:
         result = predictor.analyze_audio(
             audio_path=Path(file_path),
             call_id=f"TEST_{expected_label.upper()}",
+            build_timeline=False,
         )
 
         output = result.to_api_response()
@@ -41,6 +42,10 @@ def main() -> None:
         print(f"Expected: {expected_label}")
         print(f"Predicted: {output['dominant_emotion']}")
         print(f"Overall sentiment: {output['overall_audio_sentiment']}")
+        print(f"Confidence: {output['prediction_confidence']:.3f}")
+        print(f"Confidence level: {output['confidence_level']}")
+        print(f"Uncertain prediction: {output['uncertain_prediction']}")
+        print(f"Top emotion margin: {output['top_emotion_margin']:.3f}")
         print(f"Anger: {output['anger_probability']:.3f}")
         print(f"Sadness: {output['sadness_probability']:.3f}")
         print(f"Fear/Anxiety: {output['anxiety_probability']:.3f}")
