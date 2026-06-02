@@ -1,0 +1,87 @@
+{
+  "model_name": "Wav2Vec2 emotion classifier",
+  "base_checkpoint": "Dpngtm/wav2vec2-emotion-recognition",
+  "task": "6-class speech emotion classification",
+  "device": "Apple Silicon MPS available",
+  "labels": {
+    "0": "anger",
+    "1": "disgust",
+    "2": "fear",
+    "3": "happy",
+    "4": "neutral",
+    "5": "sadness"
+  },
+  "train_samples": 5147,
+  "validation_samples": 1066,
+  "test_samples": 1229,
+  "num_epochs": 3,
+  "batch_size": 2,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "validation": {
+    "eval_loss": 0.5859214663505554,
+    "eval_accuracy": 0.8151969981238274,
+    "eval_macro_f1": 0.8144073250473919,
+    "eval_weighted_f1": 0.8129575975157148,
+    "eval_runtime": 42.9928,
+    "eval_samples_per_second": 24.795,
+    "eval_steps_per_second": 12.397,
+    "epoch": 3.0
+  },
+  "test": {
+    "accuracy": 0.8079739625711961,
+    "macro_f1": 0.808581464200436,
+    "weighted_f1": 0.8074157971973661,
+    "classification_report": {
+      "anger": {
+        "precision": 0.7269372693726938,
+        "recall": 0.9380952380952381,
+        "f1-score": 0.8191268191268192,
+        "support": 210.0
+      },
+      "disgust": {
+        "precision": 0.8578947368421053,
+        "recall": 0.7761904761904762,
+        "f1-score": 0.815,
+        "support": 210.0
+      },
+      "fear": {
+        "precision": 0.7446808510638298,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.7865168539325843,
+        "support": 210.0
+      },
+      "happy": {
+        "precision": 0.9470588235294117,
+        "recall": 0.7666666666666667,
+        "f1-score": 0.8473684210526315,
+        "support": 210.0
+      },
+      "neutral": {
+        "precision": 0.8387096774193549,
+        "recall": 0.8715083798882681,
+        "f1-score": 0.8547945205479452,
+        "support": 179.0
+      },
+      "sadness": {
+        "precision": 0.7966101694915254,
+        "recall": 0.6714285714285714,
+        "f1-score": 0.7286821705426356,
+        "support": 210.0
+      },
+      "accuracy": 0.8079739625711961,
+      "macro avg": {
+        "precision": 0.8186485879531534,
+        "recall": 0.8095371109337591,
+        "f1-score": 0.808581464200436,
+        "support": 1229.0
+      },
+      "weighted avg": {
+        "precision": 0.8181425718640954,
+        "recall": 0.8079739625711961,
+        "f1-score": 0.8074157971973661,
+        "support": 1229.0
+      }
+    }
+  }
+}

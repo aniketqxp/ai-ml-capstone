@@ -226,6 +226,7 @@ def build_model_and_processor(
         num_labels=len(EMOTION_LABELS),
         label2id=label_encoding.label_to_id,
         id2label=label_encoding.id_to_label,
+        ignore_mismatched_sizes=True,
     )
 
     # This is safer for laptops and speeds up training.
