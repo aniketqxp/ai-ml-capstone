@@ -17,6 +17,7 @@ import torch
 from transformers import Wav2Vec2ForSequenceClassification, Wav2Vec2Processor
 
 from src.data.audio_dataset import DEFAULT_SAMPLE_RATE, load_audio_file, resolve_audio_path
+from src.features.inference_audio_features import extract_audio_feature_summary
 from src.sentiment_config import IntensityLevel, SentimentShift
 from src.sentiment_schema import (
     AudioFeatureSummary,
@@ -168,6 +169,8 @@ class EmotionPredictor:
         dominant_emotion = probabilities.dominant_emotion()
         overall_sentiment = infer_overall_sentiment(probabilities)
 
+        audio_feature_summary = extract_audio_feature_summary(audio_path)
+
         escalation_score = self._calculate_basic_escalation_score(probabilities)
         risk_level = infer_risk_level(escalation_score)
 
@@ -181,16 +184,7 @@ class EmotionPredictor:
             sadness_probability=probabilities.sadness,
             anxiety_probability=probabilities.fear,
             calm_probability=probabilities.calm_probability(),
-            audio_features=AudioFeatureSummary(
-                vocal_intensity=IntensityLevel.UNKNOWN,
-                pitch_level=IntensityLevel.UNKNOWN,
-                pitch_variability=IntensityLevel.UNKNOWN,
-                speech_rate=IntensityLevel.UNKNOWN,
-                pause_frequency=IntensityLevel.UNKNOWN,
-                long_silence_detected=False,
-                total_silence_duration_seconds=None,
-                overlap_rate=None,
-            ),
+            audio_features=audio_feature_summary,
             emotional_volatility=IntensityLevel.UNKNOWN,
             audio_sentiment_shift=SentimentShift.UNKNOWN,
             audio_escalation_score=escalation_score,
@@ -205,7 +199,7 @@ class EmotionPredictor:
             model_name="Emotion-pretrained Wav2Vec2 classifier",
             model_version="cremad-emotion-pretrained-v1",
             processing_status="success",
-            warnings=[
-                "This result uses emotion probabilities only. Audio feature extraction, timeline analysis, and peak timestamp detection will be added in later steps."
+                        warnings=[
+                "This result uses emotion probabilities and single-clip audio features. Timeline analysis, sentiment shift, and peak timestamp detection will be added in later steps."
             ],
         )

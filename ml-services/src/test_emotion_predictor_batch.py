@@ -45,8 +45,20 @@ def main() -> None:
         print(f"Sadness: {output['sadness_probability']:.3f}")
         print(f"Fear/Anxiety: {output['anxiety_probability']:.3f}")
         print(f"Calm: {output['calm_probability']:.3f}")
+        audio_features = output["audio_features"]
+
         print(f"Escalation score: {output['audio_escalation_score']:.3f}")
         print(f"Risk level: {output['risk_level']}")
+        print(f"Vocal intensity: {audio_features['vocal_intensity']}")
+        print(f"Pitch level: {audio_features['pitch_level']}")
+        print(f"Pitch variability: {audio_features['pitch_variability']}")
+        print(f"Speech rate: {audio_features['speech_rate']}")
+        print(f"Pause frequency: {audio_features['pause_frequency']}")
+        print(f"Long silence detected: {audio_features['long_silence_detected']}")
+        print(
+            f"Total silence duration: "
+            f"{audio_features.get('total_silence_duration_seconds', 0)} sec"
+        )
         print("-" * 80)
 
 
