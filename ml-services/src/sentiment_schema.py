@@ -10,13 +10,22 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-from sentiment_config import (
-    EmotionLabel,
-    IntensityLevel,
-    OverallSentiment,
-    RiskLevel,
-    SentimentShift,
-)
+try:
+    from src.sentiment_config import (
+        EmotionLabel,
+        IntensityLevel,
+        OverallSentiment,
+        RiskLevel,
+        SentimentShift,
+    )
+except ModuleNotFoundError:
+    from sentiment_config import (
+        EmotionLabel,
+        IntensityLevel,
+        OverallSentiment,
+        RiskLevel,
+        SentimentShift,
+    )
 
 
 class EmotionProbabilities(BaseModel):
