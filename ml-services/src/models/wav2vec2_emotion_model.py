@@ -37,6 +37,7 @@ Outputs:
 
 import argparse
 import json
+import mlflow
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Literal, Optional
@@ -70,6 +71,8 @@ ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
 DEFAULT_METADATA_PATH = ML_SERVICES_ROOT / "data" / "processed" / "cremad_metadata.csv"
 DEFAULT_OUTPUT_ROOT = ML_SERVICES_ROOT / "outputs" / "wav2vec2"
 DEFAULT_REPORTS_DIR = ML_SERVICES_ROOT / "outputs" / "reports"
+DEFAULT_MLFLOW_EXPERIMENT_NAME = "audio_sentiment_emotion_classification"
+DEFAULT_MLFLOW_TRACKING_URI = f"sqlite:///{ML_SERVICES_ROOT / 'mlflow.db'}"
 
 DEFAULT_MODEL_CHECKPOINT = "facebook/wav2vec2-base"
 DEFAULT_OUTPUT_DIR = ML_SERVICES_ROOT / "outputs" / "wav2vec2"
@@ -393,6 +396,86 @@ def evaluate_on_test_set(
 
     return report
 
+def log_training_run_to_mlflow(
+    full_report: Dict,
+    report_path: Path,
+    confusion_matrix_path: Path,
+    run_name: str,
+    mlflow_experiment_name: str,
+) -> str:
+    """
+    Log Wav2Vec2 training results to MLflow.
+
+    This tracks model configuration, dataset information, validation/test metrics,
+    and report artifacts for experiment comparison.
+    """
+    mlflow.set_tracking_uri(DEFAULT_MLFLOW_TRACKING_URI)
+    mlflow.set_experiment(mlflow_experiment_name)
+
+    with mlflow.start_run(run_name=run_name):
+        # Tags
+        mlflow.set_tag("module", "audio_sentiment_analysis")
+        mlflow.set_tag("model_family", "Wav2Vec2")
+        mlflow.set_tag("training_framework", "Hugging Face Transformers")
+        mlflow.set_tag("dataset_source", full_report.get("dataset_source", "Unknown"))
+        mlflow.set_tag("purpose", "model_training")
+
+        # Parameters
+        mlflow.log_param("run_name", full_report.get("run_name"))
+        mlflow.log_param("model_name", full_report.get("model_name"))
+        mlflow.log_param("base_checkpoint", full_report.get("base_checkpoint"))
+        mlflow.log_param("task", full_report.get("task"))
+        mlflow.log_param("device", full_report.get("device"))
+        mlflow.log_param("dataset_source", full_report.get("dataset_source"))
+        mlflow.log_param("metadata_path", full_report.get("metadata_path"))
+        mlflow.log_param("output_dir", full_report.get("output_dir"))
+        mlflow.log_param("best_model_dir", full_report.get("best_model_dir"))
+        mlflow.log_param("train_samples", full_report.get("train_samples"))
+        mlflow.log_param("validation_samples", full_report.get("validation_samples"))
+        mlflow.log_param("test_samples", full_report.get("test_samples"))
+        mlflow.log_param("num_epochs", full_report.get("num_epochs"))
+        mlflow.log_param("batch_size", full_report.get("batch_size"))
+        mlflow.log_param("learning_rate", full_report.get("learning_rate"))
+        mlflow.log_param("weight_decay", full_report.get("weight_decay"))
+
+        # Validation metrics
+        validation_metrics = full_report.get("validation", {})
+        mlflow.log_metric(
+            "validation_accuracy",
+            float(validation_metrics.get("eval_accuracy", 0.0)),
+        )
+        mlflow.log_metric(
+            "validation_macro_f1",
+            float(validation_metrics.get("eval_macro_f1", 0.0)),
+        )
+        mlflow.log_metric(
+            "validation_weighted_f1",
+            float(validation_metrics.get("eval_weighted_f1", 0.0)),
+        )
+        mlflow.log_metric(
+            "validation_loss",
+            float(validation_metrics.get("eval_loss", 0.0)),
+        )
+
+        # Test metrics
+        test_metrics = full_report.get("test", {})
+        mlflow.log_metric("test_accuracy", float(test_metrics.get("accuracy", 0.0)))
+        mlflow.log_metric("test_macro_f1", float(test_metrics.get("macro_f1", 0.0)))
+        mlflow.log_metric(
+            "test_weighted_f1",
+            float(test_metrics.get("weighted_f1", 0.0)),
+        )
+
+        # Artifacts
+        if report_path.exists():
+            mlflow.log_artifact(str(report_path), artifact_path="reports")
+
+        if confusion_matrix_path.exists():
+            mlflow.log_artifact(str(confusion_matrix_path), artifact_path="reports")
+
+        run_id = mlflow.active_run().info.run_id
+
+    return run_id
 
 def train_wav2vec2_emotion_model(
     model_checkpoint: str = DEFAULT_MODEL_CHECKPOINT,
@@ -405,6 +488,8 @@ def train_wav2vec2_emotion_model(
     learning_rate: float = 3e-5,
     weight_decay: float = 0.01,
     max_duration_seconds: Optional[float] = 6.0,
+    enable_mlflow: bool = False,
+    mlflow_experiment_name: str = DEFAULT_MLFLOW_EXPERIMENT_NAME,
 ) -> Dict:
     """
     Fine-tune Wav2Vec2 for emotion classification.
@@ -432,6 +517,9 @@ def train_wav2vec2_emotion_model(
     print(f"Batch size: {batch_size}")
     print(f"Learning rate: {learning_rate}")
     print(f"Output directory: {output_dir}")
+    print(f"MLflow enabled: {enable_mlflow}")
+    if enable_mlflow:
+        print(f"MLflow experiment: {mlflow_experiment_name}")
     print("-" * 70)
 
     datasets = build_wav2vec2_datasets(
@@ -487,6 +575,8 @@ def train_wav2vec2_emotion_model(
         "metadata_path": str(metadata_path),
         "output_dir": str(output_dir),
         "best_model_dir": str(best_model_dir),
+        "mlflow_enabled": enable_mlflow,
+        "mlflow_experiment_name": mlflow_experiment_name if enable_mlflow else None,
         "labels": label_encoding.id_to_label,
         "train_samples": len(datasets["train"]),
         "validation_samples": len(datasets["validation"]),
@@ -502,6 +592,21 @@ def train_wav2vec2_emotion_model(
     report_path.parent.mkdir(parents=True, exist_ok=True)
     with report_path.open("w", encoding="utf-8") as file:
         json.dump(full_report, file, indent=2)
+    mlflow_run_id = None
+
+    if enable_mlflow:
+        mlflow_run_id = log_training_run_to_mlflow(
+            full_report=full_report,
+            report_path=report_path,
+            confusion_matrix_path=confusion_matrix_path,
+            run_name=run_name,
+            mlflow_experiment_name=mlflow_experiment_name,
+        )
+
+        full_report["mlflow_run_id"] = mlflow_run_id
+
+        with report_path.open("w", encoding="utf-8") as file:
+            json.dump(full_report, file, indent=2)
 
     print("\nWav2Vec2 Results")
     print("-" * 70)
@@ -513,6 +618,8 @@ def train_wav2vec2_emotion_model(
     print(f"Saved model to: {best_model_dir}")
     print(f"Saved report to: {report_path}")
     print(f"Saved confusion matrix to: {confusion_matrix_path}")
+    if enable_mlflow:
+        print(f"Logged MLflow run ID: {mlflow_run_id}")
 
     return full_report
 
@@ -540,6 +647,18 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default="wav2vec2_emotion",
         help="Run name used for model folder and report filenames.",
+    )
+    parser.add_argument(
+        "--enable-mlflow",
+        action="store_true",
+        help="Enable MLflow logging for this training run.",
+    )
+
+    parser.add_argument(
+        "--mlflow-experiment-name",
+        type=str,
+        default=DEFAULT_MLFLOW_EXPERIMENT_NAME,
+        help="MLflow experiment name.",
     )
 
     parser.add_argument(
@@ -591,21 +710,24 @@ def parse_args() -> argparse.Namespace:
         help="Maximum audio duration per sample.",
     )
 
+
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
 
-    train_wav2vec2_emotion_model(
-        model_checkpoint=args.model_checkpoint,
-        metadata_path=args.metadata_path,
-        run_name=args.run_name,
-        output_root=args.output_root,
-        limit_per_split=args.limit_per_split,
-        num_epochs=args.num_epochs,
-        batch_size=args.batch_size,
-        learning_rate=args.learning_rate,
-        weight_decay=args.weight_decay,
-        max_duration_seconds=args.max_duration_seconds,
-    )
+train_wav2vec2_emotion_model(
+    model_checkpoint=args.model_checkpoint,
+    metadata_path=args.metadata_path,
+    run_name=args.run_name,
+    output_root=args.output_root,
+    limit_per_split=args.limit_per_split,
+    num_epochs=args.num_epochs,
+    batch_size=args.batch_size,
+    learning_rate=args.learning_rate,
+    weight_decay=args.weight_decay,
+    max_duration_seconds=args.max_duration_seconds,
+    enable_mlflow=args.enable_mlflow,
+    mlflow_experiment_name=args.mlflow_experiment_name,
+)
