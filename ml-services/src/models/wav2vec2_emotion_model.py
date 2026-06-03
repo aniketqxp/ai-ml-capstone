@@ -1,24 +1,38 @@
 """
 Wav2Vec2 emotion classifier for the capstone audio sentiment module.
 
-This script fine-tunes Wav2Vec2 on CREMA-D for 6-class speech emotion
-classification.
+This script fine-tunes Wav2Vec2 for 6-class speech emotion classification.
+
+Default training uses CREMA-D metadata. For Model V2, pass the combined
+CREMA-D + RAVDESS metadata file.
 
 Run quick smoke test from ml-services:
 
     python -m src.models.test_wav2vec2_setup
 
-Run a small training test:
+Run CREMA-D training:
 
-    python -m src.models.wav2vec2_emotion_model --limit-per-split 40 --num-epochs 1
+    python -m src.models.wav2vec2_emotion_model \
+      --model-checkpoint Dpngtm/wav2vec2-emotion-recognition \
+      --run-name model_v1_cremad \
+      --num-epochs 3 \
+      --batch-size 2 \
+      --learning-rate 1e-5
 
-Run full training:
+Run combined CREMA-D + RAVDESS training:
 
-    python -m src.models.wav2vec2_emotion_model --num-epochs 5
+    python -m src.models.wav2vec2_emotion_model \
+      --metadata-path data/processed/combined_emotion_metadata.csv \
+      --model-checkpoint Dpngtm/wav2vec2-emotion-recognition \
+      --run-name model_v2_cremad_ravdess \
+      --num-epochs 3 \
+      --batch-size 2 \
+      --learning-rate 1e-5
 
 Outputs:
-    outputs/wav2vec2/
-    outputs/reports/wav2vec2_emotion_report.json
+    outputs/wav2vec2/<run-name>/best_model
+    outputs/reports/<run-name>_report.json
+    outputs/reports/<run-name>_confusion_matrix.csv
 """
 
 import argparse
@@ -41,7 +55,6 @@ from transformers import (
 )
 
 from src.data.audio_dataset import (
-    DEFAULT_METADATA_PATH,
     DEFAULT_SAMPLE_RATE,
     EMOTION_LABELS,
     build_label_encoding,
@@ -54,6 +67,9 @@ from src.data.audio_dataset import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
+DEFAULT_METADATA_PATH = ML_SERVICES_ROOT / "data" / "processed" / "cremad_metadata.csv"
+DEFAULT_OUTPUT_ROOT = ML_SERVICES_ROOT / "outputs" / "wav2vec2"
+DEFAULT_REPORTS_DIR = ML_SERVICES_ROOT / "outputs" / "reports"
 
 DEFAULT_MODEL_CHECKPOINT = "facebook/wav2vec2-base"
 DEFAULT_OUTPUT_DIR = ML_SERVICES_ROOT / "outputs" / "wav2vec2"
@@ -173,6 +189,23 @@ def limit_metadata_per_split(
     print(f"Limited split distribution: {limited_metadata['split'].value_counts().to_dict()}")
 
     return limited_metadata
+
+def infer_dataset_source(metadata: pd.DataFrame) -> str:
+    """
+    Infer dataset source from metadata.
+
+    If the metadata has a dataset column, return the joined dataset names.
+    Otherwise, assume CREMA-D for backwards compatibility.
+    """
+    if "dataset" not in metadata.columns:
+        return "CREMA-D"
+
+    datasets = sorted(metadata["dataset"].dropna().unique().tolist())
+
+    if not datasets:
+        return "Unknown"
+
+    return " + ".join(datasets)
 
 
 def build_wav2vec2_datasets(
@@ -316,20 +349,39 @@ def evaluate_on_test_set(
 
     target_names = [id_to_label[index] for index in sorted(id_to_label.keys())]
 
+    label_ids = sorted(id_to_label.keys())
+
     report = {
         "accuracy": float(accuracy_score(labels, predictions)),
-        "macro_f1": float(f1_score(labels, predictions, average="macro")),
-        "weighted_f1": float(f1_score(labels, predictions, average="weighted")),
+        "macro_f1": float(
+            f1_score(
+                labels,
+                predictions,
+                labels=label_ids,
+                average="macro",
+                zero_division=0,
+            )
+        ),
+        "weighted_f1": float(
+            f1_score(
+                labels,
+                predictions,
+                labels=label_ids,
+                average="weighted",
+                zero_division=0,
+            )
+        ),
         "classification_report": classification_report(
             labels,
             predictions,
+            labels=label_ids,
             target_names=target_names,
             output_dict=True,
             zero_division=0,
         ),
     }
 
-    matrix = confusion_matrix(labels, predictions, labels=sorted(id_to_label.keys()))
+    matrix = confusion_matrix(labels, predictions, labels=label_ids)
     matrix_df = pd.DataFrame(
         matrix,
         index=[f"actual_{label}" for label in target_names],
@@ -344,9 +396,9 @@ def evaluate_on_test_set(
 
 def train_wav2vec2_emotion_model(
     model_checkpoint: str = DEFAULT_MODEL_CHECKPOINT,
-    output_dir: Path = DEFAULT_OUTPUT_DIR,
-    report_path: Path = DEFAULT_REPORT_PATH,
-    confusion_matrix_path: Path = DEFAULT_CONFUSION_MATRIX_PATH,
+    metadata_path: Path = DEFAULT_METADATA_PATH,
+    run_name: str = "wav2vec2_emotion",
+    output_root: Path = DEFAULT_OUTPUT_ROOT,
     limit_per_split: Optional[int] = None,
     num_epochs: int = 5,
     batch_size: int = 4,
@@ -358,17 +410,32 @@ def train_wav2vec2_emotion_model(
     Fine-tune Wav2Vec2 for emotion classification.
     """
     set_seed(RANDOM_SEED)
+    metadata_path = Path(metadata_path)
+    output_root = Path(output_root)
+
+    output_dir = output_root / run_name
+    best_model_dir = output_dir / "best_model"
+    report_path = DEFAULT_REPORTS_DIR / f"{run_name}_report.json"
+    confusion_matrix_path = DEFAULT_REPORTS_DIR / f"{run_name}_confusion_matrix.csv"
+
+    metadata = load_metadata(metadata_path)
+    dataset_source = infer_dataset_source(metadata)
 
     print("\nStarting Wav2Vec2 emotion fine-tuning")
     print("-" * 70)
+    print(f"Run name: {run_name}")
     print(f"Device: {get_device_note()}")
+    print(f"Dataset source: {dataset_source}")
+    print(f"Metadata path: {metadata_path}")
     print(f"Model checkpoint: {model_checkpoint}")
     print(f"Epochs: {num_epochs}")
     print(f"Batch size: {batch_size}")
     print(f"Learning rate: {learning_rate}")
+    print(f"Output directory: {output_dir}")
     print("-" * 70)
 
     datasets = build_wav2vec2_datasets(
+        metadata_path=metadata_path,
         limit_per_split=limit_per_split,
         max_duration_seconds=max_duration_seconds,
     )
@@ -406,15 +473,20 @@ def train_wav2vec2_emotion_model(
         confusion_matrix_path=confusion_matrix_path,
     )
 
-    output_dir.mkdir(parents=True, exist_ok=True)
-    trainer.save_model(str(output_dir / "best_model"))
-    processor.save_pretrained(str(output_dir / "best_model"))
+    best_model_dir.mkdir(parents=True, exist_ok=True)
+    trainer.save_model(str(best_model_dir))
+    processor.save_pretrained(str(best_model_dir))
 
     full_report = {
+        "run_name": run_name,
         "model_name": "Wav2Vec2 emotion classifier",
         "base_checkpoint": model_checkpoint,
         "task": TASK_NAME,
         "device": get_device_note(),
+        "dataset_source": dataset_source,
+        "metadata_path": str(metadata_path),
+        "output_dir": str(output_dir),
+        "best_model_dir": str(best_model_dir),
         "labels": label_encoding.id_to_label,
         "train_samples": len(datasets["train"]),
         "validation_samples": len(datasets["validation"]),
@@ -438,7 +510,7 @@ def train_wav2vec2_emotion_model(
     print(f"Test accuracy: {test_report['accuracy']:.4f}")
     print(f"Test macro F1: {test_report['macro_f1']:.4f}")
     print("-" * 70)
-    print(f"Saved model to: {output_dir / 'best_model'}")
+    print(f"Saved model to: {best_model_dir}")
     print(f"Saved report to: {report_path}")
     print(f"Saved confusion matrix to: {confusion_matrix_path}")
 
@@ -447,7 +519,7 @@ def train_wav2vec2_emotion_model(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Fine-tune Wav2Vec2 for CREMA-D emotion classification."
+        description="Fine-tune Wav2Vec2 for speech emotion classification."
     )
 
     parser.add_argument(
@@ -455,6 +527,26 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default=DEFAULT_MODEL_CHECKPOINT,
         help="Hugging Face Wav2Vec2 checkpoint.",
+    )
+    parser.add_argument(
+        "--metadata-path",
+        type=Path,
+        default=DEFAULT_METADATA_PATH,
+        help="Path to metadata CSV. Defaults to CREMA-D metadata.",
+    )
+
+    parser.add_argument(
+        "--run-name",
+        type=str,
+        default="wav2vec2_emotion",
+        help="Run name used for model folder and report filenames.",
+    )
+
+    parser.add_argument(
+        "--output-root",
+        type=Path,
+        default=DEFAULT_OUTPUT_ROOT,
+        help="Root directory for saved Wav2Vec2 models.",
     )
 
     parser.add_argument(
@@ -507,6 +599,9 @@ if __name__ == "__main__":
 
     train_wav2vec2_emotion_model(
         model_checkpoint=args.model_checkpoint,
+        metadata_path=args.metadata_path,
+        run_name=args.run_name,
+        output_root=args.output_root,
         limit_per_split=args.limit_per_split,
         num_epochs=args.num_epochs,
         batch_size=args.batch_size,
