@@ -52,8 +52,17 @@ def main() -> None:
         print(f"Calm: {output['calm_probability']:.3f}")
         audio_features = output["audio_features"]
 
+        breakdown = output.get("escalation_score_breakdown", {})
+
         print(f"Escalation score: {output['audio_escalation_score']:.3f}")
         print(f"Risk level: {output['risk_level']}")
+        print(
+            "Score breakdown: "
+            f"emotion={breakdown.get('emotion_risk', 0):.3f}, "
+            f"voice={breakdown.get('voice_risk', 0):.3f}, "
+            f"timeline={breakdown.get('timeline_risk', 0):.3f}, "
+            f"uncertainty_adj={breakdown.get('uncertainty_adjustment', 1):.3f}"
+        )
         print(f"Vocal intensity: {audio_features['vocal_intensity']}")
         print(f"Pitch level: {audio_features['pitch_level']}")
         print(f"Pitch variability: {audio_features['pitch_variability']}")

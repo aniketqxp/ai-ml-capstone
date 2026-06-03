@@ -15,6 +15,7 @@ from typing import Dict, Optional
 import numpy as np
 import torch
 from transformers import Wav2Vec2ForSequenceClassification, Wav2Vec2Processor
+from src.inference.escalation_score import calculate_audio_escalation_score
 
 from src.data.audio_dataset import DEFAULT_SAMPLE_RATE, load_audio_file, resolve_audio_path
 from src.features.inference_audio_features import extract_audio_feature_summary
@@ -35,7 +36,6 @@ from src.inference.sentiment_timeline import (
     calculate_audio_sentiment_shift,
     calculate_emotional_volatility,
     find_peak_emotion,
-    summarize_timeline_risk,
 )
 
 
@@ -251,10 +251,17 @@ class EmotionPredictor:
             audio_sentiment_shift = calculate_audio_sentiment_shift(sentiment_timeline)
             peak_emotion = find_peak_emotion(sentiment_timeline)
 
-            escalation_score = summarize_timeline_risk(sentiment_timeline)
-        else:
-            escalation_score = self._calculate_basic_escalation_score(probabilities)
+        escalation_breakdown = calculate_audio_escalation_score(
+            probabilities=probabilities,
+            audio_features=audio_feature_summary,
+            timeline=sentiment_timeline,
+            emotional_volatility=emotional_volatility,
+            audio_sentiment_shift=audio_sentiment_shift,
+            prediction_confidence=prediction_confidence,
+            uncertain_prediction=uncertain_prediction,
+        )
 
+        escalation_score = escalation_breakdown.final_score
         risk_level = infer_risk_level(escalation_score)
 
         return AudioSentimentResult(
@@ -272,6 +279,13 @@ class EmotionPredictor:
             audio_sentiment_shift=audio_sentiment_shift,
             audio_escalation_score=escalation_score,
             risk_level=risk_level,
+            escalation_score_breakdown={
+                "emotion_risk": escalation_breakdown.emotion_risk,
+                "voice_risk": escalation_breakdown.voice_risk,
+                "timeline_risk": escalation_breakdown.timeline_risk,
+                "uncertainty_adjustment": escalation_breakdown.uncertainty_adjustment,
+                "final_score": escalation_breakdown.final_score,
+            },
             prediction_confidence=prediction_confidence,
             confidence_level=confidence_level,
             uncertain_prediction=uncertain_prediction,

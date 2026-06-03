@@ -154,6 +154,7 @@ class AudioSentimentResult(BaseModel):
 
     audio_escalation_score: float = Field(default=0.0, ge=0.0, le=1.0)
     risk_level: RiskLevel = RiskLevel.UNKNOWN
+    escalation_score_breakdown: Dict[str, float] = Field(default_factory=dict)
 
     prediction_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     confidence_level: ConfidenceLevel = ConfidenceLevel.UNKNOWN
