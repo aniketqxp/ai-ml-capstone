@@ -21,6 +21,7 @@ def run_prediction(audio_path: Path, call_id: str) -> None:
     result = predictor.analyze_audio(
         audio_path=audio_path,
         call_id=call_id,
+        build_timeline=True,
     )
 
     print(json.dumps(result.to_api_response(), indent=2))
