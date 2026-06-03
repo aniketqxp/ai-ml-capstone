@@ -1,6 +1,16 @@
 # Git rules local file
 .gitrules
 
+# Allow processed metadata files needed for reproducible experiments
+
+!ml-services/data/
+
+!ml-services/data/processed/
+
+!ml-services/data/processed/*.csv
+
+!ml-services/data/processed/*.json
+
 # Environments
 .env
 .env.local
