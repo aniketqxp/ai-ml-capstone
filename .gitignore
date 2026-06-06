@@ -3,13 +3,7 @@
 
 # Allow processed metadata files needed for reproducible experiments
 
-!ml-services/data/
-
-!ml-services/data/processed/
-
-!ml-services/data/processed/*.csv
-
-!ml-services/data/processed/*.json
+!
 
 # Environments
 .env
@@ -30,6 +24,14 @@ node_modules/
 # Local ML data and models weight cache
 ml-services/data/
 ml-services/models/
+
+ml-services/data/
+
+!ml-services/data/processed/
+
+!ml-services/data/processed/*.csv
+
+!ml-services/data/processed/*.json
 
 # Operating system files
 .DS_Store
