@@ -717,17 +717,17 @@ def parse_args() -> argparse.Namespace:
 if __name__ == "__main__":
     args = parse_args()
 
-train_wav2vec2_emotion_model(
-    model_checkpoint=args.model_checkpoint,
-    metadata_path=args.metadata_path,
-    run_name=args.run_name,
-    output_root=args.output_root,
-    limit_per_split=args.limit_per_split,
-    num_epochs=args.num_epochs,
-    batch_size=args.batch_size,
-    learning_rate=args.learning_rate,
-    weight_decay=args.weight_decay,
-    max_duration_seconds=args.max_duration_seconds,
-    enable_mlflow=args.enable_mlflow,
-    mlflow_experiment_name=args.mlflow_experiment_name,
-)
+    train_wav2vec2_emotion_model(
+        model_checkpoint=args.model_checkpoint,
+        metadata_path=args.metadata_path,
+        run_name=args.run_name,
+        output_root=args.output_root,
+        limit_per_split=args.limit_per_split,
+        num_epochs=args.num_epochs,
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        weight_decay=args.weight_decay,
+        max_duration_seconds=args.max_duration_seconds,
+        enable_mlflow=args.enable_mlflow,
+        mlflow_experiment_name=args.mlflow_experiment_name,
+    )
