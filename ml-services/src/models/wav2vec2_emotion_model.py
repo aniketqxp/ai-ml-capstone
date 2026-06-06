@@ -249,6 +249,8 @@ def build_wav2vec2_datasets(
 
 def build_model_and_processor(
     model_checkpoint: str = DEFAULT_MODEL_CHECKPOINT,
+    freeze_feature_encoder: bool = True,
+    freeze_transformer_layers: int = 0,
 ) -> tuple[Wav2Vec2ForSequenceClassification, Wav2Vec2Processor]:
     """
     Load Wav2Vec2 model and processor for 6-class classification.
@@ -267,7 +269,22 @@ def build_model_and_processor(
 
     # This is safer for laptops and speeds up training.
     # Later we can unfreeze for stronger fine-tuning.
-    model.freeze_feature_encoder()
+    if freeze_feature_encoder:
+        model.freeze_feature_encoder()
+
+    if freeze_transformer_layers > 0:
+        encoder_layers = model.wav2vec2.encoder.layers
+        total_layers = len(encoder_layers)
+
+        if freeze_transformer_layers > total_layers:
+            raise ValueError(
+                f"freeze_transformer_layers={freeze_transformer_layers} is larger "
+                f"than total transformer layers={total_layers}"
+            )
+
+        for layer_index in range(freeze_transformer_layers):
+            for parameter in encoder_layers[layer_index].parameters():
+                parameter.requires_grad = False
 
     return model, processor
 
@@ -297,6 +314,21 @@ def get_device_note() -> str:
         return "Apple Silicon MPS available"
 
     return "CPU only"
+
+def count_trainable_parameters(model: torch.nn.Module) -> Dict[str, int]:
+    """
+    Count trainable and total model parameters.
+    """
+    total_parameters = sum(parameter.numel() for parameter in model.parameters())
+    trainable_parameters = sum(
+        parameter.numel() for parameter in model.parameters() if parameter.requires_grad
+    )
+
+    return {
+        "total_parameters": int(total_parameters),
+        "trainable_parameters": int(trainable_parameters),
+        "frozen_parameters": int(total_parameters - trainable_parameters),
+    }
 
 
 def create_training_arguments(
@@ -438,6 +470,18 @@ def log_training_run_to_mlflow(
         mlflow.log_param("batch_size", full_report.get("batch_size"))
         mlflow.log_param("learning_rate", full_report.get("learning_rate"))
         mlflow.log_param("weight_decay", full_report.get("weight_decay"))
+        mlflow.log_param("warmup_ratio", full_report.get("warmup_ratio"))
+        mlflow.log_param(
+            "freeze_feature_encoder",
+            full_report.get("freeze_feature_encoder"),
+        )
+        mlflow.log_param(
+            "freeze_transformer_layers",
+            full_report.get("freeze_transformer_layers"),
+        )
+        mlflow.log_param("total_parameters", full_report.get("total_parameters"))
+        mlflow.log_param("trainable_parameters", full_report.get("trainable_parameters"))
+        mlflow.log_param("frozen_parameters", full_report.get("frozen_parameters"))
 
         # Validation metrics
         validation_metrics = full_report.get("validation", {})
@@ -489,6 +533,8 @@ def train_wav2vec2_emotion_model(
     learning_rate: float = 3e-5,
     warmup_ratio: float = 0.1,
     weight_decay: float = 0.01,
+    freeze_feature_encoder: bool = True,
+    freeze_transformer_layers: int = 0,
     max_duration_seconds: Optional[float] = 6.0,
     enable_mlflow: bool = False,
     mlflow_experiment_name: str = DEFAULT_MLFLOW_EXPERIMENT_NAME,
@@ -532,7 +578,16 @@ def train_wav2vec2_emotion_model(
     )
 
     label_encoding = build_label_encoding(task="emotion")
-    model, processor = build_model_and_processor(model_checkpoint)
+    model, processor = build_model_and_processor(
+        model_checkpoint=model_checkpoint,
+        freeze_feature_encoder=freeze_feature_encoder,
+        freeze_transformer_layers=freeze_transformer_layers,
+    )
+    parameter_counts = count_trainable_parameters(model)
+    print("Parameter counts:")
+    print(f"  Total parameters: {parameter_counts['total_parameters']}")
+    print(f"  Trainable parameters: {parameter_counts['trainable_parameters']}")
+    print(f"  Frozen parameters: {parameter_counts['frozen_parameters']}")
 
     data_collator = Wav2Vec2DataCollator(processor=processor)
 
@@ -588,6 +643,12 @@ def train_wav2vec2_emotion_model(
         "num_epochs": num_epochs,
         "batch_size": batch_size,
         "learning_rate": learning_rate,
+        "warmup_ratio": warmup_ratio,
+        "freeze_feature_encoder": freeze_feature_encoder,
+        "freeze_transformer_layers": freeze_transformer_layers,
+        "total_parameters": parameter_counts["total_parameters"],
+        "trainable_parameters": parameter_counts["trainable_parameters"],
+        "frozen_parameters": parameter_counts["frozen_parameters"],
         "weight_decay": weight_decay,
         "warmup_ratio": warmup_ratio,
         "validation": validation_metrics,
@@ -615,6 +676,8 @@ def train_wav2vec2_emotion_model(
 
     print("\nWav2Vec2 Results")
     print("-" * 70)
+    print(f"Freeze feature encoder: {freeze_feature_encoder}")
+    print(f"Freeze transformer layers: {freeze_transformer_layers}")
     print(f"Validation accuracy: {validation_metrics.get('eval_accuracy'):.4f}")
     print(f"Validation macro F1: {validation_metrics.get('eval_macro_f1'):.4f}")
     print(f"Test accuracy: {test_report['accuracy']:.4f}")
@@ -713,6 +776,19 @@ def parse_args() -> argparse.Namespace:
         default=0.1,
         help="Warmup ratio for learning rate scheduler.",
     )
+    parser.add_argument(
+        "--freeze-feature-encoder",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Freeze Wav2Vec2 CNN feature encoder. Use --no-freeze-feature-encoder to unfreeze.",
+    )
+
+    parser.add_argument(
+        "--freeze-transformer-layers",
+        type=int,
+        default=0,
+        help="Number of lower Wav2Vec2 transformer layers to freeze.",
+    )
 
     parser.add_argument(
         "--max-duration-seconds",
@@ -739,6 +815,8 @@ if __name__ == "__main__":
         learning_rate=args.learning_rate,
         weight_decay=args.weight_decay,
         warmup_ratio=args.warmup_ratio,
+        freeze_feature_encoder=args.freeze_feature_encoder,
+        freeze_transformer_layers=args.freeze_transformer_layers,
         max_duration_seconds=args.max_duration_seconds,
         enable_mlflow=args.enable_mlflow,
         mlflow_experiment_name=args.mlflow_experiment_name,
