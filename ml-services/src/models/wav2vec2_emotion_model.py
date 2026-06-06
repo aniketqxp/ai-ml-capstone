@@ -305,6 +305,7 @@ def create_training_arguments(
     batch_size: int,
     learning_rate: float,
     weight_decay: float,
+    warmup_ratio: float,
 ) -> TrainingArguments:
     """
     Create Hugging Face training arguments.
@@ -323,7 +324,7 @@ def create_training_arguments(
         per_device_eval_batch_size=batch_size,
         num_train_epochs=num_epochs,
         weight_decay=weight_decay,
-        warmup_steps=100,
+        warmup_ratio=warmup_ratio,
         load_best_model_at_end=True,
         metric_for_best_model="macro_f1",
         greater_is_better=True,
@@ -486,6 +487,7 @@ def train_wav2vec2_emotion_model(
     num_epochs: int = 5,
     batch_size: int = 4,
     learning_rate: float = 3e-5,
+    warmup_ratio: float = 0.1,
     weight_decay: float = 0.01,
     max_duration_seconds: Optional[float] = 6.0,
     enable_mlflow: bool = False,
@@ -516,6 +518,7 @@ def train_wav2vec2_emotion_model(
     print(f"Epochs: {num_epochs}")
     print(f"Batch size: {batch_size}")
     print(f"Learning rate: {learning_rate}")
+    print(f"Warmup ratio: {warmup_ratio}")
     print(f"Output directory: {output_dir}")
     print(f"MLflow enabled: {enable_mlflow}")
     if enable_mlflow:
@@ -539,6 +542,7 @@ def train_wav2vec2_emotion_model(
         batch_size=batch_size,
         learning_rate=learning_rate,
         weight_decay=weight_decay,
+        warmup_ratio=warmup_ratio,
     )
 
     trainer = Trainer(
@@ -585,6 +589,7 @@ def train_wav2vec2_emotion_model(
         "batch_size": batch_size,
         "learning_rate": learning_rate,
         "weight_decay": weight_decay,
+        "warmup_ratio": warmup_ratio,
         "validation": validation_metrics,
         "test": test_report,
     }
@@ -702,6 +707,12 @@ def parse_args() -> argparse.Namespace:
         default=0.01,
         help="Weight decay.",
     )
+    parser.add_argument(
+        "--warmup-ratio",
+        type=float,
+        default=0.1,
+        help="Warmup ratio for learning rate scheduler.",
+    )
 
     parser.add_argument(
         "--max-duration-seconds",
@@ -727,6 +738,7 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         learning_rate=args.learning_rate,
         weight_decay=args.weight_decay,
+        warmup_ratio=args.warmup_ratio,
         max_duration_seconds=args.max_duration_seconds,
         enable_mlflow=args.enable_mlflow,
         mlflow_experiment_name=args.mlflow_experiment_name,
