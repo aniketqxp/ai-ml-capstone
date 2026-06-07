@@ -36,6 +36,7 @@ Outputs:
 """
 
 import argparse
+from html import parser
 import json
 import mlflow
 from dataclasses import dataclass
@@ -85,6 +86,75 @@ TASK_NAME = "6-class speech emotion classification"
 RANDOM_SEED = 42
 
 
+
+def add_background_noise(
+    waveform: np.ndarray,
+    noise_factor: float = 0.003,
+) -> np.ndarray:
+    """
+    Add light Gaussian noise to audio.
+    """
+    noise = np.random.normal(0, noise_factor, waveform.shape)
+    augmented = waveform + noise
+    return augmented.astype(np.float32)
+
+
+def apply_volume_gain(
+    waveform: np.ndarray,
+    min_gain: float = 0.85,
+    max_gain: float = 1.15,
+) -> np.ndarray:
+    """
+    Randomly increase or decrease audio volume slightly.
+    """
+    gain = np.random.uniform(min_gain, max_gain)
+    augmented = waveform * gain
+    return np.clip(augmented, -1.0, 1.0).astype(np.float32)
+
+
+def apply_speed_change(
+    waveform: np.ndarray,
+    min_rate: float = 0.97,
+    max_rate: float = 1.03,
+) -> np.ndarray:
+    """
+    Apply a very small speed change using interpolation.
+
+    This is intentionally light because strong speed changes can distort emotion labels.
+    """
+    rate = np.random.uniform(min_rate, max_rate)
+
+    original_indices = np.arange(len(waveform))
+    new_length = max(1, int(len(waveform) / rate))
+    new_indices = np.linspace(0, len(waveform) - 1, new_length)
+
+    augmented = np.interp(new_indices, original_indices, waveform)
+
+    return augmented.astype(np.float32)
+
+
+def apply_light_audio_augmentation(
+    waveform: np.ndarray,
+    probability: float = 0.5,
+) -> np.ndarray:
+    """
+    Apply light training-only audio augmentation.
+
+    Each augmentation is optional and mild.
+    """
+    augmented = waveform.astype(np.float32)
+
+    if np.random.random() < probability:
+        augmented = add_background_noise(augmented)
+
+    if np.random.random() < probability:
+        augmented = apply_volume_gain(augmented)
+
+    if np.random.random() < probability:
+        augmented = apply_speed_change(augmented)
+
+    return augmented.astype(np.float32)
+
 class Wav2Vec2EmotionDataset(Dataset):
     """
     PyTorch Dataset for Wav2Vec2 emotion classification.
@@ -94,16 +164,20 @@ class Wav2Vec2EmotionDataset(Dataset):
     """
 
     def __init__(
-        self,
-        metadata: pd.DataFrame,
-        label_to_id: Dict[str, int],
-        sample_rate: int = DEFAULT_SAMPLE_RATE,
-        max_duration_seconds: Optional[float] = 6.0,
-    ) -> None:
+    self,
+    metadata: pd.DataFrame,
+    label_to_id: Dict[str, int],
+    sample_rate: int = DEFAULT_SAMPLE_RATE,
+    max_duration_seconds: Optional[float] = 6.0,
+    enable_augmentation: bool = False,
+    augmentation_probability: float = 0.5,
+) -> None:
         self.metadata = metadata.reset_index(drop=True)
         self.label_to_id = label_to_id
         self.sample_rate = sample_rate
         self.max_duration_seconds = max_duration_seconds
+        self.enable_augmentation = enable_augmentation
+        self.augmentation_probability = augmentation_probability
 
         required_columns = {"file_path", "emotion_label", "filename"}
         missing_columns = required_columns - set(self.metadata.columns)
@@ -122,6 +196,11 @@ class Wav2Vec2EmotionDataset(Dataset):
             target_sample_rate=self.sample_rate,
             max_duration_seconds=self.max_duration_seconds,
         )
+        if self.enable_augmentation:
+            waveform = apply_light_audio_augmentation(
+                waveform,
+                probability=self.augmentation_probability,
+            )
 
         label_name = row["emotion_label"]
         label_id = self.label_to_id[label_name]
@@ -131,6 +210,9 @@ class Wav2Vec2EmotionDataset(Dataset):
             "labels": label_id,
             "filename": row["filename"],
         }
+
+
+
 
 
 @dataclass
@@ -215,6 +297,8 @@ def build_wav2vec2_datasets(
     metadata_path: Path = DEFAULT_METADATA_PATH,
     limit_per_split: Optional[int] = None,
     max_duration_seconds: Optional[float] = 6.0,
+    enable_augmentation: bool = False,
+    augmentation_probability: float = 0.5,
 ) -> Dict[str, Wav2Vec2EmotionDataset]:
     """
     Build train, validation, and test datasets for Wav2Vec2.
@@ -233,16 +317,20 @@ def build_wav2vec2_datasets(
             metadata=train_df,
             label_to_id=label_encoding.label_to_id,
             max_duration_seconds=max_duration_seconds,
+            enable_augmentation=enable_augmentation,
+            augmentation_probability=augmentation_probability,
         ),
         "validation": Wav2Vec2EmotionDataset(
             metadata=validation_df,
             label_to_id=label_encoding.label_to_id,
             max_duration_seconds=max_duration_seconds,
+            enable_augmentation=False,
         ),
         "test": Wav2Vec2EmotionDataset(
             metadata=test_df,
             label_to_id=label_encoding.label_to_id,
             max_duration_seconds=max_duration_seconds,
+            enable_augmentation=False,
         ),
     }
 
@@ -469,6 +557,8 @@ def log_training_run_to_mlflow(
         mlflow.log_param("num_epochs", full_report.get("num_epochs"))
         mlflow.log_param("batch_size", full_report.get("batch_size"))
         mlflow.log_param("learning_rate", full_report.get("learning_rate"))
+        mlflow.log_param("enable_augmentation", full_report.get("enable_augmentation"))
+        mlflow.log_param("augmentation_probability", full_report.get("augmentation_probability"))
         mlflow.log_param("weight_decay", full_report.get("weight_decay"))
         mlflow.log_param("warmup_ratio", full_report.get("warmup_ratio"))
         mlflow.log_param(
@@ -536,6 +626,8 @@ def train_wav2vec2_emotion_model(
     freeze_feature_encoder: bool = True,
     freeze_transformer_layers: int = 0,
     max_duration_seconds: Optional[float] = 6.0,
+    enable_augmentation: bool = False,
+    augmentation_probability: float = 0.5,
     enable_mlflow: bool = False,
     mlflow_experiment_name: str = DEFAULT_MLFLOW_EXPERIMENT_NAME,
 ) -> Dict:
@@ -565,6 +657,8 @@ def train_wav2vec2_emotion_model(
     print(f"Batch size: {batch_size}")
     print(f"Learning rate: {learning_rate}")
     print(f"Warmup ratio: {warmup_ratio}")
+    print(f"Augmentation enabled: {enable_augmentation}")
+    print(f"Augmentation probability: {augmentation_probability}")
     print(f"Output directory: {output_dir}")
     print(f"MLflow enabled: {enable_mlflow}")
     if enable_mlflow:
@@ -575,6 +669,8 @@ def train_wav2vec2_emotion_model(
         metadata_path=metadata_path,
         limit_per_split=limit_per_split,
         max_duration_seconds=max_duration_seconds,
+        enable_augmentation=enable_augmentation,
+        augmentation_probability=augmentation_probability,
     )
 
     label_encoding = build_label_encoding(task="emotion")
@@ -649,6 +745,8 @@ def train_wav2vec2_emotion_model(
         "total_parameters": parameter_counts["total_parameters"],
         "trainable_parameters": parameter_counts["trainable_parameters"],
         "frozen_parameters": parameter_counts["frozen_parameters"],
+        "enable_augmentation": enable_augmentation,
+        "augmentation_probability": augmentation_probability,
         "weight_decay": weight_decay,
         "warmup_ratio": warmup_ratio,
         "validation": validation_metrics,
@@ -667,6 +765,7 @@ def train_wav2vec2_emotion_model(
             confusion_matrix_path=confusion_matrix_path,
             run_name=run_name,
             mlflow_experiment_name=mlflow_experiment_name,
+
         )
 
         full_report["mlflow_run_id"] = mlflow_run_id
@@ -789,6 +888,18 @@ def parse_args() -> argparse.Namespace:
         default=0,
         help="Number of lower Wav2Vec2 transformer layers to freeze.",
     )
+    parser.add_argument(
+    "--enable-augmentation",
+    action="store_true",
+    help="Enable light audio augmentation for training samples only.",
+)
+
+    parser.add_argument(
+    "--augmentation-probability",
+    type=float,
+    default=0.5,
+    help="Probability of applying each light augmentation to a training sample.",
+)
 
     parser.add_argument(
         "--max-duration-seconds",
@@ -817,6 +928,8 @@ if __name__ == "__main__":
         warmup_ratio=args.warmup_ratio,
         freeze_feature_encoder=args.freeze_feature_encoder,
         freeze_transformer_layers=args.freeze_transformer_layers,
+        enable_augmentation=args.enable_augmentation,
+        augmentation_probability=args.augmentation_probability,
         max_duration_seconds=args.max_duration_seconds,
         enable_mlflow=args.enable_mlflow,
         mlflow_experiment_name=args.mlflow_experiment_name,
