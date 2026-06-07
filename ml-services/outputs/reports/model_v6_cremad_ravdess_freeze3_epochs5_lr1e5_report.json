@@ -1,0 +1,101 @@
+{
+  "run_name": "model_v6_cremad_ravdess_freeze3_epochs5_lr1e5",
+  "model_name": "Wav2Vec2 emotion classifier",
+  "base_checkpoint": "Dpngtm/wav2vec2-emotion-recognition",
+  "task": "6-class speech emotion classification",
+  "device": "Apple Silicon MPS available",
+  "dataset_source": "CREMA-D + RAVDESS",
+  "metadata_path": "data/processed/combined_emotion_metadata.csv",
+  "output_dir": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/wav2vec2/model_v6_cremad_ravdess_freeze3_epochs5_lr1e5",
+  "best_model_dir": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/wav2vec2/model_v6_cremad_ravdess_freeze3_epochs5_lr1e5/best_model",
+  "mlflow_enabled": true,
+  "mlflow_experiment_name": "audio_sentiment_emotion_classification",
+  "labels": {
+    "0": "anger",
+    "1": "disgust",
+    "2": "fear",
+    "3": "happy",
+    "4": "neutral",
+    "5": "sadness"
+  },
+  "train_samples": 5979,
+  "validation_samples": 1222,
+  "test_samples": 1489,
+  "num_epochs": 5,
+  "batch_size": 2,
+  "learning_rate": 1e-05,
+  "warmup_ratio": 0.1,
+  "freeze_feature_encoder": true,
+  "freeze_transformer_layers": 3,
+  "total_parameters": 94570118,
+  "trainable_parameters": 69106054,
+  "frozen_parameters": 25464064,
+  "weight_decay": 0.01,
+  "validation": {
+    "eval_loss": 0.8320258259773254,
+    "eval_accuracy": 0.8216039279869067,
+    "eval_macro_f1": 0.8211537674047085,
+    "eval_weighted_f1": 0.8204659761447245,
+    "eval_runtime": 42.0262,
+    "eval_samples_per_second": 29.077,
+    "eval_steps_per_second": 14.539,
+    "epoch": 5.0
+  },
+  "test": {
+    "accuracy": 0.8274009402283412,
+    "macro_f1": 0.8265841075967827,
+    "weighted_f1": 0.8263036945841582,
+    "classification_report": {
+      "anger": {
+        "precision": 0.8297101449275363,
+        "recall": 0.916,
+        "f1-score": 0.870722433460076,
+        "support": 250.0
+      },
+      "disgust": {
+        "precision": 0.8589743589743589,
+        "recall": 0.804,
+        "f1-score": 0.8305785123966942,
+        "support": 250.0
+      },
+      "fear": {
+        "precision": 0.8095238095238095,
+        "recall": 0.816,
+        "f1-score": 0.8127490039840638,
+        "support": 250.0
+      },
+      "happy": {
+        "precision": 0.8663793103448276,
+        "recall": 0.804,
+        "f1-score": 0.8340248962655602,
+        "support": 250.0
+      },
+      "neutral": {
+        "precision": 0.8250950570342205,
+        "recall": 0.9079497907949791,
+        "f1-score": 0.8645418326693227,
+        "support": 239.0
+      },
+      "sadness": {
+        "precision": 0.7758620689655172,
+        "recall": 0.72,
+        "f1-score": 0.7468879668049793,
+        "support": 250.0
+      },
+      "accuracy": 0.8274009402283412,
+      "macro avg": {
+        "precision": 0.8275907916283782,
+        "recall": 0.8279916317991631,
+        "f1-score": 0.8265841075967827,
+        "support": 1489.0
+      },
+      "weighted avg": {
+        "precision": 0.8276092288886442,
+        "recall": 0.8274009402283412,
+        "f1-score": 0.8263036945841582,
+        "support": 1489.0
+      }
+    }
+  },
+  "mlflow_run_id": "d0eccdda9d97410f9ecd739f0e3b4a9c"
+}

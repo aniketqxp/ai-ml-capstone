@@ -1,0 +1,56 @@
+{
+  "model_version": "model_v6_cremad_ravdess_freeze3_epochs5_lr1e5",
+  "run_name": "model_v6_cremad_ravdess_freeze3_epochs5_lr1e5",
+  "model_name": "Wav2Vec2 emotion classifier",
+  "base_checkpoint": "Dpngtm/wav2vec2-emotion-recognition",
+  "dataset_source": "CREMA-D + RAVDESS",
+  "evaluation_type": "business_sentiment_from_emotion_confusion_matrix",
+  "business_label_mapping": {
+    "anger": "Negative/Escalated",
+    "disgust": "Negative/Escalated",
+    "fear": "Negative/Escalated",
+    "sadness": "Negative/Escalated",
+    "neutral": "Neutral",
+    "happy": "Positive/Calm"
+  },
+  "total_test_samples": 1489,
+  "raw_emotion_accuracy": 0.8274009402283412,
+  "business_sentiment_accuracy": 0.9113498992612492,
+  "business_sentiment_macro_f1": 0.8801307351213903,
+  "business_sentiment_weighted_f1": 0.9113211541327375,
+  "business_sentiment_classification_report": {
+    "Negative/Escalated": {
+      "precision": 0.9446680080482898,
+      "recall": 0.939,
+      "f1-score": 0.9418254764292878,
+      "support": 1000.0
+    },
+    "Neutral": {
+      "precision": 0.8250950570342205,
+      "recall": 0.9079497907949791,
+      "f1-score": 0.8645418326693227,
+      "support": 239.0
+    },
+    "Positive/Calm": {
+      "precision": 0.8663793103448276,
+      "recall": 0.804,
+      "f1-score": 0.8340248962655602,
+      "support": 250.0
+    },
+    "accuracy": 0.9113498992612492,
+    "macro avg": {
+      "precision": 0.8787141251424458,
+      "recall": 0.883649930264993,
+      "f1-score": 0.8801307351213903,
+      "support": 1489.0
+    },
+    "weighted avg": {
+      "precision": 0.9123307953429654,
+      "recall": 0.9113498992612492,
+      "f1-score": 0.9113211541327375,
+      "support": 1489.0
+    }
+  },
+  "business_sentiment_confusion_matrix_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/reports/model_v6_cremad_ravdess_freeze3_epochs5_lr1e5_business_sentiment_confusion_matrix.csv",
+  "notes": "Business sentiment groups anger, disgust, fear, and sadness as Negative/Escalated, neutral as Neutral, and happy as Positive/Calm. This metric is more aligned with call-center escalation detection than exact 6-class emotion accuracy alone."
+}
