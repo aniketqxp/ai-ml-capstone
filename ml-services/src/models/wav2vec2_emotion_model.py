@@ -36,7 +36,6 @@ Outputs:
 """
 
 import argparse
-from html import parser
 import json
 import mlflow
 from dataclasses import dataclass
@@ -49,6 +48,7 @@ import torch
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from torch.utils.data import Dataset
 from transformers import (
+    AutoConfig,
     Trainer,
     TrainingArguments,
     Wav2Vec2ForSequenceClassification,
@@ -76,11 +76,7 @@ DEFAULT_MLFLOW_EXPERIMENT_NAME = "audio_sentiment_emotion_classification"
 DEFAULT_MLFLOW_TRACKING_URI = f"sqlite:///{ML_SERVICES_ROOT / 'mlflow.db'}"
 
 DEFAULT_MODEL_CHECKPOINT = "facebook/wav2vec2-base"
-DEFAULT_OUTPUT_DIR = ML_SERVICES_ROOT / "outputs" / "wav2vec2"
-DEFAULT_REPORT_PATH = ML_SERVICES_ROOT / "outputs" / "reports" / "wav2vec2_emotion_report.json"
-DEFAULT_CONFUSION_MATRIX_PATH = (
-    ML_SERVICES_ROOT / "outputs" / "reports" / "wav2vec2_emotion_confusion_matrix.csv"
-)
+
 
 TASK_NAME = "6-class speech emotion classification"
 RANDOM_SEED = 42
@@ -164,14 +160,14 @@ class Wav2Vec2EmotionDataset(Dataset):
     """
 
     def __init__(
-    self,
-    metadata: pd.DataFrame,
-    label_to_id: Dict[str, int],
-    sample_rate: int = DEFAULT_SAMPLE_RATE,
-    max_duration_seconds: Optional[float] = 6.0,
-    enable_augmentation: bool = False,
-    augmentation_probability: float = 0.5,
-) -> None:
+        self,
+        metadata: pd.DataFrame,
+        label_to_id: Dict[str, int],
+        sample_rate: int = DEFAULT_SAMPLE_RATE,
+        max_duration_seconds: Optional[float] = 6.0,
+        enable_augmentation: bool = False,
+        augmentation_probability: float = 0.5,
+    ) -> None:
         self.metadata = metadata.reset_index(drop=True)
         self.label_to_id = label_to_id
         self.sample_rate = sample_rate
@@ -335,11 +331,108 @@ def build_wav2vec2_datasets(
     }
 
 
+def normalize_checkpoint_label(label: str) -> str:
+    """
+    Normalize checkpoint labels to match the project emotion schema.
+
+    Checkpoint labels:
+        angry, calm, disgust, fearful, happy, sad, surprised
+
+    Project labels:
+        anger, neutral, disgust, fear, happy, sadness
+    """
+    label = str(label).strip().lower()
+
+    aliases = {
+        "angry": "anger",
+        "fearful": "fear",
+        "sad": "sadness",
+        "calm": "neutral",
+    }
+
+    return aliases.get(label, label)
+
+
+def transfer_matching_classifier_weights(
+    model: Wav2Vec2ForSequenceClassification,
+    model_checkpoint: str,
+    target_label_to_id: Dict[str, int],
+) -> bool:
+    """
+    Transfer classifier weights from the pretrained 7-label checkpoint into
+    our 6-label project classifier.
+
+    The checkpoint has:
+        angry, calm, disgust, fearful, happy, sad, surprised
+
+    Our project has:
+        anger, disgust, fear, happy, neutral, sadness
+
+    We reuse:
+        angry -> anger
+        calm -> neutral
+        disgust -> disgust
+        fearful -> fear
+        happy -> happy
+        sad -> sadness
+
+    We ignore:
+        surprised
+    """
+    source_config = AutoConfig.from_pretrained(model_checkpoint)
+
+    source_id_to_project_label = {
+        int(label_id): normalize_checkpoint_label(label_name)
+        for label_id, label_name in source_config.id2label.items()
+    }
+
+    source_project_label_to_id = {
+        label_name: label_id
+        for label_id, label_name in source_id_to_project_label.items()
+    }
+
+    missing_labels = [
+        label
+        for label in target_label_to_id.keys()
+        if label.lower() not in source_project_label_to_id
+    ]
+
+    if missing_labels:
+        print(
+            "Classifier weight transfer skipped. "
+            f"Missing labels in checkpoint after alias mapping: {missing_labels}"
+        )
+        print(f"Checkpoint labels after normalization: {source_id_to_project_label}")
+        print(f"Target labels: {target_label_to_id}")
+        return False
+
+    source_model = Wav2Vec2ForSequenceClassification.from_pretrained(model_checkpoint)
+
+    with torch.no_grad():
+        for target_label, target_id in target_label_to_id.items():
+            normalized_target_label = target_label.lower()
+            source_id = source_project_label_to_id[normalized_target_label]
+
+            model.classifier.weight[target_id].copy_(
+                source_model.classifier.weight[source_id]
+            )
+            model.classifier.bias[target_id].copy_(
+                source_model.classifier.bias[source_id]
+            )
+
+    print("Transferred matching classifier weights from checkpoint.")
+    print(f"Checkpoint labels after normalization: {source_id_to_project_label}")
+    print(f"Target labels: {target_label_to_id}")
+
+    return True
+
+
 def build_model_and_processor(
     model_checkpoint: str = DEFAULT_MODEL_CHECKPOINT,
     freeze_feature_encoder: bool = True,
     freeze_transformer_layers: int = 0,
-) -> tuple[Wav2Vec2ForSequenceClassification, Wav2Vec2Processor]:
+    transfer_classifier_weights: bool = False,
+) -> tuple[Wav2Vec2ForSequenceClassification, Wav2Vec2Processor, bool]:
     """
     Load Wav2Vec2 model and processor for 6-class classification.
     """
@@ -354,6 +447,14 @@ def build_model_and_processor(
         id2label=label_encoding.id_to_label,
         ignore_mismatched_sizes=True,
     )
+    classifier_weights_transferred = False
+
+    if transfer_classifier_weights:
+        classifier_weights_transferred = transfer_matching_classifier_weights(
+            model=model,
+            model_checkpoint=model_checkpoint,
+            target_label_to_id=label_encoding.label_to_id,
+        )
 
     # This is safer for laptops and speeds up training.
     # Later we can unfreeze for stronger fine-tuning.
@@ -374,7 +475,7 @@ def build_model_and_processor(
             for parameter in encoder_layers[layer_index].parameters():
                 parameter.requires_grad = False
 
-    return model, processor
+    return model, processor, classifier_weights_transferred
 
 
 def compute_metrics(eval_prediction) -> Dict[str, float]:
@@ -558,6 +659,14 @@ def log_training_run_to_mlflow(
         mlflow.log_param("batch_size", full_report.get("batch_size"))
         mlflow.log_param("learning_rate", full_report.get("learning_rate"))
         mlflow.log_param("enable_augmentation", full_report.get("enable_augmentation"))
+        mlflow.log_param(
+            "transfer_classifier_weights",
+            full_report.get("transfer_classifier_weights"),
+        )
+        mlflow.log_param(
+            "classifier_weights_transferred",
+            full_report.get("classifier_weights_transferred"),
+        )
         mlflow.log_param("augmentation_probability", full_report.get("augmentation_probability"))
         mlflow.log_param("weight_decay", full_report.get("weight_decay"))
         mlflow.log_param("warmup_ratio", full_report.get("warmup_ratio"))
@@ -625,6 +734,7 @@ def train_wav2vec2_emotion_model(
     weight_decay: float = 0.01,
     freeze_feature_encoder: bool = True,
     freeze_transformer_layers: int = 0,
+    transfer_classifier_weights: bool = False,
     max_duration_seconds: Optional[float] = 6.0,
     enable_augmentation: bool = False,
     augmentation_probability: float = 0.5,
@@ -659,6 +769,7 @@ def train_wav2vec2_emotion_model(
     print(f"Warmup ratio: {warmup_ratio}")
     print(f"Augmentation enabled: {enable_augmentation}")
     print(f"Augmentation probability: {augmentation_probability}")
+    print(f"Transfer classifier weights: {transfer_classifier_weights}")
     print(f"Output directory: {output_dir}")
     print(f"MLflow enabled: {enable_mlflow}")
     if enable_mlflow:
@@ -674,12 +785,14 @@ def train_wav2vec2_emotion_model(
     )
 
     label_encoding = build_label_encoding(task="emotion")
-    model, processor = build_model_and_processor(
+    model, processor, classifier_weights_transferred = build_model_and_processor(
         model_checkpoint=model_checkpoint,
         freeze_feature_encoder=freeze_feature_encoder,
         freeze_transformer_layers=freeze_transformer_layers,
+        transfer_classifier_weights=transfer_classifier_weights,
     )
     parameter_counts = count_trainable_parameters(model)
+    print(f"Classifier weights transferred: {classifier_weights_transferred}")
     print("Parameter counts:")
     print(f"  Total parameters: {parameter_counts['total_parameters']}")
     print(f"  Trainable parameters: {parameter_counts['trainable_parameters']}")
@@ -747,8 +860,9 @@ def train_wav2vec2_emotion_model(
         "frozen_parameters": parameter_counts["frozen_parameters"],
         "enable_augmentation": enable_augmentation,
         "augmentation_probability": augmentation_probability,
+        "transfer_classifier_weights": transfer_classifier_weights,
+        "classifier_weights_transferred": classifier_weights_transferred,
         "weight_decay": weight_decay,
-        "warmup_ratio": warmup_ratio,
         "validation": validation_metrics,
         "test": test_report,
     }
@@ -781,6 +895,7 @@ def train_wav2vec2_emotion_model(
     print(f"Validation macro F1: {validation_metrics.get('eval_macro_f1'):.4f}")
     print(f"Test accuracy: {test_report['accuracy']:.4f}")
     print(f"Test macro F1: {test_report['macro_f1']:.4f}")
+    print(f"Classifier weights transferred: {classifier_weights_transferred}")
     print("-" * 70)
     print(f"Saved model to: {best_model_dir}")
     print(f"Saved report to: {report_path}")
@@ -889,23 +1004,28 @@ def parse_args() -> argparse.Namespace:
         help="Number of lower Wav2Vec2 transformer layers to freeze.",
     )
     parser.add_argument(
-    "--enable-augmentation",
-    action="store_true",
-    help="Enable light audio augmentation for training samples only.",
-)
+        "--enable-augmentation",
+        action="store_true",
+        help="Enable light audio augmentation for training samples only.",
+    )
 
     parser.add_argument(
-    "--augmentation-probability",
-    type=float,
-    default=0.5,
-    help="Probability of applying each light augmentation to a training sample.",
-)
+        "--augmentation-probability",
+        type=float,
+        default=0.5,
+        help="Probability of applying each light augmentation to a training sample.",
+    )
 
     parser.add_argument(
         "--max-duration-seconds",
         type=float,
         default=6.0,
         help="Maximum audio duration per sample.",
+    )
+    parser.add_argument(
+        "--transfer-classifier-weights",
+        action="store_true",
+        help="Reuse matching classifier weights from a larger-label checkpoint.",
     )
 
 
@@ -928,9 +1048,11 @@ if __name__ == "__main__":
         warmup_ratio=args.warmup_ratio,
         freeze_feature_encoder=args.freeze_feature_encoder,
         freeze_transformer_layers=args.freeze_transformer_layers,
+        transfer_classifier_weights=args.transfer_classifier_weights,
         enable_augmentation=args.enable_augmentation,
         augmentation_probability=args.augmentation_probability,
         max_duration_seconds=args.max_duration_seconds,
         enable_mlflow=args.enable_mlflow,
         mlflow_experiment_name=args.mlflow_experiment_name,
+        
     )
