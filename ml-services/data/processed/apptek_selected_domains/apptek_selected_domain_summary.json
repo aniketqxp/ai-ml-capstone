@@ -1,0 +1,27 @@
+{
+  "dataset": "AppTek Call Center Dialogues",
+  "source": "apptek-com/apptek_callcenter_dialogues",
+  "target_domains": [
+    "banking",
+    "healthcare",
+    "telecommunications"
+  ],
+  "samples_per_domain_requested": 3,
+  "selected_rows": 9,
+  "selected_domain_counts": {
+    "banking": 3,
+    "healthcare": 3,
+    "telecommunications": 3
+  },
+  "raw_domain_counts": {
+    "banking": 3,
+    "health": 3,
+    "telecom": 3
+  },
+  "missing_target_domains": [],
+  "notes": [
+    "Selected domain samples are used for realistic call-center inference/demo.",
+    "They are not used as supervised emotion accuracy labels.",
+    "Telecommunications is included only if a matching AppTek domain exists."
+  ]
+}

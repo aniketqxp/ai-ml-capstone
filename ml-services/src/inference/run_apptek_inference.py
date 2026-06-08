@@ -98,8 +98,10 @@ def run_apptek_inference(
     for _, row in metadata.iterrows():
         call_id = row["call_id"]
         audio_path = ML_SERVICES_ROOT / row["audio_path"]
+        domain = row.get("selected_domain", row.get("domain", ""))
+        raw_domain = row.get("raw_domain", domain)
 
-        print(f"Processing {call_id} | domain={row['domain']} | audio={audio_path.name}")
+        print(f"Processing {call_id} | domain={domain} | raw_domain={raw_domain} | audio={audio_path.name}")
 
         result = predictor.analyze_audio(
             audio_path=audio_path,
@@ -111,7 +113,8 @@ def run_apptek_inference(
 
         # Add AppTek metadata context to output.
         result_dict["apptek_metadata"] = {
-            "domain": row.get("domain", ""),
+            "domain": domain,
+            "raw_domain": raw_domain,
             "gender": row.get("gender", ""),
             "accent": row.get("accent", ""),
             "duration_seconds": float(row.get("duration_seconds", 0.0)),
@@ -126,7 +129,8 @@ def run_apptek_inference(
         summary_rows.append(
             {
                 "call_id": call_id,
-                "domain": row.get("domain", ""),
+                "domain": domain,
+                "raw_domain": raw_domain,
                 "gender": row.get("gender", ""),
                 "accent": row.get("accent", ""),
                 "duration_seconds": row.get("duration_seconds", 0.0),
