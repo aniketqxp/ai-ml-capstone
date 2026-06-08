@@ -1,0 +1,102 @@
+{
+  "report_name": "AppTek 3-Domain Inference Report",
+  "purpose": "Realistic call-center inference/demo using the selected V5 audio sentiment model.",
+  "selected_model": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "total_calls": 9,
+  "domain_counts": {
+    "banking": 3,
+    "healthcare": 3,
+    "telecommunications": 3
+  },
+  "sentiment_distribution": {
+    "Positive": 7,
+    "Negative": 2
+  },
+  "risk_distribution": {
+    "Low": 6,
+    "Medium": 3
+  },
+  "average_escalation_score": 0.26420380748386374,
+  "highest_risk_call": {
+    "call_id": "APPTEK_BANKING_02",
+    "domain": "banking",
+    "dominant_emotion": "disgust",
+    "overall_audio_sentiment": "Negative",
+    "risk_level": "Medium",
+    "audio_escalation_score": 0.3368329461352429
+  },
+  "lowest_risk_call": {
+    "call_id": "APPTEK_BANKING_03",
+    "domain": "banking",
+    "dominant_emotion": "happy",
+    "overall_audio_sentiment": "Positive",
+    "risk_level": "Low",
+    "audio_escalation_score": 0.1558962781585675
+  },
+  "domain_summary": [
+    {
+      "domain": "banking",
+      "raw_domains": [
+        "banking"
+      ],
+      "num_calls": 3,
+      "sentiment_distribution": {
+        "Positive": 2,
+        "Negative": 1
+      },
+      "risk_distribution": {
+        "Medium": 2,
+        "Low": 1
+      },
+      "dominant_emotion_distribution": {
+        "happy": 2,
+        "disgust": 1
+      },
+      "average_escalation_score": 0.2693282264206047,
+      "max_escalation_score": 0.3368329461352429,
+      "highest_risk_call": "APPTEK_BANKING_02"
+    },
+    {
+      "domain": "healthcare",
+      "raw_domains": [
+        "health"
+      ],
+      "num_calls": 3,
+      "sentiment_distribution": {
+        "Positive": 3
+      },
+      "risk_distribution": {
+        "Low": 3
+      },
+      "dominant_emotion_distribution": {
+        "happy": 3
+      },
+      "average_escalation_score": 0.25555858540637016,
+      "max_escalation_score": 0.2912094194836178,
+      "highest_risk_call": "APPTEK_HEALTHCARE_01"
+    },
+    {
+      "domain": "telecommunications",
+      "raw_domains": [
+        "telecom"
+      ],
+      "num_calls": 3,
+      "sentiment_distribution": {
+        "Positive": 2,
+        "Negative": 1
+      },
+      "risk_distribution": {
+        "Low": 2,
+        "Medium": 1
+      },
+      "dominant_emotion_distribution": {
+        "happy": 2,
+        "disgust": 1
+      },
+      "average_escalation_score": 0.26772461062461644,
+      "max_escalation_score": 0.3033016140411928,
+      "highest_risk_call": "APPTEK_TELECOMMUNICATIONS_03"
+    }
+  ],
+  "important_note": "AppTek is used here for realistic call-center inference and demo. These results are not supervised accuracy results because AppTek does not provide ground-truth emotion labels for this project task."
+}
