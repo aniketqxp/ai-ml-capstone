@@ -1,0 +1,250 @@
+{
+  "call_id": "APPTEK_0003",
+  "overall_audio_sentiment": "Negative",
+  "dominant_emotion": "disgust",
+  "negative_emotion_probability": 0.9210347384214401,
+  "anger_probability": 0.028227515518665314,
+  "stress_probability": 0.04862204641103744,
+  "sadness_probability": 0.03241770714521408,
+  "anxiety_probability": 0.07921384274959564,
+  "calm_probability": 0.0024733394384384155,
+  "audio_features": {
+    "vocal_intensity": "Medium",
+    "pitch_level": "Medium",
+    "pitch_variability": "High",
+    "speech_rate": "High",
+    "pause_frequency": "Medium",
+    "long_silence_detected": true,
+    "total_silence_duration_seconds": 19.296,
+    "overlap_rate": null
+  },
+  "emotional_volatility": "Medium",
+  "audio_sentiment_shift": "Unchanged",
+  "audio_escalation_score": 0.42799100544417645,
+  "risk_level": "Medium",
+  "escalation_score_breakdown": {
+    "emotion_risk": 0.2641759030520916,
+    "voice_risk": 0.775,
+    "timeline_risk": 0.40861221567252265,
+    "uncertainty_adjustment": 1.0,
+    "final_score": 0.42799100544417645
+  },
+  "prediction_confidence": 0.7811756730079651,
+  "confidence_level": "High",
+  "uncertain_prediction": false,
+  "top_emotion_margin": 0.7019618302583694,
+  "peak_emotion": {
+    "time_seconds": 42.5,
+    "timestamp": "00:00:42",
+    "emotion": "anger",
+    "score": 0.5105491654830985
+  },
+  "sentiment_timeline": [
+    {
+      "segment_id": 0,
+      "start_time_seconds": 0.0,
+      "end_time_seconds": 5.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.008857935667037964,
+        "sadness": 0.02065333165228367,
+        "fear": 0.006671231705695391,
+        "disgust": 0.9557766318321228,
+        "happy": 0.0053020925261080265,
+        "neutral": 0.002738762414082885
+      },
+      "risk_score": 0.2540865584742278
+    },
+    {
+      "segment_id": 1,
+      "start_time_seconds": 5.0,
+      "end_time_seconds": 10.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.010022810660302639,
+        "sadness": 0.01822897046804428,
+        "fear": 0.005093341693282127,
+        "disgust": 0.9575656056404114,
+        "happy": 0.005623973440378904,
+        "neutral": 0.0034652510657906532
+      },
+      "risk_score": 0.25401242286898196
+    },
+    {
+      "segment_id": 2,
+      "start_time_seconds": 10.0,
+      "end_time_seconds": 15.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.008648335002362728,
+        "sadness": 0.02198982425034046,
+        "fear": 0.006129567511379719,
+        "disgust": 0.9542108774185181,
+        "happy": 0.005757688079029322,
+        "neutral": 0.003263623220846057
+      },
+      "risk_score": 0.25360121042467654
+    },
+    {
+      "segment_id": 3,
+      "start_time_seconds": 15.0,
+      "end_time_seconds": 20.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.004115517251193523,
+        "sadness": 0.02642560377717018,
+        "fear": 0.9391579627990723,
+        "disgust": 0.013245916925370693,
+        "happy": 0.01494178082793951,
+        "neutral": 0.002113211201503873
+      },
+      "risk_score": 0.4825834995135665
+    },
+    {
+      "segment_id": 4,
+      "start_time_seconds": 20.0,
+      "end_time_seconds": 25.0,
+      "dominant_emotion": "neutral",
+      "overall_audio_sentiment": "Neutral",
+      "emotion_probabilities": {
+        "anger": 0.012904113158583641,
+        "sadness": 0.26828432083129883,
+        "fear": 0.04437961056828499,
+        "disgust": 0.02810242772102356,
+        "happy": 0.01565086841583252,
+        "neutral": 0.6306785941123962
+      },
+      "risk_score": 0.10596457729116082
+    },
+    {
+      "segment_id": 5,
+      "start_time_seconds": 25.0,
+      "end_time_seconds": 30.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.3236547112464905,
+        "sadness": 0.015738239511847496,
+        "fear": 0.007351761683821678,
+        "disgust": 0.6205469369888306,
+        "happy": 0.02127252146601677,
+        "neutral": 0.011435815133154392
+      },
+      "risk_score": 0.4054882084019482
+    },
+    {
+      "segment_id": 6,
+      "start_time_seconds": 30.0,
+      "end_time_seconds": 35.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.04136113077402115,
+        "sadness": 0.1879718154668808,
+        "fear": 0.5254046320915222,
+        "disgust": 0.12263617664575577,
+        "happy": 0.07692284137010574,
+        "neutral": 0.04570332169532776
+      },
+      "risk_score": 0.3713751621544361
+    },
+    {
+      "segment_id": 7,
+      "start_time_seconds": 35.0,
+      "end_time_seconds": 40.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.011273275129497051,
+        "sadness": 0.016768770292401314,
+        "fear": 0.005126427859067917,
+        "disgust": 0.9583550095558167,
+        "happy": 0.0054565127938985825,
+        "neutral": 0.0030200097244232893
+      },
+      "risk_score": 0.25479911523871124
+    },
+    {
+      "segment_id": 8,
+      "start_time_seconds": 40.0,
+      "end_time_seconds": 45.0,
+      "dominant_emotion": "anger",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.6649059653282166,
+        "sadness": 0.0024775161873549223,
+        "fear": 0.0052745770663022995,
+        "disgust": 0.03445209562778473,
+        "happy": 0.28161731362342834,
+        "neutral": 0.011272525414824486
+      },
+      "risk_score": 0.5105491654830985
+    },
+    {
+      "segment_id": 9,
+      "start_time_seconds": 45.0,
+      "end_time_seconds": 50.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0023762669879943132,
+        "sadness": 0.7033304572105408,
+        "fear": 0.2674567699432373,
+        "disgust": 0.01597066968679428,
+        "happy": 0.0028828352224081755,
+        "neutral": 0.00798297580331564
+      },
+      "risk_score": 0.31533586693694815
+    },
+    {
+      "segment_id": 10,
+      "start_time_seconds": 50.0,
+      "end_time_seconds": 55.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.32951125502586365,
+        "sadness": 0.02595803514122963,
+        "fear": 0.12845642864704132,
+        "disgust": 0.07349391281604767,
+        "happy": 0.40578073263168335,
+        "neutral": 0.03679967671632767
+      },
+      "risk_score": 0.3362246425822377
+    },
+    {
+      "segment_id": 11,
+      "start_time_seconds": 55.0,
+      "end_time_seconds": 60.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.16635479032993317,
+        "sadness": 0.018172238022089005,
+        "fear": 0.02507133223116398,
+        "disgust": 0.40362006425857544,
+        "happy": 0.37211349606513977,
+        "neutral": 0.014668121933937073
+      },
+      "risk_score": 0.24274983443319798
+    }
+  ],
+  "model_name": "Wav2Vec2 emotion classifier - selected V5",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "processing_status": "success",
+  "warnings": [
+    "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
+    "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
+  ],
+  "apptek_metadata": {
+    "domain": "agriculture",
+    "gender": "female",
+    "accent": "en-IE",
+    "duration_seconds": 620.497,
+    "text_preview": "Ohh hello hello, thank you so much. Kamir, I've been reading online about the new government subsidies for drip irrigation, and to be honest, that's what I'm calling up about today. I want to ask you a couple of questions. You know, just with the fact that the water costs are rising and all the rest of it, so, (um) I'm I'm wondering what, what is it that you can tell me about the new subsidies? So, my farm is outside Fermoy in County Cork. Does it wha~ sound like, I'm about seven kilometers out "
+  }
+}
