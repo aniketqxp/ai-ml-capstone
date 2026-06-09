@@ -3,332 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call Transcription Testing Interface</title>
+    <title>Call Transcription Tester</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: system-ui, -apple-system, sans-serif;
-            background-color: #ffffff;
+            background: #f1f5f9;
             color: #1e293b;
-            padding: 20px;
-            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+        /* ── Top bar ───────────────────────────────────── */
+        .topbar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px 20px;
+            flex-shrink: 0;
         }
 
-        .controls {
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 25px;
+        .topbar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .meta-info {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: #64748b;
+        .topbar-meta {
+            font-size: 0.78rem;
+            color: #94a3b8;
         }
 
-        .meta-info span {
-            margin-right: 15px;
+        .topbar-meta span { margin-right: 12px; }
+
+        /* ── Player bar ─────────────────────────────────── */
+        .playerbar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            flex-shrink: 0;
         }
 
         audio {
             width: 100%;
+            height: 32px;
+        }
+
+        .player-hint {
+            font-size: 0.75rem;
+            color: #94a3b8;
             margin-top: 5px;
         }
 
-        .tip {
-            font-size: 0.85rem;
-            color: #0f766e;
-            background-color: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-
-        .transcript-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .column {
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 20px;
-        }
-
-        .column h3 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
+        /* ── Speaker legend ─────────────────────────────── */
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 20px;
+            font-size: 0.78rem;
+            color: #64748b;
+            background: #f8fafc;
             border-bottom: 1px solid #e2e8f0;
+            flex-shrink: 0;
         }
 
-        .agent-column h3 {
-            color: #0284c7;
+        .legend-left { display: flex; align-items: center; gap: 6px; }
+        .legend-right { display: flex; align-items: center; gap: 6px; }
+
+        .dot {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-agent    { background: #0284c7; }
+        .dot-customer { background: #64748b; }
+
+        /* ── Chat area ──────────────────────────────────── */
+        #chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .customer-column h3 {
-            color: #e11d48;
+        .bubble-row {
+            display: flex;
+            width: 100%;
         }
 
-        .words-container {
-            font-size: 1.05rem;
-            line-height: 1.7;
+        .bubble-row.agent    { justify-content: flex-start; }
+        .bubble-row.customer { justify-content: flex-end; }
+
+        .bubble {
+            max-width: 62%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            position: relative;
         }
 
+        /* Agent: left, blue tint */
+        .bubble-row.agent .bubble {
+            background: #e0f2fe;
+            border-top-left-radius: 4px;
+        }
+
+        /* Customer: right, light grey */
+        .bubble-row.customer .bubble {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top-right-radius: 4px;
+        }
+
+        .bubble-speaker {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .bubble-row.agent    .bubble-speaker { color: #0284c7; }
+        .bubble-row.customer .bubble-speaker { color: #64748b; }
+
+        .bubble-time {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        /* ── Word tokens ─────────────────────────────────── */
         .word {
             cursor: pointer;
-            padding: 2px 4px;
-            border-radius: 2px;
-            color: #475569;
+            padding: 1px 3px;
+            border-radius: 3px;
+            color: inherit;
+            display: inline;
         }
 
         .word:hover {
-            background-color: #f1f5f9;
-            color: #0f172a;
+            background: rgba(0,0,0,0.07);
         }
 
-        /* Flat yellow highlighter */
         .word.active {
-            background-color: #fef08a;
-            color: #000000;
+            background: #fef08a;
+            color: #000;
             font-weight: 500;
+        }
+
+        /* ── Loading / error ─────────────────────────────── */
+        #status {
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <h1>Call Transcription Word-Highlight Testing</h1>
-
-    <!-- Player Controls -->
-    <div class="controls">
-        <div class="meta-info">
-            <span>Accent: <strong>en-CA</strong></span>
-            <span>Domain: <strong>Banking</strong></span>
-            <span>Target File: <strong>call_1_mixed.wav (Stereo)</strong></span>
-        </div>
-        <audio id="audio-player" controls>
-            <source src="./data/apptek/call_1_mixed.wav" type="audio/wav">
-            Your browser does not support the audio element.
-        </audio>
-        <div class="tip">
-            <strong>Testing Note:</strong> Click any word in the transcripts below to seek the player directly to that time offset.
+    <!-- Top bar -->
+    <div class="topbar">
+        <div class="topbar-title">Call Transcription Tester</div>
+        <div class="topbar-meta">
+            <span>Model: <strong>whisper-small (int8)</strong></span>
+            <span>File: <strong>call_1_mixed.wav</strong></span>
+            <span>Domain: <strong>Banking · en-CA</strong></span>
         </div>
     </div>
 
-    <!-- Dual Columns -->
-    <div class="transcript-grid">
-        <!-- Agent -->
-        <div class="column agent-column">
-            <h3>Agent Channel (Left)</h3>
-            <div class="words-container" id="agent-transcript"></div>
-        </div>
+    <!-- Audio player -->
+    <div class="playerbar">
+        <audio id="audio-player" controls>
+            <source src="./data/apptek/call_1_mixed.wav" type="audio/wav">
+        </audio>
+        <div class="player-hint">Click any word in the transcript to seek · words highlight in real time</div>
+    </div>
 
-        <!-- Customer -->
-        <div class="column customer-column">
-            <h3>Customer Channel (Right)</h3>
-            <div class="words-container" id="customer-transcript"></div>
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-left">
+            <span class="dot dot-agent"></span>
+            <span>Emily — Agent</span>
         </div>
+        <div class="legend-right">
+            <span>James — Customer</span>
+            <span class="dot dot-customer"></span>
+        </div>
+    </div>
+
+    <!-- Chat thread -->
+    <div id="chat">
+        <div id="status">Loading transcript…</div>
     </div>
 
     <script>
-        const transcriptData = {
-            "agent": [
-                {"word": "Oh,", "start": 13.52, "end": 14.0},
-                {"word": "good", "start": 14.1, "end": 14.3},
-                {"word": "afternoon.", "start": 14.3, "end": 14.7},
-                {"word": "Thank", "start": 15.02, "end": 15.38},
-                {"word": "you", "start": 15.38, "end": 15.58},
-                {"word": "for", "start": 15.58, "end": 15.72},
-                {"word": "calling", "start": 15.72, "end": 16.08},
-                {"word": "North", "start": 16.08, "end": 16.62},
-                {"word": "Star", "start": 16.62, "end": 16.86},
-                {"word": "Bank", "start": 16.86, "end": 17.1},
-                {"word": "customer", "start": 17.1, "end": 17.48},
-                {"word": "care.", "start": 17.48, "end": 18.14},
-                {"word": "My", "start": 18.66, "end": 18.72},
-                {"word": "name", "start": 18.72, "end": 18.9},
-                {"word": "is", "start": 18.9, "end": 19.04},
-                {"word": "Emily.", "start": 19.04, "end": 19.34},
-                {"word": "How", "start": 19.42, "end": 19.6},
-                {"word": "can", "start": 19.6, "end": 19.72},
-                {"word": "I", "start": 19.72, "end": 19.82},
-                {"word": "help", "start": 19.82, "end": 20.06},
-                {"word": "you", "start": 20.06, "end": 20.2},
-                {"word": "today?", "start": 20.2, "end": 20.62},
-                
-                {"word": "Absolutely,", "start": 40.48, "end": 41.02},
-                {"word": "Mr.", "start": 41.26, "end": 41.48},
-                {"word": "Carter.", "start": 41.62, "end": 41.74},
-                {"word": "I", "start": 41.98, "end": 41.98},
-                {"word": "can", "start": 41.98, "end": 42.16},
-                {"word": "help", "start": 42.16, "end": 42.32},
-                {"word": "you", "start": 42.32, "end": 42.54},
-                {"word": "with", "start": 42.54, "end": 42.64},
-                {"word": "that.", "start": 42.64, "end": 43.44},
-                {"word": "Before", "start": 43.84, "end": 44.08},
-                {"word": "we", "start": 44.08, "end": 44.4},
-                {"word": "start,", "start": 44.4, "end": 44.74},
-                {"word": "can", "start": 45.04, "end": 45.04},
-                {"word": "I", "start": 45.04, "end": 45.56},
-                {"word": "verify", "start": 45.56, "end": 45.98},
-                {"word": "your", "start": 45.98, "end": 46.32},
-                {"word": "identity", "start": 46.32, "end": 46.64},
-                {"word": "for", "start": 46.64, "end": 47.0},
-                {"word": "security", "start": 47.0, "end": 47.5},
-                {"word": "purposes?", "start": 47.5, "end": 48.4},
-                
-                {"word": "Could", "start": 49.5, "end": 49.62},
-                {"word": "you", "start": 49.62, "end": 49.86},
-                {"word": "confirm", "start": 49.86, "end": 50.3},
-                {"word": "your", "start": 50.3, "end": 50.58},
-                {"word": "date", "start": 50.58, "end": 50.8},
-                {"word": "of", "start": 50.8, "end": 51.0},
-                {"word": "birth", "start": 51.0, "end": 51.38},
-                {"word": "and", "start": 51.38, "end": 51.72},
-                {"word": "the", "start": 51.72, "end": 51.9},
-                {"word": "last", "start": 51.9, "end": 52.3},
-                {"word": "four", "start": 52.3, "end": 52.62},
-                {"word": "digits", "start": 52.62, "end": 52.96},
-                {"word": "of", "start": 52.96, "end": 53.22},
-                {"word": "your", "start": 53.22, "end": 53.38},
-                {"word": "checking", "start": 53.38, "end": 53.64},
-                {"word": "account", "start": 53.64, "end": 54.0},
-                {"word": "number?", "start": 54.0, "end": 54.52},
-                
-                {"word": "Perfect.", "start": 67.86, "end": 68.54},
-                {"word": "Thank", "start": 68.9, "end": 69.24},
-                {"word": "you", "start": 69.24, "end": 69.62},
-                {"word": "for", "start": 69.62, "end": 69.82},
-                {"word": "confirming", "start": 69.82, "end": 70.24},
-                {"word": "that.", "start": 70.24, "end": 71.22},
-                {"word": "So", "start": 72.24, "end": 72.4},
-                {"word": "I've", "start": 72.4, "end": 72.62},
-                {"word": "got", "start": 72.62, "end": 72.76},
-                {"word": "your", "start": 72.76, "end": 73.0},
-                {"word": "account", "start": 73.0, "end": 73.24},
-                {"word": "pulled", "start": 73.24, "end": 73.52},
-                {"word": "up", "start": 73.52, "end": 73.82}
-            ],
-            "customer": [
-                {"word": "I", "start": 21.64, "end": 22.6},
-                {"word": "have", "start": 22.6, "end": 23.56},
-                {"word": "a", "start": 23.56, "end": 27.82},
-                {"word": "checking", "start": 27.82, "end": 28.24},
-                {"word": "account", "start": 28.24, "end": 28.72},
-                {"word": "with", "start": 28.72, "end": 29.04},
-                {"word": "your", "start": 29.04, "end": 29.26},
-                {"word": "bank.", "start": 29.26, "end": 29.92},
-                
-                {"word": "I", "start": 33.44, "end": 34.2},
-                {"word": "want", "start": 34.2, "end": 34.5},
-                {"word": "to", "start": 34.5, "end": 34.58},
-                {"word": "set", "start": 34.58, "end": 34.92},
-                {"word": "up", "start": 34.92, "end": 35.68},
-                {"word": "an", "start": 35.68, "end": 35.96},
-                {"word": "automatic", "start": 35.96, "end": 36.78},
-                {"word": "monthly", "start": 36.78, "end": 37.26},
-                {"word": "transfer", "start": 37.26, "end": 37.64},
-                {"word": "between", "start": 37.64, "end": 37.98},
-                {"word": "the", "start": 37.98, "end": 38.24},
-                {"word": "two.", "start": 38.24, "end": 39.9},
-                
-                {"word": "My", "start": 56.2, "end": 57.0},
-                {"word": "date", "start": 57.0, "end": 57.3},
-                {"word": "of", "start": 57.3, "end": 57.44},
-                {"word": "birth", "start": 57.44, "end": 57.84},
-                {"word": "is", "start": 57.84, "end": 58.02},
-                {"word": "October", "start": 58.02, "end": 58.46},
-                {"word": "12,", "start": 58.46, "end": 59.3},
-                {"word": "1983,", "start": 61.04, "end": 61.04},
-                {"word": "and", "start": 63.06, "end": 63.08},
-                {"word": "the", "start": 63.08, "end": 63.2},
-                {"word": "last", "start": 63.2, "end": 63.44},
-                {"word": "four", "start": 63.44, "end": 63.66},
-                {"word": "digits", "start": 63.66, "end": 63.98},
-                {"word": "are", "start": 63.98, "end": 64.52},
-                {"word": "246.", "start": 64.52, "end": 66.12},
-                
-                {"word": "I", "start": 81.98, "end": 83.28},
-                {"word": "want", "start": 83.28, "end": 84.58},
-                {"word": "to", "start": 84.58, "end": 87.06},
-                {"word": "start", "start": 87.06, "end": 87.46},
-                {"word": "putting", "start": 87.46, "end": 87.96},
-                {"word": "some", "start": 87.96, "end": 88.28},
-                {"word": "money", "start": 88.28, "end": 88.5},
-                {"word": "aside", "start": 88.5, "end": 89.14},
-                {"word": "every", "start": 89.14, "end": 89.8},
-                {"word": "month", "start": 89.8, "end": 90.44},
-                {"word": "automatically.", "start": 90.44, "end": 91.48}
-            ]
-        };
-
         const player = document.getElementById("audio-player");
-        const agentContainer = document.getElementById("agent-transcript");
-        const customerContainer = document.getElementById("customer-transcript");
+        const chat   = document.getElementById("chat");
 
-        // Render words into spans
-        function renderTranscript(channel, container) {
-            const words = transcriptData[channel];
-            container.innerHTML = "";
-            
-            words.forEach((item, index) => {
+        // Global word registry: id -> { start, end }
+        const wordRegistry = {};
+
+        // Group a flat word array into utterances by inter-word gap
+        function groupIntoUtterances(words, gapSecs = 3.0) {
+            if (!words.length) return [];
+            const utts = [];
+            let cur = { start: words[0].start, end: words[0].end, words: [words[0]] };
+            for (let i = 1; i < words.length; i++) {
+                const gap = words[i].start - cur.end;
+                if (gap > gapSecs) {
+                    utts.push(cur);
+                    cur = { start: words[i].start, end: words[i].end, words: [words[i]] };
+                } else {
+                    cur.words.push(words[i]);
+                    cur.end = words[i].end;
+                }
+            }
+            utts.push(cur);
+            return utts;
+        }
+
+        function formatTime(secs) {
+            const m = Math.floor(secs / 60);
+            const s = Math.floor(secs % 60).toString().padStart(2, "0");
+            return `${m}:${s}`;
+        }
+
+        function renderBubble(speaker, utterance, uttIndex) {
+            const row = document.createElement("div");
+            row.className = `bubble-row ${speaker}`;
+
+            const bubble = document.createElement("div");
+            bubble.className = "bubble";
+
+            // Speaker label
+            const label = document.createElement("div");
+            label.className = "bubble-speaker";
+            label.textContent = speaker === "agent" ? "Emily" : "James";
+            bubble.appendChild(label);
+
+            // Word spans
+            const textNode = document.createElement("div");
+            utterance.words.forEach((item, wordIdx) => {
+                const id = `${speaker}-${uttIndex}-${wordIdx}`;
                 const span = document.createElement("span");
                 span.className = "word";
-                span.id = `${channel}-word-${index}`;
-                span.innerText = item.word;
-                
-                // Click-to-seek logic
+                span.id = id;
+                span.textContent = item.word;
                 span.addEventListener("click", () => {
                     player.currentTime = item.start;
                     player.play();
                 });
-                
-                container.appendChild(span);
-                container.appendChild(document.createTextNode(" "));
+                wordRegistry[id] = { start: item.start, end: item.end };
+                textNode.appendChild(span);
+                textNode.appendChild(document.createTextNode(" "));
             });
+            bubble.appendChild(textNode);
+
+            // Timestamp footer
+            const timeEl = document.createElement("div");
+            timeEl.className = "bubble-time";
+            timeEl.textContent = formatTime(utterance.start);
+            bubble.appendChild(timeEl);
+
+            row.appendChild(bubble);
+            return row;
         }
 
-        renderTranscript("agent", agentContainer);
-        renderTranscript("customer", customerContainer);
-
-        // Track active word highlights during audio playback
+        // Highlight active words based on current playback time
         player.addEventListener("timeupdate", () => {
-            const currentTime = player.currentTime;
-            
-            // Agent Highlight
-            transcriptData.agent.forEach((item, index) => {
-                const span = document.getElementById(`agent-word-${index}`);
-                if (span) {
-                    if (currentTime >= item.start && currentTime <= item.end) {
-                        span.classList.add("active");
-                    } else {
-                        span.classList.remove("active");
-                    }
-                }
-            });
-
-            // Customer Highlight
-            transcriptData.customer.forEach((item, index) => {
-                const span = document.getElementById(`customer-word-${index}`);
-                if (span) {
-                    if (currentTime >= item.start && currentTime <= item.end) {
-                        span.classList.add("active");
-                    } else {
-                        span.classList.remove("active");
-                    }
+            const t = player.currentTime;
+            Object.entries(wordRegistry).forEach(([id, { start, end }]) => {
+                const span = document.getElementById(id);
+                if (!span) return;
+                if (t >= start && t <= end) {
+                    span.classList.add("active");
+                } else {
+                    span.classList.remove("active");
                 }
             });
         });
+
+        // Load and render
+        fetch("./frontend/transcript_data.json")
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(data => {
+                // Update model label dynamically
+                const modelEl = document.querySelector(".topbar-meta strong");
+                if (modelEl && data.model) {
+                    modelEl.textContent = data.model;
+                }
+
+                const agentUtts    = groupIntoUtterances(data.agent, 3.0)
+                    .map((u, i) => ({ ...u, speaker: "agent",    uttIndex: i }));
+                const customerUtts = groupIntoUtterances(data.customer, 3.0)
+                    .map((u, i) => ({ ...u, speaker: "customer", uttIndex: i }));
+
+                // Merge and sort chronologically
+                const all = [...agentUtts, ...customerUtts].sort((a, b) => a.start - b.start);
+
+                chat.innerHTML = "";
+                all.forEach(utt => {
+                    chat.appendChild(renderBubble(utt.speaker, utt, utt.uttIndex));
+                });
+            })
+            .catch(err => {
+                document.getElementById("status").textContent =
+                    `Error loading transcript_data.json: ${err.message}. Serve via http.server or similar.`;
+            });
     </script>
 </body>
 </html>
