@@ -1,4 +1,6 @@
 import uuid
+import os
+import shutil
 from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
 from sqlalchemy.orm import Session
@@ -21,8 +23,12 @@ async def ingest_call(
     file: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
-    # Save audio file path
-    audio_path = f"/data/audio/calls/{uuid.uuid4()}_{file.filename}"
+    # Create directory and save audio file safely
+    os.makedirs("/data/audio/calls", exist_ok=True)
+    safe_filename = os.path.basename(file.filename)
+    audio_path = f"/data/audio/calls/{uuid.uuid4()}_{safe_filename}"
+    with open(audio_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
     # Create call record in database
     call = Call(
@@ -47,6 +53,7 @@ async def ingest_call(
         "job_id": str(job.job_id),
         "call_id": str(call.call_id),
         "status": "queued",
+        "audio_path": audio_path,
         "created_at": job.created_at.isoformat()
     }
 
