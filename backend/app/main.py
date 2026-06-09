@@ -1,5 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.database import engine
+from app.models import Base
+from app.routers import calls
+
+# Create all database tables on startup
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="AI/ML Capstone API",
@@ -16,6 +22,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Register routers
+app.include_router(calls.router)
+
 @app.get("/")
 def read_root():
     return {"status": "online", "service": "backend-orchestration"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "service": "capstone_api"}
