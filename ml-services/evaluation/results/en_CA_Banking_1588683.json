@@ -1,0 +1,122 @@
+{
+  "rubric_version": "0.1.0",
+  "metadata": {
+    "call_id": "en_CA_Banking_1588683",
+    "domain": "banking",
+    "accent": "en-CA",
+    "duration_seconds": 559.6,
+    "transcript_model": "faster-whisper small.en/int8"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Julia.",
+        "speaker": "AGENT",
+        "timestamp": "00:12"
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "welcome to the bank association.",
+        "speaker": "AGENT",
+        "timestamp": "00:12"
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "Can you please provide your full name and your checking account number?",
+        "speaker": "AGENT",
+        "timestamp": "00:29"
+      },
+      "note": null
+    },
+    "identity_method": "account number",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "I have set that up for you for the 7th and 21st of every month.",
+        "speaker": "AGENT",
+        "timestamp": "05:24"
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 4,
+      "signals_present": [
+        "first-call resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "I have set that up for you for the 7th and 21st of every month.",
+          "speaker": "AGENT",
+          "timestamp": "05:24"
+        }
+      ],
+      "requires_audio": false
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained why"
+      ],
+      "signals_absent": [
+        "no explicit options A/B/C"
+      ],
+      "evidence": [],
+      "requires_audio": false
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [],
+      "requires_audio": false
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "complete sentences"
+      ],
+      "signals_absent": [],
+      "evidence": [],
+      "requires_audio": true
+    },
+    "empathy": {
+      "score": 2,
+      "signals_present": [],
+      "signals_absent": [
+        "no validation phrase"
+      ],
+      "evidence": [],
+      "requires_audio": true
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true
+  },
+  "overall_summary": "The agent introduced themselves and the bank, verified the customer's identity, and successfully set up the requested transfers. The call was handled efficiently, but there were some missed opportunities for empathy and clarity."
+}

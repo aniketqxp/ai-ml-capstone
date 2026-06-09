@@ -1,0 +1,152 @@
+{
+  "rubric_version": "0.1.0",
+  "metadata": {
+    "call_id": "en_CA_Banking_1592237",
+    "domain": "banking",
+    "accent": "en-CA",
+    "duration_seconds": 632.7,
+    "transcript_model": "faster-whisper small.en/int8"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Joao, customer support analyst.",
+        "speaker": "AGENT",
+        "timestamp": "00:12"
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling the Bank of Ottawa.",
+        "speaker": "AGENT",
+        "timestamp": "00:12"
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "I just need your date of birth. Can I get your date of birth?",
+        "speaker": "AGENT",
+        "timestamp": "00:42"
+      },
+      "note": null
+    },
+    "identity_method": "date of birth",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "I've entered the information and got you all started. So I'll be emailing you at the email that you provided.",
+        "speaker": "AGENT",
+        "timestamp": "10:07"
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "no unnecessary holds/transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "this is not a long process at all since we already have many of your information on file from the credit card.",
+          "speaker": "AGENT",
+          "timestamp": "08:38"
+        }
+      ],
+      "requires_audio": false
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained pros/cons",
+        "solved the actual issue"
+      ],
+      "signals_absent": [
+        "no explicit options A/B/C"
+      ],
+      "evidence": [
+        {
+          "quote": "The card that you currently have is just a credit card. This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.",
+          "speaker": "AGENT",
+          "timestamp": "02:04"
+        },
+        {
+          "quote": "We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.",
+          "speaker": "AGENT",
+          "timestamp": "04:51"
+        }
+      ],
+      "requires_audio": false
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "open-ended questions",
+        "confirms understanding"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "How can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:12"
+        },
+        {
+          "quote": "does that make sense?",
+          "speaker": "AGENT",
+          "timestamp": "05:51"
+        }
+      ],
+      "requires_audio": false
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "grammar",
+        "complete sentences",
+        "no slang"
+      ],
+      "signals_absent": [],
+      "evidence": [],
+      "requires_audio": true
+    },
+    "empathy": {
+      "score": 2,
+      "signals_present": [],
+      "signals_absent": [
+        "no validation phrase",
+        "no customer name used"
+      ],
+      "evidence": [],
+      "requires_audio": true
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true
+  },
+  "overall_summary": "Agent efficiently verified identity, explained checking account features and benefits, and completed account setup in one call without transfers. Customer remained calm throughout and expressed satisfaction at the end."
+}
