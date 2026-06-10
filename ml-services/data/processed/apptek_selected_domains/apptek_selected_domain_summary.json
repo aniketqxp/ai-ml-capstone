@@ -6,22 +6,24 @@
     "healthcare",
     "telecommunications"
   ],
-  "samples_per_domain_requested": 3,
-  "selected_rows": 9,
+  "samples_per_domain_requested": "all",
+  "selected_rows": 322,
   "selected_domain_counts": {
-    "banking": 3,
-    "healthcare": 3,
-    "telecommunications": 3
+    "banking": 128,
+    "healthcare": 114,
+    "telecommunications": 80
   },
   "raw_domain_counts": {
-    "banking": 3,
-    "health": 3,
-    "telecom": 3
+    "banking": 128,
+    "health": 114,
+    "telecom": 80
   },
   "missing_target_domains": [],
   "notes": [
     "Selected domain samples are used for realistic call-center inference/demo.",
     "They are not used as supervised emotion accuracy labels.",
-    "Telecommunications is included only if a matching AppTek domain exists."
+    "AppTek raw domains are mapped as banking -> banking, health -> healthcare, telecom -> telecommunications.",
+    "WAV audio files should not be committed to GitHub because they are large.",
+    "Audio was exported with decode=False to avoid requiring torchcodec."
   ]
 }

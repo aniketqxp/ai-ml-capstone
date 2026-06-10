@@ -11,44 +11,47 @@ This report summarizes realistic call-center inference using the selected V5 aud
 
 ## Dataset Setup
 
-- Total AppTek calls processed: 9
+- Total AppTek calls processed: 322
 - Samples per selected domain: 3
 - Processed duration per call: first 60 seconds
 - Domains used:
-  - banking: 3 calls
-  - healthcare: 3 calls
-  - telecommunications: 3 calls
+  - banking: 128 calls
+  - healthcare: 114 calls
+  - telecommunications: 80 calls
 
 ## Overall Results
 
 ### Sentiment Distribution
 
-- Positive: 7
-- Negative: 2
+- Positive: 174
+- Negative: 129
+- Neutral: 11
+- Mixed: 7
+- Unknown: 1
 
 ### Risk Distribution
 
-- Low: 6
-- Medium: 3
+- Low: 185
+- Medium: 137
 
-- Average escalation score: 0.2642
+- Average escalation score: 0.3010
 
 ## Domain-Level Summary
 
 | Domain | Calls | Sentiment Distribution | Risk Distribution | Avg Escalation | Highest-Risk Call |
 |---|---:|---|---|---:|---|
-| banking | 3 | Positive: 2, Negative: 1 | Medium: 2, Low: 1 | 0.2693 | APPTEK_BANKING_02 |
-| healthcare | 3 | Positive: 3 | Low: 3 | 0.2556 | APPTEK_HEALTHCARE_01 |
-| telecommunications | 3 | Positive: 2, Negative: 1 | Low: 2, Medium: 1 | 0.2677 | APPTEK_TELECOMMUNICATIONS_03 |
+| banking | 128 | Positive: 72, Negative: 46, Neutral: 8, Mixed: 2 | Low: 78, Medium: 50 | 0.2938 | APPTEK_BANKING_0090 |
+| healthcare | 114 | Positive: 65, Negative: 45, Mixed: 3, Neutral: 1 | Low: 69, Medium: 45 | 0.2970 | APPTEK_HEALTHCARE_0028 |
+| telecommunications | 80 | Negative: 38, Positive: 37, Mixed: 2, Neutral: 2, Unknown: 1 | Medium: 42, Low: 38 | 0.3183 | APPTEK_TELECOMMUNICATIONS_0019 |
 
 ## Highest-Risk Call
 
-- Call ID: `APPTEK_BANKING_02`
+- Call ID: `APPTEK_BANKING_0090`
 - Domain: banking
-- Dominant emotion: disgust
+- Dominant emotion: fear
 - Overall sentiment: Negative
 - Risk level: Medium
-- Escalation score: 0.3368
+- Escalation score: 0.5735
 
 ## Important Limitation
 

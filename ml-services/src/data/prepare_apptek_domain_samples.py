@@ -1,209 +1,200 @@
 """
-Prepare AppTek samples for the selected capstone domains.
+Prepare AppTek calls for selected call-center domains without decoding audio through Hugging Face.
 
-Target domains:
-    - banking
-    - healthcare
-    - telecommunications / telecom if available
+This avoids the torchcodec dependency by casting the audio column with decode=False
+and copying the original audio file/bytes into our processed folder.
 
-This script:
-    1. Loads AppTek test split
-    2. Selects a small number of calls from chosen domains
-    3. Exports audio to WAV
-    4. Creates metadata for inference
+Examples:
 
-Run from ml-services:
+    # Small demo
+    python -m src.data.prepare_apptek_domain_samples --samples-per-domain 3 --overwrite
 
-    python -m src.data.prepare_apptek_domain_samples
+    # Full 3-domain subset
+    python -m src.data.prepare_apptek_domain_samples --samples-per-domain all --overwrite
 """
 
+import argparse
 import json
-import wave
-from collections import defaultdict
+import shutil
+from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Dict, List
 
-import numpy as np
 import pandas as pd
-from datasets import load_dataset
+import soundfile as sf
+from datasets import Audio, load_dataset
 
+
+DATASET_NAME = "apptek-com/apptek_callcenter_dialogues"
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
 
-DATASET_NAME = "apptek-com/apptek_callcenter_dialogues"
+OUTPUT_DIR = ML_SERVICES_ROOT / "data" / "processed" / "apptek_selected_domains"
+AUDIO_DIR = OUTPUT_DIR / "audio"
+METADATA_PATH = OUTPUT_DIR / "apptek_selected_domain_metadata.csv"
+SUMMARY_PATH = OUTPUT_DIR / "apptek_selected_domain_summary.json"
 
-OUTPUT_ROOT = ML_SERVICES_ROOT / "data" / "processed" / "apptek_selected_domains"
-AUDIO_DIR = OUTPUT_ROOT / "audio"
-METADATA_PATH = OUTPUT_ROOT / "apptek_selected_domain_metadata.csv"
-SUMMARY_PATH = OUTPUT_ROOT / "apptek_selected_domain_summary.json"
 
-SAMPLES_PER_DOMAIN = 3
-
-# These are flexible aliases. The script will match by lowercase text.
-TARGET_DOMAIN_ALIASES: Dict[str, List[str]] = {
-    "banking": ["banking", "bank", "finance", "financial"],
-    "healthcare": ["healthcare", "health", "medical", "clinic", "hospital"],
-    "telecommunications": [
-        "telecommunications",
-        "telecom",
-        "communication",
-        "mobile",
-        "phone",
-        "internet",
-        "broadband",
-    ],
+DOMAIN_MAPPING = {
+    "banking": "banking",
+    "health": "healthcare",
+    "telecom": "telecommunications",
 }
 
 
-def save_audio_as_wav(audio_array: np.ndarray, sampling_rate: int, output_path: Path) -> None:
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--samples-per-domain",
+        default="3",
+        help="Number of calls per selected domain, or 'all'. Example: 3, 10, all",
+    )
+    parser.add_argument(
+        "--overwrite",
+        action="store_true",
+        help="Overwrite existing output metadata/audio files.",
+    )
+    return parser.parse_args()
+
+
+def export_audio_without_decoding(audio_obj, output_path: Path) -> None:
     """
-    Save mono audio array as WAV.
+    Export HF audio object without decoding with torchcodec.
+
+    With decode=False, the audio object usually has:
+    - path: local cached file path
+    - bytes: optional audio bytes
+
+    We copy the path if available, otherwise write bytes.
     """
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    audio_path = audio_obj.get("path")
+    audio_bytes = audio_obj.get("bytes")
 
-    audio_array = np.asarray(audio_array)
+    if audio_path:
+        shutil.copyfile(audio_path, output_path)
+        return
 
-    if audio_array.ndim > 1:
-        audio_array = audio_array.mean(axis=0)
+    if audio_bytes:
+        with output_path.open("wb") as file:
+            file.write(audio_bytes)
+        return
 
-    audio_array = np.clip(audio_array, -1.0, 1.0)
-    audio_int16 = (audio_array * 32767).astype(np.int16)
-
-    with wave.open(str(output_path), "wb") as wav_file:
-        wav_file.setnchannels(1)
-        wav_file.setsampwidth(2)
-        wav_file.setframerate(sampling_rate)
-        wav_file.writeframes(audio_int16.tobytes())
+    raise ValueError(f"Could not export audio. Audio object keys: {audio_obj.keys()}")
 
 
-def match_target_domain(domain: str) -> str | None:
+def get_audio_info(audio_path: Path):
     """
-    Return normalized target domain name if the raw AppTek domain matches.
+    Get duration and sample rate from exported audio file.
     """
-    domain_lower = str(domain).lower()
-
-    for normalized_domain, aliases in TARGET_DOMAIN_ALIASES.items():
-        for alias in aliases:
-            if alias in domain_lower:
-                return normalized_domain
-
-    return None
+    info = sf.info(str(audio_path))
+    duration_seconds = round(float(info.duration), 3)
+    sampling_rate = int(info.samplerate)
+    return duration_seconds, sampling_rate
 
 
-def main() -> None:
-    print("\nLoading AppTek test split...")
+def main():
+    args = parse_args()
+
+    samples_arg = str(args.samples_per_domain).lower().strip()
+
+    if samples_arg == "all":
+        samples_per_domain = None
+    else:
+        samples_per_domain = int(samples_arg)
+        if samples_per_domain <= 0:
+            raise ValueError("--samples-per-domain must be positive or 'all'.")
+
+    if OUTPUT_DIR.exists() and args.overwrite:
+        shutil.rmtree(OUTPUT_DIR)
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+
+    print("\nLoading AppTek test split without audio decoding...")
     print("-" * 80)
 
     ds = load_dataset(DATASET_NAME, split="test")
+    ds = ds.cast_column("audio", Audio(decode=False))
 
     selected_rows = []
-    counts = defaultdict(int)
-    raw_domain_matches = defaultdict(list)
+    selected_counts = Counter()
+    raw_counts = Counter()
+    call_number_by_domain = defaultdict(int)
 
-    print("Selecting domain samples...")
-    for index, row in enumerate(ds):
-        raw_domain = row.get("domain", "")
-        normalized_domain = match_target_domain(raw_domain)
+    print("Selecting and exporting selected domain calls...")
+    print("-" * 80)
 
-        if normalized_domain is None:
+    for row in ds:
+        raw_domain = str(row.get("domain", "")).lower().strip()
+
+        if raw_domain not in DOMAIN_MAPPING:
             continue
 
-        if counts[normalized_domain] >= SAMPLES_PER_DOMAIN:
+        selected_domain = DOMAIN_MAPPING[raw_domain]
+
+        if samples_per_domain is not None and selected_counts[selected_domain] >= samples_per_domain:
             continue
 
-        selected_rows.append((index, normalized_domain, row))
-        counts[normalized_domain] += 1
-        raw_domain_matches[normalized_domain].append(raw_domain)
+        call_number_by_domain[selected_domain] += 1
+        selected_counts[selected_domain] += 1
+        raw_counts[raw_domain] += 1
 
-        if all(
-            counts[target_domain] >= SAMPLES_PER_DOMAIN
-            for target_domain in TARGET_DOMAIN_ALIASES.keys()
-        ):
-            break
+        call_id = f"APPTEK_{selected_domain.upper()}_{call_number_by_domain[selected_domain]:04d}"
+        audio_filename = f"{call_id}.wav"
+        output_audio_path = AUDIO_DIR / audio_filename
 
-    print("\nSelected counts:")
-    for domain in TARGET_DOMAIN_ALIASES.keys():
-        print(f"{domain}: {counts[domain]}")
+        export_audio_without_decoding(row["audio"], output_audio_path)
+        duration_seconds, sampling_rate = get_audio_info(output_audio_path)
 
-    missing_domains = [
-        domain
-        for domain in TARGET_DOMAIN_ALIASES.keys()
-        if counts[domain] == 0
-    ]
-
-    if missing_domains:
-        print("\nMissing target domains:")
-        for domain in missing_domains:
-            print(f"- {domain}")
-
-    AUDIO_DIR.mkdir(parents=True, exist_ok=True)
-
-    records = []
-
-    for selected_index, normalized_domain, row in selected_rows:
-        call_id = f"APPTEK_{normalized_domain.upper()}_{counts[normalized_domain]:02d}_{selected_index:04d}"
-
-        # Better readable sequential ID
-        domain_existing_count = sum(
-            1 for record in records if record["selected_domain"] == normalized_domain
-        )
-        call_id = f"APPTEK_{normalized_domain.upper()}_{domain_existing_count + 1:02d}"
-
-        audio = row["audio"]
-        audio_array = audio["array"]
-        sampling_rate = audio["sampling_rate"]
-
-        output_audio_path = AUDIO_DIR / f"{call_id}.wav"
-
-        save_audio_as_wav(
-            audio_array=audio_array,
-            sampling_rate=sampling_rate,
-            output_path=output_audio_path,
-        )
-
-        records.append(
+        selected_rows.append(
             {
                 "call_id": call_id,
-                "selected_domain": normalized_domain,
-                "raw_domain": row.get("domain", ""),
-                "audio_path": str(output_audio_path.relative_to(ML_SERVICES_ROOT)),
-                "text": row.get("text", ""),
+                "selected_domain": selected_domain,
+                "raw_domain": raw_domain,
+                "domain": selected_domain,
                 "gender": row.get("gender", ""),
                 "accent": row.get("accent", ""),
+                "duration_seconds": duration_seconds,
                 "sampling_rate": sampling_rate,
-                "duration_seconds": round(len(audio_array) / sampling_rate, 3),
+                "audio_path": str(output_audio_path.relative_to(ML_SERVICES_ROOT)),
+                "text": row.get("text", ""),
             }
         )
 
-    metadata = pd.DataFrame(records)
-    METADATA_PATH.parent.mkdir(parents=True, exist_ok=True)
-    metadata.to_csv(METADATA_PATH, index=False)
+        if selected_counts[selected_domain] % 25 == 0:
+            print(
+                f"Exported {selected_counts[selected_domain]} calls for {selected_domain}..."
+            )
+
+    metadata_df = pd.DataFrame(selected_rows)
+    metadata_df.to_csv(METADATA_PATH, index=False)
 
     summary = {
         "dataset": "AppTek Call Center Dialogues",
         "source": DATASET_NAME,
-        "target_domains": list(TARGET_DOMAIN_ALIASES.keys()),
-        "samples_per_domain_requested": SAMPLES_PER_DOMAIN,
-        "selected_rows": len(metadata),
-        "selected_domain_counts": metadata["selected_domain"].value_counts().to_dict()
-        if len(metadata) > 0
-        else {},
-        "raw_domain_counts": metadata["raw_domain"].value_counts().to_dict()
-        if len(metadata) > 0
-        else {},
-        "missing_target_domains": missing_domains,
+        "target_domains": ["banking", "healthcare", "telecommunications"],
+        "samples_per_domain_requested": "all" if samples_per_domain is None else samples_per_domain,
+        "selected_rows": int(len(metadata_df)),
+        "selected_domain_counts": dict(selected_counts),
+        "raw_domain_counts": dict(raw_counts),
+        "missing_target_domains": [
+            domain
+            for domain in ["banking", "healthcare", "telecommunications"]
+            if selected_counts[domain] == 0
+        ],
         "notes": [
             "Selected domain samples are used for realistic call-center inference/demo.",
             "They are not used as supervised emotion accuracy labels.",
-            "Telecommunications is included only if a matching AppTek domain exists.",
+            "AppTek raw domains are mapped as banking -> banking, health -> healthcare, telecom -> telecommunications.",
+            "WAV audio files should not be committed to GitHub because they are large.",
+            "Audio was exported with decode=False to avoid requiring torchcodec.",
         ],
     }
 
     with SUMMARY_PATH.open("w", encoding="utf-8") as file:
         json.dump(summary, file, indent=2)
 
-    print("\nSelected AppTek domain sample preparation completed.")
+    print("\nSelected AppTek domain preparation completed.")
     print("-" * 80)
     print(f"Saved metadata: {METADATA_PATH}")
     print(f"Saved summary: {SUMMARY_PATH}")

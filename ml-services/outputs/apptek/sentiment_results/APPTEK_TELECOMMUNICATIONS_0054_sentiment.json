@@ -1,0 +1,251 @@
+{
+  "call_id": "APPTEK_TELECOMMUNICATIONS_0054",
+  "overall_audio_sentiment": "Negative",
+  "dominant_emotion": "disgust",
+  "negative_emotion_probability": 0.9357553403824568,
+  "anger_probability": 0.013328006491065025,
+  "stress_probability": 0.017761724069714546,
+  "sadness_probability": 0.03688551113009453,
+  "anxiety_probability": 0.024412300437688828,
+  "calm_probability": 0.004767267499119043,
+  "audio_features": {
+    "vocal_intensity": "Medium",
+    "pitch_level": "Medium",
+    "pitch_variability": "Medium",
+    "speech_rate": "High",
+    "pause_frequency": "Medium",
+    "long_silence_detected": true,
+    "total_silence_duration_seconds": 16.896,
+    "overlap_rate": null
+  },
+  "emotional_volatility": "Medium",
+  "audio_sentiment_shift": "Mixed",
+  "audio_escalation_score": 0.3922316105568704,
+  "risk_level": "Medium",
+  "escalation_score_breakdown": {
+    "emotion_risk": 0.24670591345056891,
+    "voice_risk": 0.65,
+    "timeline_risk": 0.4255146153263437,
+    "uncertainty_adjustment": 1.0,
+    "final_score": 0.3922316105568704
+  },
+  "prediction_confidence": 0.8611295223236084,
+  "confidence_level": "High",
+  "uncertain_prediction": false,
+  "top_emotion_margin": 0.8016521446406841,
+  "peak_emotion": {
+    "time_seconds": 12.5,
+    "timestamp": "00:00:12",
+    "emotion": "fear",
+    "score": 0.4627230610931292
+  },
+  "sentiment_timeline": [
+    {
+      "segment_id": 0,
+      "start_time_seconds": 0.0,
+      "end_time_seconds": 5.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0030233312863856554,
+        "sadness": 0.889244019985199,
+        "fear": 0.05156274512410164,
+        "disgust": 0.025561010465025902,
+        "happy": 0.003555441275238991,
+        "neutral": 0.027053408324718475
+      },
+      "risk_score": 0.2567501286393963
+    },
+    {
+      "segment_id": 1,
+      "start_time_seconds": 5.0,
+      "end_time_seconds": 10.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0026197691913694143,
+        "sadness": 0.5690951347351074,
+        "fear": 0.03823857381939888,
+        "disgust": 0.007513868156820536,
+        "happy": 0.0057858871296048164,
+        "neutral": 0.3767468333244324
+      },
+      "risk_score": 0.1652363645262085
+    },
+    {
+      "segment_id": 2,
+      "start_time_seconds": 10.0,
+      "end_time_seconds": 15.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0027018743567168713,
+        "sadness": 0.11187861114740372,
+        "fear": 0.8557183742523193,
+        "disgust": 0.019471261650323868,
+        "happy": 0.007360246963799,
+        "neutral": 0.00286964513361454
+      },
+      "risk_score": 0.4627230610931292
+    },
+    {
+      "segment_id": 3,
+      "start_time_seconds": 15.0,
+      "end_time_seconds": 20.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0054241144098341465,
+        "sadness": 0.09124612808227539,
+        "fear": 0.5857831239700317,
+        "disgust": 0.1433488428592682,
+        "happy": 0.16790077090263367,
+        "neutral": 0.006297014188021421
+      },
+      "risk_score": 0.3556083905277774
+    },
+    {
+      "segment_id": 4,
+      "start_time_seconds": 20.0,
+      "end_time_seconds": 25.0,
+      "dominant_emotion": "neutral",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.32668760418891907,
+        "sadness": 0.047074850648641586,
+        "fear": 0.0063267480581998825,
+        "disgust": 0.17961914837360382,
+        "happy": 0.016259951516985893,
+        "neutral": 0.42403170466423035
+      },
+      "risk_score": 0.3048525769263506
+    },
+    {
+      "segment_id": 5,
+      "start_time_seconds": 25.0,
+      "end_time_seconds": 30.0,
+      "dominant_emotion": "neutral",
+      "overall_audio_sentiment": "Neutral",
+      "emotion_probabilities": {
+        "anger": 0.005541360937058926,
+        "sadness": 0.011267222464084625,
+        "fear": 0.0018398900283500552,
+        "disgust": 0.0035481301601976156,
+        "happy": 0.0036267386749386787,
+        "neutral": 0.9741766452789307
+      },
+      "risk_score": 0.008779803873039782
+    },
+    {
+      "segment_id": 6,
+      "start_time_seconds": 30.0,
+      "end_time_seconds": 35.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.008589152246713638,
+        "sadness": 0.058463457971811295,
+        "fear": 0.013085804879665375,
+        "disgust": 0.9028052091598511,
+        "happy": 0.011203978210687637,
+        "neutral": 0.005852403584867716
+      },
+      "risk_score": 0.2533019334077835
+    },
+    {
+      "segment_id": 7,
+      "start_time_seconds": 35.0,
+      "end_time_seconds": 40.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0026942885015159845,
+        "sadness": 0.9157297015190125,
+        "fear": 0.051787711679935455,
+        "disgust": 0.013621228747069836,
+        "happy": 0.0016493048751726747,
+        "neutral": 0.014517745934426785
+      },
+      "risk_score": 0.2602523047826253
+    },
+    {
+      "segment_id": 8,
+      "start_time_seconds": 40.0,
+      "end_time_seconds": 45.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.003328676801174879,
+        "sadness": 0.9243221282958984,
+        "fear": 0.030932705849409103,
+        "disgust": 0.023602452129125595,
+        "happy": 0.0015697679482400417,
+        "neutral": 0.016244327649474144
+      },
+      "risk_score": 0.2549440056318417
+    },
+    {
+      "segment_id": 9,
+      "start_time_seconds": 45.0,
+      "end_time_seconds": 50.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.05514581501483917,
+        "sadness": 0.2679855525493622,
+        "fear": 0.04820792376995087,
+        "disgust": 0.3036794066429138,
+        "happy": 0.030612336471676826,
+        "neutral": 0.2943689227104187
+      },
+      "risk_score": 0.2083795629441738
+    },
+    {
+      "segment_id": 10,
+      "start_time_seconds": 50.0,
+      "end_time_seconds": 55.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.003790211630985141,
+        "sadness": 0.002230644691735506,
+        "fear": 0.00741270836442709,
+        "disgust": 0.004772820044308901,
+        "happy": 0.9729619026184082,
+        "neutral": 0.008831714279949665
+      },
+      "risk_score": 0.008299879089463502
+    },
+    {
+      "segment_id": 11,
+      "start_time_seconds": 55.0,
+      "end_time_seconds": 60.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.002565112430602312,
+        "sadness": 0.9113844037055969,
+        "fear": 0.05723453685641289,
+        "disgust": 0.014194727875292301,
+        "happy": 0.0016717144753783941,
+        "neutral": 0.012949424795806408
+      },
+      "risk_score": 0.2619358856463805
+    }
+  ],
+  "model_name": "Wav2Vec2 emotion classifier - selected V5",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "processing_status": "success",
+  "warnings": [
+    "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
+    "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
+  ],
+  "apptek_metadata": {
+    "domain": "telecommunications",
+    "raw_domain": "telecom",
+    "gender": "female",
+    "accent": "en-GB",
+    "duration_seconds": 404.377,
+    "text_preview": "Easy. I've already got a scenario in my head. Hi there. (Um) I'm looking to, hello, I'm looking to expand my existing plan by adding another line. I was just wondering what the process is because my son's just moved (uh) to a shelter at the bottom of my garden and he needs his own Wi-Fi. (Uh) yeah. I was just wondering what your process is, (uh) how how to go about adding the other line. Yeah. No. That's that's absolutely perfect. That would be (uh) amazing. Yes. So it's O one seven eight O seve"
+  }
+}
