@@ -26,7 +26,9 @@ ml-services/data/
 ml-services/models/
 
 # Prevent gigabytes of binary sound layers from being committed
-data/
+# data/* (not data/) so subdirectory exceptions can be applied
+data/*
+!data/sentence_segments/
 *.wav
 *.mp3
 

@@ -1,0 +1,965 @@
+{
+  "call_id": "en_US_General_Banking_1584540",
+  "accent": "en-US_General",
+  "domain": "banking",
+  "model": "faster-whisper small.en/int8 + per-channel",
+  "total": 106,
+  "agent_sentences": 66,
+  "customer_sentences": 40,
+  "sentences": [
+    {
+      "speaker": "AGENT",
+      "start": 15.12,
+      "end": 16.16,
+      "duration": 1.04,
+      "text": "Good afternoon.",
+      "id": "AGENT_001",
+      "seq_id": 1
+    },
+    {
+      "speaker": "AGENT",
+      "start": 16.44,
+      "end": 19.38,
+      "duration": 2.94,
+      "text": "Thank you for calling Justice Federal Credit Union.",
+      "id": "AGENT_002",
+      "seq_id": 2
+    },
+    {
+      "speaker": "AGENT",
+      "start": 19.84,
+      "end": 20.96,
+      "duration": 1.12,
+      "text": "How can I help you?",
+      "id": "AGENT_003",
+      "seq_id": 3
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 23.25,
+      "end": 25.73,
+      "duration": 2.48,
+      "text": "Hello there, I'm Jeffrey.",
+      "id": "CUSTOMER_001",
+      "seq_id": 4
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 26.63,
+      "end": 34.6,
+      "duration": 7.97,
+      "text": "I actually contacted you guys to know if you guys hand out loans.",
+      "id": "CUSTOMER_002",
+      "seq_id": 5
+    },
+    {
+      "speaker": "AGENT",
+      "start": 36.07,
+      "end": 36.93,
+      "duration": 0.86,
+      "text": "Oh, hi, Jeffrey.",
+      "id": "AGENT_004",
+      "seq_id": 6
+    },
+    {
+      "speaker": "AGENT",
+      "start": 37.21,
+      "end": 39.97,
+      "duration": 2.76,
+      "text": "I certainly appreciate you giving us a call today.",
+      "id": "AGENT_005",
+      "seq_id": 7
+    },
+    {
+      "speaker": "AGENT",
+      "start": 40.47,
+      "end": 44.97,
+      "duration": 4.5,
+      "text": "And yes, we do offer various consumer loans.",
+      "id": "AGENT_006",
+      "seq_id": 8
+    },
+    {
+      "speaker": "AGENT",
+      "start": 46.07,
+      "end": 54.16,
+      "duration": 8.09,
+      "text": "Can I ask a little bit about a little bit of questions to you about what type of loan you may be seeking?",
+      "id": "AGENT_007",
+      "seq_id": 9
+    },
+    {
+      "speaker": "AGENT",
+      "start": 54.16,
+      "end": 63.06,
+      "duration": 8.9,
+      "text": "Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?",
+      "id": "AGENT_008",
+      "seq_id": 10
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 65.46,
+      "end": 66.92,
+      "duration": 1.46,
+      "text": "Well, it's got to be agricultural.",
+      "id": "CUSTOMER_003",
+      "seq_id": 11
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 67.38,
+      "end": 75.18,
+      "duration": 7.8,
+      "text": "You see I have this farm and basically I'm looking to buy some equipment.",
+      "id": "CUSTOMER_004",
+      "seq_id": 12
+    },
+    {
+      "speaker": "AGENT",
+      "start": 77.36,
+      "end": 77.58,
+      "duration": 0.22,
+      "text": "Great.",
+      "id": "AGENT_009",
+      "seq_id": 13
+    },
+    {
+      "speaker": "AGENT",
+      "start": 77.94,
+      "end": 80.12,
+      "duration": 2.18,
+      "text": "So you're looking to expand your current operation.",
+      "id": "AGENT_010",
+      "seq_id": 14
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 84.09,
+      "end": 84.83,
+      "duration": 0.74,
+      "text": "Yes, exactly.",
+      "id": "CUSTOMER_005",
+      "seq_id": 15
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 85.77,
+      "end": 92.07,
+      "duration": 6.3,
+      "text": "So what do I need to be doing to get a loan for these equipment?",
+      "id": "CUSTOMER_006",
+      "seq_id": 16
+    },
+    {
+      "speaker": "AGENT",
+      "start": 93.77,
+      "end": 98.23,
+      "duration": 4.46,
+      "text": "First, let me go ahead and ask a few qualifying questions if you don't mind.",
+      "id": "AGENT_011",
+      "seq_id": 17
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 101.75,
+      "end": 102.83,
+      "duration": 1.08,
+      "text": "Sure, go ahead.",
+      "id": "CUSTOMER_007",
+      "seq_id": 18
+    },
+    {
+      "speaker": "AGENT",
+      "start": 104.63,
+      "end": 106.87,
+      "duration": 2.24,
+      "text": "Now, do you currently have an account with us?",
+      "id": "AGENT_012",
+      "seq_id": 19
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 110.19,
+      "end": 111.61,
+      "duration": 1.42,
+      "text": "I do not think I do.",
+      "id": "CUSTOMER_008",
+      "seq_id": 20
+    },
+    {
+      "speaker": "AGENT",
+      "start": 112.82,
+      "end": 114.32,
+      "duration": 1.5,
+      "text": "Okay, not a problem.",
+      "id": "AGENT_013",
+      "seq_id": 21
+    },
+    {
+      "speaker": "AGENT",
+      "start": 114.86,
+      "end": 117.08,
+      "duration": 2.22,
+      "text": "And how long has your farm been in operation?",
+      "id": "AGENT_014",
+      "seq_id": 22
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 119.62,
+      "end": 121.6,
+      "duration": 1.98,
+      "text": "It's been about three months.",
+      "id": "CUSTOMER_009",
+      "seq_id": 23
+    },
+    {
+      "speaker": "AGENT",
+      "start": 123.18,
+      "end": 123.78,
+      "duration": 0.6,
+      "text": "Okay.",
+      "id": "AGENT_015",
+      "seq_id": 24
+    },
+    {
+      "speaker": "AGENT",
+      "start": 124.3,
+      "end": 131.32,
+      "duration": 7.02,
+      "text": "And was it a running farm prior to you taking it over, or is it a completely new venture for you?",
+      "id": "AGENT_016",
+      "seq_id": 25
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 133.39,
+      "end": 138.55,
+      "duration": 5.16,
+      "text": "No, yes, my grandfather owned it but after he passed away I took over ownership.",
+      "id": "CUSTOMER_010",
+      "seq_id": 26
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 138.89,
+      "end": 139.81,
+      "duration": 0.92,
+      "text": "He left it to me.",
+      "id": "CUSTOMER_011",
+      "seq_id": 27
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 140.43,
+      "end": 149.31,
+      "duration": 8.88,
+      "text": "So I took over the business with things he already had and it sounds good.",
+      "id": "CUSTOMER_012",
+      "seq_id": 28
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 149.95,
+      "end": 159.56,
+      "duration": 9.61,
+      "text": "So I'm looking to really expand my selection of tools and supplies to help improve.",
+      "id": "CUSTOMER_013",
+      "seq_id": 29
+    },
+    {
+      "speaker": "AGENT",
+      "start": 158.56,
+      "end": 158.58,
+      "duration": 0.02,
+      "text": "Okay.",
+      "id": "AGENT_017",
+      "seq_id": 30
+    },
+    {
+      "speaker": "AGENT",
+      "start": 160.42,
+      "end": 167.3,
+      "duration": 6.88,
+      "text": "So basically, it's been a running farm for several years, but you have had ownership of it for the last three months, correct?",
+      "id": "AGENT_018",
+      "seq_id": 31
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 168.38,
+      "end": 169.24,
+      "duration": 0.86,
+      "text": "That's right.",
+      "id": "CUSTOMER_014",
+      "seq_id": 32
+    },
+    {
+      "speaker": "AGENT",
+      "start": 170.46,
+      "end": 171.06,
+      "duration": 0.6,
+      "text": "Okay.",
+      "id": "AGENT_019",
+      "seq_id": 33
+    },
+    {
+      "speaker": "AGENT",
+      "start": 171.06,
+      "end": 173.98,
+      "duration": 2.92,
+      "text": "And the previous owner, did he have an account with us?",
+      "id": "AGENT_020",
+      "seq_id": 34
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 176.83,
+      "end": 178.89,
+      "duration": 2.06,
+      "text": "He probably did.",
+      "id": "CUSTOMER_015",
+      "seq_id": 35
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 179.59,
+      "end": 181.93,
+      "duration": 2.34,
+      "text": "His name is Michael Thompson.",
+      "id": "CUSTOMER_016",
+      "seq_id": 36
+    },
+    {
+      "speaker": "AGENT",
+      "start": 184.88,
+      "end": 186.98,
+      "duration": 2.1,
+      "text": "Okay, I'll go ahead and note that down.",
+      "id": "AGENT_021",
+      "seq_id": 37
+    },
+    {
+      "speaker": "AGENT",
+      "start": 187.9,
+      "end": 188.8,
+      "duration": 0.9,
+      "text": "Okay, great.",
+      "id": "AGENT_022",
+      "seq_id": 38
+    },
+    {
+      "speaker": "AGENT",
+      "start": 189.58,
+      "end": 194.84,
+      "duration": 5.26,
+      "text": "And what type of equipment are you looking to get a loan for?",
+      "id": "AGENT_023",
+      "seq_id": 39
+    },
+    {
+      "speaker": "AGENT",
+      "start": 195.0,
+      "end": 196.14,
+      "duration": 1.14,
+      "text": "What is the amount?",
+      "id": "AGENT_024",
+      "seq_id": 40
+    },
+    {
+      "speaker": "AGENT",
+      "start": 197.39,
+      "end": 200.51,
+      "duration": 3.12,
+      "text": "Is it under 10 ,000 or over 10 ,000?",
+      "id": "AGENT_025",
+      "seq_id": 41
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 202.81,
+      "end": 205.55,
+      "duration": 2.74,
+      "text": "I would imagine it's over.",
+      "id": "CUSTOMER_017",
+      "seq_id": 42
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 206.45,
+      "end": 221.03,
+      "duration": 14.58,
+      "text": "I'm looking to buy like most of the things that we have on the farm are old so I'm looking to replace everything that would range from tractors to plows and all sorts of machines.",
+      "id": "CUSTOMER_018",
+      "seq_id": 43
+    },
+    {
+      "speaker": "AGENT",
+      "start": 222.49,
+      "end": 223.41,
+      "duration": 0.92,
+      "text": "Okay, great.",
+      "id": "AGENT_026",
+      "seq_id": 44
+    },
+    {
+      "speaker": "AGENT",
+      "start": 224.01,
+      "end": 231.23,
+      "duration": 7.22,
+      "text": "Now, do you have any collateral that you will be using as part of your loan application?",
+      "id": "AGENT_027",
+      "seq_id": 45
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 234.72,
+      "end": 239.48,
+      "duration": 4.76,
+      "text": "Well, you see this is my first time taking a loan so I don't really know much about it.",
+      "id": "CUSTOMER_019",
+      "seq_id": 46
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 240.08,
+      "end": 241.62,
+      "duration": 1.54,
+      "text": "Bicolateral, what do you mean?",
+      "id": "CUSTOMER_020",
+      "seq_id": 47
+    },
+    {
+      "speaker": "AGENT",
+      "start": 241.96,
+      "end": 245.64,
+      "duration": 3.68,
+      "text": "Okay, I would be happy to explain this to you.",
+      "id": "AGENT_028",
+      "seq_id": 48
+    },
+    {
+      "speaker": "AGENT",
+      "start": 246.38,
+      "end": 253.08,
+      "duration": 6.7,
+      "text": "Collateral is basically something that you would be using as security against the repayment of your loan.",
+      "id": "AGENT_029",
+      "seq_id": 49
+    },
+    {
+      "speaker": "AGENT",
+      "start": 253.3,
+      "end": 264.02,
+      "duration": 10.72,
+      "text": "For example, if you're a homeowner, or if you own land, or any other type of property, then that could be used as collateral as a basis for your loan.",
+      "id": "AGENT_030",
+      "seq_id": 50
+    },
+    {
+      "speaker": "AGENT",
+      "start": 264.96,
+      "end": 269.14,
+      "duration": 4.18,
+      "text": "So for example, this is just an example, not for your specific case.",
+      "id": "AGENT_031",
+      "seq_id": 51
+    },
+    {
+      "speaker": "AGENT",
+      "start": 269.96,
+      "end": 276.72,
+      "duration": 6.76,
+      "text": "Say you wanted to borrow $50 ,000, and you use your home as collateral.",
+      "id": "AGENT_032",
+      "seq_id": 52
+    },
+    {
+      "speaker": "AGENT",
+      "start": 277.28,
+      "end": 288.56,
+      "duration": 11.28,
+      "text": "So we would put a lien against your home in the event that you did not repay the balance.",
+      "id": "AGENT_033",
+      "seq_id": 53
+    },
+    {
+      "speaker": "AGENT",
+      "start": 288.56,
+      "end": 293.7,
+      "duration": 5.14,
+      "text": "But of course, if you make your payments on time, and you pay off the balance before, then that lien would be revoked.",
+      "id": "AGENT_034",
+      "seq_id": 54
+    },
+    {
+      "speaker": "AGENT",
+      "start": 295.3,
+      "end": 311.45,
+      "duration": 16.15,
+      "text": "In the event that you did not pay, of course, we would be able to file an injunction so that anytime you refinance your home or sold that property, then we would be able to recoup our payment at that time.",
+      "id": "AGENT_035",
+      "seq_id": 55
+    },
+    {
+      "speaker": "AGENT",
+      "start": 312.01,
+      "end": 313.19,
+      "duration": 1.18,
+      "text": "That is just an example.",
+      "id": "AGENT_036",
+      "seq_id": 56
+    },
+    {
+      "speaker": "AGENT",
+      "start": 314.2,
+      "end": 329.78,
+      "duration": 15.58,
+      "text": "For smaller loan amounts, you would necessarily need collateral, but you would have to show that you have good credit, and that you have been using credit responsibly, and also that you have a regular source of income.",
+      "id": "AGENT_037",
+      "seq_id": 57
+    },
+    {
+      "speaker": "AGENT",
+      "start": 330.6,
+      "end": 348.82,
+      "duration": 18.22,
+      "text": "Say from a regular job, like a salary job, or if you're a W2N4E, we would need at least 12 -month bank statement that shows that you're financially solvent and that you actually have the ability to make payments on the loan amount that you are seeking.",
+      "id": "AGENT_038",
+      "seq_id": 58
+    },
+    {
+      "speaker": "AGENT",
+      "start": 348.82,
+      "end": 349.28,
+      "duration": 0.46,
+      "text": "Great.",
+      "id": "AGENT_039",
+      "seq_id": 59
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 353.23,
+      "end": 353.81,
+      "duration": 0.58,
+      "text": "I see.",
+      "id": "CUSTOMER_021",
+      "seq_id": 60
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 353.93,
+      "end": 356.31,
+      "duration": 2.38,
+      "text": "That's a lot of information but I get it now.",
+      "id": "CUSTOMER_022",
+      "seq_id": 61
+    },
+    {
+      "speaker": "AGENT",
+      "start": 358.87,
+      "end": 376.87,
+      "duration": 18.0,
+      "text": "So you sit here thinking about borrowing about $10 ,000 for the purpose of purchasing new equipment to help maintain the farm that your grandfather left behind.",
+      "id": "AGENT_040",
+      "seq_id": 62
+    },
+    {
+      "speaker": "AGENT",
+      "start": 377.53,
+      "end": 378.31,
+      "duration": 0.78,
+      "text": "Okay, great.",
+      "id": "AGENT_041",
+      "seq_id": 63
+    },
+    {
+      "speaker": "AGENT",
+      "start": 378.53,
+      "end": 379.15,
+      "duration": 0.62,
+      "text": "Not a problem.",
+      "id": "AGENT_042",
+      "seq_id": 64
+    },
+    {
+      "speaker": "AGENT",
+      "start": 380.55,
+      "end": 382.63,
+      "duration": 2.08,
+      "text": "And are you currently working?",
+      "id": "AGENT_043",
+      "seq_id": 65
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 385.29,
+      "end": 387.85,
+      "duration": 2.56,
+      "text": "Yes, I am working actually.",
+      "id": "CUSTOMER_023",
+      "seq_id": 66
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 388.33,
+      "end": 393.53,
+      "duration": 5.2,
+      "text": "I have another company of my own that I work at.",
+      "id": "CUSTOMER_024",
+      "seq_id": 67
+    },
+    {
+      "speaker": "AGENT",
+      "start": 394.57,
+      "end": 400.35,
+      "duration": 5.78,
+      "text": "So it's your own company, so make sure you're self -employed, or are you working for someone else?",
+      "id": "AGENT_044",
+      "seq_id": 68
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 404.64,
+      "end": 405.86,
+      "duration": 1.22,
+      "text": "I am self -employed, yes.",
+      "id": "CUSTOMER_025",
+      "seq_id": 69
+    },
+    {
+      "speaker": "AGENT",
+      "start": 408.1,
+      "end": 410.54,
+      "duration": 2.44,
+      "text": "And what is your monthly income?",
+      "id": "AGENT_045",
+      "seq_id": 70
+    },
+    {
+      "speaker": "AGENT",
+      "start": 411.55,
+      "end": 411.99,
+      "duration": 0.44,
+      "text": "Approximate?",
+      "id": "AGENT_046",
+      "seq_id": 71
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 414.58,
+      "end": 420.79,
+      "duration": 6.21,
+      "text": "That'll be approximately, I'd say about $1 ,200 per",
+      "id": "CUSTOMER_026",
+      "seq_id": 72
+    },
+    {
+      "speaker": "AGENT",
+      "start": 421.23,
+      "end": 422.53,
+      "duration": 1.3,
+      "text": "$1 ,200 per month?",
+      "id": "AGENT_047",
+      "seq_id": 73
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 424.18,
+      "end": 424.64,
+      "duration": 0.46,
+      "text": "month, yes.",
+      "id": "CUSTOMER_027",
+      "seq_id": 74
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 426.56,
+      "end": 427.2,
+      "duration": 0.64,
+      "text": "On an average,",
+      "id": "CUSTOMER_028",
+      "seq_id": 75
+    },
+    {
+      "speaker": "AGENT",
+      "start": 427.88,
+      "end": 429.96,
+      "duration": 2.08,
+      "text": "Okay, thank you so much.",
+      "id": "AGENT_048",
+      "seq_id": 76
+    },
+    {
+      "speaker": "AGENT",
+      "start": 431.51,
+      "end": 433.35,
+      "duration": 1.84,
+      "text": "I didn't send information in.",
+      "id": "AGENT_049",
+      "seq_id": 77
+    },
+    {
+      "speaker": "AGENT",
+      "start": 437.0,
+      "end": 440.16,
+      "duration": 3.16,
+      "text": "Do you have a mortgage, or are you renting friendly?",
+      "id": "AGENT_050",
+      "seq_id": 78
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 441.98,
+      "end": 443.0,
+      "duration": 1.02,
+      "text": "I am currently renting.",
+      "id": "CUSTOMER_029",
+      "seq_id": 79
+    },
+    {
+      "speaker": "AGENT",
+      "start": 443.46,
+      "end": 445.34,
+      "duration": 1.88,
+      "text": "Okay, and what is your monthly rent?",
+      "id": "AGENT_051",
+      "seq_id": 80
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 449.58,
+      "end": 451.16,
+      "duration": 1.58,
+      "text": "That would be around $700.",
+      "id": "CUSTOMER_030",
+      "seq_id": 81
+    },
+    {
+      "speaker": "AGENT",
+      "start": 453.22,
+      "end": 453.66,
+      "duration": 0.44,
+      "text": "Thank you.",
+      "id": "AGENT_052",
+      "seq_id": 82
+    },
+    {
+      "speaker": "AGENT",
+      "start": 455.46,
+      "end": 457.96,
+      "duration": 2.5,
+      "text": "And do you have any other expenses that I should know about?",
+      "id": "AGENT_053",
+      "seq_id": 83
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 460.56,
+      "end": 461.56,
+      "duration": 1.0,
+      "text": "Currently, no.",
+      "id": "CUSTOMER_031",
+      "seq_id": 84
+    },
+    {
+      "speaker": "AGENT",
+      "start": 463.74,
+      "end": 464.18,
+      "duration": 0.44,
+      "text": "Okay,",
+      "id": "AGENT_054",
+      "seq_id": 85
+    },
+    {
+      "speaker": "AGENT",
+      "start": 466.42,
+      "end": 467.22,
+      "duration": 0.8,
+      "text": "thank you.",
+      "id": "AGENT_055",
+      "seq_id": 86
+    },
+    {
+      "speaker": "AGENT",
+      "start": 473.08,
+      "end": 475.98,
+      "duration": 2.9,
+      "text": "Okay, I just put all that information in there. I",
+      "id": "AGENT_056",
+      "seq_id": 87
+    },
+    {
+      "speaker": "AGENT",
+      "start": 478.93,
+      "end": 481.39,
+      "duration": 2.46,
+      "text": "have an idea of what your credit score may be.",
+      "id": "AGENT_057",
+      "seq_id": 88
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 483.78,
+      "end": 490.27,
+      "duration": 6.49,
+      "text": "I haven't checked it recently but it should be around $400, I believe.",
+      "id": "CUSTOMER_032",
+      "seq_id": 89
+    },
+    {
+      "speaker": "AGENT",
+      "start": 492.22,
+      "end": 494.14,
+      "duration": 1.92,
+      "text": "Okay, thank you, information.",
+      "id": "AGENT_058",
+      "seq_id": 90
+    },
+    {
+      "speaker": "AGENT",
+      "start": 496.83,
+      "end": 500.87,
+      "duration": 4.04,
+      "text": "And is there anyone who would be able to be a cold borrower on this loan?",
+      "id": "AGENT_059",
+      "seq_id": 91
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 507.07,
+      "end": 508.57,
+      "duration": 1.5,
+      "text": "I could ask my wife.",
+      "id": "CUSTOMER_033",
+      "seq_id": 92
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 509.83,
+      "end": 511.19,
+      "duration": 1.36,
+      "text": "Yes, it would be my wife.",
+      "id": "CUSTOMER_034",
+      "seq_id": 93
+    },
+    {
+      "speaker": "AGENT",
+      "start": 513.37,
+      "end": 515.11,
+      "duration": 1.74,
+      "text": "Thank you. Okay,",
+      "id": "AGENT_060",
+      "seq_id": 94
+    },
+    {
+      "speaker": "AGENT",
+      "start": 517.57,
+      "end": 532.76,
+      "duration": 15.19,
+      "text": "based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.",
+      "id": "AGENT_061",
+      "seq_id": 95
+    },
+    {
+      "speaker": "AGENT",
+      "start": 533.1,
+      "end": 541.02,
+      "duration": 7.92,
+      "text": "We do need a minimum credit score of $650 for any loan that we offer through our credit union here.",
+      "id": "AGENT_062",
+      "seq_id": 96
+    },
+    {
+      "speaker": "AGENT",
+      "start": 541.78,
+      "end": 552.54,
+      "duration": 10.76,
+      "text": "And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify.",
+      "id": "AGENT_063",
+      "seq_id": 97
+    },
+    {
+      "speaker": "AGENT",
+      "start": 556.8,
+      "end": 575.02,
+      "duration": 18.22,
+      "text": "And with your $400 credit and your $1 ,200 a month income, which also, which most of it goes towards your living, you would not, according to our calculations, you would not be able to make payments on a loan at this time.",
+      "id": "AGENT_064",
+      "seq_id": 98
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 557.37,
+      "end": 557.79,
+      "duration": 0.42,
+      "text": "I see.",
+      "id": "CUSTOMER_035",
+      "seq_id": 99
+    },
+    {
+      "speaker": "AGENT",
+      "start": 576.22,
+      "end": 593.06,
+      "duration": 16.84,
+      "text": "What I can do is send you some information to help you get your credit in order and some budgeting tips that may help you to get on a better path towards financial solvency so you can reply maybe six months or one year down the line. You",
+      "id": "AGENT_065",
+      "seq_id": 100
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 595.38,
+      "end": 595.92,
+      "duration": 0.54,
+      "text": "I see.",
+      "id": "CUSTOMER_036",
+      "seq_id": 101
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 596.78,
+      "end": 598.2,
+      "duration": 1.42,
+      "text": "No, that won't be necessary.",
+      "id": "CUSTOMER_037",
+      "seq_id": 102
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 598.88,
+      "end": 599.98,
+      "duration": 1.1,
+      "text": "Thank you for all your time.",
+      "id": "CUSTOMER_038",
+      "seq_id": 103
+    },
+    {
+      "speaker": "AGENT",
+      "start": 601.42,
+      "end": 604.54,
+      "duration": 3.12,
+      "text": "are most welcome and do feel free to give us a call anytime.",
+      "id": "AGENT_066",
+      "seq_id": 104
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 607.2,
+      "end": 607.9,
+      "duration": 0.7,
+      "text": "Yes, of course.",
+      "id": "CUSTOMER_039",
+      "seq_id": 105
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 608.32,
+      "end": 608.42,
+      "duration": 0.1,
+      "text": "Goodbye.",
+      "id": "CUSTOMER_040",
+      "seq_id": 106
+    }
+  ]
+}

@@ -1,0 +1,875 @@
+{
+  "call_id": "en_CA_Banking_1592237",
+  "accent": "en-CA",
+  "domain": "banking",
+  "model": "faster-whisper small.en/int8 + per-channel",
+  "total": 96,
+  "agent_sentences": 70,
+  "customer_sentences": 26,
+  "sentences": [
+    {
+      "speaker": "AGENT",
+      "start": 11.7,
+      "end": 13.4,
+      "duration": 1.7,
+      "text": "Thank you for calling the Bank of Ottawa.",
+      "id": "AGENT_001",
+      "seq_id": 1
+    },
+    {
+      "speaker": "AGENT",
+      "start": 13.84,
+      "end": 16.38,
+      "duration": 2.54,
+      "text": "My name is Joao, customer support analyst.",
+      "id": "AGENT_002",
+      "seq_id": 2
+    },
+    {
+      "speaker": "AGENT",
+      "start": 16.74,
+      "end": 17.48,
+      "duration": 0.74,
+      "text": "How can I help you today?",
+      "id": "AGENT_003",
+      "seq_id": 3
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 19.54,
+      "end": 25.58,
+      "duration": 6.04,
+      "text": "My name is Dorothy Brown and I currently have a credit card with your bank.",
+      "id": "CUSTOMER_001",
+      "seq_id": 4
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 25.92,
+      "end": 39.38,
+      "duration": 13.46,
+      "text": "Would it be possible for me to open a checking account that I could link to this card or I suppose you have to look up and see if my information is there at all?",
+      "id": "CUSTOMER_002",
+      "seq_id": 5
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 39.54,
+      "end": 40.62,
+      "duration": 1.08,
+      "text": "So let's start with that.",
+      "id": "CUSTOMER_003",
+      "seq_id": 6
+    },
+    {
+      "speaker": "AGENT",
+      "start": 41.9,
+      "end": 42.3,
+      "duration": 0.4,
+      "text": "Sure.",
+      "id": "AGENT_004",
+      "seq_id": 7
+    },
+    {
+      "speaker": "AGENT",
+      "start": 42.66,
+      "end": 44.4,
+      "duration": 1.74,
+      "text": "I just need your date of birth.",
+      "id": "AGENT_005",
+      "seq_id": 8
+    },
+    {
+      "speaker": "AGENT",
+      "start": 52.87,
+      "end": 53.97,
+      "duration": 1.1,
+      "text": "Can I get your date of birth?",
+      "id": "AGENT_006",
+      "seq_id": 9
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 53.6,
+      "end": 64.48,
+      "duration": 10.88,
+      "text": "All right here's my card number, 760 -132 -598.",
+      "id": "CUSTOMER_004",
+      "seq_id": 10
+    },
+    {
+      "speaker": "AGENT",
+      "start": 67.9,
+      "end": 69.04,
+      "duration": 1.14,
+      "text": "Okay, thank you very much.",
+      "id": "AGENT_007",
+      "seq_id": 11
+    },
+    {
+      "speaker": "AGENT",
+      "start": 69.14,
+      "end": 72.54,
+      "duration": 3.4,
+      "text": "I also just need your date of birth to be able to confirm with our security, please.",
+      "id": "AGENT_008",
+      "seq_id": 12
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 75.22,
+      "end": 78.98,
+      "duration": 3.76,
+      "text": "Okay, 2856.",
+      "id": "CUSTOMER_005",
+      "seq_id": 13
+    },
+    {
+      "speaker": "AGENT",
+      "start": 81.44,
+      "end": 82.52,
+      "duration": 1.08,
+      "text": "Okay, thank you very much.",
+      "id": "AGENT_009",
+      "seq_id": 14
+    },
+    {
+      "speaker": "AGENT",
+      "start": 82.86,
+      "end": 88.62,
+      "duration": 5.76,
+      "text": "I see you have an account with us under the credit card, and you're looking to open up a new checking account.",
+      "id": "AGENT_010",
+      "seq_id": 15
+    },
+    {
+      "speaker": "AGENT",
+      "start": 89.02,
+      "end": 90.58,
+      "duration": 1.56,
+      "text": "We can definitely help you with that today.",
+      "id": "AGENT_011",
+      "seq_id": 16
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 93.58,
+      "end": 97.02,
+      "duration": 3.44,
+      "text": "First of all, how does that work?",
+      "id": "CUSTOMER_006",
+      "seq_id": 17
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 97.72,
+      "end": 111.82,
+      "duration": 14.1,
+      "text": "Would it, if I use the credit card, could I make it go to the checking account or do I have to have two cards or do I have to have a different number?",
+      "id": "CUSTOMER_007",
+      "seq_id": 18
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 112.1,
+      "end": 113.48,
+      "duration": 1.38,
+      "text": "How does that work?",
+      "id": "CUSTOMER_008",
+      "seq_id": 19
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 113.6,
+      "end": 114.88,
+      "duration": 1.28,
+      "text": "How do you link it up?",
+      "id": "CUSTOMER_009",
+      "seq_id": 20
+    },
+    {
+      "speaker": "AGENT",
+      "start": 115.24,
+      "end": 124.02,
+      "duration": 8.78,
+      "text": "Well, basically what we're going to do is that we're going to open up a new checking account, which that allows you to draw money from it.",
+      "id": "AGENT_012",
+      "seq_id": 21
+    },
+    {
+      "speaker": "AGENT",
+      "start": 124.26,
+      "end": 126.98,
+      "duration": 2.72,
+      "text": "The card that you currently have is just a credit card.",
+      "id": "AGENT_013",
+      "seq_id": 22
+    },
+    {
+      "speaker": "AGENT",
+      "start": 127.6,
+      "end": 136.1,
+      "duration": 8.5,
+      "text": "This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.",
+      "id": "AGENT_014",
+      "seq_id": 23
+    },
+    {
+      "speaker": "AGENT",
+      "start": 136.1,
+      "end": 140.46,
+      "duration": 4.36,
+      "text": "But it will have another card itself because it's going to be a debit.",
+      "id": "AGENT_015",
+      "seq_id": 24
+    },
+    {
+      "speaker": "AGENT",
+      "start": 141.18,
+      "end": 142.62,
+      "duration": 1.44,
+      "text": "It's going to have a debit card.",
+      "id": "AGENT_016",
+      "seq_id": 25
+    },
+    {
+      "speaker": "AGENT",
+      "start": 142.98,
+      "end": 144.4,
+      "duration": 1.42,
+      "text": "So you're going to have two cards.",
+      "id": "AGENT_017",
+      "seq_id": 26
+    },
+    {
+      "speaker": "AGENT",
+      "start": 144.98,
+      "end": 155.66,
+      "duration": 10.68,
+      "text": "But with the checking account, you will be able to pay your credit card much quicker and be able to show up and have that available credit a lot faster than you would normally.",
+      "id": "AGENT_018",
+      "seq_id": 27
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 158.21,
+      "end": 166.31,
+      "duration": 8.1,
+      "text": "So can I use this new card, this new checking account at the machines in the stores or no?",
+      "id": "CUSTOMER_010",
+      "seq_id": 28
+    },
+    {
+      "speaker": "AGENT",
+      "start": 166.09,
+      "end": 174.31,
+      "duration": 8.22,
+      "text": "Yes, so the way that a checking account works in a debit account, the way that it works is that it draws money only that you have.",
+      "id": "AGENT_019",
+      "seq_id": 29
+    },
+    {
+      "speaker": "AGENT",
+      "start": 174.65,
+      "end": 179.75,
+      "duration": 5.1,
+      "text": "It doesn't have any credit options unless you're using it for online purchases.",
+      "id": "AGENT_020",
+      "seq_id": 30
+    },
+    {
+      "speaker": "AGENT",
+      "start": 180.43,
+      "end": 184.79,
+      "duration": 4.36,
+      "text": "This one is a debit credit card, but only in the sense of online purchases.",
+      "id": "AGENT_021",
+      "seq_id": 31
+    },
+    {
+      "speaker": "AGENT",
+      "start": 185.45,
+      "end": 189.99,
+      "duration": 4.54,
+      "text": "So it still only takes money from your account that you currently have available.",
+      "id": "AGENT_022",
+      "seq_id": 32
+    },
+    {
+      "speaker": "AGENT",
+      "start": 190.47,
+      "end": 194.51,
+      "duration": 4.04,
+      "text": "It does not take any money that you don't already have.",
+      "id": "AGENT_023",
+      "seq_id": 33
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 198.5,
+      "end": 217.12,
+      "duration": 18.62,
+      "text": "That's good to know because I'm trying to cut down on my expenses and I realize that a credit card is necessary because when you go to a hotel or some other places, they only take credit.",
+      "id": "CUSTOMER_011",
+      "seq_id": 34
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 217.3,
+      "end": 220.8,
+      "duration": 3.5,
+      "text": "I don't think that that's right but is that true?",
+      "id": "CUSTOMER_012",
+      "seq_id": 35
+    },
+    {
+      "speaker": "AGENT",
+      "start": 221.48,
+      "end": 226.0,
+      "duration": 4.52,
+      "text": "Well, I can't speak for all the hotels or different things like that.",
+      "id": "AGENT_024",
+      "seq_id": 36
+    },
+    {
+      "speaker": "AGENT",
+      "start": 226.12,
+      "end": 235.38,
+      "duration": 9.26,
+      "text": "But from my own experience, a lot of times they do require credit cards specifically to be able to make security deposits or things of such of that nature.",
+      "id": "AGENT_025",
+      "seq_id": 37
+    },
+    {
+      "speaker": "AGENT",
+      "start": 236.18,
+      "end": 242.4,
+      "duration": 6.22,
+      "text": "So without that ability, it becomes very hard to be able to travel or anything else using a hotel.",
+      "id": "AGENT_026",
+      "seq_id": 38
+    },
+    {
+      "speaker": "AGENT",
+      "start": 242.4,
+      "end": 251.06,
+      "duration": 8.66,
+      "text": "There are options such as Airbnbs, which don't require a credit card to be able to make a purchase for a stay.",
+      "id": "AGENT_027",
+      "seq_id": 39
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 255.96,
+      "end": 272.58,
+      "duration": 16.62,
+      "text": "Okay, another interesting point that I was trying to figure out is, is there a monthly maintenance fee on this card, this checking account card or is the maintenance fee on the credit card?",
+      "id": "CUSTOMER_013",
+      "seq_id": 40
+    },
+    {
+      "speaker": "AGENT",
+      "start": 269.39,
+      "end": 270.63,
+      "duration": 1.24,
+      "text": "No, you're actually...",
+      "id": "AGENT_028",
+      "seq_id": 41
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 273.34,
+      "end": 275.56,
+      "duration": 2.22,
+      "text": "How do I pay them?",
+      "id": "CUSTOMER_014",
+      "seq_id": 42
+    },
+    {
+      "speaker": "AGENT",
+      "start": 276.71,
+      "end": 282.53,
+      "duration": 5.82,
+      "text": "Yeah, so for the credit card, there is an annual fee that we do offer that you already had available.",
+      "id": "AGENT_029",
+      "seq_id": 43
+    },
+    {
+      "speaker": "AGENT",
+      "start": 283.07,
+      "end": 285.79,
+      "duration": 2.72,
+      "text": "In terms of the checking account, you're actually in luck.",
+      "id": "AGENT_030",
+      "seq_id": 44
+    },
+    {
+      "speaker": "AGENT",
+      "start": 286.05,
+      "end": 290.81,
+      "duration": 4.76,
+      "text": "There is no annual fee with our card or even a monthly fee.",
+      "id": "AGENT_031",
+      "seq_id": 45
+    },
+    {
+      "speaker": "AGENT",
+      "start": 290.81,
+      "end": 300.49,
+      "duration": 9.68,
+      "text": "We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.",
+      "id": "AGENT_032",
+      "seq_id": 46
+    },
+    {
+      "speaker": "AGENT",
+      "start": 301.17,
+      "end": 305.11,
+      "duration": 3.94,
+      "text": "So it's a feature that we offer that the majority of banks don't offer.",
+      "id": "AGENT_033",
+      "seq_id": 47
+    },
+    {
+      "speaker": "AGENT",
+      "start": 305.53,
+      "end": 309.75,
+      "duration": 4.22,
+      "text": "So it gives you the freedom to know that banking with us doesn't cost you money.",
+      "id": "AGENT_034",
+      "seq_id": 48
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 312.86,
+      "end": 313.28,
+      "duration": 0.42,
+      "text": "Well, yeah.",
+      "id": "CUSTOMER_015",
+      "seq_id": 49
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 314.14,
+      "end": 319.06,
+      "duration": 4.92,
+      "text": "Okay, so what kind of security do you have in this account?",
+      "id": "CUSTOMER_016",
+      "seq_id": 50
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 319.42,
+      "end": 329.4,
+      "duration": 9.98,
+      "text": "So if I was to do it online banking or on my phone banking, what type of security do you have for this account?",
+      "id": "CUSTOMER_017",
+      "seq_id": 51
+    },
+    {
+      "speaker": "AGENT",
+      "start": 329.78,
+      "end": 344.05,
+      "duration": 14.27,
+      "text": "Yeah, so our online banking and our mobile apps that we offer, which you can use directly from your smartphone, all have one of the top line security features that we offer, that the industry offers.",
+      "id": "AGENT_035",
+      "seq_id": 52
+    },
+    {
+      "speaker": "AGENT",
+      "start": 344.43,
+      "end": 350.81,
+      "duration": 6.38,
+      "text": "We offer what's known as two -factor authentication, which means it goes through two steps before you can get into your account.",
+      "id": "AGENT_036",
+      "seq_id": 53
+    },
+    {
+      "speaker": "AGENT",
+      "start": 350.81,
+      "end": 362.04,
+      "duration": 11.23,
+      "text": "It is a little bit sometimes a little bit more daunting for people, but it gives you that extra piece of mind to know that your account is not hacked.",
+      "id": "AGENT_037",
+      "seq_id": 54
+    },
+    {
+      "speaker": "AGENT",
+      "start": 362.83,
+      "end": 366.41,
+      "duration": 3.58,
+      "text": "If you lose your card, we do offer a zero liability.",
+      "id": "AGENT_038",
+      "seq_id": 55
+    },
+    {
+      "speaker": "AGENT",
+      "start": 367.15,
+      "end": 375.13,
+      "duration": 7.98,
+      "text": "If things are purchased with your card that was not you and you report it, we'll automatically reverse those charges on your card.",
+      "id": "AGENT_039",
+      "seq_id": 56
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 379.44,
+      "end": 393.42,
+      "duration": 13.98,
+      "text": "Okay, so do I have to set up a PIN for this account like I do with my other things or can I withdraw from an ATM?",
+      "id": "CUSTOMER_018",
+      "seq_id": 57
+    },
+    {
+      "speaker": "AGENT",
+      "start": 395.77,
+      "end": 403.37,
+      "duration": 7.6,
+      "text": "Yeah, so you will have to set up usually a four to six digit pin to be able to access or to make purchases.",
+      "id": "AGENT_040",
+      "seq_id": 58
+    },
+    {
+      "speaker": "AGENT",
+      "start": 403.57,
+      "end": 414.99,
+      "duration": 11.42,
+      "text": "If you use tap on your card, which is a feature that allows you to just tap the card, that does have a limit of $250, but that way you won't have to use a pin.",
+      "id": "AGENT_041",
+      "seq_id": 59
+    },
+    {
+      "speaker": "AGENT",
+      "start": 416.15,
+      "end": 423.96,
+      "duration": 7.81,
+      "text": "We also do have a daily withdrawal limit or purchase limit normally put in place of $1 ,000.",
+      "id": "AGENT_042",
+      "seq_id": 60
+    },
+    {
+      "speaker": "AGENT",
+      "start": 425.12,
+      "end": 432.36,
+      "duration": 7.24,
+      "text": "So in case you do have to make any purchases that are a little bit higher or you'd like that limit removed, those are automatic.",
+      "id": "AGENT_043",
+      "seq_id": 61
+    },
+    {
+      "speaker": "AGENT",
+      "start": 432.7,
+      "end": 439.72,
+      "duration": 7.02,
+      "text": "You can get those changed when you get the card and to just give us a call and say that you'd like those features removed.",
+      "id": "AGENT_044",
+      "seq_id": 62
+    },
+    {
+      "speaker": "AGENT",
+      "start": 439.72,
+      "end": 447.66,
+      "duration": 7.94,
+      "text": "Or if you make a big purchase, just give us a call and we'll up the limit temporarily for the purchase that you're trying to do.",
+      "id": "AGENT_045",
+      "seq_id": 63
+    },
+    {
+      "speaker": "AGENT",
+      "start": 448.3,
+      "end": 453.22,
+      "duration": 4.92,
+      "text": "For the ATM access, you do have that access to be able to access at any of our locations.",
+      "id": "AGENT_046",
+      "seq_id": 64
+    },
+    {
+      "speaker": "AGENT",
+      "start": 453.94,
+      "end": 456.88,
+      "duration": 2.94,
+      "text": "No charge to be able to access the ATM and your funds.",
+      "id": "AGENT_047",
+      "seq_id": 65
+    },
+    {
+      "speaker": "AGENT",
+      "start": 457.48,
+      "end": 461.2,
+      "duration": 3.72,
+      "text": "However, if you do go to other banks, you can use their ATMs.",
+      "id": "AGENT_048",
+      "seq_id": 66
+    },
+    {
+      "speaker": "AGENT",
+      "start": 461.88,
+      "end": 466.42,
+      "duration": 4.54,
+      "text": "However, there's usually a small conversion charge. Oh",
+      "id": "AGENT_049",
+      "seq_id": 67
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 468.5,
+      "end": 482.42,
+      "duration": 13.92,
+      "text": "Okay, so how do you have a machine in many places for your particular company or are you limited to a certain area?",
+      "id": "CUSTOMER_019",
+      "seq_id": 68
+    },
+    {
+      "speaker": "AGENT",
+      "start": 483.38,
+      "end": 485.84,
+      "duration": 2.46,
+      "text": "no, we're nationwide branches.",
+      "id": "AGENT_050",
+      "seq_id": 69
+    },
+    {
+      "speaker": "AGENT",
+      "start": 486.08,
+      "end": 495.38,
+      "duration": 9.3,
+      "text": "We have branches in many locations, over 300 branches in many small rural communities, as well as in all the major cities across Canada.",
+      "id": "AGENT_051",
+      "seq_id": 70
+    },
+    {
+      "speaker": "AGENT",
+      "start": 495.58,
+      "end": 500.2,
+      "duration": 4.62,
+      "text": "We are a very large but very family -friendly bank.",
+      "id": "AGENT_052",
+      "seq_id": 71
+    },
+    {
+      "speaker": "AGENT",
+      "start": 500.78,
+      "end": 501.78,
+      "duration": 1.0,
+      "text": "So you can trust us.",
+      "id": "AGENT_053",
+      "seq_id": 72
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 506.59,
+      "end": 515.21,
+      "duration": 8.62,
+      "text": "Okay, so could you try and set it up right now and while I wait or do I need to wait for you to call me back?",
+      "id": "CUSTOMER_020",
+      "seq_id": 73
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 515.51,
+      "end": 517.23,
+      "duration": 1.72,
+      "text": "Is this a long process?",
+      "id": "CUSTOMER_021",
+      "seq_id": 74
+    },
+    {
+      "speaker": "AGENT",
+      "start": 518.01,
+      "end": 523.45,
+      "duration": 5.44,
+      "text": "Oh no, this is not a long process at all since we already have many of your information on file from the credit card.",
+      "id": "AGENT_054",
+      "seq_id": 75
+    },
+    {
+      "speaker": "AGENT",
+      "start": 523.45,
+      "end": 531.19,
+      "duration": 7.74,
+      "text": "Please give me a few minutes to be able to enter all the information in, and I will email you directly with all the other information.",
+      "id": "AGENT_055",
+      "seq_id": 76
+    },
+    {
+      "speaker": "AGENT",
+      "start": 531.79,
+      "end": 537.23,
+      "duration": 5.44,
+      "text": "You'll receive the new card in the mail within seven to ten business days.",
+      "id": "AGENT_056",
+      "seq_id": 77
+    },
+    {
+      "speaker": "AGENT",
+      "start": 538.07,
+      "end": 546.27,
+      "duration": 8.2,
+      "text": "And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it.",
+      "id": "AGENT_057",
+      "seq_id": 78
+    },
+    {
+      "speaker": "AGENT",
+      "start": 546.27,
+      "end": 555.5,
+      "duration": 9.23,
+      "text": "You'll have to create a pin, which all the instructions will be done there, and will be in the envelope once you receive your card.",
+      "id": "AGENT_058",
+      "seq_id": 79
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 559.04,
+      "end": 565.62,
+      "duration": 6.58,
+      "text": "Okay, I think I'd like to go ahead with it then and setting up the new checking account.",
+      "id": "CUSTOMER_022",
+      "seq_id": 80
+    },
+    {
+      "speaker": "AGENT",
+      "start": 566.38,
+      "end": 567.72,
+      "duration": 1.34,
+      "text": "That's great for you to hear.",
+      "id": "AGENT_059",
+      "seq_id": 81
+    },
+    {
+      "speaker": "AGENT",
+      "start": 568.02,
+      "end": 573.9,
+      "duration": 5.88,
+      "text": "In case you're also wondering, we do also offer a savings promotion right now for a savings account.",
+      "id": "AGENT_060",
+      "seq_id": 82
+    },
+    {
+      "speaker": "AGENT",
+      "start": 574.53,
+      "end": 587.27,
+      "duration": 12.74,
+      "text": "Savings accounts are not normally used for purchases, but you can get free interest on your money that you deposit in, so that's free money for you.",
+      "id": "AGENT_061",
+      "seq_id": 83
+    },
+    {
+      "speaker": "AGENT",
+      "start": 587.77,
+      "end": 590.73,
+      "duration": 2.96,
+      "text": "So if you're interested, we do offer that option as well.",
+      "id": "AGENT_062",
+      "seq_id": 84
+    },
+    {
+      "speaker": "AGENT",
+      "start": 591.59,
+      "end": 595.63,
+      "duration": 4.04,
+      "text": "I'll send the information via email to you in case you change your mind.",
+      "id": "AGENT_063",
+      "seq_id": 85
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 597.91,
+      "end": 600.73,
+      "duration": 2.82,
+      "text": "Yes, I think I'd like to go ahead with that as well.",
+      "id": "CUSTOMER_023",
+      "seq_id": 86
+    },
+    {
+      "speaker": "AGENT",
+      "start": 601.92,
+      "end": 603.14,
+      "duration": 1.22,
+      "text": "I'm very glad to hear that.",
+      "id": "AGENT_064",
+      "seq_id": 87
+    },
+    {
+      "speaker": "AGENT",
+      "start": 603.54,
+      "end": 604.84,
+      "duration": 1.3,
+      "text": "So give me a few minutes here.",
+      "id": "AGENT_065",
+      "seq_id": 88
+    },
+    {
+      "speaker": "AGENT",
+      "start": 606.61,
+      "end": 616.23,
+      "duration": 9.62,
+      "text": "Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.",
+      "id": "AGENT_066",
+      "seq_id": 89
+    },
+    {
+      "speaker": "AGENT",
+      "start": 616.41,
+      "end": 617.57,
+      "duration": 1.16,
+      "text": "We're glad to have your business.",
+      "id": "AGENT_067",
+      "seq_id": 90
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 619.8,
+      "end": 621.1,
+      "duration": 1.3,
+      "text": "Well, thank you very much.",
+      "id": "CUSTOMER_024",
+      "seq_id": 91
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 622.08,
+      "end": 624.04,
+      "duration": 1.96,
+      "text": "It's been a pleasure talking with you.",
+      "id": "CUSTOMER_025",
+      "seq_id": 92
+    },
+    {
+      "speaker": "AGENT",
+      "start": 624.98,
+      "end": 626.04,
+      "duration": 1.06,
+      "text": "You're very welcome.",
+      "id": "AGENT_068",
+      "seq_id": 93
+    },
+    {
+      "speaker": "AGENT",
+      "start": 626.6,
+      "end": 627.5,
+      "duration": 0.9,
+      "text": "Thank you for calling.",
+      "id": "AGENT_069",
+      "seq_id": 94
+    },
+    {
+      "speaker": "AGENT",
+      "start": 627.72,
+      "end": 629.7,
+      "duration": 1.98,
+      "text": "I'm Bank of Ottawa, and have a great day.",
+      "id": "AGENT_070",
+      "seq_id": 95
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 632.09,
+      "end": 632.75,
+      "duration": 0.66,
+      "text": "Bye -bye.",
+      "id": "CUSTOMER_026",
+      "seq_id": 96
+    }
+  ]
+}
