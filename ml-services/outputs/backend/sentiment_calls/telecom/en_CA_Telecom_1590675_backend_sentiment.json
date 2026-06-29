@@ -3,7 +3,12 @@
   "domain": "telecom",
   "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
   "source_file": "outputs/apptek/simple_sentiment_results/telecom/en_CA_Telecom_1590675_simple_sentiment.json",
-  "generated_at": "2026-06-29T22:06:48.225683+00:00",
+  "generated_at": "2026-06-29T22:11:51.123286+00:00",
+  "join_keys": {
+    "recommended_unique_key": "call_id + segment_index",
+    "transcript_alignment_key": "call_id + seq_id",
+    "note": "seq_id is preserved from transcription. segment_index is added because one transcript file contains a duplicate seq_id."
+  },
   "call_summary": {
     "total_segments": 104,
     "successful_segments": 94,
@@ -30,10 +35,13 @@
       "neutral": 15,
       "fear": 3,
       "anger": 18
-    }
+    },
+    "duplicate_seq_ids": []
   },
   "segments": [
     {
+      "segment_index": 1,
+      "segment_key": "en_CA_Telecom_1590675_0001",
       "seq_id": 1,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -41,6 +49,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 2,
+      "segment_key": "en_CA_Telecom_1590675_0002",
       "seq_id": 2,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -48,6 +58,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 3,
+      "segment_key": "en_CA_Telecom_1590675_0003",
       "seq_id": 3,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -55,6 +67,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 4,
+      "segment_key": "en_CA_Telecom_1590675_0004",
       "seq_id": 4,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -62,6 +76,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 5,
+      "segment_key": "en_CA_Telecom_1590675_0005",
       "seq_id": 5,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -69,6 +85,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 6,
+      "segment_key": "en_CA_Telecom_1590675_0006",
       "seq_id": 6,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -76,6 +94,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 7,
+      "segment_key": "en_CA_Telecom_1590675_0007",
       "seq_id": 7,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -83,6 +103,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 8,
+      "segment_key": "en_CA_Telecom_1590675_0008",
       "seq_id": 8,
       "sentiment": "Negative",
       "dominant_emotion": "fear",
@@ -90,6 +112,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 9,
+      "segment_key": "en_CA_Telecom_1590675_0009",
       "seq_id": 9,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -97,6 +121,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 10,
+      "segment_key": "en_CA_Telecom_1590675_0010",
       "seq_id": 10,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -104,6 +130,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 11,
+      "segment_key": "en_CA_Telecom_1590675_0011",
       "seq_id": 11,
       "sentiment": "Negative",
       "dominant_emotion": "fear",
@@ -111,6 +139,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 12,
+      "segment_key": "en_CA_Telecom_1590675_0012",
       "seq_id": 12,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -118,6 +148,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 13,
+      "segment_key": "en_CA_Telecom_1590675_0013",
       "seq_id": 13,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -125,6 +157,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 14,
+      "segment_key": "en_CA_Telecom_1590675_0014",
       "seq_id": 14,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -132,6 +166,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 15,
+      "segment_key": "en_CA_Telecom_1590675_0015",
       "seq_id": 15,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -139,6 +175,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 16,
+      "segment_key": "en_CA_Telecom_1590675_0016",
       "seq_id": 16,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -146,6 +184,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 17,
+      "segment_key": "en_CA_Telecom_1590675_0017",
       "seq_id": 17,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -153,6 +193,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 18,
+      "segment_key": "en_CA_Telecom_1590675_0018",
       "seq_id": 18,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -160,6 +202,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 19,
+      "segment_key": "en_CA_Telecom_1590675_0019",
       "seq_id": 19,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -167,6 +211,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 20,
+      "segment_key": "en_CA_Telecom_1590675_0020",
       "seq_id": 20,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -174,6 +220,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 21,
+      "segment_key": "en_CA_Telecom_1590675_0021",
       "seq_id": 21,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -181,6 +229,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 22,
+      "segment_key": "en_CA_Telecom_1590675_0022",
       "seq_id": 22,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -188,6 +238,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 23,
+      "segment_key": "en_CA_Telecom_1590675_0023",
       "seq_id": 23,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -195,6 +247,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 24,
+      "segment_key": "en_CA_Telecom_1590675_0024",
       "seq_id": 24,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -202,6 +256,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 25,
+      "segment_key": "en_CA_Telecom_1590675_0025",
       "seq_id": 25,
       "sentiment": null,
       "dominant_emotion": null,
@@ -209,6 +265,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 26,
+      "segment_key": "en_CA_Telecom_1590675_0026",
       "seq_id": 26,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -216,6 +274,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 27,
+      "segment_key": "en_CA_Telecom_1590675_0027",
       "seq_id": 27,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -223,6 +283,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 28,
+      "segment_key": "en_CA_Telecom_1590675_0028",
       "seq_id": 28,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -230,6 +292,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 29,
+      "segment_key": "en_CA_Telecom_1590675_0029",
       "seq_id": 29,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -237,6 +301,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 30,
+      "segment_key": "en_CA_Telecom_1590675_0030",
       "seq_id": 30,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -244,6 +310,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 31,
+      "segment_key": "en_CA_Telecom_1590675_0031",
       "seq_id": 31,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -251,6 +319,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 32,
+      "segment_key": "en_CA_Telecom_1590675_0032",
       "seq_id": 32,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -258,6 +328,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 33,
+      "segment_key": "en_CA_Telecom_1590675_0033",
       "seq_id": 33,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -265,6 +337,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 34,
+      "segment_key": "en_CA_Telecom_1590675_0034",
       "seq_id": 34,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -272,6 +346,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 35,
+      "segment_key": "en_CA_Telecom_1590675_0035",
       "seq_id": 35,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -279,6 +355,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 36,
+      "segment_key": "en_CA_Telecom_1590675_0036",
       "seq_id": 36,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -286,6 +364,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 37,
+      "segment_key": "en_CA_Telecom_1590675_0037",
       "seq_id": 37,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -293,6 +373,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 38,
+      "segment_key": "en_CA_Telecom_1590675_0038",
       "seq_id": 38,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -300,6 +382,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 39,
+      "segment_key": "en_CA_Telecom_1590675_0039",
       "seq_id": 39,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -307,6 +391,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 40,
+      "segment_key": "en_CA_Telecom_1590675_0040",
       "seq_id": 40,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -314,6 +400,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 41,
+      "segment_key": "en_CA_Telecom_1590675_0041",
       "seq_id": 41,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -321,6 +409,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 42,
+      "segment_key": "en_CA_Telecom_1590675_0042",
       "seq_id": 42,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -328,6 +418,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 43,
+      "segment_key": "en_CA_Telecom_1590675_0043",
       "seq_id": 43,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -335,6 +427,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 44,
+      "segment_key": "en_CA_Telecom_1590675_0044",
       "seq_id": 44,
       "sentiment": "Mixed",
       "dominant_emotion": "happy",
@@ -342,6 +436,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 45,
+      "segment_key": "en_CA_Telecom_1590675_0045",
       "seq_id": 45,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -349,6 +445,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 46,
+      "segment_key": "en_CA_Telecom_1590675_0046",
       "seq_id": 46,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -356,6 +454,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 47,
+      "segment_key": "en_CA_Telecom_1590675_0047",
       "seq_id": 47,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -363,6 +463,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 48,
+      "segment_key": "en_CA_Telecom_1590675_0048",
       "seq_id": 48,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -370,6 +472,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 49,
+      "segment_key": "en_CA_Telecom_1590675_0049",
       "seq_id": 49,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -377,6 +481,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 50,
+      "segment_key": "en_CA_Telecom_1590675_0050",
       "seq_id": 50,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -384,6 +490,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 51,
+      "segment_key": "en_CA_Telecom_1590675_0051",
       "seq_id": 51,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -391,6 +499,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 52,
+      "segment_key": "en_CA_Telecom_1590675_0052",
       "seq_id": 52,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -398,6 +508,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 53,
+      "segment_key": "en_CA_Telecom_1590675_0053",
       "seq_id": 53,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -405,6 +517,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 54,
+      "segment_key": "en_CA_Telecom_1590675_0054",
       "seq_id": 54,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -412,6 +526,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 55,
+      "segment_key": "en_CA_Telecom_1590675_0055",
       "seq_id": 55,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -419,6 +535,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 56,
+      "segment_key": "en_CA_Telecom_1590675_0056",
       "seq_id": 56,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -426,6 +544,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 57,
+      "segment_key": "en_CA_Telecom_1590675_0057",
       "seq_id": 57,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -433,6 +553,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 58,
+      "segment_key": "en_CA_Telecom_1590675_0058",
       "seq_id": 58,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -440,6 +562,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 59,
+      "segment_key": "en_CA_Telecom_1590675_0059",
       "seq_id": 59,
       "sentiment": "Negative",
       "dominant_emotion": "fear",
@@ -447,6 +571,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 60,
+      "segment_key": "en_CA_Telecom_1590675_0060",
       "seq_id": 60,
       "sentiment": null,
       "dominant_emotion": null,
@@ -454,6 +580,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 61,
+      "segment_key": "en_CA_Telecom_1590675_0061",
       "seq_id": 61,
       "sentiment": null,
       "dominant_emotion": null,
@@ -461,6 +589,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 62,
+      "segment_key": "en_CA_Telecom_1590675_0062",
       "seq_id": 62,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -468,6 +598,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 63,
+      "segment_key": "en_CA_Telecom_1590675_0063",
       "seq_id": 63,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -475,6 +607,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 64,
+      "segment_key": "en_CA_Telecom_1590675_0064",
       "seq_id": 64,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -482,6 +616,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 65,
+      "segment_key": "en_CA_Telecom_1590675_0065",
       "seq_id": 65,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -489,6 +625,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 66,
+      "segment_key": "en_CA_Telecom_1590675_0066",
       "seq_id": 66,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -496,6 +634,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 67,
+      "segment_key": "en_CA_Telecom_1590675_0067",
       "seq_id": 67,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -503,6 +643,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 68,
+      "segment_key": "en_CA_Telecom_1590675_0068",
       "seq_id": 68,
       "sentiment": null,
       "dominant_emotion": null,
@@ -510,6 +652,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 69,
+      "segment_key": "en_CA_Telecom_1590675_0069",
       "seq_id": 69,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -517,6 +661,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 70,
+      "segment_key": "en_CA_Telecom_1590675_0070",
       "seq_id": 70,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -524,6 +670,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 71,
+      "segment_key": "en_CA_Telecom_1590675_0071",
       "seq_id": 71,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -531,6 +679,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 72,
+      "segment_key": "en_CA_Telecom_1590675_0072",
       "seq_id": 72,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -538,6 +688,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 73,
+      "segment_key": "en_CA_Telecom_1590675_0073",
       "seq_id": 73,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -545,6 +697,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 74,
+      "segment_key": "en_CA_Telecom_1590675_0074",
       "seq_id": 74,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -552,6 +706,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 75,
+      "segment_key": "en_CA_Telecom_1590675_0075",
       "seq_id": 75,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -559,6 +715,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 76,
+      "segment_key": "en_CA_Telecom_1590675_0076",
       "seq_id": 76,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -566,6 +724,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 77,
+      "segment_key": "en_CA_Telecom_1590675_0077",
       "seq_id": 77,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -573,6 +733,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 78,
+      "segment_key": "en_CA_Telecom_1590675_0078",
       "seq_id": 78,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -580,6 +742,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 79,
+      "segment_key": "en_CA_Telecom_1590675_0079",
       "seq_id": 79,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -587,6 +751,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 80,
+      "segment_key": "en_CA_Telecom_1590675_0080",
       "seq_id": 80,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -594,6 +760,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 81,
+      "segment_key": "en_CA_Telecom_1590675_0081",
       "seq_id": 81,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -601,6 +769,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 82,
+      "segment_key": "en_CA_Telecom_1590675_0082",
       "seq_id": 82,
       "sentiment": "Mixed",
       "dominant_emotion": "happy",
@@ -608,6 +778,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 83,
+      "segment_key": "en_CA_Telecom_1590675_0083",
       "seq_id": 83,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -615,6 +787,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 84,
+      "segment_key": "en_CA_Telecom_1590675_0084",
       "seq_id": 84,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -622,6 +796,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 85,
+      "segment_key": "en_CA_Telecom_1590675_0085",
       "seq_id": 85,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -629,6 +805,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 86,
+      "segment_key": "en_CA_Telecom_1590675_0086",
       "seq_id": 86,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -636,6 +814,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 87,
+      "segment_key": "en_CA_Telecom_1590675_0087",
       "seq_id": 87,
       "sentiment": null,
       "dominant_emotion": null,
@@ -643,6 +823,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 88,
+      "segment_key": "en_CA_Telecom_1590675_0088",
       "seq_id": 88,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -650,6 +832,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 89,
+      "segment_key": "en_CA_Telecom_1590675_0089",
       "seq_id": 89,
       "sentiment": null,
       "dominant_emotion": null,
@@ -657,6 +841,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 90,
+      "segment_key": "en_CA_Telecom_1590675_0090",
       "seq_id": 90,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -664,6 +850,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 91,
+      "segment_key": "en_CA_Telecom_1590675_0091",
       "seq_id": 91,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -671,6 +859,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 92,
+      "segment_key": "en_CA_Telecom_1590675_0092",
       "seq_id": 92,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -678,6 +868,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 93,
+      "segment_key": "en_CA_Telecom_1590675_0093",
       "seq_id": 93,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -685,6 +877,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 94,
+      "segment_key": "en_CA_Telecom_1590675_0094",
       "seq_id": 94,
       "sentiment": null,
       "dominant_emotion": null,
@@ -692,6 +886,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 95,
+      "segment_key": "en_CA_Telecom_1590675_0095",
       "seq_id": 95,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -699,6 +895,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 96,
+      "segment_key": "en_CA_Telecom_1590675_0096",
       "seq_id": 96,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -706,6 +904,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 97,
+      "segment_key": "en_CA_Telecom_1590675_0097",
       "seq_id": 97,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -713,6 +913,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 98,
+      "segment_key": "en_CA_Telecom_1590675_0098",
       "seq_id": 98,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -720,6 +922,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 99,
+      "segment_key": "en_CA_Telecom_1590675_0099",
       "seq_id": 99,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -727,6 +931,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 100,
+      "segment_key": "en_CA_Telecom_1590675_0100",
       "seq_id": 100,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -734,6 +940,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 101,
+      "segment_key": "en_CA_Telecom_1590675_0101",
       "seq_id": 101,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -741,6 +949,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 102,
+      "segment_key": "en_CA_Telecom_1590675_0102",
       "seq_id": 102,
       "sentiment": null,
       "dominant_emotion": null,
@@ -748,6 +958,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 103,
+      "segment_key": "en_CA_Telecom_1590675_0103",
       "seq_id": 103,
       "sentiment": null,
       "dominant_emotion": null,
@@ -755,6 +967,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 104,
+      "segment_key": "en_CA_Telecom_1590675_0104",
       "seq_id": 104,
       "sentiment": null,
       "dominant_emotion": null,

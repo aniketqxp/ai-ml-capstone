@@ -3,7 +3,12 @@
   "domain": "health",
   "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
   "source_file": "outputs/apptek/simple_sentiment_results/health/en_US_General_Health_1586726_simple_sentiment.json",
-  "generated_at": "2026-06-29T22:06:48.222405+00:00",
+  "generated_at": "2026-06-29T22:11:51.118991+00:00",
+  "join_keys": {
+    "recommended_unique_key": "call_id + segment_index",
+    "transcript_alignment_key": "call_id + seq_id",
+    "note": "seq_id is preserved from transcription. segment_index is added because one transcript file contains a duplicate seq_id."
+  },
   "call_summary": {
     "total_segments": 103,
     "successful_segments": 72,
@@ -29,10 +34,13 @@
       "sadness": 5,
       "disgust": 7,
       "anger": 10
-    }
+    },
+    "duplicate_seq_ids": []
   },
   "segments": [
     {
+      "segment_index": 1,
+      "segment_key": "en_US_General_Health_1586726_0001",
       "seq_id": 1,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -40,6 +48,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 2,
+      "segment_key": "en_US_General_Health_1586726_0002",
       "seq_id": 2,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -47,6 +57,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 3,
+      "segment_key": "en_US_General_Health_1586726_0003",
       "seq_id": 3,
       "sentiment": null,
       "dominant_emotion": null,
@@ -54,6 +66,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 4,
+      "segment_key": "en_US_General_Health_1586726_0004",
       "seq_id": 4,
       "sentiment": null,
       "dominant_emotion": null,
@@ -61,6 +75,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 5,
+      "segment_key": "en_US_General_Health_1586726_0005",
       "seq_id": 5,
       "sentiment": null,
       "dominant_emotion": null,
@@ -68,6 +84,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 6,
+      "segment_key": "en_US_General_Health_1586726_0006",
       "seq_id": 6,
       "sentiment": null,
       "dominant_emotion": null,
@@ -75,6 +93,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 7,
+      "segment_key": "en_US_General_Health_1586726_0007",
       "seq_id": 7,
       "sentiment": null,
       "dominant_emotion": null,
@@ -82,6 +102,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 8,
+      "segment_key": "en_US_General_Health_1586726_0008",
       "seq_id": 8,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -89,6 +111,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 9,
+      "segment_key": "en_US_General_Health_1586726_0009",
       "seq_id": 9,
       "sentiment": null,
       "dominant_emotion": null,
@@ -96,6 +120,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 10,
+      "segment_key": "en_US_General_Health_1586726_0010",
       "seq_id": 10,
       "sentiment": null,
       "dominant_emotion": null,
@@ -103,6 +129,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 11,
+      "segment_key": "en_US_General_Health_1586726_0011",
       "seq_id": 11,
       "sentiment": "Mixed",
       "dominant_emotion": "happy",
@@ -110,6 +138,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 12,
+      "segment_key": "en_US_General_Health_1586726_0012",
       "seq_id": 12,
       "sentiment": null,
       "dominant_emotion": null,
@@ -117,6 +147,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 13,
+      "segment_key": "en_US_General_Health_1586726_0013",
       "seq_id": 13,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -124,6 +156,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 14,
+      "segment_key": "en_US_General_Health_1586726_0014",
       "seq_id": 14,
       "sentiment": null,
       "dominant_emotion": null,
@@ -131,6 +165,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 15,
+      "segment_key": "en_US_General_Health_1586726_0015",
       "seq_id": 15,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -138,6 +174,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 16,
+      "segment_key": "en_US_General_Health_1586726_0016",
       "seq_id": 16,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -145,6 +183,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 17,
+      "segment_key": "en_US_General_Health_1586726_0017",
       "seq_id": 17,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -152,6 +192,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 18,
+      "segment_key": "en_US_General_Health_1586726_0018",
       "seq_id": 18,
       "sentiment": null,
       "dominant_emotion": null,
@@ -159,6 +201,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 19,
+      "segment_key": "en_US_General_Health_1586726_0019",
       "seq_id": 19,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -166,6 +210,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 20,
+      "segment_key": "en_US_General_Health_1586726_0020",
       "seq_id": 20,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -173,6 +219,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 21,
+      "segment_key": "en_US_General_Health_1586726_0021",
       "seq_id": 21,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -180,6 +228,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 22,
+      "segment_key": "en_US_General_Health_1586726_0022",
       "seq_id": 22,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -187,6 +237,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 23,
+      "segment_key": "en_US_General_Health_1586726_0023",
       "seq_id": 23,
       "sentiment": null,
       "dominant_emotion": null,
@@ -194,6 +246,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 24,
+      "segment_key": "en_US_General_Health_1586726_0024",
       "seq_id": 24,
       "sentiment": "Mixed",
       "dominant_emotion": "disgust",
@@ -201,6 +255,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 25,
+      "segment_key": "en_US_General_Health_1586726_0025",
       "seq_id": 25,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -208,6 +264,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 26,
+      "segment_key": "en_US_General_Health_1586726_0026",
       "seq_id": 26,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -215,6 +273,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 27,
+      "segment_key": "en_US_General_Health_1586726_0027",
       "seq_id": 27,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -222,6 +282,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 28,
+      "segment_key": "en_US_General_Health_1586726_0028",
       "seq_id": 28,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -229,6 +291,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 29,
+      "segment_key": "en_US_General_Health_1586726_0029",
       "seq_id": 29,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -236,6 +300,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 30,
+      "segment_key": "en_US_General_Health_1586726_0030",
       "seq_id": 30,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -243,6 +309,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 31,
+      "segment_key": "en_US_General_Health_1586726_0031",
       "seq_id": 31,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -250,6 +318,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 32,
+      "segment_key": "en_US_General_Health_1586726_0032",
       "seq_id": 32,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -257,6 +327,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 33,
+      "segment_key": "en_US_General_Health_1586726_0033",
       "seq_id": 33,
       "sentiment": null,
       "dominant_emotion": null,
@@ -264,6 +336,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 34,
+      "segment_key": "en_US_General_Health_1586726_0034",
       "seq_id": 34,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -271,6 +345,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 35,
+      "segment_key": "en_US_General_Health_1586726_0035",
       "seq_id": 35,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -278,6 +354,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 36,
+      "segment_key": "en_US_General_Health_1586726_0036",
       "seq_id": 36,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -285,6 +363,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 37,
+      "segment_key": "en_US_General_Health_1586726_0037",
       "seq_id": 37,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -292,6 +372,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 38,
+      "segment_key": "en_US_General_Health_1586726_0038",
       "seq_id": 38,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -299,6 +381,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 39,
+      "segment_key": "en_US_General_Health_1586726_0039",
       "seq_id": 39,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -306,6 +390,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 40,
+      "segment_key": "en_US_General_Health_1586726_0040",
       "seq_id": 40,
       "sentiment": null,
       "dominant_emotion": null,
@@ -313,6 +399,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 41,
+      "segment_key": "en_US_General_Health_1586726_0041",
       "seq_id": 41,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -320,6 +408,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 42,
+      "segment_key": "en_US_General_Health_1586726_0042",
       "seq_id": 42,
       "sentiment": null,
       "dominant_emotion": null,
@@ -327,6 +417,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 43,
+      "segment_key": "en_US_General_Health_1586726_0043",
       "seq_id": 43,
       "sentiment": null,
       "dominant_emotion": null,
@@ -334,6 +426,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 44,
+      "segment_key": "en_US_General_Health_1586726_0044",
       "seq_id": 44,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -341,6 +435,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 45,
+      "segment_key": "en_US_General_Health_1586726_0045",
       "seq_id": 45,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -348,6 +444,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 46,
+      "segment_key": "en_US_General_Health_1586726_0046",
       "seq_id": 46,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -355,6 +453,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 47,
+      "segment_key": "en_US_General_Health_1586726_0047",
       "seq_id": 47,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -362,6 +462,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 48,
+      "segment_key": "en_US_General_Health_1586726_0048",
       "seq_id": 48,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -369,6 +471,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 49,
+      "segment_key": "en_US_General_Health_1586726_0049",
       "seq_id": 49,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -376,6 +480,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 50,
+      "segment_key": "en_US_General_Health_1586726_0050",
       "seq_id": 50,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -383,6 +489,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 51,
+      "segment_key": "en_US_General_Health_1586726_0051",
       "seq_id": 51,
       "sentiment": null,
       "dominant_emotion": null,
@@ -390,6 +498,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 52,
+      "segment_key": "en_US_General_Health_1586726_0052",
       "seq_id": 52,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -397,6 +507,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 53,
+      "segment_key": "en_US_General_Health_1586726_0053",
       "seq_id": 53,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -404,6 +516,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 54,
+      "segment_key": "en_US_General_Health_1586726_0054",
       "seq_id": 54,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -411,6 +525,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 55,
+      "segment_key": "en_US_General_Health_1586726_0055",
       "seq_id": 55,
       "sentiment": null,
       "dominant_emotion": null,
@@ -418,6 +534,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 56,
+      "segment_key": "en_US_General_Health_1586726_0056",
       "seq_id": 56,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -425,6 +543,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 57,
+      "segment_key": "en_US_General_Health_1586726_0057",
       "seq_id": 57,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -432,6 +552,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 58,
+      "segment_key": "en_US_General_Health_1586726_0058",
       "seq_id": 58,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -439,6 +561,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 59,
+      "segment_key": "en_US_General_Health_1586726_0059",
       "seq_id": 59,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -446,6 +570,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 60,
+      "segment_key": "en_US_General_Health_1586726_0060",
       "seq_id": 60,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -453,6 +579,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 61,
+      "segment_key": "en_US_General_Health_1586726_0061",
       "seq_id": 61,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -460,6 +588,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 62,
+      "segment_key": "en_US_General_Health_1586726_0062",
       "seq_id": 62,
       "sentiment": null,
       "dominant_emotion": null,
@@ -467,6 +597,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 63,
+      "segment_key": "en_US_General_Health_1586726_0063",
       "seq_id": 63,
       "sentiment": null,
       "dominant_emotion": null,
@@ -474,6 +606,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 64,
+      "segment_key": "en_US_General_Health_1586726_0064",
       "seq_id": 64,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -481,6 +615,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 65,
+      "segment_key": "en_US_General_Health_1586726_0065",
       "seq_id": 65,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -488,6 +624,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 66,
+      "segment_key": "en_US_General_Health_1586726_0066",
       "seq_id": 66,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -495,6 +633,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 67,
+      "segment_key": "en_US_General_Health_1586726_0067",
       "seq_id": 67,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -502,6 +642,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 68,
+      "segment_key": "en_US_General_Health_1586726_0068",
       "seq_id": 68,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -509,6 +651,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 69,
+      "segment_key": "en_US_General_Health_1586726_0069",
       "seq_id": 69,
       "sentiment": null,
       "dominant_emotion": null,
@@ -516,6 +660,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 70,
+      "segment_key": "en_US_General_Health_1586726_0070",
       "seq_id": 70,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -523,6 +669,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 71,
+      "segment_key": "en_US_General_Health_1586726_0071",
       "seq_id": 71,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -530,6 +678,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 72,
+      "segment_key": "en_US_General_Health_1586726_0072",
       "seq_id": 72,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -537,6 +687,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 73,
+      "segment_key": "en_US_General_Health_1586726_0073",
       "seq_id": 73,
       "sentiment": null,
       "dominant_emotion": null,
@@ -544,6 +696,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 74,
+      "segment_key": "en_US_General_Health_1586726_0074",
       "seq_id": 74,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -551,6 +705,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 75,
+      "segment_key": "en_US_General_Health_1586726_0075",
       "seq_id": 75,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -558,6 +714,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 76,
+      "segment_key": "en_US_General_Health_1586726_0076",
       "seq_id": 76,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -565,6 +723,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 77,
+      "segment_key": "en_US_General_Health_1586726_0077",
       "seq_id": 77,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -572,6 +732,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 78,
+      "segment_key": "en_US_General_Health_1586726_0078",
       "seq_id": 78,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -579,6 +741,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 79,
+      "segment_key": "en_US_General_Health_1586726_0079",
       "seq_id": 79,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -586,6 +750,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 80,
+      "segment_key": "en_US_General_Health_1586726_0080",
       "seq_id": 80,
       "sentiment": null,
       "dominant_emotion": null,
@@ -593,6 +759,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 81,
+      "segment_key": "en_US_General_Health_1586726_0081",
       "seq_id": 81,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -600,6 +768,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 82,
+      "segment_key": "en_US_General_Health_1586726_0082",
       "seq_id": 82,
       "sentiment": "Mixed",
       "dominant_emotion": "neutral",
@@ -607,6 +777,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 83,
+      "segment_key": "en_US_General_Health_1586726_0083",
       "seq_id": 83,
       "sentiment": null,
       "dominant_emotion": null,
@@ -614,6 +786,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 84,
+      "segment_key": "en_US_General_Health_1586726_0084",
       "seq_id": 84,
       "sentiment": null,
       "dominant_emotion": null,
@@ -621,6 +795,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 85,
+      "segment_key": "en_US_General_Health_1586726_0085",
       "seq_id": 85,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -628,6 +804,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 86,
+      "segment_key": "en_US_General_Health_1586726_0086",
       "seq_id": 86,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -635,6 +813,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 87,
+      "segment_key": "en_US_General_Health_1586726_0087",
       "seq_id": 87,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -642,6 +822,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 88,
+      "segment_key": "en_US_General_Health_1586726_0088",
       "seq_id": 88,
       "sentiment": null,
       "dominant_emotion": null,
@@ -649,6 +831,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 89,
+      "segment_key": "en_US_General_Health_1586726_0089",
       "seq_id": 89,
       "sentiment": null,
       "dominant_emotion": null,
@@ -656,6 +840,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 90,
+      "segment_key": "en_US_General_Health_1586726_0090",
       "seq_id": 90,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -663,6 +849,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 91,
+      "segment_key": "en_US_General_Health_1586726_0091",
       "seq_id": 91,
       "sentiment": null,
       "dominant_emotion": null,
@@ -670,6 +858,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 92,
+      "segment_key": "en_US_General_Health_1586726_0092",
       "seq_id": 92,
       "sentiment": null,
       "dominant_emotion": null,
@@ -677,6 +867,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 93,
+      "segment_key": "en_US_General_Health_1586726_0093",
       "seq_id": 93,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -684,6 +876,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 94,
+      "segment_key": "en_US_General_Health_1586726_0094",
       "seq_id": 94,
       "sentiment": null,
       "dominant_emotion": null,
@@ -691,6 +885,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 95,
+      "segment_key": "en_US_General_Health_1586726_0095",
       "seq_id": 95,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -698,6 +894,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 96,
+      "segment_key": "en_US_General_Health_1586726_0096",
       "seq_id": 96,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -705,6 +903,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 97,
+      "segment_key": "en_US_General_Health_1586726_0097",
       "seq_id": 97,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -712,6 +912,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 98,
+      "segment_key": "en_US_General_Health_1586726_0098",
       "seq_id": 98,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -719,6 +921,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 99,
+      "segment_key": "en_US_General_Health_1586726_0099",
       "seq_id": 99,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -726,6 +930,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 100,
+      "segment_key": "en_US_General_Health_1586726_0100",
       "seq_id": 100,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -733,6 +939,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 101,
+      "segment_key": "en_US_General_Health_1586726_0101",
       "seq_id": 101,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -740,6 +948,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 102,
+      "segment_key": "en_US_General_Health_1586726_0102",
       "seq_id": 102,
       "sentiment": null,
       "dominant_emotion": null,
@@ -747,6 +957,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 103,
+      "segment_key": "en_US_General_Health_1586726_0103",
       "seq_id": 103,
       "sentiment": null,
       "dominant_emotion": null,

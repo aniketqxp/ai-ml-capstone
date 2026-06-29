@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T22:06:48.230336+00:00",
+  "generated_at": "2026-06-29T22:11:51.129123+00:00",
   "source": "AppTek timestamped sentiment batch",
   "model": "Model V5 audio emotion and sentiment inference",
   "total_calls": 22,
@@ -7,7 +7,7 @@
   "failed_calls": 0,
   "total_segments": 3102,
   "successful_segments": 2209,
-  "note": "These files are backend-ready sentiment payloads. Backend can join with transcription using call_id and seq_id.",
+  "note": "Backend-ready sentiment payloads. Use call_id + segment_index as the safest unique key. seq_id is still included for transcript alignment.",
   "calls": [
     {
       "call_id": "en_CA_Banking_1586889",
@@ -18,6 +18,7 @@
       "risk_level": "Medium",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_CA_Banking_1586889_backend_sentiment.json"
     },
     {
@@ -29,6 +30,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_CA_Banking_1588683_backend_sentiment.json"
     },
     {
@@ -40,6 +42,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_CA_Banking_1590992_backend_sentiment.json"
     },
     {
@@ -51,6 +54,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_CA_Banking_1592237_backend_sentiment.json"
     },
     {
@@ -62,6 +66,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1584540_backend_sentiment.json"
     },
     {
@@ -73,6 +78,7 @@
       "risk_level": "Medium",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1586157_backend_sentiment.json"
     },
     {
@@ -84,6 +90,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1586678_backend_sentiment.json"
     },
     {
@@ -95,6 +102,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1586893_backend_sentiment.json"
     },
     {
@@ -106,6 +114,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1587139_backend_sentiment.json"
     },
     {
@@ -117,6 +126,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Negative",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/banking/en_US_General_Banking_1587700_backend_sentiment.json"
     },
     {
@@ -128,6 +138,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_CA_Health_1587315_backend_sentiment.json"
     },
     {
@@ -139,6 +150,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Negative",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_CA_Health_1588706_backend_sentiment.json"
     },
     {
@@ -150,6 +162,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_CA_Health_1590851_backend_sentiment.json"
     },
     {
@@ -161,6 +174,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_US_General_Health_1586594_backend_sentiment.json"
     },
     {
@@ -172,6 +186,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_US_General_Health_1586726_backend_sentiment.json"
     },
     {
@@ -183,6 +198,9 @@
       "risk_level": "Medium",
       "dominant_sentiment": "Negative",
       "dominant_emotion": "sadness",
+      "duplicate_seq_ids": [
+        121
+      ],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_US_General_Health_1587175_backend_sentiment.json"
     },
     {
@@ -194,6 +212,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/health/en_US_General_Health_1587922_backend_sentiment.json"
     },
     {
@@ -205,6 +224,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/telecom/en_CA_Telecom_1590675_backend_sentiment.json"
     },
     {
@@ -216,6 +236,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/telecom/en_CA_Telecom_1590992_backend_sentiment.json"
     },
     {
@@ -227,6 +248,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Positive",
       "dominant_emotion": "happy",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/telecom/en_US_General_Telecom_1584567_backend_sentiment.json"
     },
     {
@@ -238,6 +260,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Negative",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/telecom/en_US_General_Telecom_1586751_backend_sentiment.json"
     },
     {
@@ -249,6 +272,7 @@
       "risk_level": "High",
       "dominant_sentiment": "Neutral",
       "dominant_emotion": "neutral",
+      "duplicate_seq_ids": [],
       "backend_payload_path": "outputs/backend/sentiment_calls/telecom/en_US_General_Telecom_1586891_backend_sentiment.json"
     }
   ]

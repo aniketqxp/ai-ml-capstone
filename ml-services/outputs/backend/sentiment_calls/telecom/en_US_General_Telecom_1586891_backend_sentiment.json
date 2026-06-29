@@ -3,7 +3,12 @@
   "domain": "telecom",
   "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
   "source_file": "outputs/apptek/simple_sentiment_results/telecom/en_US_General_Telecom_1586891_simple_sentiment.json",
-  "generated_at": "2026-06-29T22:06:48.229873+00:00",
+  "generated_at": "2026-06-29T22:11:51.128536+00:00",
+  "join_keys": {
+    "recommended_unique_key": "call_id + segment_index",
+    "transcript_alignment_key": "call_id + seq_id",
+    "note": "seq_id is preserved from transcription. segment_index is added because one transcript file contains a duplicate seq_id."
+  },
   "call_summary": {
     "total_segments": 148,
     "successful_segments": 113,
@@ -29,10 +34,13 @@
       "disgust": 15,
       "sadness": 6,
       "anger": 7
-    }
+    },
+    "duplicate_seq_ids": []
   },
   "segments": [
     {
+      "segment_index": 1,
+      "segment_key": "en_US_General_Telecom_1586891_0001",
       "seq_id": 1,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -40,6 +48,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 2,
+      "segment_key": "en_US_General_Telecom_1586891_0002",
       "seq_id": 2,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -47,6 +57,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 3,
+      "segment_key": "en_US_General_Telecom_1586891_0003",
       "seq_id": 3,
       "sentiment": null,
       "dominant_emotion": null,
@@ -54,6 +66,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 4,
+      "segment_key": "en_US_General_Telecom_1586891_0004",
       "seq_id": 4,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -61,6 +75,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 5,
+      "segment_key": "en_US_General_Telecom_1586891_0005",
       "seq_id": 5,
       "sentiment": null,
       "dominant_emotion": null,
@@ -68,6 +84,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 6,
+      "segment_key": "en_US_General_Telecom_1586891_0006",
       "seq_id": 6,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -75,6 +93,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 7,
+      "segment_key": "en_US_General_Telecom_1586891_0007",
       "seq_id": 7,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -82,6 +102,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 8,
+      "segment_key": "en_US_General_Telecom_1586891_0008",
       "seq_id": 8,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -89,6 +111,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 9,
+      "segment_key": "en_US_General_Telecom_1586891_0009",
       "seq_id": 9,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -96,6 +120,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 10,
+      "segment_key": "en_US_General_Telecom_1586891_0010",
       "seq_id": 10,
       "sentiment": null,
       "dominant_emotion": null,
@@ -103,6 +129,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 11,
+      "segment_key": "en_US_General_Telecom_1586891_0011",
       "seq_id": 11,
       "sentiment": null,
       "dominant_emotion": null,
@@ -110,6 +138,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 12,
+      "segment_key": "en_US_General_Telecom_1586891_0012",
       "seq_id": 12,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -117,6 +147,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 13,
+      "segment_key": "en_US_General_Telecom_1586891_0013",
       "seq_id": 13,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -124,6 +156,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 14,
+      "segment_key": "en_US_General_Telecom_1586891_0014",
       "seq_id": 14,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -131,6 +165,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 15,
+      "segment_key": "en_US_General_Telecom_1586891_0015",
       "seq_id": 15,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -138,6 +174,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 16,
+      "segment_key": "en_US_General_Telecom_1586891_0016",
       "seq_id": 16,
       "sentiment": null,
       "dominant_emotion": null,
@@ -145,6 +183,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 17,
+      "segment_key": "en_US_General_Telecom_1586891_0017",
       "seq_id": 17,
       "sentiment": null,
       "dominant_emotion": null,
@@ -152,6 +192,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 18,
+      "segment_key": "en_US_General_Telecom_1586891_0018",
       "seq_id": 18,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -159,6 +201,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 19,
+      "segment_key": "en_US_General_Telecom_1586891_0019",
       "seq_id": 19,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -166,6 +210,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 20,
+      "segment_key": "en_US_General_Telecom_1586891_0020",
       "seq_id": 20,
       "sentiment": null,
       "dominant_emotion": null,
@@ -173,6 +219,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 21,
+      "segment_key": "en_US_General_Telecom_1586891_0021",
       "seq_id": 21,
       "sentiment": null,
       "dominant_emotion": null,
@@ -180,6 +228,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 22,
+      "segment_key": "en_US_General_Telecom_1586891_0022",
       "seq_id": 22,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -187,6 +237,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 23,
+      "segment_key": "en_US_General_Telecom_1586891_0023",
       "seq_id": 23,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -194,6 +246,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 24,
+      "segment_key": "en_US_General_Telecom_1586891_0024",
       "seq_id": 24,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -201,6 +255,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 25,
+      "segment_key": "en_US_General_Telecom_1586891_0025",
       "seq_id": 25,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -208,6 +264,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 26,
+      "segment_key": "en_US_General_Telecom_1586891_0026",
       "seq_id": 26,
       "sentiment": null,
       "dominant_emotion": null,
@@ -215,6 +273,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 27,
+      "segment_key": "en_US_General_Telecom_1586891_0027",
       "seq_id": 27,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -222,6 +282,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 28,
+      "segment_key": "en_US_General_Telecom_1586891_0028",
       "seq_id": 28,
       "sentiment": null,
       "dominant_emotion": null,
@@ -229,6 +291,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 29,
+      "segment_key": "en_US_General_Telecom_1586891_0029",
       "seq_id": 29,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -236,6 +300,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 30,
+      "segment_key": "en_US_General_Telecom_1586891_0030",
       "seq_id": 30,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -243,6 +309,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 31,
+      "segment_key": "en_US_General_Telecom_1586891_0031",
       "seq_id": 31,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -250,6 +318,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 32,
+      "segment_key": "en_US_General_Telecom_1586891_0032",
       "seq_id": 32,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -257,6 +327,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 33,
+      "segment_key": "en_US_General_Telecom_1586891_0033",
       "seq_id": 33,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -264,6 +336,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 34,
+      "segment_key": "en_US_General_Telecom_1586891_0034",
       "seq_id": 34,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -271,6 +345,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 35,
+      "segment_key": "en_US_General_Telecom_1586891_0035",
       "seq_id": 35,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -278,6 +354,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 36,
+      "segment_key": "en_US_General_Telecom_1586891_0036",
       "seq_id": 36,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -285,6 +363,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 37,
+      "segment_key": "en_US_General_Telecom_1586891_0037",
       "seq_id": 37,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -292,6 +372,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 38,
+      "segment_key": "en_US_General_Telecom_1586891_0038",
       "seq_id": 38,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -299,6 +381,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 39,
+      "segment_key": "en_US_General_Telecom_1586891_0039",
       "seq_id": 39,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -306,6 +390,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 40,
+      "segment_key": "en_US_General_Telecom_1586891_0040",
       "seq_id": 40,
       "sentiment": null,
       "dominant_emotion": null,
@@ -313,6 +399,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 41,
+      "segment_key": "en_US_General_Telecom_1586891_0041",
       "seq_id": 41,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -320,6 +408,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 42,
+      "segment_key": "en_US_General_Telecom_1586891_0042",
       "seq_id": 42,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -327,6 +417,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 43,
+      "segment_key": "en_US_General_Telecom_1586891_0043",
       "seq_id": 43,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -334,6 +426,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 44,
+      "segment_key": "en_US_General_Telecom_1586891_0044",
       "seq_id": 44,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -341,6 +435,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 45,
+      "segment_key": "en_US_General_Telecom_1586891_0045",
       "seq_id": 45,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -348,6 +444,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 46,
+      "segment_key": "en_US_General_Telecom_1586891_0046",
       "seq_id": 46,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -355,6 +453,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 47,
+      "segment_key": "en_US_General_Telecom_1586891_0047",
       "seq_id": 47,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -362,6 +462,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 48,
+      "segment_key": "en_US_General_Telecom_1586891_0048",
       "seq_id": 48,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -369,6 +471,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 49,
+      "segment_key": "en_US_General_Telecom_1586891_0049",
       "seq_id": 49,
       "sentiment": null,
       "dominant_emotion": null,
@@ -376,6 +480,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 50,
+      "segment_key": "en_US_General_Telecom_1586891_0050",
       "seq_id": 50,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -383,6 +489,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 51,
+      "segment_key": "en_US_General_Telecom_1586891_0051",
       "seq_id": 51,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -390,6 +498,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 52,
+      "segment_key": "en_US_General_Telecom_1586891_0052",
       "seq_id": 52,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -397,6 +507,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 53,
+      "segment_key": "en_US_General_Telecom_1586891_0053",
       "seq_id": 53,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -404,6 +516,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 54,
+      "segment_key": "en_US_General_Telecom_1586891_0054",
       "seq_id": 54,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -411,6 +525,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 55,
+      "segment_key": "en_US_General_Telecom_1586891_0055",
       "seq_id": 55,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -418,6 +534,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 56,
+      "segment_key": "en_US_General_Telecom_1586891_0056",
       "seq_id": 56,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -425,6 +543,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 57,
+      "segment_key": "en_US_General_Telecom_1586891_0057",
       "seq_id": 57,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -432,6 +552,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 58,
+      "segment_key": "en_US_General_Telecom_1586891_0058",
       "seq_id": 58,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -439,6 +561,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 59,
+      "segment_key": "en_US_General_Telecom_1586891_0059",
       "seq_id": 59,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -446,6 +570,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 60,
+      "segment_key": "en_US_General_Telecom_1586891_0060",
       "seq_id": 60,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -453,6 +579,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 61,
+      "segment_key": "en_US_General_Telecom_1586891_0061",
       "seq_id": 61,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -460,6 +588,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 62,
+      "segment_key": "en_US_General_Telecom_1586891_0062",
       "seq_id": 62,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -467,6 +597,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 63,
+      "segment_key": "en_US_General_Telecom_1586891_0063",
       "seq_id": 63,
       "sentiment": null,
       "dominant_emotion": null,
@@ -474,6 +606,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 64,
+      "segment_key": "en_US_General_Telecom_1586891_0064",
       "seq_id": 64,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -481,6 +615,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 65,
+      "segment_key": "en_US_General_Telecom_1586891_0065",
       "seq_id": 65,
       "sentiment": null,
       "dominant_emotion": null,
@@ -488,6 +624,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 66,
+      "segment_key": "en_US_General_Telecom_1586891_0066",
       "seq_id": 66,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -495,6 +633,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 67,
+      "segment_key": "en_US_General_Telecom_1586891_0067",
       "seq_id": 67,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -502,6 +642,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 68,
+      "segment_key": "en_US_General_Telecom_1586891_0068",
       "seq_id": 68,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -509,6 +651,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 69,
+      "segment_key": "en_US_General_Telecom_1586891_0069",
       "seq_id": 69,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -516,6 +660,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 70,
+      "segment_key": "en_US_General_Telecom_1586891_0070",
       "seq_id": 70,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -523,6 +669,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 71,
+      "segment_key": "en_US_General_Telecom_1586891_0071",
       "seq_id": 71,
       "sentiment": null,
       "dominant_emotion": null,
@@ -530,6 +678,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 72,
+      "segment_key": "en_US_General_Telecom_1586891_0072",
       "seq_id": 72,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -537,6 +687,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 73,
+      "segment_key": "en_US_General_Telecom_1586891_0073",
       "seq_id": 73,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -544,6 +696,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 74,
+      "segment_key": "en_US_General_Telecom_1586891_0074",
       "seq_id": 74,
       "sentiment": null,
       "dominant_emotion": null,
@@ -551,6 +705,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 75,
+      "segment_key": "en_US_General_Telecom_1586891_0075",
       "seq_id": 75,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -558,6 +714,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 76,
+      "segment_key": "en_US_General_Telecom_1586891_0076",
       "seq_id": 76,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -565,6 +723,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 77,
+      "segment_key": "en_US_General_Telecom_1586891_0077",
       "seq_id": 77,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -572,6 +732,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 78,
+      "segment_key": "en_US_General_Telecom_1586891_0078",
       "seq_id": 78,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -579,6 +741,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 79,
+      "segment_key": "en_US_General_Telecom_1586891_0079",
       "seq_id": 79,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -586,6 +750,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 80,
+      "segment_key": "en_US_General_Telecom_1586891_0080",
       "seq_id": 80,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -593,6 +759,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 81,
+      "segment_key": "en_US_General_Telecom_1586891_0081",
       "seq_id": 81,
       "sentiment": null,
       "dominant_emotion": null,
@@ -600,6 +768,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 82,
+      "segment_key": "en_US_General_Telecom_1586891_0082",
       "seq_id": 82,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -607,6 +777,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 83,
+      "segment_key": "en_US_General_Telecom_1586891_0083",
       "seq_id": 83,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -614,6 +786,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 84,
+      "segment_key": "en_US_General_Telecom_1586891_0084",
       "seq_id": 84,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -621,6 +795,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 85,
+      "segment_key": "en_US_General_Telecom_1586891_0085",
       "seq_id": 85,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -628,6 +804,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 86,
+      "segment_key": "en_US_General_Telecom_1586891_0086",
       "seq_id": 86,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -635,6 +813,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 87,
+      "segment_key": "en_US_General_Telecom_1586891_0087",
       "seq_id": 87,
       "sentiment": null,
       "dominant_emotion": null,
@@ -642,6 +822,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 88,
+      "segment_key": "en_US_General_Telecom_1586891_0088",
       "seq_id": 88,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -649,6 +831,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 89,
+      "segment_key": "en_US_General_Telecom_1586891_0089",
       "seq_id": 89,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -656,6 +840,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 90,
+      "segment_key": "en_US_General_Telecom_1586891_0090",
       "seq_id": 90,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -663,6 +849,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 91,
+      "segment_key": "en_US_General_Telecom_1586891_0091",
       "seq_id": 91,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -670,6 +858,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 92,
+      "segment_key": "en_US_General_Telecom_1586891_0092",
       "seq_id": 92,
       "sentiment": null,
       "dominant_emotion": null,
@@ -677,6 +867,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 93,
+      "segment_key": "en_US_General_Telecom_1586891_0093",
       "seq_id": 93,
       "sentiment": null,
       "dominant_emotion": null,
@@ -684,6 +876,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 94,
+      "segment_key": "en_US_General_Telecom_1586891_0094",
       "seq_id": 94,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -691,6 +885,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 95,
+      "segment_key": "en_US_General_Telecom_1586891_0095",
       "seq_id": 95,
       "sentiment": null,
       "dominant_emotion": null,
@@ -698,6 +894,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 96,
+      "segment_key": "en_US_General_Telecom_1586891_0096",
       "seq_id": 96,
       "sentiment": null,
       "dominant_emotion": null,
@@ -705,6 +903,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 97,
+      "segment_key": "en_US_General_Telecom_1586891_0097",
       "seq_id": 97,
       "sentiment": "Unknown",
       "dominant_emotion": "neutral",
@@ -712,6 +912,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 98,
+      "segment_key": "en_US_General_Telecom_1586891_0098",
       "seq_id": 98,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -719,6 +921,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 99,
+      "segment_key": "en_US_General_Telecom_1586891_0099",
       "seq_id": 99,
       "sentiment": null,
       "dominant_emotion": null,
@@ -726,6 +930,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 100,
+      "segment_key": "en_US_General_Telecom_1586891_0100",
       "seq_id": 100,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -733,6 +939,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 101,
+      "segment_key": "en_US_General_Telecom_1586891_0101",
       "seq_id": 101,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -740,6 +948,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 102,
+      "segment_key": "en_US_General_Telecom_1586891_0102",
       "seq_id": 102,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -747,6 +957,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 103,
+      "segment_key": "en_US_General_Telecom_1586891_0103",
       "seq_id": 103,
       "sentiment": "Negative",
       "dominant_emotion": "sadness",
@@ -754,6 +966,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 104,
+      "segment_key": "en_US_General_Telecom_1586891_0104",
       "seq_id": 104,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -761,6 +975,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 105,
+      "segment_key": "en_US_General_Telecom_1586891_0105",
       "seq_id": 105,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -768,6 +984,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 106,
+      "segment_key": "en_US_General_Telecom_1586891_0106",
       "seq_id": 106,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -775,6 +993,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 107,
+      "segment_key": "en_US_General_Telecom_1586891_0107",
       "seq_id": 107,
       "sentiment": null,
       "dominant_emotion": null,
@@ -782,6 +1002,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 108,
+      "segment_key": "en_US_General_Telecom_1586891_0108",
       "seq_id": 108,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -789,6 +1011,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 109,
+      "segment_key": "en_US_General_Telecom_1586891_0109",
       "seq_id": 109,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -796,6 +1020,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 110,
+      "segment_key": "en_US_General_Telecom_1586891_0110",
       "seq_id": 110,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -803,6 +1029,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 111,
+      "segment_key": "en_US_General_Telecom_1586891_0111",
       "seq_id": 111,
       "sentiment": null,
       "dominant_emotion": null,
@@ -810,6 +1038,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 112,
+      "segment_key": "en_US_General_Telecom_1586891_0112",
       "seq_id": 112,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -817,6 +1047,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 113,
+      "segment_key": "en_US_General_Telecom_1586891_0113",
       "seq_id": 113,
       "sentiment": null,
       "dominant_emotion": null,
@@ -824,6 +1056,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 114,
+      "segment_key": "en_US_General_Telecom_1586891_0114",
       "seq_id": 114,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -831,6 +1065,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 115,
+      "segment_key": "en_US_General_Telecom_1586891_0115",
       "seq_id": 115,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -838,6 +1074,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 116,
+      "segment_key": "en_US_General_Telecom_1586891_0116",
       "seq_id": 116,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -845,6 +1083,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 117,
+      "segment_key": "en_US_General_Telecom_1586891_0117",
       "seq_id": 117,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -852,6 +1092,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 118,
+      "segment_key": "en_US_General_Telecom_1586891_0118",
       "seq_id": 118,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -859,6 +1101,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 119,
+      "segment_key": "en_US_General_Telecom_1586891_0119",
       "seq_id": 119,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -866,6 +1110,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 120,
+      "segment_key": "en_US_General_Telecom_1586891_0120",
       "seq_id": 120,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -873,6 +1119,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 121,
+      "segment_key": "en_US_General_Telecom_1586891_0121",
       "seq_id": 121,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -880,6 +1128,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 122,
+      "segment_key": "en_US_General_Telecom_1586891_0122",
       "seq_id": 122,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -887,6 +1137,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 123,
+      "segment_key": "en_US_General_Telecom_1586891_0123",
       "seq_id": 123,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -894,6 +1146,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 124,
+      "segment_key": "en_US_General_Telecom_1586891_0124",
       "seq_id": 124,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -901,6 +1155,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 125,
+      "segment_key": "en_US_General_Telecom_1586891_0125",
       "seq_id": 125,
       "sentiment": "Negative",
       "dominant_emotion": "anger",
@@ -908,6 +1164,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 126,
+      "segment_key": "en_US_General_Telecom_1586891_0126",
       "seq_id": 126,
       "sentiment": null,
       "dominant_emotion": null,
@@ -915,6 +1173,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 127,
+      "segment_key": "en_US_General_Telecom_1586891_0127",
       "seq_id": 127,
       "sentiment": null,
       "dominant_emotion": null,
@@ -922,6 +1182,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 128,
+      "segment_key": "en_US_General_Telecom_1586891_0128",
       "seq_id": 128,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -929,6 +1191,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 129,
+      "segment_key": "en_US_General_Telecom_1586891_0129",
       "seq_id": 129,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -936,6 +1200,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 130,
+      "segment_key": "en_US_General_Telecom_1586891_0130",
       "seq_id": 130,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -943,6 +1209,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 131,
+      "segment_key": "en_US_General_Telecom_1586891_0131",
       "seq_id": 131,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -950,6 +1218,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 132,
+      "segment_key": "en_US_General_Telecom_1586891_0132",
       "seq_id": 132,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -957,6 +1227,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 133,
+      "segment_key": "en_US_General_Telecom_1586891_0133",
       "seq_id": 133,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -964,6 +1236,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 134,
+      "segment_key": "en_US_General_Telecom_1586891_0134",
       "seq_id": 134,
       "sentiment": null,
       "dominant_emotion": null,
@@ -971,6 +1245,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 135,
+      "segment_key": "en_US_General_Telecom_1586891_0135",
       "seq_id": 135,
       "sentiment": null,
       "dominant_emotion": null,
@@ -978,6 +1254,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 136,
+      "segment_key": "en_US_General_Telecom_1586891_0136",
       "seq_id": 136,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -985,6 +1263,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 137,
+      "segment_key": "en_US_General_Telecom_1586891_0137",
       "seq_id": 137,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -992,6 +1272,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 138,
+      "segment_key": "en_US_General_Telecom_1586891_0138",
       "seq_id": 138,
       "sentiment": null,
       "dominant_emotion": null,
@@ -999,6 +1281,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 139,
+      "segment_key": "en_US_General_Telecom_1586891_0139",
       "seq_id": 139,
       "sentiment": "Negative",
       "dominant_emotion": "disgust",
@@ -1006,6 +1290,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 140,
+      "segment_key": "en_US_General_Telecom_1586891_0140",
       "seq_id": 140,
       "sentiment": null,
       "dominant_emotion": null,
@@ -1013,6 +1299,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 141,
+      "segment_key": "en_US_General_Telecom_1586891_0141",
       "seq_id": 141,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -1020,6 +1308,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 142,
+      "segment_key": "en_US_General_Telecom_1586891_0142",
       "seq_id": 142,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",
@@ -1027,6 +1317,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 143,
+      "segment_key": "en_US_General_Telecom_1586891_0143",
       "seq_id": 143,
       "sentiment": null,
       "dominant_emotion": null,
@@ -1034,6 +1326,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 144,
+      "segment_key": "en_US_General_Telecom_1586891_0144",
       "seq_id": 144,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -1041,6 +1335,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 145,
+      "segment_key": "en_US_General_Telecom_1586891_0145",
       "seq_id": 145,
       "sentiment": "Positive",
       "dominant_emotion": "happy",
@@ -1048,6 +1344,8 @@
       "processing_status": "success"
     },
     {
+      "segment_index": 146,
+      "segment_key": "en_US_General_Telecom_1586891_0146",
       "seq_id": 146,
       "sentiment": null,
       "dominant_emotion": null,
@@ -1055,6 +1353,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 147,
+      "segment_key": "en_US_General_Telecom_1586891_0147",
       "seq_id": 147,
       "sentiment": null,
       "dominant_emotion": null,
@@ -1062,6 +1362,8 @@
       "processing_status": "skipped_too_short"
     },
     {
+      "segment_index": 148,
+      "segment_key": "en_US_General_Telecom_1586891_0148",
       "seq_id": 148,
       "sentiment": "Neutral",
       "dominant_emotion": "neutral",

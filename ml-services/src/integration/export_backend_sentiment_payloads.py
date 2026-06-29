@@ -9,7 +9,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
 
 DEFAULT_INPUT_DIR = ML_SERVICES_ROOT / "outputs" / "apptek" / "simple_sentiment_results"
-DEFAULT_SUMMARY_PATH = ML_SERVICES_ROOT / "outputs" / "apptek" / "batch_transcript_sentiment_summary.csv"
 DEFAULT_OUTPUT_DIR = ML_SERVICES_ROOT / "outputs" / "backend" / "sentiment_calls"
 DEFAULT_MANIFEST_PATH = ML_SERVICES_ROOT / "outputs" / "backend" / "sentiment_manifest.json"
 
@@ -51,6 +50,16 @@ def infer_domain_from_path(path):
     return "unknown"
 
 
+def get_risk_level(max_escalation_score):
+    if max_escalation_score is None:
+        return "Unknown"
+    if max_escalation_score >= 0.50:
+        return "High"
+    if max_escalation_score >= 0.25:
+        return "Medium"
+    return "Low"
+
+
 def build_backend_payload(simple_payload, source_file, domain):
     call_id = simple_payload["call_id"]
     model_version = simple_payload.get("model_version")
@@ -86,20 +95,20 @@ def build_backend_payload(simple_payload, source_file, domain):
 
     dominant_sentiment = sentiment_counts.most_common(1)[0][0] if sentiment_counts else None
     dominant_emotion = emotion_counts.most_common(1)[0][0] if emotion_counts else None
+    risk_level = get_risk_level(max_escalation_score)
 
-    if max_escalation_score is None:
-        risk_level = "Unknown"
-    elif max_escalation_score >= 0.50:
-        risk_level = "High"
-    elif max_escalation_score >= 0.25:
-        risk_level = "Medium"
-    else:
-        risk_level = "Low"
+    seq_id_counts = Counter(seg.get("seq_id") for seg in segments)
+    duplicate_seq_ids = sorted([
+        seq_id for seq_id, count in seq_id_counts.items()
+        if seq_id is not None and count > 1
+    ])
 
     backend_segments = []
 
-    for seg in segments:
+    for segment_index, seg in enumerate(segments, start=1):
         backend_segments.append({
+            "segment_index": segment_index,
+            "segment_key": f"{call_id}_{segment_index:04d}",
             "seq_id": seg.get("seq_id"),
             "sentiment": seg.get("sentiment"),
             "dominant_emotion": seg.get("dominant_emotion"),
@@ -113,6 +122,11 @@ def build_backend_payload(simple_payload, source_file, domain):
         "model_version": model_version,
         "source_file": str(source_file.relative_to(ML_SERVICES_ROOT)),
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "join_keys": {
+            "recommended_unique_key": "call_id + segment_index",
+            "transcript_alignment_key": "call_id + seq_id",
+            "note": "seq_id is preserved from transcription. segment_index is added because one transcript file contains a duplicate seq_id."
+        },
         "call_summary": {
             "total_segments": len(segments),
             "successful_segments": len(successful_segments),
@@ -125,6 +139,7 @@ def build_backend_payload(simple_payload, source_file, domain):
             "processing_status_distribution": dict(status_counts),
             "sentiment_distribution": dict(sentiment_counts),
             "emotion_distribution": dict(emotion_counts),
+            "duplicate_seq_ids": duplicate_seq_ids,
         },
         "segments": backend_segments,
     }
@@ -145,7 +160,6 @@ def main():
 
     input_files = sorted(input_dir.rglob("*_simple_sentiment.json"))
 
-    # Ignore old root-level test files. Keep only files inside domain folders.
     input_files = [
         path for path in input_files
         if path.parent.name in {"banking", "health", "healthcare", "telecom"}
@@ -179,6 +193,7 @@ def main():
                 "risk_level": backend_payload["call_summary"]["risk_level"],
                 "dominant_sentiment": backend_payload["call_summary"]["dominant_sentiment"],
                 "dominant_emotion": backend_payload["call_summary"]["dominant_emotion"],
+                "duplicate_seq_ids": backend_payload["call_summary"]["duplicate_seq_ids"],
                 "backend_payload_path": str(output_path.relative_to(ML_SERVICES_ROOT)),
             })
 
@@ -193,6 +208,7 @@ def main():
                 "risk_level": None,
                 "dominant_sentiment": None,
                 "dominant_emotion": None,
+                "duplicate_seq_ids": [],
                 "backend_payload_path": None,
             })
 
@@ -205,7 +221,7 @@ def main():
         "failed_calls": failed_calls,
         "total_segments": total_segments,
         "successful_segments": successful_segments,
-        "note": "These files are backend-ready sentiment payloads. Backend can join with transcription using call_id and seq_id.",
+        "note": "Backend-ready sentiment payloads. Use call_id + segment_index as the safest unique key. seq_id is still included for transcript alignment.",
         "calls": manifest_calls,
     }
 
