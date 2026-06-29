@@ -23,7 +23,8 @@ from __future__ import annotations
 from typing import Optional, List, Literal
 from pydantic import BaseModel, Field
 
-RUBRIC_VERSION = "0.1.0"
+RUBRIC_VERSION = "0.1.0"          # legacy monolithic path (extract.py)
+RUBRIC_VERSION_GRAPH = "0.2.0"    # graph path with customer_satisfaction
 
 Speaker = Literal["AGENT", "CUSTOMER"]
 
@@ -91,6 +92,12 @@ class QualityDimensions(BaseModel):
     professionalism: QualityDimension   # requires_audio likely True
     # e. Empathy: validation phrases + name use (TEXT) + flat/robotic tone, matches emotion (AUDIO)
     empathy: QualityDimension           # requires_audio likely True
+    # f. Customer Satisfaction: problem addressed, clear resolution, followed through (TEXT)
+    #    + "sounds satisfied", not frustrated at end (AUDIO). Added in v0.2.0.
+    customer_satisfaction: Optional[QualityDimension] = Field(
+        default=None,
+        description="Customer outcome signals. Added in v0.2.0; null in v0.1.0 evaluations."
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -155,6 +162,7 @@ MODALITY_MAP = {
     "quality.empathy":                  "text+audio",     # phrases=text, warmth/tone=audio
     "escalation.red_flags":             "text",
     "escalation.customer_emotion":      "text+audio",      # words=text, intensity=audio
+    "quality.customer_satisfaction":    "text+audio",      # outcome=text, "sounds satisfied"=audio
 }
 
 
