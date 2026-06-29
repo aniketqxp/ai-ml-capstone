@@ -1,5 +1,28 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import callData from './call_data.json';
+import sentenceData from './sentence_segments.json';
+import sentimentStub from './en_CA_Banking_1586889_simple_sentiment.json';
+
+const SENTIMENT_STYLE = {
+  Positive: {
+    bg:   'bg-emerald-950/40',
+    ring: 'ring-emerald-700/50',
+    dot:  'bg-emerald-400',
+    pill: 'bg-emerald-900/70 text-emerald-300 border-emerald-700',
+  },
+  Negative: {
+    bg:   'bg-red-950/40',
+    ring: 'ring-red-700/50',
+    dot:  'bg-red-400',
+    pill: 'bg-red-900/70 text-red-300 border-red-700',
+  },
+  Neutral: {
+    bg:   '',
+    ring: '',
+    dot:  'bg-slate-500',
+    pill: 'bg-slate-800 text-slate-400 border-slate-700',
+  },
+};
 
 const CHAPTER_COLORS = [
   '#6366f1', '#0ea5e9', '#10b981', '#f59e0b',
@@ -53,6 +76,7 @@ const QUALITY_DIMS = [
   ['clarity', 'Clarity'],
   ['professionalism', 'Professionalism'],
   ['empathy', 'Empathy'],
+  ['customer_satisfaction', 'Customer satisfaction'],
 ];
 const RISK_STYLE = {
   none:     { label: 'No escalation', cls: 'bg-emerald-950 text-emerald-300 border-emerald-800' },
@@ -125,6 +149,7 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
           <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Quality · text-derived</div>
           {QUALITY_DIMS.map(([key, name]) => {
             const d = q[key];
+            if (!d) return null;
             return (
               <div key={key} className="flex items-center gap-2">
                 <span className="flex-grow text-xs text-slate-300">
@@ -154,7 +179,7 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
             <p className="text-xs text-slate-400 leading-relaxed">{evaluation.overall_summary}</p>
           </div>
         )}
-        <div className="text-[9px] text-slate-600 text-right pt-1">evaluated by {evaluation.served_by}</div>
+        <div className="text-[9px] text-slate-600 text-right pt-1">rubric {evaluation.rubric_version}{evaluation.served_by ? ` · ${evaluation.served_by}` : ''}</div>
       </div>
     </section>
   );
@@ -174,6 +199,25 @@ export default function App() {
   const [dragTime, setDragTime] = useState(0);
 
   const { turns, chapters, evaluation } = callData;
+  const sentences = sentenceData.sentences;
+
+  // seq_id → sentiment entry
+  const sentimentMap = useMemo(() => {
+    const m = new Map();
+    sentimentStub.segments.forEach(s => m.set(s.seq_id, s));
+    return m;
+  }, []);
+
+  // for each turn, collect the sentences that fall inside it (same speaker, overlapping time)
+  const turnSentences = useMemo(() =>
+    turns.map(turn =>
+      sentences.filter(s =>
+        s.speaker === turn.speaker &&
+        s.start >= turn.start - 0.1 &&
+        s.end   <= turn.end   + 0.1
+      )
+    ),
+  [turns, sentences]);
 
   // ── audio wiring ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -375,16 +419,24 @@ export default function App() {
         <section className="lg:col-span-3 bg-slate-950 rounded-xl border border-slate-800 shadow-xl flex flex-col min-h-0">
           <div className="px-5 py-3 border-b border-slate-800 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-300">Conversation</h2>
-            <div className="flex gap-4 text-xs">
+            <div className="flex gap-4 text-xs items-center">
               <span className="flex items-center gap-1.5 text-indigo-400"><span className="w-2 h-2 rounded-full bg-indigo-500" />Agent</span>
               <span className="flex items-center gap-1.5 text-emerald-400"><span className="w-2 h-2 rounded-full bg-emerald-500" />Customer</span>
+              <span className="w-px h-3 bg-slate-700" />
+              <span className="flex items-center gap-1.5 text-slate-400 text-[10px]">
+                <span className="w-3 h-3 rounded-sm bg-emerald-500/30 border border-emerald-700/50" />positive
+              </span>
+              <span className="flex items-center gap-1.5 text-slate-400 text-[10px]">
+                <span className="w-3 h-3 rounded-sm bg-red-500/30 border border-red-700/50" />negative
+              </span>
             </div>
           </div>
 
           <div ref={scrollRef} className="overflow-y-auto p-5 space-y-3" style={{ maxHeight: '46vh' }}>
             {turns.map((t, i) => {
               const isAgent = t.speaker === 'AGENT';
-              const active = i === activeTurnIdx;
+              const active  = i === activeTurnIdx;
+              const sents   = turnSentences[i] || [];
               return (
                 <div key={i} ref={active ? activeTurnRef : null}
                   className={`flex ${isAgent ? 'justify-end' : 'justify-start'}`}>
@@ -393,14 +445,31 @@ export default function App() {
                       ${isAgent
                         ? 'bg-indigo-950/60 border-indigo-900 rounded-br-sm'
                         : 'bg-slate-800/60 border-slate-700 rounded-bl-sm'}
-                      ${active ? 'ring-2 ring-offset-2 ring-offset-slate-950 scale-[1.01] shadow-lg ' +
-                        (isAgent ? 'ring-indigo-400' : 'ring-emerald-400') : 'opacity-70 hover:opacity-100'}`}>
+                      ${active
+                        ? 'ring-2 ring-offset-2 ring-offset-slate-950 scale-[1.01] shadow-lg ' +
+                          (isAgent ? 'ring-indigo-400' : 'ring-emerald-400')
+                        : 'opacity-70 hover:opacity-100'}`}>
                     <div className={`flex items-center gap-2 mb-1 text-[10px] font-mono uppercase tracking-wide
                       ${isAgent ? 'text-indigo-400' : 'text-emerald-400'}`}>
                       <span>{isAgent ? 'Agent' : 'Customer'}</span>
                       <span className="text-slate-600">{fmt(t.start)}</span>
                     </div>
-                    <div className="text-sm text-slate-200 leading-snug">{t.text}</div>
+                    {/* sentence-level emotion color — no labels, pure background */}
+                    <div className="text-sm text-slate-200 leading-relaxed">
+                      {sents.length > 0
+                        ? sents.map((s) => {
+                            const sent = sentimentMap.get(s.seq_id);
+                            const bg = sent?.sentiment === 'Positive' ? 'bg-emerald-500/20'
+                                     : sent?.sentiment === 'Negative' ? 'bg-red-500/25'
+                                     : '';
+                            return (
+                              <span key={s.seq_id} className={`${bg} rounded px-0.5`}>
+                                {s.text}{' '}
+                              </span>
+                            );
+                          })
+                        : t.text}
+                    </div>
                   </button>
                 </div>
               );

@@ -414,13 +414,13 @@
     }
   ],
   "evaluation": {
-    "rubric_version": "0.1.0",
+    "rubric_version": "0.2.0",
     "metadata": {
-      "call_id": "call_1",
+      "call_id": "en_CA_Banking_1586889",
       "domain": "banking",
-      "accent": null,
-      "duration_seconds": 636.22,
-      "transcript_model": "faster-whisper small.en/int8 + stereo channel attribution"
+      "accent": "en-CA",
+      "duration_seconds": 636.2,
+      "transcript_model": "faster-whisper small.en/int8"
     },
     "compliance": {
       "name_announced": {
@@ -429,7 +429,7 @@
           "quote": "My name is Emily.",
           "speaker": "AGENT",
           "timestamp": "00:13",
-          "sec": 13.49,
+          "sec": 13.46,
           "turn": 0
         },
         "note": null
@@ -440,7 +440,7 @@
           "quote": "Thank you for calling North Star Bank customer care.",
           "speaker": "AGENT",
           "timestamp": "00:13",
-          "sec": 13.49,
+          "sec": 13.46,
           "turn": 0
         },
         "note": null
@@ -456,20 +456,20 @@
           "quote": "Before we start, can I verify your identity for security purposes? Could you confirm your date of birth and the last four digits of your checking account number?",
           "speaker": "AGENT",
           "timestamp": "00:40",
-          "sec": 40.31,
-          "turn": 2
+          "sec": 40.49,
+          "turn": 3
         },
         "note": null
       },
-      "identity_method": "date of birth and last four digits of account number",
+      "identity_method": "date of birth",
       "resolution_provided": {
         "passed": true,
         "evidence": {
-          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program, and you can pause, change, or cancel your transfers any time online or by phone. And a confirmation text and email will be sent to you shortly. Does everything sound correct so far?",
+          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers any time online or by phone. And a confirmation text and email will be sent to you shortly.",
           "speaker": "AGENT",
-          "timestamp": "07:32",
-          "sec": 452.88,
-          "turn": 34
+          "timestamp": "07:33",
+          "sec": 452.68,
+          "turn": 35
         },
         "note": null
       },
@@ -484,16 +484,17 @@
         "score": 5,
         "signals_present": [
           "first-call resolution",
-          "no unnecessary holds/transfers"
+          "appropriate call duration",
+          "no unnecessary holds or transfers"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Absolutely, Mr. Carter, I can help you with that.",
+            "quote": "So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
             "speaker": "AGENT",
-            "timestamp": "00:40",
-            "sec": 40.31,
-            "turn": 2
+            "timestamp": "07:33",
+            "sec": 452.68,
+            "turn": 35
           }
         ],
         "requires_audio": false
@@ -501,51 +502,51 @@
       "problem_resolution": {
         "score": 5,
         "signals_present": [
-          "offered options",
-          "explained pros/cons and WHY",
-          "solved the actual issue"
+          "offered multiple options",
+          "explained pros and cons",
+          "waited for customer preference",
+          "had a backup plan",
+          "solution fits customer's situation",
+          "explained WHY",
+          "issue solved by end",
+          "offered alternatives"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Yeah, for sure. So you can just adjust or cancel the transfer at any time through the mobile app or online banking. So it's at the top in the transfer section. So you tap on scheduled transfers and then you'll be able to edit the details. But also, you can also call us if you need it so that we can and we can change it for you.",
+            "quote": "So you can adjust or cancel the transfer at any time through the mobile app or online banking. So it's at the top in the transfer section. You can tap on scheduled transfers and then you'll be able to edit the details.",
             "speaker": "AGENT",
-            "timestamp": "03:52",
-            "sec": 232.49,
-            "turn": 18
-          },
-          {
-            "quote": "Yeah, absolutely. So you can pause or skip one or more of the scheduled transfers any time. So you can do that on your online account or by giving us a quick call, pardon. So when you pause, the schedule remains saved. It just skips the select month and then you can resume whenever you're ready.",
-            "speaker": "AGENT",
-            "timestamp": "05:05",
-            "sec": 305.18,
-            "turn": 22
+            "timestamp": "03:53",
+            "sec": null,
+            "turn": null
           }
         ],
         "requires_audio": false
       },
       "clarity": {
-        "score": 5,
+        "score": 4,
         "signals_present": [
-          "open-ended questions",
-          "confirms understanding",
-          "recap at end"
+          "asked open-ended diagnostic questions",
+          "checked understanding",
+          "asked clarifying questions",
+          "confirmed understanding mid-call",
+          "provided a recap or summary at the end"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Does everything sound correct so far?",
+            "quote": "So how much would you like to transfer each month?",
             "speaker": "AGENT",
-            "timestamp": "08:16",
-            "sec": 452.88,
-            "turn": 34
+            "timestamp": "01:33",
+            "sec": 92.86,
+            "turn": 6
           },
           {
-            "quote": "So I can summarize what we've done today... Does everything sound correct so far?",
+            "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account...",
             "speaker": "AGENT",
-            "timestamp": "07:32",
-            "sec": 452.88,
-            "turn": 34
+            "timestamp": "07:33",
+            "sec": 452.68,
+            "turn": 35
           }
         ],
         "requires_audio": false
@@ -553,18 +554,21 @@
       "professionalism": {
         "score": 5,
         "signals_present": [
-          "grammar",
-          "complete sentences",
-          "no slang"
+          "proper grammar and complete sentences",
+          "no slang or informal language",
+          "knew the answer or actively found it",
+          "provided accurate information",
+          "explained WHY",
+          "listened fully without interrupting"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Oh, good afternoon. Thank you for calling North Star Bank customer care. My name is Emily. How can I help you today?",
+            "quote": "Absolutely, Mr. Carter, I can help you with that. Before we start, can I verify your identity for security purposes? Could you confirm your date of birth and the last four digits of your checking account number?",
             "speaker": "AGENT",
-            "timestamp": "00:13",
-            "sec": 13.49,
-            "turn": 0
+            "timestamp": "00:40",
+            "sec": 40.49,
+            "turn": 3
           }
         ],
         "requires_audio": true
@@ -572,33 +576,56 @@
       "empathy": {
         "score": 4,
         "signals_present": [
-          "uses customer name",
-          "acknowledges concern"
+          "uses customer's name naturally",
+          "acknowledges the concern before moving to solutions",
+          "matches the emotional register of the customer"
         ],
         "signals_absent": [
-          "no validation phrase"
+          "no explicit validation phrases"
         ],
         "evidence": [
           {
-            "quote": "Absolutely, Mr. Carter, I can help you with that.",
-            "speaker": "AGENT",
-            "timestamp": "00:40",
-            "sec": 40.31,
-            "turn": 2
-          },
-          {
             "quote": "Okay, that's a smart move. Consistent savings make projects like that a lot easier to handle.",
             "speaker": "AGENT",
-            "timestamp": "01:32",
-            "sec": 92.63,
+            "timestamp": "01:33",
+            "sec": 92.86,
             "turn": 6
           },
           {
-            "quote": "Yeah, I love that. Also, North Star Bank offers a home project savings bonus.",
+            "quote": "Renovations have a way of growing as they go. What kind of renovation are you planning if you don't mind me asking?",
             "speaker": "AGENT",
-            "timestamp": "06:46",
-            "sec": 406.71,
-            "turn": 30
+            "timestamp": "06:01",
+            "sec": 360.95,
+            "turn": 28
+          }
+        ],
+        "requires_audio": true
+      },
+      "customer_satisfaction": {
+        "score": 5,
+        "signals_present": [
+          "problem was identified clearly",
+          "issue was addressed",
+          "clear resolution provided",
+          "agent didn't dismiss or minimize concern",
+          "agent followed through on promises",
+          "first-call resolution achieved"
+        ],
+        "signals_absent": [],
+        "evidence": [
+          {
+            "quote": "Everything sounds perfect. Yes, please.",
+            "speaker": "CUSTOMER",
+            "timestamp": "07:28",
+            "sec": 447.55,
+            "turn": 34
+          },
+          {
+            "quote": "That's all for now. Thanks again, Emily. Have a great afternoon.",
+            "speaker": "CUSTOMER",
+            "timestamp": "10:22",
+            "sec": 621.63,
+            "turn": 51
           }
         ],
         "requires_audio": true
@@ -611,7 +638,10 @@
       "evidence": [],
       "requires_audio": true
     },
-    "overall_summary": "The agent efficiently set up an automatic monthly transfer between the customer's accounts, verified identity, and provided clear next steps. The call was professional, empathetic, and resolved the customer's request without escalation.",
-    "served_by": "mistral-small-latest"
+    "overall_summary": null,
+    "_anchor_stats": {
+      "total": 13,
+      "anchored": 12
+    }
   }
 }
