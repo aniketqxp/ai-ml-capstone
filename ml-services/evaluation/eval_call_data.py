@@ -16,7 +16,7 @@ from router import chat_json_routed
 from rubric import CallEvaluation, RUBRIC_VERSION
 
 load_env()
-CALL_DATA = r"d:\Desktop\ai-ml-capstone\frontend\src\call_data.json"
+CALL_DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\frontend\src\call_data.json"
 
 
 def mmss(s):

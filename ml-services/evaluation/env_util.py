@@ -3,7 +3,7 @@ import os
 
 def load_env(path=None):
     if path is None:
-        path = r"d:\Desktop\ai-ml-capstone\.env"
+        path = r"d:\Desktop\Main\Projects\ai-ml-capstone\.env"
     vals = {}
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:

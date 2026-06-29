@@ -16,7 +16,7 @@ from extract import strip_fences
 
 load_env()
 
-FRONTEND = r"d:\Desktop\ai-ml-capstone\frontend"
+FRONTEND = r"d:\Desktop\Main\Projects\ai-ml-capstone\frontend"
 TRANSCRIPT = os.path.join(FRONTEND, "transcript_data.json")
 OUT = os.path.join(FRONTEND, "src", "call_data.json")
 

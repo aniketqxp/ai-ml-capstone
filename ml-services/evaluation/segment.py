@@ -37,7 +37,7 @@ from llm_client import chat_json
 from extract import strip_fences
 
 load_env()
-DATA = r"d:\Desktop\ai-ml-capstone\data\na_testset"
+DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
 
 
 # ── Schema ────────────────────────────────────────────────────────────────────

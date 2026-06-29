@@ -20,7 +20,7 @@ from rubric import CallEvaluation, CallMetadata, RUBRIC_VERSION
 from llm_client import chat_json
 
 load_env()
-DATA = r"d:\Desktop\ai-ml-capstone\data\na_testset"
+DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
 
 SYSTEM = f"""You are a meticulous call-center QA analyst. You evaluate a single customer-service call against a fixed rubric and output ONLY a JSON object. Rubric version {RUBRIC_VERSION}.
 

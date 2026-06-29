@@ -18,7 +18,7 @@ Usage:
 """
 import os, json, argparse
 
-DATA = r"d:\Desktop\ai-ml-capstone\data\na_testset"
+DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
 MANIFEST = os.path.join(DATA, "manifest.json")
 
 
