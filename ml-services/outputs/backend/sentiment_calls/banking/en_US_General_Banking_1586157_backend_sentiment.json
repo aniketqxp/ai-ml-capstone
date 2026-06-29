@@ -1,0 +1,987 @@
+{
+  "call_id": "en_US_General_Banking_1586157",
+  "domain": "banking",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "source_file": "outputs/apptek/simple_sentiment_results/banking/en_US_General_Banking_1586157_simple_sentiment.json",
+  "generated_at": "2026-06-29T22:06:48.213591+00:00",
+  "call_summary": {
+    "total_segments": 136,
+    "successful_segments": 93,
+    "skipped_segments": 43,
+    "dominant_sentiment": "Neutral",
+    "dominant_emotion": "neutral",
+    "average_escalation_score": 0.157694,
+    "max_escalation_score": 0.3522,
+    "risk_level": "Medium",
+    "processing_status_distribution": {
+      "success": 93,
+      "skipped_too_short": 43
+    },
+    "sentiment_distribution": {
+      "Neutral": 44,
+      "Negative": 10,
+      "Positive": 36,
+      "Unknown": 3
+    },
+    "emotion_distribution": {
+      "neutral": 46,
+      "sadness": 7,
+      "happy": 37,
+      "disgust": 3
+    }
+  },
+  "segments": [
+    {
+      "seq_id": 1,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1258,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 2,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2634,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 3,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 4,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2107,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 5,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0662,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 6,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.143,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 7,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 8,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1043,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 9,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1437,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 10,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1057,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 11,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1349,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 12,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1037,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 13,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.137,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 14,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0844,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 15,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.135,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 16,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2602,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 17,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0892,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 18,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 19,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1311,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 20,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1047,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 21,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0788,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 22,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2596,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 23,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0662,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 24,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1112,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 25,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1038,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 26,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 27,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1441,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 28,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2377,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 29,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.212,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 30,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2417,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 31,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3289,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 32,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 33,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0726,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 34,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 35,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 36,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.214,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 37,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1775,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 38,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1135,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 39,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.1902,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 40,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.131,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 41,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2908,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 42,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1725,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 43,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 44,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1477,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 45,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1727,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 46,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1725,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 47,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1231,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 48,
+      "sentiment": "Unknown",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1313,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 49,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1425,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 50,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.3522,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 51,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2147,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 52,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 53,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0726,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 54,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1041,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 55,
+      "sentiment": "Unknown",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2186,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 56,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2316,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 57,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 58,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 59,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.117,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 60,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1454,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 61,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1798,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 62,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.143,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 63,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 64,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1794,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 65,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 66,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1099,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 67,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1411,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 68,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 69,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0933,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 70,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 71,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1043,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 72,
+      "sentiment": "Unknown",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2477,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 73,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1793,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 74,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 75,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1059,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 76,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1477,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 77,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1661,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 78,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1412,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 79,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1415,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 80,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 81,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1798,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 82,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2398,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 83,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1039,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 84,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1413,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 85,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2608,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 86,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2101,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 87,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1678,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 88,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 89,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0664,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 90,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 91,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1095,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 92,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1468,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 93,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 94,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1364,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 95,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 96,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.274,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 97,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1062,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 98,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1846,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 99,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0726,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 100,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 101,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1348,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 102,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 103,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.223,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 104,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 105,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 106,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 107,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 108,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 109,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1414,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 110,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1801,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 111,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 112,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 113,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 114,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1724,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 115,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 116,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 117,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2289,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 118,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 119,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1973,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 120,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.248,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 121,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1169,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 122,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 123,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 124,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.0825,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 125,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1414,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 126,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1406,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 127,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 128,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.0714,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 129,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1725,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 130,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 131,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 132,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.099,
+      "processing_status": "success"
+    },
+    {
+      "seq_id": 133,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 134,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 135,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "seq_id": 136,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    }
+  ]
+}
