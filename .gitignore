@@ -5,6 +5,9 @@
 .claude/
 CLAUDE.md
 
+# Allow processed metadata files needed for reproducible experiments
+!
+
 # Environments
 .env
 .env.local
@@ -25,31 +28,36 @@ node_modules/
 ml-services/data/
 ml-services/models/
 
+# Allow selected processed metadata files
+!ml-services/data/processed/
+!ml-services/data/processed/*.csv
+!ml-services/data/processed/*.json
+
 # Prevent gigabytes of binary sound layers from being committed
-# data/* (not data/) so subdirectory exceptions can be applied
+# data/* not data/ so subdirectory exceptions can be applied
 data/*
 !data/sentence_segments/
 *.wav
 *.mp3
+data/audio/
 
 # Operating system files
 .DS_Store
 Thumbs.db
 
+# Raw data should not be committed
 ml-services/data/raw/
 
-#sentiment analysis baseline files
-ml-services/data/raw/
+# Sentiment analysis baseline files
 ml-services/data/processed/cremad_baseline_features.csv
 ml-services/outputs/models/
-ml-services/data/raw/
-
 ml-services/outputs/wav2vec2/
 ml-services/outputs/reports/wav2vec2_emotion_report.json
 ml-services/outputs/reports/wav2vec2_emotion_confusion_matrix.csv
 ml-services/outputs/sentiment/
+
 # Local MLflow tracking files
 ml-services/mlflow.db
+ml-services/mlflow.db-journal
 ml-services/mlruns/
-data/audio/
-
+ml-services/mlartifacts/

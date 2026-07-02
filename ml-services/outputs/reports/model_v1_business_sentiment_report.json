@@ -1,0 +1,55 @@
+{
+  "model_version": "model_v1",
+  "model_name": "Wav2Vec2 emotion classifier",
+  "base_checkpoint": "Dpngtm/wav2vec2-emotion-recognition",
+  "dataset": "CREMA-D",
+  "evaluation_type": "business_sentiment_from_emotion_confusion_matrix",
+  "business_label_mapping": {
+    "anger": "Negative/Escalated",
+    "disgust": "Negative/Escalated",
+    "fear": "Negative/Escalated",
+    "sadness": "Negative/Escalated",
+    "neutral": "Neutral",
+    "happy": "Positive/Calm"
+  },
+  "total_test_samples": 1229,
+  "raw_emotion_accuracy": 0.8079739625711961,
+  "business_sentiment_accuracy": 0.9170056956875509,
+  "business_sentiment_macro_f1": 0.8826240745206825,
+  "business_sentiment_weighted_f1": 0.9156642672471688,
+  "business_sentiment_classification_report": {
+    "Negative/Escalated": {
+      "precision": 0.9278350515463918,
+      "recall": 0.9642857142857143,
+      "f1-score": 0.9457092819614711,
+      "support": 840.0
+    },
+    "Neutral": {
+      "precision": 0.8387096774193549,
+      "recall": 0.8715083798882681,
+      "f1-score": 0.8547945205479452,
+      "support": 179.0
+    },
+    "Positive/Calm": {
+      "precision": 0.9470588235294117,
+      "recall": 0.7666666666666667,
+      "f1-score": 0.8473684210526315,
+      "support": 210.0
+    },
+    "accuracy": 0.9170056956875509,
+    "macro avg": {
+      "precision": 0.904534517498386,
+      "recall": 0.8674869202802163,
+      "f1-score": 0.8826240745206825,
+      "support": 1229.0
+    },
+    "weighted avg": {
+      "precision": 0.9181389979643695,
+      "recall": 0.9170056956875509,
+      "f1-score": 0.9156642672471688,
+      "support": 1229.0
+    }
+  },
+  "business_sentiment_confusion_matrix_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/reports/model_v1_business_sentiment_confusion_matrix.csv",
+  "notes": "Business sentiment groups anger, disgust, fear, and sadness as Negative/Escalated, neutral as Neutral, and happy as Positive/Calm. This metric is more aligned with the call-center risk use case than raw emotion accuracy alone."
+}

@@ -1,0 +1,183 @@
+{
+  "model_version": "model_v2",
+  "run_name": "model_v2_cremad_ravdess",
+  "model_dir": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/wav2vec2/model_v2_cremad_ravdess/best_model",
+  "metadata_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/data/processed/combined_emotion_metadata.csv",
+  "device": "Apple Silicon MPS available",
+  "dataset_results": {
+    "CREMA-D": {
+      "samples": 1229,
+      "accuracy": 0.8087876322213181,
+      "macro_f1": 0.8088697203629472,
+      "weighted_f1": 0.8074208565370637,
+      "classification_report": {
+        "anger": {
+          "precision": 0.7948717948717948,
+          "recall": 0.8857142857142857,
+          "f1-score": 0.8378378378378378,
+          "support": 210.0
+        },
+        "disgust": {
+          "precision": 0.8315789473684211,
+          "recall": 0.7523809523809524,
+          "f1-score": 0.79,
+          "support": 210.0
+        },
+        "fear": {
+          "precision": 0.728744939271255,
+          "recall": 0.8571428571428571,
+          "f1-score": 0.787746170678337,
+          "support": 210.0
+        },
+        "happy": {
+          "precision": 0.898936170212766,
+          "recall": 0.8047619047619048,
+          "f1-score": 0.8492462311557789,
+          "support": 210.0
+        },
+        "neutral": {
+          "precision": 0.8307692307692308,
+          "recall": 0.9050279329608939,
+          "f1-score": 0.8663101604278075,
+          "support": 179.0
+        },
+        "sadness": {
+          "precision": 0.7942857142857143,
+          "recall": 0.6619047619047619,
+          "f1-score": 0.7220779220779221,
+          "support": 210.0
+        },
+        "accuracy": 0.8087876322213181,
+        "macro avg": {
+          "precision": 0.813197799463197,
+          "recall": 0.811155449144276,
+          "f1-score": 0.8088697203629472,
+          "support": 1229.0
+        },
+        "weighted avg": {
+          "precision": 0.8127545819119464,
+          "recall": 0.8087876322213181,
+          "f1-score": 0.8074208565370637,
+          "support": 1229.0
+        }
+      },
+      "confusion_matrix_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/reports/model_v2_cremad_only_confusion_matrix.csv"
+    },
+    "RAVDESS": {
+      "samples": 260,
+      "accuracy": 0.823076923076923,
+      "macro_f1": 0.823432711810153,
+      "weighted_f1": 0.8274788922748518,
+      "classification_report": {
+        "anger": {
+          "precision": 1.0,
+          "recall": 0.85,
+          "f1-score": 0.918918918918919,
+          "support": 40.0
+        },
+        "disgust": {
+          "precision": 0.9473684210526315,
+          "recall": 0.9,
+          "f1-score": 0.9230769230769231,
+          "support": 40.0
+        },
+        "fear": {
+          "precision": 0.7142857142857143,
+          "recall": 0.75,
+          "f1-score": 0.7317073170731707,
+          "support": 40.0
+        },
+        "happy": {
+          "precision": 0.9032258064516129,
+          "recall": 0.7,
+          "f1-score": 0.7887323943661971,
+          "support": 40.0
+        },
+        "neutral": {
+          "precision": 0.8688524590163934,
+          "recall": 0.8833333333333333,
+          "f1-score": 0.8760330578512396,
+          "support": 60.0
+        },
+        "sadness": {
+          "precision": 0.6111111111111112,
+          "recall": 0.825,
+          "f1-score": 0.7021276595744681,
+          "support": 40.0
+        },
+        "accuracy": 0.823076923076923,
+        "macro avg": {
+          "precision": 0.8408072519862438,
+          "recall": 0.8180555555555556,
+          "f1-score": 0.823432711810153,
+          "support": 260.0
+        },
+        "weighted avg": {
+          "precision": 0.8429645756039476,
+          "recall": 0.823076923076923,
+          "f1-score": 0.8274788922748518,
+          "support": 260.0
+        }
+      },
+      "confusion_matrix_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/reports/model_v2_ravdess_only_confusion_matrix.csv"
+    },
+    "Combined": {
+      "samples": 1489,
+      "accuracy": 0.8112827400940228,
+      "macro_f1": 0.8112153509324935,
+      "weighted_f1": 0.8107907796126159,
+      "classification_report": {
+        "anger": {
+          "precision": 0.8208955223880597,
+          "recall": 0.88,
+          "f1-score": 0.8494208494208494,
+          "support": 250.0
+        },
+        "disgust": {
+          "precision": 0.8508771929824561,
+          "recall": 0.776,
+          "f1-score": 0.8117154811715481,
+          "support": 250.0
+        },
+        "fear": {
+          "precision": 0.726643598615917,
+          "recall": 0.84,
+          "f1-score": 0.7792207792207793,
+          "support": 250.0
+        },
+        "happy": {
+          "precision": 0.8995433789954338,
+          "recall": 0.788,
+          "f1-score": 0.8400852878464818,
+          "support": 250.0
+        },
+        "neutral": {
+          "precision": 0.83984375,
+          "recall": 0.899581589958159,
+          "f1-score": 0.8686868686868687,
+          "support": 239.0
+        },
+        "sadness": {
+          "precision": 0.7510917030567685,
+          "recall": 0.688,
+          "f1-score": 0.7181628392484343,
+          "support": 250.0
+        },
+        "accuracy": 0.8112827400940228,
+        "macro avg": {
+          "precision": 0.8148158576731058,
+          "recall": 0.8119302649930265,
+          "f1-score": 0.8112153509324935,
+          "support": 1489.0
+        },
+        "weighted avg": {
+          "precision": 0.8146309639084345,
+          "recall": 0.8112827400940228,
+          "f1-score": 0.8107907796126159,
+          "support": 1489.0
+        }
+      },
+      "confusion_matrix_path": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/outputs/reports/model_v2_combined_recomputed_confusion_matrix.csv"
+    }
+  }
+}

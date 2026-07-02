@@ -1,0 +1,41 @@
+{
+  "dataset": "RAVDESS",
+  "total_records": 1248,
+  "splits": {
+    "train": 832,
+    "test": 260,
+    "validation": 156
+  },
+  "actors_per_split": {
+    "test": 5,
+    "train": 16,
+    "validation": 3
+  },
+  "emotion_labels": {
+    "neutral": 288,
+    "anger": 192,
+    "disgust": 192,
+    "fear": 192,
+    "happy": 192,
+    "sadness": 192
+  },
+  "ravdess_original_emotions": {
+    "angry": 192,
+    "disgust": 192,
+    "fearful": 192,
+    "happy": 192,
+    "calm": 192,
+    "sad": 192,
+    "neutral": 96
+  },
+  "sentiment_labels": {
+    "Negative": 768,
+    "Neutral": 288,
+    "Positive": 192
+  },
+  "notes": [
+    "Surprised samples are skipped because the project emotion schema does not include surprise.",
+    "Calm samples are mapped to neutral.",
+    "Split is speaker-aware, so each actor belongs to only one split."
+  ]
+}

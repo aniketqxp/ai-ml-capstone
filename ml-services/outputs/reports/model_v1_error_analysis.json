@@ -1,0 +1,298 @@
+{
+  "model_version": "model_v1",
+  "model_name": "Wav2Vec2 emotion classifier",
+  "base_checkpoint": "Dpngtm/wav2vec2-emotion-recognition",
+  "dataset": "CREMA-D",
+  "raw_emotion_accuracy": 0.8079739625711961,
+  "business_sentiment_accuracy": 0.9170056956875509,
+  "emotion_per_class_performance": [
+    {
+      "class_name": "anger",
+      "support": 210,
+      "correct": 197,
+      "recall": 0.9380952380952381,
+      "most_confused_with": "disgust",
+      "most_confused_count": 8
+    },
+    {
+      "class_name": "neutral",
+      "support": 179,
+      "correct": 156,
+      "recall": 0.8715083798882681,
+      "most_confused_with": "anger",
+      "most_confused_count": 12
+    },
+    {
+      "class_name": "fear",
+      "support": 210,
+      "correct": 175,
+      "recall": 0.8333333333333334,
+      "most_confused_with": "sadness",
+      "most_confused_count": 16
+    },
+    {
+      "class_name": "disgust",
+      "support": 210,
+      "correct": 163,
+      "recall": 0.7761904761904762,
+      "most_confused_with": "anger",
+      "most_confused_count": 19
+    },
+    {
+      "class_name": "happy",
+      "support": 210,
+      "correct": 161,
+      "recall": 0.7666666666666667,
+      "most_confused_with": "anger",
+      "most_confused_count": 29
+    },
+    {
+      "class_name": "sadness",
+      "support": 210,
+      "correct": 141,
+      "recall": 0.6714285714285714,
+      "most_confused_with": "fear",
+      "most_confused_count": 35
+    }
+  ],
+  "business_per_class_performance": [
+    {
+      "class_name": "Negative/Escalated",
+      "support": 840,
+      "correct": 810,
+      "recall": 0.9642857142857143,
+      "most_confused_with": "Neutral",
+      "most_confused_count": 22
+    },
+    {
+      "class_name": "Neutral",
+      "support": 179,
+      "correct": 156,
+      "recall": 0.8715083798882681,
+      "most_confused_with": "Negative/Escalated",
+      "most_confused_count": 22
+    },
+    {
+      "class_name": "Positive/Calm",
+      "support": 210,
+      "correct": 161,
+      "recall": 0.7666666666666667,
+      "most_confused_with": "Negative/Escalated",
+      "most_confused_count": 41
+    }
+  ],
+  "top_emotion_confusions": [
+    {
+      "actual": "sadness",
+      "predicted": "fear",
+      "count": 35
+    },
+    {
+      "actual": "happy",
+      "predicted": "anger",
+      "count": 29
+    },
+    {
+      "actual": "disgust",
+      "predicted": "anger",
+      "count": 19
+    },
+    {
+      "actual": "sadness",
+      "predicted": "neutral",
+      "count": 19
+    },
+    {
+      "actual": "fear",
+      "predicted": "sadness",
+      "count": 16
+    },
+    {
+      "actual": "disgust",
+      "predicted": "fear",
+      "count": 14
+    },
+    {
+      "actual": "disgust",
+      "predicted": "sadness",
+      "count": 12
+    },
+    {
+      "actual": "neutral",
+      "predicted": "anger",
+      "count": 12
+    },
+    {
+      "actual": "fear",
+      "predicted": "anger",
+      "count": 10
+    },
+    {
+      "actual": "sadness",
+      "predicted": "disgust",
+      "count": 10
+    }
+  ],
+  "top_business_confusions": [
+    {
+      "actual": "Positive/Calm",
+      "predicted": "Negative/Escalated",
+      "count": 41
+    },
+    {
+      "actual": "Negative/Escalated",
+      "predicted": "Neutral",
+      "count": 22
+    },
+    {
+      "actual": "Neutral",
+      "predicted": "Negative/Escalated",
+      "count": 22
+    },
+    {
+      "actual": "Negative/Escalated",
+      "predicted": "Positive/Calm",
+      "count": 8
+    },
+    {
+      "actual": "Positive/Calm",
+      "predicted": "Neutral",
+      "count": 8
+    },
+    {
+      "actual": "Neutral",
+      "predicted": "Positive/Calm",
+      "count": 1
+    }
+  ],
+  "interpretation": {
+    "strongest_classes": [
+      {
+        "class_name": "anger",
+        "support": 210,
+        "correct": 197,
+        "recall": 0.9380952380952381,
+        "most_confused_with": "disgust",
+        "most_confused_count": 8
+      },
+      {
+        "class_name": "neutral",
+        "support": 179,
+        "correct": 156,
+        "recall": 0.8715083798882681,
+        "most_confused_with": "anger",
+        "most_confused_count": 12
+      },
+      {
+        "class_name": "fear",
+        "support": 210,
+        "correct": 175,
+        "recall": 0.8333333333333334,
+        "most_confused_with": "sadness",
+        "most_confused_count": 16
+      }
+    ],
+    "weakest_classes": [
+      {
+        "class_name": "sadness",
+        "support": 210,
+        "correct": 141,
+        "recall": 0.6714285714285714,
+        "most_confused_with": "fear",
+        "most_confused_count": 35
+      },
+      {
+        "class_name": "happy",
+        "support": 210,
+        "correct": 161,
+        "recall": 0.7666666666666667,
+        "most_confused_with": "anger",
+        "most_confused_count": 29
+      },
+      {
+        "class_name": "disgust",
+        "support": 210,
+        "correct": 163,
+        "recall": 0.7761904761904762,
+        "most_confused_with": "anger",
+        "most_confused_count": 19
+      }
+    ],
+    "main_emotion_confusions": [
+      {
+        "actual": "sadness",
+        "predicted": "fear",
+        "count": 35
+      },
+      {
+        "actual": "happy",
+        "predicted": "anger",
+        "count": 29
+      },
+      {
+        "actual": "disgust",
+        "predicted": "anger",
+        "count": 19
+      },
+      {
+        "actual": "sadness",
+        "predicted": "neutral",
+        "count": 19
+      },
+      {
+        "actual": "fear",
+        "predicted": "sadness",
+        "count": 16
+      }
+    ],
+    "main_business_confusions": [
+      {
+        "actual": "Positive/Calm",
+        "predicted": "Negative/Escalated",
+        "count": 41
+      },
+      {
+        "actual": "Negative/Escalated",
+        "predicted": "Neutral",
+        "count": 22
+      },
+      {
+        "actual": "Neutral",
+        "predicted": "Negative/Escalated",
+        "count": 22
+      },
+      {
+        "actual": "Negative/Escalated",
+        "predicted": "Positive/Calm",
+        "count": 8
+      },
+      {
+        "actual": "Positive/Calm",
+        "predicted": "Neutral",
+        "count": 8
+      }
+    ],
+    "recommendations_for_model_v2": [
+      {
+        "issue": "Sadness is weaker than other classes and is often confused with fear or neutral.",
+        "reason": "Sad, worried, tired, or low-energy speech can be acoustically similar.",
+        "recommended_fix": "Add RAVDESS examples, apply light augmentation, and check sadness/fear label mapping carefully."
+      },
+      {
+        "issue": "Happy speech is sometimes confused with anger or negative emotion.",
+        "reason": "Happy and angry speech can both be high-energy with higher pitch or louder voice.",
+        "recommended_fix": "Use business-level sentiment accuracy and consider voice-feature support to distinguish positive high energy from aggressive high energy."
+      },
+      {
+        "issue": "Some negative emotions are confused with each other.",
+        "reason": "Anger, disgust, fear, and sadness are all negative states and can overlap in vocal tone.",
+        "recommended_fix": "Report both raw emotion accuracy and business sentiment accuracy, since the business use case mainly needs escalation/negative-state detection."
+      },
+      {
+        "issue": "The model is trained on acted emotional speech.",
+        "reason": "CREMA-D is useful for labeled emotion learning but not identical to real call-center calls.",
+        "recommended_fix": "Use AppTek for realistic inference/demo and manually label a small AppTek subset if accuracy on call-center-like audio is needed."
+      }
+    ]
+  }
+}

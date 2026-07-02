@@ -1,0 +1,1475 @@
+{
+  "call_id": "en_US_General_Banking_1587700",
+  "domain": "banking",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "source_file": "outputs/apptek/simple_sentiment_results/banking/en_US_General_Banking_1587700_simple_sentiment.json",
+  "generated_at": "2026-06-29T22:11:51.113684+00:00",
+  "join_keys": {
+    "recommended_unique_key": "call_id + segment_index",
+    "transcript_alignment_key": "call_id + seq_id",
+    "note": "seq_id is preserved from transcription. segment_index is added because one transcript file contains a duplicate seq_id."
+  },
+  "call_summary": {
+    "total_segments": 159,
+    "successful_segments": 124,
+    "skipped_segments": 35,
+    "dominant_sentiment": "Negative",
+    "dominant_emotion": "neutral",
+    "average_escalation_score": 0.270098,
+    "max_escalation_score": 0.6926,
+    "risk_level": "High",
+    "processing_status_distribution": {
+      "success": 124,
+      "skipped_too_short": 35
+    },
+    "sentiment_distribution": {
+      "Unknown": 4,
+      "Negative": 52,
+      "Positive": 23,
+      "Neutral": 43,
+      "Mixed": 2
+    },
+    "emotion_distribution": {
+      "sadness": 27,
+      "happy": 26,
+      "neutral": 44,
+      "disgust": 13,
+      "anger": 13,
+      "fear": 1
+    },
+    "duplicate_seq_ids": []
+  },
+  "segments": [
+    {
+      "segment_index": 1,
+      "segment_key": "en_US_General_Banking_1587700_0001",
+      "seq_id": 1,
+      "sentiment": "Unknown",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2364,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 2,
+      "segment_key": "en_US_General_Banking_1587700_0002",
+      "seq_id": 2,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 3,
+      "segment_key": "en_US_General_Banking_1587700_0003",
+      "seq_id": 3,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 4,
+      "segment_key": "en_US_General_Banking_1587700_0004",
+      "seq_id": 4,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 5,
+      "segment_key": "en_US_General_Banking_1587700_0005",
+      "seq_id": 5,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2684,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 6,
+      "segment_key": "en_US_General_Banking_1587700_0006",
+      "seq_id": 6,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2666,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 7,
+      "segment_key": "en_US_General_Banking_1587700_0007",
+      "seq_id": 7,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 8,
+      "segment_key": "en_US_General_Banking_1587700_0008",
+      "seq_id": 8,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 9,
+      "segment_key": "en_US_General_Banking_1587700_0009",
+      "seq_id": 9,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1655,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 10,
+      "segment_key": "en_US_General_Banking_1587700_0010",
+      "seq_id": 10,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2344,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 11,
+      "segment_key": "en_US_General_Banking_1587700_0011",
+      "seq_id": 11,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3274,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 12,
+      "segment_key": "en_US_General_Banking_1587700_0012",
+      "seq_id": 12,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1438,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 13,
+      "segment_key": "en_US_General_Banking_1587700_0013",
+      "seq_id": 13,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1381,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 14,
+      "segment_key": "en_US_General_Banking_1587700_0014",
+      "seq_id": 14,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2962,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 15,
+      "segment_key": "en_US_General_Banking_1587700_0015",
+      "seq_id": 15,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2114,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 16,
+      "segment_key": "en_US_General_Banking_1587700_0016",
+      "seq_id": 16,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1352,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 17,
+      "segment_key": "en_US_General_Banking_1587700_0017",
+      "seq_id": 17,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 18,
+      "segment_key": "en_US_General_Banking_1587700_0018",
+      "seq_id": 18,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 19,
+      "segment_key": "en_US_General_Banking_1587700_0019",
+      "seq_id": 19,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 20,
+      "segment_key": "en_US_General_Banking_1587700_0020",
+      "seq_id": 20,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3336,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 21,
+      "segment_key": "en_US_General_Banking_1587700_0021",
+      "seq_id": 21,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 22,
+      "segment_key": "en_US_General_Banking_1587700_0022",
+      "seq_id": 22,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2666,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 23,
+      "segment_key": "en_US_General_Banking_1587700_0023",
+      "seq_id": 23,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3135,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 24,
+      "segment_key": "en_US_General_Banking_1587700_0024",
+      "seq_id": 24,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 25,
+      "segment_key": "en_US_General_Banking_1587700_0025",
+      "seq_id": 25,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3447,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 26,
+      "segment_key": "en_US_General_Banking_1587700_0026",
+      "seq_id": 26,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3035,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 27,
+      "segment_key": "en_US_General_Banking_1587700_0027",
+      "seq_id": 27,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.152,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 28,
+      "segment_key": "en_US_General_Banking_1587700_0028",
+      "seq_id": 28,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2226,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 29,
+      "segment_key": "en_US_General_Banking_1587700_0029",
+      "seq_id": 29,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2201,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 30,
+      "segment_key": "en_US_General_Banking_1587700_0030",
+      "seq_id": 30,
+      "sentiment": "Mixed",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2689,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 31,
+      "segment_key": "en_US_General_Banking_1587700_0031",
+      "seq_id": 31,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3118,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 32,
+      "segment_key": "en_US_General_Banking_1587700_0032",
+      "seq_id": 32,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1634,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 33,
+      "segment_key": "en_US_General_Banking_1587700_0033",
+      "seq_id": 33,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1052,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 34,
+      "segment_key": "en_US_General_Banking_1587700_0034",
+      "seq_id": 34,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2158,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 35,
+      "segment_key": "en_US_General_Banking_1587700_0035",
+      "seq_id": 35,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.335,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 36,
+      "segment_key": "en_US_General_Banking_1587700_0036",
+      "seq_id": 36,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3472,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 37,
+      "segment_key": "en_US_General_Banking_1587700_0037",
+      "seq_id": 37,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2927,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 38,
+      "segment_key": "en_US_General_Banking_1587700_0038",
+      "seq_id": 38,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1965,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 39,
+      "segment_key": "en_US_General_Banking_1587700_0039",
+      "seq_id": 39,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1415,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 40,
+      "segment_key": "en_US_General_Banking_1587700_0040",
+      "seq_id": 40,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1776,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 41,
+      "segment_key": "en_US_General_Banking_1587700_0041",
+      "seq_id": 41,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 42,
+      "segment_key": "en_US_General_Banking_1587700_0042",
+      "seq_id": 42,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2664,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 43,
+      "segment_key": "en_US_General_Banking_1587700_0043",
+      "seq_id": 43,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1432,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 44,
+      "segment_key": "en_US_General_Banking_1587700_0044",
+      "seq_id": 44,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3426,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 45,
+      "segment_key": "en_US_General_Banking_1587700_0045",
+      "seq_id": 45,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.3355,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 46,
+      "segment_key": "en_US_General_Banking_1587700_0046",
+      "seq_id": 46,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6539,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 47,
+      "segment_key": "en_US_General_Banking_1587700_0047",
+      "seq_id": 47,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2935,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 48,
+      "segment_key": "en_US_General_Banking_1587700_0048",
+      "seq_id": 48,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1044,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 49,
+      "segment_key": "en_US_General_Banking_1587700_0049",
+      "seq_id": 49,
+      "sentiment": "Unknown",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2669,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 50,
+      "segment_key": "en_US_General_Banking_1587700_0050",
+      "seq_id": 50,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3039,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 51,
+      "segment_key": "en_US_General_Banking_1587700_0051",
+      "seq_id": 51,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3877,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 52,
+      "segment_key": "en_US_General_Banking_1587700_0052",
+      "seq_id": 52,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2142,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 53,
+      "segment_key": "en_US_General_Banking_1587700_0053",
+      "seq_id": 53,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3354,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 54,
+      "segment_key": "en_US_General_Banking_1587700_0054",
+      "seq_id": 54,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5064,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 55,
+      "segment_key": "en_US_General_Banking_1587700_0055",
+      "seq_id": 55,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2958,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 56,
+      "segment_key": "en_US_General_Banking_1587700_0056",
+      "seq_id": 56,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1986,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 57,
+      "segment_key": "en_US_General_Banking_1587700_0057",
+      "seq_id": 57,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5398,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 58,
+      "segment_key": "en_US_General_Banking_1587700_0058",
+      "seq_id": 58,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1401,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 59,
+      "segment_key": "en_US_General_Banking_1587700_0059",
+      "seq_id": 59,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1043,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 60,
+      "segment_key": "en_US_General_Banking_1587700_0060",
+      "seq_id": 60,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1098,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 61,
+      "segment_key": "en_US_General_Banking_1587700_0061",
+      "seq_id": 61,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 62,
+      "segment_key": "en_US_General_Banking_1587700_0062",
+      "seq_id": 62,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1728,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 63,
+      "segment_key": "en_US_General_Banking_1587700_0063",
+      "seq_id": 63,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3074,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 64,
+      "segment_key": "en_US_General_Banking_1587700_0064",
+      "seq_id": 64,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2921,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 65,
+      "segment_key": "en_US_General_Banking_1587700_0065",
+      "seq_id": 65,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2493,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 66,
+      "segment_key": "en_US_General_Banking_1587700_0066",
+      "seq_id": 66,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1727,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 67,
+      "segment_key": "en_US_General_Banking_1587700_0067",
+      "seq_id": 67,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1461,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 68,
+      "segment_key": "en_US_General_Banking_1587700_0068",
+      "seq_id": 68,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 69,
+      "segment_key": "en_US_General_Banking_1587700_0069",
+      "seq_id": 69,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6009,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 70,
+      "segment_key": "en_US_General_Banking_1587700_0070",
+      "seq_id": 70,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3798,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 71,
+      "segment_key": "en_US_General_Banking_1587700_0071",
+      "seq_id": 71,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 72,
+      "segment_key": "en_US_General_Banking_1587700_0072",
+      "seq_id": 72,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 73,
+      "segment_key": "en_US_General_Banking_1587700_0073",
+      "seq_id": 73,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1416,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 74,
+      "segment_key": "en_US_General_Banking_1587700_0074",
+      "seq_id": 74,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2693,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 75,
+      "segment_key": "en_US_General_Banking_1587700_0075",
+      "seq_id": 75,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2392,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 76,
+      "segment_key": "en_US_General_Banking_1587700_0076",
+      "seq_id": 76,
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.3782,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 77,
+      "segment_key": "en_US_General_Banking_1587700_0077",
+      "seq_id": 77,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 78,
+      "segment_key": "en_US_General_Banking_1587700_0078",
+      "seq_id": 78,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1949,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 79,
+      "segment_key": "en_US_General_Banking_1587700_0079",
+      "seq_id": 79,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1415,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 80,
+      "segment_key": "en_US_General_Banking_1587700_0080",
+      "seq_id": 80,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 81,
+      "segment_key": "en_US_General_Banking_1587700_0081",
+      "seq_id": 81,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1047,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 82,
+      "segment_key": "en_US_General_Banking_1587700_0082",
+      "seq_id": 82,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 83,
+      "segment_key": "en_US_General_Banking_1587700_0083",
+      "seq_id": 83,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1732,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 84,
+      "segment_key": "en_US_General_Banking_1587700_0084",
+      "seq_id": 84,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2224,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 85,
+      "segment_key": "en_US_General_Banking_1587700_0085",
+      "seq_id": 85,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3361,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 86,
+      "segment_key": "en_US_General_Banking_1587700_0086",
+      "seq_id": 86,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6501,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 87,
+      "segment_key": "en_US_General_Banking_1587700_0087",
+      "seq_id": 87,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1902,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 88,
+      "segment_key": "en_US_General_Banking_1587700_0088",
+      "seq_id": 88,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.142,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 89,
+      "segment_key": "en_US_General_Banking_1587700_0089",
+      "seq_id": 89,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2899,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 90,
+      "segment_key": "en_US_General_Banking_1587700_0090",
+      "seq_id": 90,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 91,
+      "segment_key": "en_US_General_Banking_1587700_0091",
+      "seq_id": 91,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 92,
+      "segment_key": "en_US_General_Banking_1587700_0092",
+      "seq_id": 92,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.336,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 93,
+      "segment_key": "en_US_General_Banking_1587700_0093",
+      "seq_id": 93,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1096,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 94,
+      "segment_key": "en_US_General_Banking_1587700_0094",
+      "seq_id": 94,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.4401,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 95,
+      "segment_key": "en_US_General_Banking_1587700_0095",
+      "seq_id": 95,
+      "sentiment": "Unknown",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.173,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 96,
+      "segment_key": "en_US_General_Banking_1587700_0096",
+      "seq_id": 96,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 97,
+      "segment_key": "en_US_General_Banking_1587700_0097",
+      "seq_id": 97,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1724,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 98,
+      "segment_key": "en_US_General_Banking_1587700_0098",
+      "seq_id": 98,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.3329,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 99,
+      "segment_key": "en_US_General_Banking_1587700_0099",
+      "seq_id": 99,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2422,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 100,
+      "segment_key": "en_US_General_Banking_1587700_0100",
+      "seq_id": 100,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.683,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 101,
+      "segment_key": "en_US_General_Banking_1587700_0101",
+      "seq_id": 101,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 102,
+      "segment_key": "en_US_General_Banking_1587700_0102",
+      "seq_id": 102,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2657,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 103,
+      "segment_key": "en_US_General_Banking_1587700_0103",
+      "seq_id": 103,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2958,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 104,
+      "segment_key": "en_US_General_Banking_1587700_0104",
+      "seq_id": 104,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3045,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 105,
+      "segment_key": "en_US_General_Banking_1587700_0105",
+      "seq_id": 105,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2629,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 106,
+      "segment_key": "en_US_General_Banking_1587700_0106",
+      "seq_id": 106,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3332,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 107,
+      "segment_key": "en_US_General_Banking_1587700_0107",
+      "seq_id": 107,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3101,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 108,
+      "segment_key": "en_US_General_Banking_1587700_0108",
+      "seq_id": 108,
+      "sentiment": "Mixed",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.3293,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 109,
+      "segment_key": "en_US_General_Banking_1587700_0109",
+      "seq_id": 109,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2596,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 110,
+      "segment_key": "en_US_General_Banking_1587700_0110",
+      "seq_id": 110,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.261,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 111,
+      "segment_key": "en_US_General_Banking_1587700_0111",
+      "seq_id": 111,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.3352,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 112,
+      "segment_key": "en_US_General_Banking_1587700_0112",
+      "seq_id": 112,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 113,
+      "segment_key": "en_US_General_Banking_1587700_0113",
+      "seq_id": 113,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.3185,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 114,
+      "segment_key": "en_US_General_Banking_1587700_0114",
+      "seq_id": 114,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1868,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 115,
+      "segment_key": "en_US_General_Banking_1587700_0115",
+      "seq_id": 115,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5338,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 116,
+      "segment_key": "en_US_General_Banking_1587700_0116",
+      "seq_id": 116,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6233,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 117,
+      "segment_key": "en_US_General_Banking_1587700_0117",
+      "seq_id": 117,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6536,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 118,
+      "segment_key": "en_US_General_Banking_1587700_0118",
+      "seq_id": 118,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.175,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 119,
+      "segment_key": "en_US_General_Banking_1587700_0119",
+      "seq_id": 119,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2117,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 120,
+      "segment_key": "en_US_General_Banking_1587700_0120",
+      "seq_id": 120,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 121,
+      "segment_key": "en_US_General_Banking_1587700_0121",
+      "seq_id": 121,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1428,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 122,
+      "segment_key": "en_US_General_Banking_1587700_0122",
+      "seq_id": 122,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1415,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 123,
+      "segment_key": "en_US_General_Banking_1587700_0123",
+      "seq_id": 123,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3164,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 124,
+      "segment_key": "en_US_General_Banking_1587700_0124",
+      "seq_id": 124,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1437,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 125,
+      "segment_key": "en_US_General_Banking_1587700_0125",
+      "seq_id": 125,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1635,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 126,
+      "segment_key": "en_US_General_Banking_1587700_0126",
+      "seq_id": 126,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2479,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 127,
+      "segment_key": "en_US_General_Banking_1587700_0127",
+      "seq_id": 127,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 128,
+      "segment_key": "en_US_General_Banking_1587700_0128",
+      "seq_id": 128,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1773,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 129,
+      "segment_key": "en_US_General_Banking_1587700_0129",
+      "seq_id": 129,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1724,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 130,
+      "segment_key": "en_US_General_Banking_1587700_0130",
+      "seq_id": 130,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.3176,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 131,
+      "segment_key": "en_US_General_Banking_1587700_0131",
+      "seq_id": 131,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.226,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 132,
+      "segment_key": "en_US_General_Banking_1587700_0132",
+      "seq_id": 132,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2105,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 133,
+      "segment_key": "en_US_General_Banking_1587700_0133",
+      "seq_id": 133,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6926,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 134,
+      "segment_key": "en_US_General_Banking_1587700_0134",
+      "seq_id": 134,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2626,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 135,
+      "segment_key": "en_US_General_Banking_1587700_0135",
+      "seq_id": 135,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1475,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 136,
+      "segment_key": "en_US_General_Banking_1587700_0136",
+      "seq_id": 136,
+      "sentiment": "Unknown",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.2549,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 137,
+      "segment_key": "en_US_General_Banking_1587700_0137",
+      "seq_id": 137,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1417,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 138,
+      "segment_key": "en_US_General_Banking_1587700_0138",
+      "seq_id": 138,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 139,
+      "segment_key": "en_US_General_Banking_1587700_0139",
+      "seq_id": 139,
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.479,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 140,
+      "segment_key": "en_US_General_Banking_1587700_0140",
+      "seq_id": 140,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3752,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 141,
+      "segment_key": "en_US_General_Banking_1587700_0141",
+      "seq_id": 141,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2972,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 142,
+      "segment_key": "en_US_General_Banking_1587700_0142",
+      "seq_id": 142,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1958,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 143,
+      "segment_key": "en_US_General_Banking_1587700_0143",
+      "seq_id": 143,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1421,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 144,
+      "segment_key": "en_US_General_Banking_1587700_0144",
+      "seq_id": 144,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1039,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 145,
+      "segment_key": "en_US_General_Banking_1587700_0145",
+      "seq_id": 145,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 146,
+      "segment_key": "en_US_General_Banking_1587700_0146",
+      "seq_id": 146,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 147,
+      "segment_key": "en_US_General_Banking_1587700_0147",
+      "seq_id": 147,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.1917,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 148,
+      "segment_key": "en_US_General_Banking_1587700_0148",
+      "seq_id": 148,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 149,
+      "segment_key": "en_US_General_Banking_1587700_0149",
+      "seq_id": 149,
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2687,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 150,
+      "segment_key": "en_US_General_Banking_1587700_0150",
+      "seq_id": 150,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3142,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 151,
+      "segment_key": "en_US_General_Banking_1587700_0151",
+      "seq_id": 151,
+      "sentiment": "Positive",
+      "dominant_emotion": "happy",
+      "escalation_score": 0.1418,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 152,
+      "segment_key": "en_US_General_Banking_1587700_0152",
+      "seq_id": 152,
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3168,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 153,
+      "segment_key": "en_US_General_Banking_1587700_0153",
+      "seq_id": 153,
+      "sentiment": "Neutral",
+      "dominant_emotion": "neutral",
+      "escalation_score": 0.2852,
+      "processing_status": "success"
+    },
+    {
+      "segment_index": 154,
+      "segment_key": "en_US_General_Banking_1587700_0154",
+      "seq_id": 154,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 155,
+      "segment_key": "en_US_General_Banking_1587700_0155",
+      "seq_id": 155,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 156,
+      "segment_key": "en_US_General_Banking_1587700_0156",
+      "seq_id": 156,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 157,
+      "segment_key": "en_US_General_Banking_1587700_0157",
+      "seq_id": 157,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 158,
+      "segment_key": "en_US_General_Banking_1587700_0158",
+      "seq_id": 158,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    },
+    {
+      "segment_index": 159,
+      "segment_key": "en_US_General_Banking_1587700_0159",
+      "seq_id": 159,
+      "sentiment": null,
+      "dominant_emotion": null,
+      "escalation_score": null,
+      "processing_status": "skipped_too_short"
+    }
+  ]
+}

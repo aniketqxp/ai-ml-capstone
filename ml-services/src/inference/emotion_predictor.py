@@ -42,7 +42,17 @@ from src.inference.sentiment_timeline import (
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
 
-DEFAULT_MODEL_DIR = ML_SERVICES_ROOT / "outputs" / "wav2vec2" / "best_model"
+SELECTED_EMOTION_MODEL_VERSION = "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5"
+
+SELECTED_EMOTION_MODEL_DIR = (
+    ML_SERVICES_ROOT
+    / "outputs"
+    / "wav2vec2"
+    / SELECTED_EMOTION_MODEL_VERSION
+    / "best_model"
+)
+
+DEFAULT_MODEL_DIR = SELECTED_EMOTION_MODEL_DIR
 
 
 class EmotionPredictor:
@@ -63,8 +73,8 @@ class EmotionPredictor:
 
         if not self.model_dir.exists():
             raise FileNotFoundError(
-                f"Trained Wav2Vec2 model not found at: {self.model_dir}\n"
-                "Run training first or make sure outputs/wav2vec2/best_model exists."
+                f"Selected emotion model not found at: {self.model_dir}\n"
+                f"Expected selected model version: {SELECTED_EMOTION_MODEL_VERSION}"
             )
 
         self.device = self._get_device()
@@ -292,11 +302,11 @@ class EmotionPredictor:
             top_emotion_margin=top_emotion_margin,
             peak_emotion=peak_emotion,
             sentiment_timeline=sentiment_timeline,
-            model_name="Emotion-pretrained Wav2Vec2 classifier",
-            model_version="cremad-emotion-pretrained-v1",
+            model_name="Wav2Vec2 emotion classifier - selected V5",
+            model_version=SELECTED_EMOTION_MODEL_VERSION,
             processing_status="success",
-                        warnings=[
+            warnings=[
                 "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
-                "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
+                "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low.",
             ],
         )

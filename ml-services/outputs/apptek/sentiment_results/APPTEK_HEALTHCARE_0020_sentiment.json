@@ -1,0 +1,251 @@
+{
+  "call_id": "APPTEK_HEALTHCARE_0020",
+  "overall_audio_sentiment": "Positive",
+  "dominant_emotion": "happy",
+  "negative_emotion_probability": 0.01637079566717148,
+  "anger_probability": 0.0031623574905097485,
+  "stress_probability": 0.0050448023714125155,
+  "sadness_probability": 0.0021422237623482943,
+  "anxiety_probability": 0.007868469692766666,
+  "calm_probability": 0.011498198844492435,
+  "audio_features": {
+    "vocal_intensity": "Low",
+    "pitch_level": "High",
+    "pitch_variability": "High",
+    "speech_rate": "Medium",
+    "pause_frequency": "Medium",
+    "long_silence_detected": true,
+    "total_silence_duration_seconds": 21.888,
+    "overlap_rate": null
+  },
+  "emotional_volatility": "Medium",
+  "audio_sentiment_shift": "Mixed",
+  "audio_escalation_score": 0.23743934190668975,
+  "risk_level": "Low",
+  "escalation_score_breakdown": {
+    "emotion_risk": 0.00764099508523941,
+    "voice_risk": 0.525,
+    "timeline_risk": 0.40947537745628015,
+    "uncertainty_adjustment": 1.0,
+    "final_score": 0.23743934190668975
+  },
+  "prediction_confidence": 0.9721310138702393,
+  "confidence_level": "High",
+  "uncertain_prediction": false,
+  "top_emotion_margin": 0.9606328150257468,
+  "peak_emotion": {
+    "time_seconds": 7.5,
+    "timestamp": "00:00:08",
+    "emotion": "fear",
+    "score": 0.4791266535175964
+  },
+  "sentiment_timeline": [
+    {
+      "segment_id": 0,
+      "start_time_seconds": 0.0,
+      "end_time_seconds": 5.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0034731244668364525,
+        "sadness": 0.629142165184021,
+        "fear": 0.21105805039405823,
+        "disgust": 0.14746741950511932,
+        "happy": 0.004351054783910513,
+        "neutral": 0.0045081996358931065
+      },
+      "risk_score": 0.30228626471944153
+    },
+    {
+      "segment_id": 1,
+      "start_time_seconds": 5.0,
+      "end_time_seconds": 10.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.003079113084822893,
+        "sadness": 0.04949064180254936,
+        "fear": 0.9229423403739929,
+        "disgust": 0.011893952265381813,
+        "happy": 0.00981453713029623,
+        "neutral": 0.0027793601620942354
+      },
+      "risk_score": 0.4791266535175964
+    },
+    {
+      "segment_id": 2,
+      "start_time_seconds": 10.0,
+      "end_time_seconds": 15.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.008167795836925507,
+        "sadness": 0.023202382028102875,
+        "fear": 0.008884006179869175,
+        "disgust": 0.9516628384590149,
+        "happy": 0.005673362407833338,
+        "neutral": 0.0024095536209642887
+      },
+      "risk_score": 0.25428415508940816
+    },
+    {
+      "segment_id": 3,
+      "start_time_seconds": 15.0,
+      "end_time_seconds": 20.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.002497344510629773,
+        "sadness": 0.9069308638572693,
+        "fear": 0.061223533004522324,
+        "disgust": 0.01591583341360092,
+        "happy": 0.0017477188957855105,
+        "neutral": 0.011684704571962357
+      },
+      "risk_score": 0.26319644920295104
+    },
+    {
+      "segment_id": 4,
+      "start_time_seconds": 20.0,
+      "end_time_seconds": 25.0,
+      "dominant_emotion": "neutral",
+      "overall_audio_sentiment": "Neutral",
+      "emotion_probabilities": {
+        "anger": 0.004371185787022114,
+        "sadness": 0.0351782962679863,
+        "fear": 0.01827363856136799,
+        "disgust": 0.0051124910824000835,
+        "happy": 0.13698413968086243,
+        "neutral": 0.8000801801681519
+      },
+      "risk_score": 0.022487905458547175
+    },
+    {
+      "segment_id": 5,
+      "start_time_seconds": 25.0,
+      "end_time_seconds": 30.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.0031350876670330763,
+        "sadness": 0.0015880586579442024,
+        "fear": 0.007792553398758173,
+        "disgust": 0.003148668445646763,
+        "happy": 0.9780681729316711,
+        "neutral": 0.006267359014600515
+      },
+      "risk_score": 0.007431774225551635
+    },
+    {
+      "segment_id": 6,
+      "start_time_seconds": 30.0,
+      "end_time_seconds": 35.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.004354976583272219,
+        "sadness": 0.0011301212944090366,
+        "fear": 0.0069118975661695,
+        "disgust": 0.003031566273421049,
+        "happy": 0.9804876446723938,
+        "neutral": 0.004083744715899229
+      },
+      "risk_score": 0.007762603112496436
+    },
+    {
+      "segment_id": 7,
+      "start_time_seconds": 35.0,
+      "end_time_seconds": 40.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0071108038537204266,
+        "sadness": 0.02938271500170231,
+        "fear": 0.008327976800501347,
+        "disgust": 0.9464661478996277,
+        "happy": 0.005601800046861172,
+        "neutral": 0.0031106334645301104
+      },
+      "risk_score": 0.2534593070158735
+    },
+    {
+      "segment_id": 8,
+      "start_time_seconds": 40.0,
+      "end_time_seconds": 45.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.0043953764252364635,
+        "sadness": 0.0012837114045396447,
+        "fear": 0.00807759165763855,
+        "disgust": 0.0034767191391438246,
+        "happy": 0.9791127443313599,
+        "neutral": 0.0036538648419082165
+      },
+      "risk_score": 0.00852543578366749
+    },
+    {
+      "segment_id": 9,
+      "start_time_seconds": 45.0,
+      "end_time_seconds": 50.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.005857258569449186,
+        "sadness": 0.0158266332000494,
+        "fear": 0.014400261454284191,
+        "disgust": 0.006350500974804163,
+        "happy": 0.6202850341796875,
+        "neutral": 0.3372802734375
+      },
+      "risk_score": 0.017137358197942376
+    },
+    {
+      "segment_id": 10,
+      "start_time_seconds": 50.0,
+      "end_time_seconds": 55.0,
+      "dominant_emotion": "neutral",
+      "overall_audio_sentiment": "Neutral",
+      "emotion_probabilities": {
+        "anger": 0.0035112968180328608,
+        "sadness": 0.01874951831996441,
+        "fear": 0.005997098051011562,
+        "disgust": 0.003339483169838786,
+        "happy": 0.042488642036914825,
+        "neutral": 0.9259138107299805
+      },
+      "risk_score": 0.011154272011481225
+    },
+    {
+      "segment_id": 11,
+      "start_time_seconds": 55.0,
+      "end_time_seconds": 60.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.002600368345156312,
+        "sadness": 0.14547456800937653,
+        "fear": 0.8267201781272888,
+        "disgust": 0.015573278069496155,
+        "happy": 0.005923332180827856,
+        "neutral": 0.003708308795467019
+      },
+      "risk_score": 0.4555723268422298
+    }
+  ],
+  "model_name": "Wav2Vec2 emotion classifier - selected V5",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "processing_status": "success",
+  "warnings": [
+    "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
+    "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
+  ],
+  "apptek_metadata": {
+    "domain": "healthcare",
+    "raw_domain": "health",
+    "gender": "female",
+    "accent": "en-CN",
+    "duration_seconds": 667.531,
+    "text_preview": "Hi Emma, good morning. I like to schedule a lab test appointment, if possible. I received referral from Doctor Mitchell's office last week. It's a blood test my daughter mentioned is a comprehensive metabolic panel to check cholesterol and glucose levels for my annual physical. Ohh, yes, yes, twelve hours. I remember that from last year I'm available this week (um) since I'm on vacation, yes, (um) preferably early morning to get it over with. Let me okay, let me check on Friday at ten am works p"
+  }
+}
