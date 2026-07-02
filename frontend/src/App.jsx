@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import callData from './call_data.json';
 import sentenceData from './sentence_segments.json';
-import sentimentStub from './en_CA_Banking_1586889_simple_sentiment.json';
+const API_BASE_URL = 'http://127.0.0.1:8000';
+const DEFAULT_SENTIMENT_CALL_ID = 'en_CA_Banking_1586889';
 
 const SENTIMENT_STYLE = {
   Positive: {
@@ -197,16 +198,52 @@ export default function App() {
   const [rate, setRate] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [dragTime, setDragTime] = useState(0);
+  const [sentimentPayload, setSentimentPayload] = useState(null);
+  const [sentimentLoading, setSentimentLoading] = useState(true);
+  const [sentimentError, setSentimentError] = useState(null);
 
   const { turns, chapters, evaluation } = callData;
   const sentences = sentenceData.sentences;
 
+  useEffect(() => {
+    async function loadSentiment() {
+      try {
+        setSentimentLoading(true);
+        setSentimentError(null);
+
+        const response = await fetch(`${API_BASE_URL}/calls/${DEFAULT_SENTIMENT_CALL_ID}/sentiment`);
+
+        if (!response.ok) {
+          throw new Error(`Backend returned ${response.status}`);
+        }
+
+        const data = await response.json();
+        setSentimentPayload(data);
+      } catch (error) {
+        console.error('Failed to load sentiment from backend:', error);
+        setSentimentError(error.message);
+      } finally {
+        setSentimentLoading(false);
+      }
+    }
+
+    loadSentiment();
+  }, []);
+
   // seq_id → sentiment entry
   const sentimentMap = useMemo(() => {
     const m = new Map();
-    sentimentStub.segments.forEach(s => m.set(s.seq_id, s));
+
+    if (!sentimentPayload?.segments) {
+      return m;
+    }
+
+    sentimentPayload.segments.forEach((s) => {
+      m.set(s.seq_id, s);
+    });
+
     return m;
-  }, []);
+  }, [sentimentPayload]);
 
   // for each turn, collect the sentences that fall inside it (same speaker, overlapping time)
   const turnSentences = useMemo(() =>
@@ -326,6 +363,14 @@ export default function App() {
         <div>
           <h1 className="text-xl font-bold tracking-tight text-indigo-400">Call Compliance Player</h1>
           <p className="text-xs text-slate-500 mt-0.5">{callData.model}</p>
+          <p className="text-[10px] text-slate-600 mt-1">
+      Sentiment source:{' '}
+      {sentimentLoading
+        ? 'loading from backend...'
+        : sentimentError
+          ? `backend error: ${sentimentError}`
+          : `backend API · ${sentimentPayload?.model_version}`}
+    </p>
         </div>
         <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">
           {callData.call} · {fmt(duration)} · {chapters.length} chapters
