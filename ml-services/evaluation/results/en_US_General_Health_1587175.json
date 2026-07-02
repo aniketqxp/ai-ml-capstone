@@ -1,0 +1,122 @@
+{
+  "rubric_version": "0.1.0",
+  "metadata": {
+    "call_id": "en_US_General_Health_1587175",
+    "domain": "health",
+    "accent": "en-US_General",
+    "duration_seconds": 643.6,
+    "transcript_model": "faster-whisper small.en/int8"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Erika.",
+        "speaker": "AGENT",
+        "timestamp": "00:13"
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "thank you for calling Southwest Clinic.",
+        "speaker": "AGENT",
+        "timestamp": "00:13"
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "can I get your date of birth?",
+        "speaker": "AGENT",
+        "timestamp": "04:06"
+      },
+      "note": null
+    },
+    "identity_method": "date of birth",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "she is able to send that prescription for seven days.",
+        "speaker": "AGENT",
+        "timestamp": "06:08"
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 4,
+      "signals_present": [
+        "first-call resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "I'll be going. I'll be sending those forms over to you.",
+          "speaker": "AGENT",
+          "timestamp": "09:40"
+        }
+      ],
+      "requires_audio": false
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained why"
+      ],
+      "signals_absent": [
+        "no explicit options A/B/C"
+      ],
+      "evidence": [],
+      "requires_audio": false
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [],
+      "requires_audio": false
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "complete sentences"
+      ],
+      "signals_absent": [],
+      "evidence": [],
+      "requires_audio": true
+    },
+    "empathy": {
+      "score": 2,
+      "signals_present": [],
+      "signals_absent": [
+        "no validation phrase"
+      ],
+      "evidence": [],
+      "requires_audio": true
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true
+  },
+  "overall_summary": "The agent effectively assisted the customer in scheduling an appointment and addressing prescription needs. Compliance with key protocols was mostly met, though there was no recording disclosure. The call was handled professionally, but there was a lack of empathetic validation."
+}

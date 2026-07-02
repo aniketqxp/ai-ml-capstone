@@ -1,6 +1,10 @@
 # Git rules local file
 .gitrules
 
+# Claude Code local config (never commit)
+.claude/
+CLAUDE.md
+
 # Environments
 .env
 .env.local
@@ -20,6 +24,13 @@ node_modules/
 # Local ML data and models weight cache
 ml-services/data/
 ml-services/models/
+
+# Prevent gigabytes of binary sound layers from being committed
+# data/* (not data/) so subdirectory exceptions can be applied
+data/*
+!data/sentence_segments/
+*.wav
+*.mp3
 
 # Operating system files
 .DS_Store
