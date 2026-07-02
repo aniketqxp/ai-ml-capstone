@@ -1,13 +1,24 @@
 import uuid
 import os
 import shutil
+import json
+from pathlib import Path
 from datetime import datetime
-from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
+from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Call, Job
 
 router = APIRouter(prefix="/calls", tags=["calls"])
+REPO_ROOT = Path(__file__).resolve().parents[3]
+SENTIMENT_OUTPUT_DIR = REPO_ROOT / "ml-services" / "outputs" / "backend" / "sentiment_calls"
+
+
+def find_sentiment_file(call_id: str) -> Path | None:
+    matches = list(SENTIMENT_OUTPUT_DIR.rglob(f"{call_id}_backend_sentiment.json"))
+    if matches:
+        return matches[0]
+    return None
 
 def process_job(job_id: str, call_id: str):
     # Pipeline workers plug in here
@@ -56,6 +67,54 @@ async def ingest_call(
         "audio_path": audio_path,
         "created_at": job.created_at.isoformat()
     }
+
+
+@router.get("/sentiment/available")
+def list_available_sentiment_calls():
+    if not SENTIMENT_OUTPUT_DIR.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"Sentiment output directory not found: {SENTIMENT_OUTPUT_DIR}"
+        )
+
+    calls = []
+
+    for file_path in sorted(SENTIMENT_OUTPUT_DIR.rglob("*_backend_sentiment.json")):
+        with open(file_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+
+        call_summary = payload.get("call_summary", {})
+
+        calls.append({
+            "call_id": payload.get("call_id"),
+            "domain": payload.get("domain"),
+            "model_version": payload.get("model_version"),
+            "risk_level": call_summary.get("risk_level"),
+            "dominant_sentiment": call_summary.get("dominant_sentiment"),
+            "dominant_emotion": call_summary.get("dominant_emotion"),
+            "total_segments": call_summary.get("total_segments"),
+            "successful_segments": call_summary.get("successful_segments"),
+            "skipped_segments": call_summary.get("skipped_segments"),
+        })
+
+    return {
+        "total_calls": len(calls),
+        "calls": calls
+    }
+
+
+@router.get("/{call_id}/sentiment")
+def get_call_sentiment(call_id: str):
+    sentiment_file = find_sentiment_file(call_id)
+
+    if not sentiment_file:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No backend sentiment file found for call_id: {call_id}"
+        )
+
+    with open(sentiment_file, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 @router.get("/{call_id}/status")
 def get_call_status(call_id: str, db: Session = Depends(get_db)):
