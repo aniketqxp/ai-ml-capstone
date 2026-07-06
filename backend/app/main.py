@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app.models import Base
 from app.routers import calls
+from app.routers import sentiment
 
-# Create all database tables on startup
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -13,7 +13,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configurations
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,8 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register routers
 app.include_router(calls.router)
+app.include_router(sentiment.router)
 
 @app.get("/")
 def read_root():
