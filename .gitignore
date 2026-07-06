@@ -29,6 +29,11 @@ ml-services/models/
 # data/* (not data/) so subdirectory exceptions can be applied
 data/*
 !data/sentence_segments/
+!data/wer_results.json
+!data/na_testset/
+data/na_testset/*
+!data/na_testset/results/
+!data/na_testset/results/**
 *.wav
 *.mp3
 

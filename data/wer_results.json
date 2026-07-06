@@ -1,0 +1,679 @@
+{
+  "generated": "2026-06-15T19:08:51.044124",
+  "model": "faster-whisper small.en/int8 + stereo channel attribution",
+  "domains": [
+    "banking",
+    "health",
+    "telecom"
+  ],
+  "overall": {
+    "n_calls": 22,
+    "total_words": 32059,
+    "overall_wer": 0.0975,
+    "overall_acc": 0.9025,
+    "pass_90": true
+  },
+  "by_domain": {
+    "banking": {
+      "n_calls": 10,
+      "total_words": 14513,
+      "overall_wer": 0.0889,
+      "overall_acc": 0.9111,
+      "pass_90": true
+    },
+    "health": {
+      "n_calls": 7,
+      "total_words": 9589,
+      "overall_wer": 0.1355,
+      "overall_acc": 0.8645,
+      "pass_90": false
+    },
+    "telecom": {
+      "n_calls": 5,
+      "total_words": 7957,
+      "overall_wer": 0.0676,
+      "overall_acc": 0.9324,
+      "pass_90": true
+    }
+  },
+  "calls": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "domain": "banking",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0853,
+      "raw_customer_wer": 0.084,
+      "raw_overall_wer": 0.085,
+      "raw_overall_acc": 0.915,
+      "raw_ref_words": 1389,
+      "normalised_agent_wer": 0.0729,
+      "normalised_customer_wer": 0.0916,
+      "normalised_overall_wer": 0.0782,
+      "normalised_overall_acc": 0.9218,
+      "normalised_ref_words": 1406,
+      "raw": {
+        "agent_wer": 0.0853,
+        "customer_wer": 0.084,
+        "overall_wer": 0.085,
+        "overall_acc": 0.915,
+        "ref_words": 1389
+      },
+      "normalised": {
+        "agent_wer": 0.0729,
+        "customer_wer": 0.0916,
+        "overall_wer": 0.0782,
+        "overall_acc": 0.9218,
+        "ref_words": 1406
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "domain": "banking",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.1166,
+      "raw_customer_wer": 0.2065,
+      "raw_overall_wer": 0.174,
+      "raw_overall_acc": 0.826,
+      "raw_ref_words": 1356,
+      "normalised_agent_wer": 0.0521,
+      "normalised_customer_wer": 0.1295,
+      "normalised_overall_wer": 0.1021,
+      "normalised_overall_acc": 0.8979,
+      "normalised_ref_words": 1303,
+      "raw": {
+        "agent_wer": 0.1166,
+        "customer_wer": 0.2065,
+        "overall_wer": 0.174,
+        "overall_acc": 0.826,
+        "ref_words": 1356
+      },
+      "normalised": {
+        "agent_wer": 0.0521,
+        "customer_wer": 0.1295,
+        "overall_wer": 0.1021,
+        "overall_acc": 0.8979,
+        "ref_words": 1303
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "domain": "banking",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0634,
+      "raw_customer_wer": 0.1095,
+      "raw_overall_wer": 0.0763,
+      "raw_overall_acc": 0.9237,
+      "raw_ref_words": 1468,
+      "normalised_agent_wer": 0.0417,
+      "normalised_customer_wer": 0.0769,
+      "normalised_overall_wer": 0.0515,
+      "normalised_overall_acc": 0.9485,
+      "normalised_ref_words": 1494,
+      "raw": {
+        "agent_wer": 0.0634,
+        "customer_wer": 0.1095,
+        "overall_wer": 0.0763,
+        "overall_acc": 0.9237,
+        "ref_words": 1468
+      },
+      "normalised": {
+        "agent_wer": 0.0417,
+        "customer_wer": 0.0769,
+        "overall_wer": 0.0515,
+        "overall_acc": 0.9485,
+        "ref_words": 1494
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "domain": "banking",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0612,
+      "raw_customer_wer": 0.0784,
+      "raw_overall_wer": 0.0657,
+      "raw_overall_acc": 0.9343,
+      "raw_ref_words": 1552,
+      "normalised_agent_wer": 0.0543,
+      "normalised_customer_wer": 0.0613,
+      "normalised_overall_wer": 0.0561,
+      "normalised_overall_acc": 0.9439,
+      "normalised_ref_words": 1587,
+      "raw": {
+        "agent_wer": 0.0612,
+        "customer_wer": 0.0784,
+        "overall_wer": 0.0657,
+        "overall_acc": 0.9343,
+        "ref_words": 1552
+      },
+      "normalised": {
+        "agent_wer": 0.0543,
+        "customer_wer": 0.0613,
+        "overall_wer": 0.0561,
+        "overall_acc": 0.9439,
+        "ref_words": 1587
+      }
+    },
+    {
+      "call_id": "en_CA_Health_1587315",
+      "domain": "health",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0706,
+      "raw_customer_wer": 0.1442,
+      "raw_overall_wer": 0.0959,
+      "raw_overall_acc": 0.9041,
+      "raw_ref_words": 1251,
+      "normalised_agent_wer": 0.0478,
+      "normalised_customer_wer": 0.0905,
+      "normalised_overall_wer": 0.0619,
+      "normalised_overall_acc": 0.9381,
+      "normalised_ref_words": 1277,
+      "raw": {
+        "agent_wer": 0.0706,
+        "customer_wer": 0.1442,
+        "overall_wer": 0.0959,
+        "overall_acc": 0.9041,
+        "ref_words": 1251
+      },
+      "normalised": {
+        "agent_wer": 0.0478,
+        "customer_wer": 0.0905,
+        "overall_wer": 0.0619,
+        "overall_acc": 0.9381,
+        "ref_words": 1277
+      }
+    },
+    {
+      "call_id": "en_CA_Health_1588706",
+      "domain": "health",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0579,
+      "raw_customer_wer": 0.1129,
+      "raw_overall_wer": 0.0788,
+      "raw_overall_acc": 0.9212,
+      "raw_ref_words": 1282,
+      "normalised_agent_wer": 0.053,
+      "normalised_customer_wer": 0.0891,
+      "normalised_overall_wer": 0.0667,
+      "normalised_overall_acc": 0.9333,
+      "normalised_ref_words": 1305,
+      "raw": {
+        "agent_wer": 0.0579,
+        "customer_wer": 0.1129,
+        "overall_wer": 0.0788,
+        "overall_acc": 0.9212,
+        "ref_words": 1282
+      },
+      "normalised": {
+        "agent_wer": 0.053,
+        "customer_wer": 0.0891,
+        "overall_wer": 0.0667,
+        "overall_acc": 0.9333,
+        "ref_words": 1305
+      }
+    },
+    {
+      "call_id": "en_CA_Health_1590851",
+      "domain": "health",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.1558,
+      "raw_customer_wer": 0.3935,
+      "raw_overall_wer": 0.2764,
+      "raw_overall_acc": 0.7236,
+      "raw_ref_words": 2294,
+      "normalised_agent_wer": 0.1291,
+      "normalised_customer_wer": 0.3794,
+      "normalised_overall_wer": 0.2556,
+      "normalised_overall_acc": 0.7444,
+      "normalised_ref_words": 2379,
+      "raw": {
+        "agent_wer": 0.1558,
+        "customer_wer": 0.3935,
+        "overall_wer": 0.2764,
+        "overall_acc": 0.7236,
+        "ref_words": 2294
+      },
+      "normalised": {
+        "agent_wer": 0.1291,
+        "customer_wer": 0.3794,
+        "overall_wer": 0.2556,
+        "overall_acc": 0.7444,
+        "ref_words": 2379
+      }
+    },
+    {
+      "call_id": "en_CA_Telecom_1590675",
+      "domain": "telecom",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.0611,
+      "raw_customer_wer": 0.127,
+      "raw_overall_wer": 0.0746,
+      "raw_overall_acc": 0.9254,
+      "raw_ref_words": 1502,
+      "normalised_agent_wer": 0.0343,
+      "normalised_customer_wer": 0.1083,
+      "normalised_overall_wer": 0.0494,
+      "normalised_overall_acc": 0.9506,
+      "normalised_ref_words": 1538,
+      "raw": {
+        "agent_wer": 0.0611,
+        "customer_wer": 0.127,
+        "overall_wer": 0.0746,
+        "overall_acc": 0.9254,
+        "ref_words": 1502
+      },
+      "normalised": {
+        "agent_wer": 0.0343,
+        "customer_wer": 0.1083,
+        "overall_wer": 0.0494,
+        "overall_acc": 0.9506,
+        "ref_words": 1538
+      }
+    },
+    {
+      "call_id": "en_CA_Telecom_1590992",
+      "domain": "telecom",
+      "accent": "en-CA",
+      "raw_agent_wer": 0.074,
+      "raw_customer_wer": 0.0969,
+      "raw_overall_wer": 0.0798,
+      "raw_overall_acc": 0.9202,
+      "raw_ref_words": 2294,
+      "normalised_agent_wer": 0.0685,
+      "normalised_customer_wer": 0.0611,
+      "normalised_overall_wer": 0.0666,
+      "normalised_overall_acc": 0.9334,
+      "normalised_ref_words": 2372,
+      "raw": {
+        "agent_wer": 0.074,
+        "customer_wer": 0.0969,
+        "overall_wer": 0.0798,
+        "overall_acc": 0.9202,
+        "ref_words": 2294
+      },
+      "normalised": {
+        "agent_wer": 0.0685,
+        "customer_wer": 0.0611,
+        "overall_wer": 0.0666,
+        "overall_acc": 0.9334,
+        "ref_words": 2372
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1112,
+      "raw_customer_wer": 0.1023,
+      "raw_overall_wer": 0.1089,
+      "raw_overall_acc": 0.8911,
+      "raw_ref_words": 1157,
+      "normalised_agent_wer": 0.1008,
+      "normalised_customer_wer": 0.0794,
+      "normalised_overall_wer": 0.095,
+      "normalised_overall_acc": 0.905,
+      "normalised_ref_words": 1168,
+      "raw": {
+        "agent_wer": 0.1112,
+        "customer_wer": 0.1023,
+        "overall_wer": 0.1089,
+        "overall_acc": 0.8911,
+        "ref_words": 1157
+      },
+      "normalised": {
+        "agent_wer": 0.1008,
+        "customer_wer": 0.0794,
+        "overall_wer": 0.095,
+        "overall_acc": 0.905,
+        "ref_words": 1168
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1599,
+      "raw_customer_wer": 0.1935,
+      "raw_overall_wer": 0.1712,
+      "raw_overall_acc": 0.8288,
+      "raw_ref_words": 1186,
+      "normalised_agent_wer": 0.1073,
+      "normalised_customer_wer": 0.1093,
+      "normalised_overall_wer": 0.108,
+      "normalised_overall_acc": 0.892,
+      "normalised_ref_words": 1074,
+      "raw": {
+        "agent_wer": 0.1599,
+        "customer_wer": 0.1935,
+        "overall_wer": 0.1712,
+        "overall_acc": 0.8288,
+        "ref_words": 1186
+      },
+      "normalised": {
+        "agent_wer": 0.1073,
+        "customer_wer": 0.1093,
+        "overall_wer": 0.108,
+        "overall_acc": 0.892,
+        "ref_words": 1074
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.0611,
+      "raw_customer_wer": 0.1418,
+      "raw_overall_wer": 0.0948,
+      "raw_overall_acc": 0.9052,
+      "raw_ref_words": 928,
+      "normalised_agent_wer": 0.0314,
+      "normalised_customer_wer": 0.0596,
+      "normalised_overall_wer": 0.0431,
+      "normalised_overall_acc": 0.9569,
+      "normalised_ref_words": 928,
+      "raw": {
+        "agent_wer": 0.0611,
+        "customer_wer": 0.1418,
+        "overall_wer": 0.0948,
+        "overall_acc": 0.9052,
+        "ref_words": 928
+      },
+      "normalised": {
+        "agent_wer": 0.0314,
+        "customer_wer": 0.0596,
+        "overall_wer": 0.0431,
+        "overall_acc": 0.9569,
+        "ref_words": 928
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.0916,
+      "raw_customer_wer": 0.2008,
+      "raw_overall_wer": 0.1221,
+      "raw_overall_acc": 0.8779,
+      "raw_ref_words": 1696,
+      "normalised_agent_wer": 0.0507,
+      "normalised_customer_wer": 0.1608,
+      "normalised_overall_wer": 0.0816,
+      "normalised_overall_acc": 0.9184,
+      "normalised_ref_words": 1727,
+      "raw": {
+        "agent_wer": 0.0916,
+        "customer_wer": 0.2008,
+        "overall_wer": 0.1221,
+        "overall_acc": 0.8779,
+        "ref_words": 1696
+      },
+      "normalised": {
+        "agent_wer": 0.0507,
+        "customer_wer": 0.1608,
+        "overall_wer": 0.0816,
+        "overall_acc": 0.9184,
+        "ref_words": 1727
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.2091,
+      "raw_customer_wer": 0.1675,
+      "raw_overall_wer": 0.1951,
+      "raw_overall_acc": 0.8049,
+      "raw_ref_words": 1722,
+      "normalised_agent_wer": 0.1387,
+      "normalised_customer_wer": 0.1257,
+      "normalised_overall_wer": 0.1342,
+      "normalised_overall_acc": 0.8658,
+      "normalised_ref_words": 1669,
+      "raw": {
+        "agent_wer": 0.2091,
+        "customer_wer": 0.1675,
+        "overall_wer": 0.1951,
+        "overall_acc": 0.8049,
+        "ref_words": 1722
+      },
+      "normalised": {
+        "agent_wer": 0.1387,
+        "customer_wer": 0.1257,
+        "overall_wer": 0.1342,
+        "overall_acc": 0.8658,
+        "ref_words": 1669
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "domain": "banking",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1054,
+      "raw_customer_wer": 0.2336,
+      "raw_overall_wer": 0.1456,
+      "raw_overall_acc": 0.8544,
+      "raw_ref_words": 2184,
+      "normalised_agent_wer": 0.0678,
+      "normalised_customer_wer": 0.2182,
+      "normalised_overall_wer": 0.1154,
+      "normalised_overall_acc": 0.8846,
+      "normalised_ref_words": 2157,
+      "raw": {
+        "agent_wer": 0.1054,
+        "customer_wer": 0.2336,
+        "overall_wer": 0.1456,
+        "overall_acc": 0.8544,
+        "ref_words": 2184
+      },
+      "normalised": {
+        "agent_wer": 0.0678,
+        "customer_wer": 0.2182,
+        "overall_wer": 0.1154,
+        "overall_acc": 0.8846,
+        "ref_words": 2157
+      }
+    },
+    {
+      "call_id": "en_US_General_Health_1586594",
+      "domain": "health",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1272,
+      "raw_customer_wer": 0.134,
+      "raw_overall_wer": 0.1296,
+      "raw_overall_acc": 0.8704,
+      "raw_ref_words": 540,
+      "normalised_agent_wer": 0.0789,
+      "normalised_customer_wer": 0.1031,
+      "normalised_overall_wer": 0.0874,
+      "normalised_overall_acc": 0.9126,
+      "normalised_ref_words": 549,
+      "raw": {
+        "agent_wer": 0.1272,
+        "customer_wer": 0.134,
+        "overall_wer": 0.1296,
+        "overall_acc": 0.8704,
+        "ref_words": 540
+      },
+      "normalised": {
+        "agent_wer": 0.0789,
+        "customer_wer": 0.1031,
+        "overall_wer": 0.0874,
+        "overall_acc": 0.9126,
+        "ref_words": 549
+      }
+    },
+    {
+      "call_id": "en_US_General_Health_1586726",
+      "domain": "health",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.0915,
+      "raw_customer_wer": 0.1418,
+      "raw_overall_wer": 0.1163,
+      "raw_overall_acc": 0.8837,
+      "raw_ref_words": 860,
+      "normalised_agent_wer": 0.0406,
+      "normalised_customer_wer": 0.1198,
+      "normalised_overall_wer": 0.0798,
+      "normalised_overall_acc": 0.9202,
+      "normalised_ref_words": 877,
+      "raw": {
+        "agent_wer": 0.0915,
+        "customer_wer": 0.1418,
+        "overall_wer": 0.1163,
+        "overall_acc": 0.8837,
+        "ref_words": 860
+      },
+      "normalised": {
+        "agent_wer": 0.0406,
+        "customer_wer": 0.1198,
+        "overall_wer": 0.0798,
+        "overall_acc": 0.9202,
+        "ref_words": 877
+      }
+    },
+    {
+      "call_id": "en_US_General_Health_1587175",
+      "domain": "health",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1475,
+      "raw_customer_wer": 0.1881,
+      "raw_overall_wer": 0.1619,
+      "raw_overall_acc": 0.8381,
+      "raw_ref_words": 1470,
+      "normalised_agent_wer": 0.1034,
+      "normalised_customer_wer": 0.1431,
+      "normalised_overall_wer": 0.1176,
+      "normalised_overall_acc": 0.8824,
+      "normalised_ref_words": 1505,
+      "raw": {
+        "agent_wer": 0.1475,
+        "customer_wer": 0.1881,
+        "overall_wer": 0.1619,
+        "overall_acc": 0.8381,
+        "ref_words": 1470
+      },
+      "normalised": {
+        "agent_wer": 0.1034,
+        "customer_wer": 0.1431,
+        "overall_wer": 0.1176,
+        "overall_acc": 0.8824,
+        "ref_words": 1505
+      }
+    },
+    {
+      "call_id": "en_US_General_Health_1587922",
+      "domain": "health",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1298,
+      "raw_customer_wer": 0.2151,
+      "raw_overall_wer": 0.1609,
+      "raw_overall_acc": 0.8391,
+      "raw_ref_words": 1672,
+      "normalised_agent_wer": 0.094,
+      "normalised_customer_wer": 0.2074,
+      "normalised_overall_wer": 0.1355,
+      "normalised_overall_acc": 0.8645,
+      "normalised_ref_words": 1697,
+      "raw": {
+        "agent_wer": 0.1298,
+        "customer_wer": 0.2151,
+        "overall_wer": 0.1609,
+        "overall_acc": 0.8391,
+        "ref_words": 1672
+      },
+      "normalised": {
+        "agent_wer": 0.094,
+        "customer_wer": 0.2074,
+        "overall_wer": 0.1355,
+        "overall_acc": 0.8645,
+        "ref_words": 1697
+      }
+    },
+    {
+      "call_id": "en_US_General_Telecom_1584567",
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1107,
+      "raw_customer_wer": 0.2291,
+      "raw_overall_wer": 0.145,
+      "raw_overall_acc": 0.855,
+      "raw_ref_words": 1731,
+      "normalised_agent_wer": 0.0611,
+      "normalised_customer_wer": 0.1731,
+      "normalised_overall_wer": 0.0938,
+      "normalised_overall_acc": 0.9062,
+      "normalised_ref_words": 1685,
+      "raw": {
+        "agent_wer": 0.1107,
+        "customer_wer": 0.2291,
+        "overall_wer": 0.145,
+        "overall_acc": 0.855,
+        "ref_words": 1731
+      },
+      "normalised": {
+        "agent_wer": 0.0611,
+        "customer_wer": 0.1731,
+        "overall_wer": 0.0938,
+        "overall_acc": 0.9062,
+        "ref_words": 1685
+      }
+    },
+    {
+      "call_id": "en_US_General_Telecom_1586751",
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.1252,
+      "raw_customer_wer": 0.0956,
+      "raw_overall_wer": 0.1159,
+      "raw_overall_acc": 0.8841,
+      "raw_ref_words": 794,
+      "normalised_agent_wer": 0.0514,
+      "normalised_customer_wer": 0.0684,
+      "normalised_overall_wer": 0.0569,
+      "normalised_overall_acc": 0.9431,
+      "normalised_ref_words": 808,
+      "raw": {
+        "agent_wer": 0.1252,
+        "customer_wer": 0.0956,
+        "overall_wer": 0.1159,
+        "overall_acc": 0.8841,
+        "ref_words": 794
+      },
+      "normalised": {
+        "agent_wer": 0.0514,
+        "customer_wer": 0.0684,
+        "overall_wer": 0.0569,
+        "overall_acc": 0.9431,
+        "ref_words": 808
+      }
+    },
+    {
+      "call_id": "en_US_General_Telecom_1586891",
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "raw_agent_wer": 0.0969,
+      "raw_customer_wer": 0.1591,
+      "raw_overall_wer": 0.1112,
+      "raw_overall_acc": 0.8888,
+      "raw_ref_words": 1529,
+      "normalised_agent_wer": 0.0439,
+      "normalised_customer_wer": 0.1301,
+      "normalised_overall_wer": 0.0644,
+      "normalised_overall_acc": 0.9356,
+      "normalised_ref_words": 1554,
+      "raw": {
+        "agent_wer": 0.0969,
+        "customer_wer": 0.1591,
+        "overall_wer": 0.1112,
+        "overall_acc": 0.8888,
+        "ref_words": 1529
+      },
+      "normalised": {
+        "agent_wer": 0.0439,
+        "customer_wer": 0.1301,
+        "overall_wer": 0.0644,
+        "overall_acc": 0.9356,
+        "ref_words": 1554
+      }
+    }
+  ]
+}
