@@ -28,7 +28,6 @@ class Call(Base):
 
     agent       = relationship("Agent", back_populates="calls")
     jobs        = relationship("Job", back_populates="call")
-    transcripts = relationship("Transcript", back_populates="call")
     evaluations = relationship("Evaluation", back_populates="call")
 
 class Job(Base):
@@ -48,7 +47,7 @@ class Transcript(Base):
     __tablename__ = "transcripts"
 
     transcript_id  = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    call_id        = Column(UUID(as_uuid=True), ForeignKey("calls.call_id"), nullable=True)
+    call_id        = Column(UUID(as_uuid=True), nullable=True)
     source_call_id = Column(String(100))
     turn_id        = Column(Integer, nullable=False)
     speaker        = Column(String(20))
@@ -57,8 +56,6 @@ class Transcript(Base):
     text           = Column(Text)
     avg_confidence = Column(Float)
     low_confidence = Column(Boolean, default=False)
-
-    call = relationship("Call", back_populates="transcripts")
 
 class Evaluation(Base):
     __tablename__ = "evaluations"
@@ -94,3 +91,4 @@ class SentimentSegment(Base):
     domain            = Column(String(50))
     model_version     = Column(String(100))
     created_at        = Column(DateTime, default=datetime.utcnow)
+    
