@@ -77,3 +77,19 @@ class Evaluation(Base):
     created_at             = Column(DateTime, default=datetime.utcnow)
 
     call  = relationship("Call", back_populates="evaluations")
+
+class SentimentSegment(Base):
+    __tablename__ = "sentiment_segments"
+
+    id                = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    call_id           = Column(String(100), nullable=False)
+    segment_index     = Column(Integer, nullable=False)
+    segment_key       = Column(String(200))
+    seq_id            = Column(Integer)
+    sentiment         = Column(String(20))
+    dominant_emotion  = Column(String(50))
+    escalation_score  = Column(Float)
+    processing_status = Column(String(30))
+    domain            = Column(String(50))
+    model_version     = Column(String(100))
+    created_at        = Column(DateTime, default=datetime.utcnow)
