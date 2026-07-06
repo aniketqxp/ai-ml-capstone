@@ -5,7 +5,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import Call, Job
+from app.models import Call, Job, Transcript
 
 router = APIRouter(prefix="/calls", tags=["calls"])
 
@@ -68,4 +68,36 @@ def get_call_status(call_id: str, db: Session = Depends(get_db)):
         "status": job.status,
         "stage": job.stage,
         "updated_at": job.updated_at.isoformat() if job.updated_at else None
+    }
+
+@router.post("/transcripts/ingest", status_code=201)
+async def ingest_transcript(
+    payload: dict,
+    db: Session = Depends(get_db)
+):
+    call_id_str = payload.get("call_id")
+    sentences = payload.get("sentences", [])
+
+    inserted = 0
+    for sentence in sentences:
+        transcript = Transcript(
+            call_id=uuid.UUID(call_id_str) if len(call_id_str) == 36 else None,
+            source_call_id=call_id_str,
+            turn_id=sentence.get("seq_id", 0),
+            speaker=sentence.get("speaker", "").lower(),
+            start_time=sentence.get("start"),
+            end_time=sentence.get("end"),
+            text=sentence.get("text"),
+            avg_confidence=1.0,
+            low_confidence=False
+        )
+        db.add(transcript)
+        inserted += 1
+
+    db.commit()
+
+    return {
+        "call_id": call_id_str,
+        "inserted": inserted,
+        "status": "complete"
     }

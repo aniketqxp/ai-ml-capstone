@@ -48,7 +48,8 @@ class Transcript(Base):
     __tablename__ = "transcripts"
 
     transcript_id  = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    call_id        = Column(UUID(as_uuid=True), ForeignKey("calls.call_id"), nullable=False)
+    call_id        = Column(UUID(as_uuid=True), ForeignKey("calls.call_id"), nullable=True)
+    source_call_id = Column(String(100))
     turn_id        = Column(Integer, nullable=False)
     speaker        = Column(String(20))
     start_time     = Column(Float)
