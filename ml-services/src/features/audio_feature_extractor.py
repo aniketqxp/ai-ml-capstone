@@ -316,12 +316,14 @@ def extract_features_from_transcript_segments(
             or sentence.get("transcript")
             or ""
         )
+        speaker = sentence.get("speaker")
 
         if start_time is None or end_time is None:
             segment_features.append({
             "segment_index": idx + 1,
             "segment_key": f"{call_id}_{idx + 1:04d}",
             "seq_id": sentence.get("seq_id"),
+            "speaker": speaker,
             "start_time": start_time,
             "end_time": end_time,
             "text": text,
@@ -342,6 +344,7 @@ def extract_features_from_transcript_segments(
                 "segment_index": idx + 1,
                 "segment_key": f"{call_id}_{idx + 1:04d}",
                 "seq_id": sentence.get("seq_id"),
+                "speaker": speaker,
                 "start_time": start_time,
                 "end_time": end_time,
                 "text": text,
@@ -354,6 +357,7 @@ def extract_features_from_transcript_segments(
                 "segment_index": idx + 1,
                 "segment_key": f"{call_id}_{idx + 1:04d}",
                 "seq_id": sentence.get("seq_id"),
+                "speaker": speaker,
                 "start_time": start_time,
                 "end_time": end_time,
                 "text": text,
