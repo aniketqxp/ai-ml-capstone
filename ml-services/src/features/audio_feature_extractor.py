@@ -1,323 +1,419 @@
 """
-Audio feature extraction utilities for baseline speech emotion recognition.
+Audio feature extraction for call-center sentiment analysis.
 
-This module extracts traditional acoustic features from waveform audio. These
-features are used by the baseline machine learning model before moving to a
-deep learning model such as Wav2Vec2.
+This script extracts explainable voice/tone features from audio segments:
+- pitch
+- volume
+- energy
+- pauses
+- speech rate estimate
 
-Feature groups:
-    - MFCC statistics
-    - Chroma statistics
-    - Spectral contrast
-    - Zero crossing rate
-    - RMS energy / loudness
-    - Pitch statistics
-    - Tempo-like speech rhythm approximation
+These features are separate from Wav2Vec2. Wav2Vec2 predicts emotion,
+while this file extracts interpretable acoustic features for dashboard use.
 """
 
-from dataclasses import dataclass
+import argparse
+import json
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Any, List, Optional
 
 import librosa
 import numpy as np
-import pandas as pd
 
 
-DEFAULT_SAMPLE_RATE = 16_000
+def load_audio_segment(
+    audio_path: str,
+    start_time: Optional[float] = None,
+    end_time: Optional[float] = None,
+    target_sr: int = 16000,
+):
+    """Load full audio or a timestamped segment."""
+    if start_time is not None and end_time is not None:
+        duration = max(0.0, end_time - start_time)
+        y, sr = librosa.load(
+            audio_path,
+            sr=target_sr,
+            mono=True,
+            offset=start_time,
+            duration=duration,
+        )
+    else:
+        y, sr = librosa.load(audio_path, sr=target_sr, mono=True)
+
+    return y, sr
 
 
-@dataclass(frozen=True)
-class AudioFeatureConfig:
+def safe_float(value):
+    """Convert numpy values to normal Python floats for JSON."""
+    if value is None:
+        return None
+    if np.isnan(value) or np.isinf(value):
+        return None
+    return float(value)
+
+
+def extract_pitch(y: np.ndarray, sr: int) -> Dict[str, Any]:
     """
-    Configuration for baseline audio feature extraction.
+    Extract pitch using librosa.pyin.
+
+    Returns pitch mean, min, max, and variability.
     """
-
-    sample_rate: int = DEFAULT_SAMPLE_RATE
-    n_mfcc: int = 20
-    n_fft: int = 1024
-    hop_length: int = 512
-    max_duration_seconds: Optional[float] = 6.0
-
-
-def safe_stat_features(values: np.ndarray, prefix: str) -> Dict[str, float]:
-    """
-    Calculate stable summary statistics for a 1D or 2D feature array.
-
-    For 2D arrays shaped [features, frames], statistics are calculated for each
-    feature dimension across time.
-    """
-    features: Dict[str, float] = {}
-
-    if values.size == 0:
-        features[f"{prefix}_mean"] = 0.0
-        features[f"{prefix}_std"] = 0.0
-        features[f"{prefix}_min"] = 0.0
-        features[f"{prefix}_max"] = 0.0
-        return features
-
-    values = np.nan_to_num(values, nan=0.0, posinf=0.0, neginf=0.0)
-
-    if values.ndim == 1:
-        features[f"{prefix}_mean"] = float(np.mean(values))
-        features[f"{prefix}_std"] = float(np.std(values))
-        features[f"{prefix}_min"] = float(np.min(values))
-        features[f"{prefix}_max"] = float(np.max(values))
-        return features
-
-    for index in range(values.shape[0]):
-        row = values[index]
-        features[f"{prefix}_{index + 1}_mean"] = float(np.mean(row))
-        features[f"{prefix}_{index + 1}_std"] = float(np.std(row))
-        features[f"{prefix}_{index + 1}_min"] = float(np.min(row))
-        features[f"{prefix}_{index + 1}_max"] = float(np.max(row))
-
-    return features
-
-
-def load_audio_for_features(
-    audio_path: Path,
-    config: AudioFeatureConfig,
-) -> np.ndarray:
-    """
-    Load audio for feature extraction.
-
-    Args:
-        audio_path: Path to audio file.
-        config: Feature extraction configuration.
-
-    Returns:
-        Mono waveform at target sample rate.
-    """
-    if not audio_path.exists():
-        raise FileNotFoundError(f"Audio file not found: {audio_path}")
-
-    waveform, _ = librosa.load(
-        audio_path,
-        sr=config.sample_rate,
-        mono=True,
-        duration=config.max_duration_seconds,
-    )
-
-    if waveform.size == 0:
-        raise ValueError(f"Loaded empty audio file: {audio_path}")
-
-    return waveform.astype(np.float32)
-
-
-def extract_pitch_features(
-    waveform: np.ndarray,
-    config: AudioFeatureConfig,
-) -> Dict[str, float]:
-    """
-    Extract pitch statistics using librosa.pyin.
-
-    Pitch is useful for emotion detection because angry, fearful, or stressed
-    speech often has higher or more unstable pitch.
-    """
-    features: Dict[str, float] = {}
+    if len(y) < sr * 0.2:
+        return {
+            "pitch_mean_hz": None,
+            "pitch_min_hz": None,
+            "pitch_max_hz": None,
+            "pitch_std_hz": None,
+            "pitch_level": "unreliable_short_segment",
+        }
 
     try:
-        f0, voiced_flag, _ = librosa.pyin(
-            waveform,
+        f0, voiced_flag, voiced_prob = librosa.pyin(
+            y,
             fmin=librosa.note_to_hz("C2"),
             fmax=librosa.note_to_hz("C7"),
-            sr=config.sample_rate,
-            frame_length=config.n_fft,
-            hop_length=config.hop_length,
+            sr=sr,
         )
 
-        voiced_pitch = f0[voiced_flag] if f0 is not None and voiced_flag is not None else []
+        valid_pitch = f0[~np.isnan(f0)]
 
-        if len(voiced_pitch) == 0:
-            features.update(
-                {
-                    "pitch_mean": 0.0,
-                    "pitch_std": 0.0,
-                    "pitch_min": 0.0,
-                    "pitch_max": 0.0,
-                    "voiced_ratio": 0.0,
-                }
-            )
-            return features
+        if len(valid_pitch) == 0:
+            return {
+                "pitch_mean_hz": None,
+                "pitch_min_hz": None,
+                "pitch_max_hz": None,
+                "pitch_std_hz": None,
+                "pitch_level": "unvoiced_or_unreliable",
+            }
 
-        voiced_pitch = np.nan_to_num(voiced_pitch, nan=0.0)
-        features["pitch_mean"] = float(np.mean(voiced_pitch))
-        features["pitch_std"] = float(np.std(voiced_pitch))
-        features["pitch_min"] = float(np.min(voiced_pitch))
-        features["pitch_max"] = float(np.max(voiced_pitch))
-        features["voiced_ratio"] = float(np.mean(voiced_flag))
+        pitch_mean = float(np.mean(valid_pitch))
+        pitch_std = float(np.std(valid_pitch))
+
+        if pitch_mean < 140:
+            pitch_level = "low"
+        elif pitch_mean < 220:
+            pitch_level = "medium"
+        else:
+            pitch_level = "high"
+
+        return {
+            "pitch_mean_hz": safe_float(pitch_mean),
+            "pitch_min_hz": safe_float(np.min(valid_pitch)),
+            "pitch_max_hz": safe_float(np.max(valid_pitch)),
+            "pitch_std_hz": safe_float(pitch_std),
+            "pitch_level": pitch_level,
+        }
 
     except Exception:
-        features.update(
-            {
-                "pitch_mean": 0.0,
-                "pitch_std": 0.0,
-                "pitch_min": 0.0,
-                "pitch_max": 0.0,
-                "voiced_ratio": 0.0,
-            }
+        return {
+            "pitch_mean_hz": None,
+            "pitch_min_hz": None,
+            "pitch_max_hz": None,
+            "pitch_std_hz": None,
+            "pitch_level": "error",
+        }
+
+
+def extract_volume_energy(y: np.ndarray, sr: int) -> Dict[str, Any]:
+    """
+    Extract RMS energy and approximate volume in dB.
+    """
+    if len(y) == 0:
+        return {
+            "rms_energy_mean": None,
+            "rms_energy_max": None,
+            "volume_db_mean": None,
+            "volume_level": "empty_audio",
+        }
+
+    rms = librosa.feature.rms(y=y)[0]
+
+    rms_mean = float(np.mean(rms))
+    rms_max = float(np.max(rms))
+
+    # Convert RMS to dB. Add small number to avoid log(0).
+    volume_db = librosa.amplitude_to_db(rms, ref=np.max)
+    volume_db_mean = float(np.mean(volume_db))
+
+    if rms_mean < 0.01:
+        volume_level = "low"
+    elif rms_mean < 0.04:
+        volume_level = "medium"
+    else:
+        volume_level = "high"
+
+    return {
+        "rms_energy_mean": safe_float(rms_mean),
+        "rms_energy_max": safe_float(rms_max),
+        "volume_db_mean": safe_float(volume_db_mean),
+        "volume_level": volume_level,
+    }
+
+
+def extract_pauses(y: np.ndarray, sr: int) -> Dict[str, Any]:
+    """
+    Detect non-silent intervals and estimate pause duration.
+
+    This is useful for detecting hesitation or silence.
+    """
+    if len(y) == 0:
+        return {
+            "total_pause_duration_seconds": None,
+            "pause_count": None,
+            "pause_ratio": None,
+            "pause_level": "empty_audio",
+        }
+
+    duration_seconds = len(y) / sr
+
+    intervals = librosa.effects.split(
+        y,
+        top_db=30,
+    )
+
+    speech_duration = 0.0
+    for start, end in intervals:
+        speech_duration += (end - start) / sr
+
+    pause_duration = max(0.0, duration_seconds - speech_duration)
+    pause_ratio = pause_duration / duration_seconds if duration_seconds > 0 else 0.0
+
+    # Estimate pauses as gaps between speech intervals
+    pause_count = max(0, len(intervals) - 1)
+
+    if pause_ratio < 0.15:
+        pause_level = "low"
+    elif pause_ratio < 0.35:
+        pause_level = "medium"
+    else:
+        pause_level = "high"
+
+    return {
+        "total_pause_duration_seconds": safe_float(pause_duration),
+        "pause_count": int(pause_count),
+        "pause_ratio": safe_float(pause_ratio),
+        "pause_level": pause_level,
+    }
+
+
+def estimate_speech_rate(y: np.ndarray, sr: int, transcript_text: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Estimate speech rate.
+
+    Best option: use transcript text word count / segment duration.
+    If transcript text is not available, return an audio-based placeholder estimate.
+    """
+    duration_seconds = len(y) / sr if sr else 0
+
+    if duration_seconds <= 0:
+        return {
+            "word_count": None,
+            "speech_rate_words_per_second": None,
+            "speech_rate_words_per_minute": None,
+            "speech_rate_level": "empty_audio",
+        }
+
+    if transcript_text:
+        words = [w for w in transcript_text.strip().split() if w]
+        word_count = len(words)
+        wps = word_count / duration_seconds
+        wpm = wps * 60
+
+        if wpm < 110:
+            speech_rate_level = "slow"
+        elif wpm < 180:
+            speech_rate_level = "normal"
+        else:
+            speech_rate_level = "fast"
+
+        return {
+            "word_count": int(word_count),
+            "speech_rate_words_per_second": safe_float(wps),
+            "speech_rate_words_per_minute": safe_float(wpm),
+            "speech_rate_level": speech_rate_level,
+        }
+
+    return {
+        "word_count": None,
+        "speech_rate_words_per_second": None,
+        "speech_rate_words_per_minute": None,
+        "speech_rate_level": "transcript_required",
+    }
+
+
+def extract_audio_features(
+    audio_path: str,
+    start_time: Optional[float] = None,
+    end_time: Optional[float] = None,
+    transcript_text: Optional[str] = None,
+    target_sr: int = 16000,
+) -> Dict[str, Any]:
+    """
+    Extract all audio features for one file or one timestamped segment.
+    """
+    y, sr = load_audio_segment(audio_path, start_time, end_time, target_sr)
+
+    duration_seconds = len(y) / sr if sr else 0
+
+    features = {
+        "duration_seconds": safe_float(duration_seconds),
+        "sample_rate": sr,
+    }
+
+    features.update(extract_pitch(y, sr))
+    features.update(extract_volume_energy(y, sr))
+    features.update(extract_pauses(y, sr))
+    features.update(estimate_speech_rate(y, sr, transcript_text))
+
+    return features
+
+
+def extract_features_from_transcript_segments(
+    transcript_path: str,
+    audio_path: str,
+    output_path: str,
+):
+    """
+    Extract features for every segment in a transcript JSON using one audio file.
+
+    This assumes the transcript has sentence rows with:
+    seq_id, start_time, end_time, text
+    """
+    transcript_path = Path(transcript_path)
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with transcript_path.open("r", encoding="utf-8") as f:
+        transcript = json.load(f)
+
+    call_id = transcript.get("call_id", transcript_path.stem)
+    domain = transcript.get("domain")
+
+    sentences = transcript.get("sentences", [])
+
+    segment_features: List[Dict[str, Any]] = []
+
+    for idx, sentence in enumerate(sentences):
+        start_time = (
+            sentence.get("start_time")
+            or sentence.get("start")
+            or sentence.get("start_timestamp")
+            or sentence.get("startTime")
+            or sentence.get("start_seconds")
         )
 
-    return features
+        end_time = (
+            sentence.get("end_time")
+            or sentence.get("end")
+            or sentence.get("end_timestamp")
+            or sentence.get("endTime")
+            or sentence.get("end_seconds")
+        )
 
+        text = (
+            sentence.get("text")
+            or sentence.get("sentence")
+            or sentence.get("transcript")
+            or ""
+        )
 
-def extract_baseline_audio_features(
-    audio_path: Path,
-    config: Optional[AudioFeatureConfig] = None,
-) -> Dict[str, float]:
-    """
-    Extract a complete baseline feature vector from one audio file.
-
-    Args:
-        audio_path: Path to audio file.
-        config: Optional feature extraction config.
-
-    Returns:
-        Dictionary of feature_name -> value.
-    """
-    if config is None:
-        config = AudioFeatureConfig()
-
-    waveform = load_audio_for_features(audio_path, config)
-
-    features: Dict[str, float] = {}
-
-    # Basic duration
-    duration_seconds = len(waveform) / config.sample_rate
-    features["duration_seconds"] = float(duration_seconds)
-
-    # MFCCs
-    mfcc = librosa.feature.mfcc(
-        y=waveform,
-        sr=config.sample_rate,
-        n_mfcc=config.n_mfcc,
-        n_fft=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(mfcc, "mfcc"))
-
-    # Chroma
-    chroma = librosa.feature.chroma_stft(
-        y=waveform,
-        sr=config.sample_rate,
-        n_fft=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(chroma, "chroma"))
-
-    # Spectral contrast
-    spectral_contrast = librosa.feature.spectral_contrast(
-        y=waveform,
-        sr=config.sample_rate,
-        n_fft=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(spectral_contrast, "spectral_contrast"))
-
-    # Zero crossing rate
-    zero_crossing_rate = librosa.feature.zero_crossing_rate(
-        y=waveform,
-        frame_length=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(zero_crossing_rate.flatten(), "zcr"))
-
-    # RMS energy / loudness
-    rms = librosa.feature.rms(
-        y=waveform,
-        frame_length=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(rms.flatten(), "rms"))
-
-    # Spectral centroid
-    spectral_centroid = librosa.feature.spectral_centroid(
-        y=waveform,
-        sr=config.sample_rate,
-        n_fft=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(spectral_centroid.flatten(), "spectral_centroid"))
-
-    # Spectral bandwidth
-    spectral_bandwidth = librosa.feature.spectral_bandwidth(
-        y=waveform,
-        sr=config.sample_rate,
-        n_fft=config.n_fft,
-        hop_length=config.hop_length,
-    )
-    features.update(safe_stat_features(spectral_bandwidth.flatten(), "spectral_bandwidth"))
-
-    # Pitch
-    features.update(extract_pitch_features(waveform, config))
-
-    return features
-
-
-def extract_feature_dataframe(
-    metadata: pd.DataFrame,
-    ml_services_root: Path,
-    config: Optional[AudioFeatureConfig] = None,
-    limit: Optional[int] = None,
-) -> pd.DataFrame:
-    """
-    Extract feature vectors for a metadata DataFrame.
-
-    Args:
-        metadata: DataFrame containing file_path and labels.
-        ml_services_root: Root directory of ml-services.
-        config: Feature extraction config.
-        limit: Optional limit for quick testing.
-
-    Returns:
-        DataFrame containing features and label columns.
-    """
-    if config is None:
-        config = AudioFeatureConfig()
-
-    rows: List[Dict] = []
-    working_metadata = metadata.head(limit).copy() if limit else metadata.copy()
-
-    total = len(working_metadata)
-
-    for index, row in working_metadata.iterrows():
-        file_path = Path(row["file_path"])
-        audio_path = file_path if file_path.is_absolute() else ml_services_root / file_path
+        if start_time is None or end_time is None:
+            segment_features.append({
+            "segment_index": idx + 1,
+            "segment_key": f"{call_id}_{idx + 1:04d}",
+            "seq_id": sentence.get("seq_id"),
+            "start_time": start_time,
+            "end_time": end_time,
+            "text": text,
+            "processing_status": "missing_timestamps",
+            "audio_features": None,
+        })
+            continue
 
         try:
-            feature_row = extract_baseline_audio_features(audio_path, config)
-            required_columns = [
-                "filename",
-                "actor_id",
-                "emotion_label",
-                "sentiment_label",
-                "split",
-            ]
+            features = extract_audio_features(
+                audio_path=audio_path,
+                start_time=float(start_time),
+                end_time=float(end_time),
+                transcript_text=text,
+            )
 
-            missing_columns = [
-                column for column in required_columns if column not in working_metadata.columns
-            ]
+            segment_features.append({
+                "segment_index": idx + 1,
+                "segment_key": f"{call_id}_{idx + 1:04d}",
+                "seq_id": sentence.get("seq_id"),
+                "start_time": start_time,
+                "end_time": end_time,
+                "text": text,
+                "processing_status": "success",
+                "audio_features": features,
+            })
 
-            if missing_columns:
-                raise ValueError(
-                    f"Metadata is missing required columns during feature extraction: {missing_columns}"
-                )
+        except Exception as e:
+            segment_features.append({
+                "segment_index": idx + 1,
+                "segment_key": f"{call_id}_{idx + 1:04d}",
+                "seq_id": sentence.get("seq_id"),
+                "start_time": start_time,
+                "end_time": end_time,
+                "text": text,
+                "processing_status": "feature_extraction_error",
+                "error": str(e),
+                "audio_features": None,
+            })
 
-            feature_row["filename"] = row["filename"]
-            feature_row["actor_id"] = int(row["actor_id"])
-            feature_row["emotion_label"] = row["emotion_label"]
-            feature_row["sentiment_label"] = row["sentiment_label"]
-            feature_row["split"] = row["split"]
-            rows.append(feature_row)
+    output = {
+        "call_id": call_id,
+        "domain": domain,
+        "audio_path": audio_path,
+        "feature_extraction_version": "audio_features_v1_librosa",
+        "total_segments": len(segment_features),
+        "segments": segment_features,
+    }
 
-        except Exception as exc:
-            print(f"[WARN] Failed to extract features for {row['filename']}: {exc}")
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
 
-        if (len(rows) % 250 == 0 and len(rows) > 0) or len(rows) == total:
-            print(f"Extracted features for {len(rows)}/{total} files")
+    print(f"Saved audio features to: {output_path}")
+    print(f"Total segments: {len(segment_features)}")
 
-    if not rows:
-        raise ValueError("No features were extracted.")
 
-    return pd.DataFrame(rows)
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--audio-path", required=True)
+    parser.add_argument("--output-path", required=True)
+
+    parser.add_argument("--transcript-path", default=None)
+    parser.add_argument("--start-time", type=float, default=None)
+    parser.add_argument("--end-time", type=float, default=None)
+    parser.add_argument("--text", default=None)
+
+    args = parser.parse_args()
+
+    if args.transcript_path:
+        extract_features_from_transcript_segments(
+            transcript_path=args.transcript_path,
+            audio_path=args.audio_path,
+            output_path=args.output_path,
+        )
+    else:
+        features = extract_audio_features(
+            audio_path=args.audio_path,
+            start_time=args.start_time,
+            end_time=args.end_time,
+            transcript_text=args.text,
+        )
+
+        output_path = Path(args.output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with output_path.open("w", encoding="utf-8") as f:
+            json.dump(features, f, indent=2)
+
+        print(json.dumps(features, indent=2))
+        print(f"Saved audio features to: {output_path}")
+
+
+if __name__ == "__main__":
+    main()
