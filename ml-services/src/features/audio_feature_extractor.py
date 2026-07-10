@@ -318,18 +318,23 @@ def extract_features_from_transcript_segments(
         )
         speaker = sentence.get("speaker")
 
+        # Some transcripts have the first segment with missing start time.
+        # If it is the first segment and end_time exists, assume it starts at 0.0.
+        if start_time is None and idx == 0 and end_time is not None:
+            start_time = 0.0
+
         if start_time is None or end_time is None:
             segment_features.append({
-            "segment_index": idx + 1,
-            "segment_key": f"{call_id}_{idx + 1:04d}",
-            "seq_id": sentence.get("seq_id"),
-            "speaker": speaker,
-            "start_time": start_time,
-            "end_time": end_time,
-            "text": text,
-            "processing_status": "missing_timestamps",
-            "audio_features": None,
-        })
+                "segment_index": idx + 1,
+                "segment_key": f"{call_id}_{idx + 1:04d}",
+                "seq_id": sentence.get("seq_id"),
+                "speaker": speaker,
+                "start_time": start_time,
+                "end_time": end_time,
+                "text": text,
+                "processing_status": "missing_timestamps",
+                "audio_features": None,
+            })
             continue
 
         try:

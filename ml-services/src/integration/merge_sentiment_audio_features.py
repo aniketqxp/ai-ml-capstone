@@ -93,10 +93,10 @@ def main():
         seq_id = segment.get("seq_id")
         segment_index = segment.get("segment_index")
 
-        feature_item = feature_map_by_seq_id.get(seq_id)
+        feature_item = feature_map_by_segment_index.get(segment_index)
 
         if feature_item is None:
-            feature_item = feature_map_by_segment_index.get(segment_index)
+            feature_item = feature_map_by_seq_id.get(seq_id)
 
         if feature_item is None:
             segment["audio_features"] = None
