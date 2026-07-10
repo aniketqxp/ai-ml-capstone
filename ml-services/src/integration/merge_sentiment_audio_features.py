@@ -10,6 +10,100 @@ import argparse
 import json
 from pathlib import Path
 
+def safe_average(values):
+    values = [v for v in values if v is not None]
+    if not values:
+        return None
+    return round(sum(values) / len(values), 4)
+
+
+def count_level(segments, feature_name, expected_level):
+    count = 0
+
+    for segment in segments:
+        audio = segment.get("audio_features") or {}
+        if audio.get(feature_name) == expected_level:
+            count += 1
+
+    return count
+
+
+def find_max_segment(segments, feature_name):
+    best_segment = None
+    best_value = None
+
+    for segment in segments:
+        audio = segment.get("audio_features") or {}
+        value = audio.get(feature_name)
+
+        if value is None:
+            continue
+
+        if best_value is None or value > best_value:
+            best_value = value
+            best_segment = segment
+
+    if best_segment is None:
+        return {
+            "segment_index": None,
+            "seq_id": None,
+            "speaker": None,
+            "value": None,
+        }
+
+    return {
+        "segment_index": best_segment.get("segment_index"),
+        "seq_id": best_segment.get("seq_id"),
+        "speaker": best_segment.get("speaker"),
+        "value": round(best_value, 4),
+    }
+
+
+def build_audio_feature_summary(sentiment_payload):
+    segments = sentiment_payload.get("segments", [])
+
+    segments_with_audio = [
+        segment for segment in segments
+        if segment.get("audio_features") is not None
+    ]
+
+    pitch_values = []
+    volume_values = []
+    energy_values = []
+    pause_values = []
+    speech_rate_values = []
+
+    for segment in segments_with_audio:
+        audio = segment.get("audio_features") or {}
+
+        pitch_values.append(audio.get("pitch_mean_hz"))
+        volume_values.append(audio.get("volume_db_mean"))
+        energy_values.append(audio.get("rms_energy_mean"))
+        pause_values.append(audio.get("pause_ratio"))
+        speech_rate_values.append(audio.get("speech_rate_words_per_minute"))
+
+    return {
+        "total_segments": len(segments),
+        "total_segments_with_audio_features": len(segments_with_audio),
+
+        "average_pitch_hz": safe_average(pitch_values),
+        "average_volume_db": safe_average(volume_values),
+        "average_energy": safe_average(energy_values),
+        "average_pause_ratio": safe_average(pause_values),
+        "average_speech_rate_wpm": safe_average(speech_rate_values),
+
+        "high_pitch_segments": count_level(segments_with_audio, "pitch_level", "high"),
+        "high_volume_segments": count_level(segments_with_audio, "volume_level", "high"),
+        "fast_speech_segments": count_level(segments_with_audio, "speech_rate_level", "fast"),
+        "high_pause_segments": count_level(segments_with_audio, "pause_level", "high"),
+
+        "highest_pitch_segment": find_max_segment(segments_with_audio, "pitch_mean_hz"),
+        "highest_volume_segment": find_max_segment(segments_with_audio, "volume_db_mean"),
+        "highest_energy_segment": find_max_segment(segments_with_audio, "rms_energy_mean"),
+        "highest_pause_ratio_segment": find_max_segment(segments_with_audio, "pause_ratio"),
+        "highest_speech_rate_segment": find_max_segment(segments_with_audio, "speech_rate_words_per_minute"),
+    }
+
 
 def build_audio_feature_series(sentiment_payload):
     """
@@ -119,6 +213,7 @@ def main():
     }
 
     sentiment["dashboard_audio_feature_series"] = build_audio_feature_series(sentiment)
+    sentiment["audio_feature_summary"] = build_audio_feature_summary(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(sentiment, f, indent=2)

@@ -32,7 +32,14 @@ def main():
         has_features = data.get("has_audio_features")
         series = data.get("dashboard_audio_feature_series", [])
 
-        if has_features and matched == total and len(series) == total:
+        audio_summary = data.get("audio_feature_summary", {})
+
+        if (
+            has_features
+            and matched == total
+            and len(series) == total
+            and audio_summary.get("total_segments_with_audio_features") == total
+        ):
             status_counts["valid"] += 1
         else:
             status_counts["invalid"] += 1
