@@ -10,6 +10,80 @@ import argparse
 import json
 from pathlib import Path
 
+def normalize_label(value):
+    if value is None:
+        return ""
+    return str(value).strip().lower()
+
+
+def build_segment_explainability(segment):
+    """
+    Build human-readable reasons for why a segment may be risky or important.
+
+    This does not replace the model prediction.
+    It explains the prediction using sentiment, emotion, escalation score,
+    and extracted audio features.
+    """
+    sentiment = normalize_label(segment.get("sentiment"))
+    emotion = normalize_label(segment.get("dominant_emotion"))
+    escalation_score = segment.get("escalation_score")
+
+    audio = segment.get("audio_features") or {}
+
+    pitch_level = normalize_label(audio.get("pitch_level"))
+    volume_level = normalize_label(audio.get("volume_level"))
+    pause_level = normalize_label(audio.get("pause_level"))
+    speech_rate_level = normalize_label(audio.get("speech_rate_level"))
+
+    flags = {
+        "negative_sentiment": sentiment == "negative",
+        "anger_emotion": emotion in {"anger", "angry"},
+        "sadness_or_fear_emotion": emotion in {"sadness", "sad", "fear", "fearful"},
+        "high_escalation_score": escalation_score is not None and escalation_score >= 0.6,
+        "medium_escalation_score": escalation_score is not None and 0.4 <= escalation_score < 0.6,
+        "high_pitch": pitch_level == "high",
+        "high_volume": volume_level == "high",
+        "fast_speech": speech_rate_level == "fast",
+        "high_pause": pause_level == "high",
+    }
+
+    reasons = []
+
+    if flags["negative_sentiment"]:
+        reasons.append("Negative sentiment detected")
+
+    if flags["anger_emotion"]:
+        reasons.append("Anger-related emotion detected")
+
+    if flags["sadness_or_fear_emotion"]:
+        reasons.append("Emotion may indicate customer distress")
+
+    if flags["high_escalation_score"]:
+        reasons.append("High escalation score")
+
+    elif flags["medium_escalation_score"]:
+        reasons.append("Medium escalation score")
+
+    if flags["high_pitch"]:
+        reasons.append("High pitch detected")
+
+    if flags["high_volume"]:
+        reasons.append("High volume detected")
+
+    if flags["fast_speech"]:
+        reasons.append("Fast speech rate detected")
+
+    if flags["high_pause"]:
+        reasons.append("Long or frequent pauses detected")
+
+    if not reasons:
+        reasons.append("No strong escalation indicators detected")
+
+    return {
+        "explainability_flags": flags,
+        "escalation_explanation": reasons,
+    }
+
 def safe_average(values):
     values = [v for v in values if v is not None]
     if not values:
@@ -149,6 +223,8 @@ def build_audio_feature_series(sentiment_payload):
 
             "speech_rate_words_per_minute": audio.get("speech_rate_words_per_minute"),
             "speech_rate_level": audio.get("speech_rate_level"),
+            "explainability_flags": segment.get("explainability_flags"),
+            "escalation_explanation": segment.get("escalation_explanation"),
         })
 
     return series
@@ -204,6 +280,11 @@ def main():
 
         if segment["audio_features"] is not None:
             matched_count += 1
+
+        explanation = build_segment_explainability(segment)
+        segment["explainability_flags"] = explanation["explainability_flags"]
+        segment["escalation_explanation"] = explanation["escalation_explanation"]
+        
 
     sentiment["audio_feature_version"] = features.get("feature_extraction_version")
     sentiment["has_audio_features"] = matched_count > 0

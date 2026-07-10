@@ -31,6 +31,12 @@ def main():
 
         has_features = data.get("has_audio_features")
         series = data.get("dashboard_audio_feature_series", [])
+        segments = data.get("segments", [])
+        segments_with_explanations = [
+            segment for segment in segments
+            if segment.get("escalation_explanation") is not None
+            and segment.get("explainability_flags") is not None
+        ]
 
         audio_summary = data.get("audio_feature_summary", {})
 
@@ -39,6 +45,7 @@ def main():
             and matched == total
             and len(series) == total
             and audio_summary.get("total_segments_with_audio_features") == total
+            and len(segments_with_explanations) == total
         ):
             status_counts["valid"] += 1
         else:
