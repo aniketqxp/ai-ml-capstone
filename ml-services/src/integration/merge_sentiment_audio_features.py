@@ -178,6 +178,79 @@ def build_audio_feature_summary(sentiment_payload):
         "highest_speech_rate_segment": find_max_segment(segments_with_audio, "speech_rate_words_per_minute"),
     }
 
+def build_single_speaker_summary(segments, speaker_name):
+    speaker_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == normalize_label(speaker_name)
+    ]
+
+    segments_with_audio = [
+        segment for segment in speaker_segments
+        if segment.get("audio_features") is not None
+    ]
+
+    pitch_values = []
+    volume_values = []
+    energy_values = []
+    pause_values = []
+    speech_rate_values = []
+    escalation_values = []
+    sentiments = []
+    emotions = []
+
+    for segment in speaker_segments:
+        escalation = segment.get("escalation_score")
+        if escalation is not None:
+            escalation_values.append(escalation)
+
+        sentiments.append(segment.get("sentiment"))
+        emotions.append(segment.get("dominant_emotion"))
+
+    for segment in segments_with_audio:
+        audio = segment.get("audio_features") or {}
+
+        pitch_values.append(audio.get("pitch_mean_hz"))
+        volume_values.append(audio.get("volume_db_mean"))
+        energy_values.append(audio.get("rms_energy_mean"))
+        pause_values.append(audio.get("pause_ratio"))
+        speech_rate_values.append(audio.get("speech_rate_words_per_minute"))
+
+    return {
+        "speaker": speaker_name,
+        "total_segments": len(speaker_segments),
+        "total_segments_with_audio_features": len(segments_with_audio),
+
+        "average_escalation_score": safe_average(escalation_values),
+        "dominant_sentiment": dominant_label(sentiments),
+        "dominant_emotion": dominant_label(emotions),
+
+        "average_pitch_hz": safe_average(pitch_values),
+        "average_volume_db": safe_average(volume_values),
+        "average_energy": safe_average(energy_values),
+        "average_pause_ratio": safe_average(pause_values),
+        "average_speech_rate_wpm": safe_average(speech_rate_values),
+
+        "high_pitch_segments": count_level(segments_with_audio, "pitch_level", "high"),
+        "high_volume_segments": count_level(segments_with_audio, "volume_level", "high"),
+        "fast_speech_segments": count_level(segments_with_audio, "speech_rate_level", "fast"),
+        "high_pause_segments": count_level(segments_with_audio, "pause_level", "high"),
+
+        "highest_pitch_segment": find_max_segment(segments_with_audio, "pitch_mean_hz"),
+        "highest_volume_segment": find_max_segment(segments_with_audio, "volume_db_mean"),
+        "highest_energy_segment": find_max_segment(segments_with_audio, "rms_energy_mean"),
+        "highest_pause_ratio_segment": find_max_segment(segments_with_audio, "pause_ratio"),
+        "highest_speech_rate_segment": find_max_segment(segments_with_audio, "speech_rate_words_per_minute"),
+    }
+
+
+def build_speaker_audio_feature_summary(sentiment_payload):
+    segments = sentiment_payload.get("segments", [])
+
+    return {
+        "customer": build_single_speaker_summary(segments, "CUSTOMER"),
+        "agent": build_single_speaker_summary(segments, "AGENT"),
+    }
+
 
 def build_audio_feature_series(sentiment_payload):
     """
@@ -192,6 +265,7 @@ def build_audio_feature_series(sentiment_payload):
     - escalation over call
     """
     series = []
+    
 
     for segment in sentiment_payload.get("segments", []):
         audio = segment.get("audio_features") or {}
@@ -228,6 +302,21 @@ def build_audio_feature_series(sentiment_payload):
         })
 
     return series
+
+
+def dominant_label(values):
+    values = [v for v in values if v is not None]
+
+    if not values:
+        return None
+
+    counts = {}
+
+    for value in values:
+        label = str(value).strip()
+        counts[label] = counts.get(label, 0) + 1
+
+    return max(counts, key=counts.get)
 
 
 def main():
@@ -295,6 +384,7 @@ def main():
 
     sentiment["dashboard_audio_feature_series"] = build_audio_feature_series(sentiment)
     sentiment["audio_feature_summary"] = build_audio_feature_summary(sentiment)
+    sentiment["speaker_audio_feature_summary"] = build_speaker_audio_feature_summary(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(sentiment, f, indent=2)

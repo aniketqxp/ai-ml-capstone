@@ -39,6 +39,9 @@ def main():
         ]
 
         audio_summary = data.get("audio_feature_summary", {})
+        speaker_summary = data.get("speaker_audio_feature_summary", {})
+        customer_summary = speaker_summary.get("customer", {})
+        agent_summary = speaker_summary.get("agent", {})
 
         if (
             has_features
@@ -46,6 +49,8 @@ def main():
             and len(series) == total
             and audio_summary.get("total_segments_with_audio_features") == total
             and len(segments_with_explanations) == total
+            and customer_summary.get("total_segments") is not None
+            and agent_summary.get("total_segments") is not None
         ):
             status_counts["valid"] += 1
         else:
