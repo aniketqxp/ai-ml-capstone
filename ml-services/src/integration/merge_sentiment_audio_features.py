@@ -29,6 +29,8 @@ def build_segment_explainability(segment):
     escalation_score = segment.get("escalation_score")
 
     audio = segment.get("audio_features") or {}
+    audio_quality = audio.get("audio_quality_flags") or {}
+    speech_rate_reliability = normalize_label(audio_quality.get("speech_rate_reliability"))
 
     pitch_level = normalize_label(audio.get("pitch_level"))
     volume_level = normalize_label(audio.get("volume_level"))
@@ -43,7 +45,8 @@ def build_segment_explainability(segment):
         "medium_escalation_score": escalation_score is not None and 0.4 <= escalation_score < 0.6,
         "high_pitch": pitch_level == "high",
         "high_volume": volume_level == "high",
-        "fast_speech": speech_rate_level == "fast",
+        "fast_speech": speech_rate_level in {"fast", "very_fast"} and speech_rate_reliability != "low",
+        "unreliable_speech_rate": speech_rate_reliability == "low",
         "high_pause": pause_level == "high",
     }
 
@@ -72,6 +75,9 @@ def build_segment_explainability(segment):
 
     if flags["fast_speech"]:
         reasons.append("Fast speech rate detected")
+
+    if flags["unreliable_speech_rate"]:
+        reasons.append("Speech rate may be unreliable due to short segment length")
 
     if flags["high_pause"]:
         reasons.append("Long or frequent pauses detected")
@@ -374,6 +380,8 @@ def build_audio_feature_series(sentiment_payload):
 
             "speech_rate_words_per_minute": audio.get("speech_rate_words_per_minute"),
             "speech_rate_level": audio.get("speech_rate_level"),
+            "audio_quality_flags": audio.get("audio_quality_flags"),
+            "speech_rate_reliability": audio.get("speech_rate_reliability"),
             "explainability_flags": segment.get("explainability_flags"),
             "escalation_explanation": segment.get("escalation_explanation"),
         })

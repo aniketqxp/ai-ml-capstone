@@ -32,10 +32,16 @@ def main():
         has_features = data.get("has_audio_features")
         series = data.get("dashboard_audio_feature_series", [])
         segments = data.get("segments", [])
+
         segments_with_explanations = [
             segment for segment in segments
             if segment.get("escalation_explanation") is not None
             and segment.get("explainability_flags") is not None
+        ]
+
+        segments_with_audio_quality_flags = [
+            segment for segment in segments
+            if (segment.get("audio_features") or {}).get("audio_quality_flags") is not None
         ]
 
         audio_summary = data.get("audio_feature_summary", {})
@@ -50,6 +56,7 @@ def main():
             and len(series) == total
             and audio_summary.get("total_segments_with_audio_features") == total
             and len(segments_with_explanations) == total
+            and len(segments_with_audio_quality_flags) == total
             and customer_summary.get("total_segments") is not None
             and agent_summary.get("total_segments") is not None
             and customer_trend.get("trend") is not None
@@ -64,6 +71,7 @@ def main():
                 "total": total,
                 "series_len": len(series),
                 "has_audio_features": has_features,
+                "segments_with_audio_quality_flags": len(segments_with_audio_quality_flags),
             })
 
     print("Domain counts:", dict(domain_counts))

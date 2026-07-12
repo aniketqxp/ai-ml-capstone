@@ -244,50 +244,90 @@ def extract_pauses(y: np.ndarray, sr: int) -> Dict[str, Any]:
     }
 
 
-def estimate_speech_rate(y: np.ndarray, sr: int, transcript_text: Optional[str] = None) -> Dict[str, Any]:
-    """
-    Estimate speech rate.
-
-    Best option: use transcript text word count / segment duration.
-    If transcript text is not available, return an audio-based placeholder estimate.
-    """
+def estimate_speech_rate(
+    y: np.ndarray,
+    sr: int,
+    transcript_text: Optional[str] = None,
+) -> Dict[str, Any]:
     duration_seconds = len(y) / sr if sr else 0
+
+    if not transcript_text:
+        word_count = 0
+    else:
+        word_count = len(str(transcript_text).split())
 
     if duration_seconds <= 0:
         return {
-            "word_count": None,
+            "word_count": word_count,
             "speech_rate_words_per_second": None,
             "speech_rate_words_per_minute": None,
-            "speech_rate_level": "empty_audio",
+            "speech_rate_level": "unknown",
+            "speech_rate_reliability": "low",
         }
 
-    if transcript_text:
-        words = [w for w in transcript_text.strip().split() if w]
-        word_count = len(words)
-        wps = word_count / duration_seconds
-        wpm = wps * 60
+    speech_rate_wps = word_count / duration_seconds
+    speech_rate_wpm = speech_rate_wps * 60
 
-        if wpm < 110:
-            speech_rate_level = "slow"
-        elif wpm < 180:
-            speech_rate_level = "normal"
-        else:
-            speech_rate_level = "fast"
+    # Reliability logic:
+    # Very short segments can make WPM look unrealistically high.
+    if duration_seconds < 1.0:
+        speech_rate_level = "unreliable"
+        speech_rate_reliability = "low"
 
-        return {
-            "word_count": int(word_count),
-            "speech_rate_words_per_second": safe_float(wps),
-            "speech_rate_words_per_minute": safe_float(wpm),
-            "speech_rate_level": speech_rate_level,
-        }
+    elif speech_rate_wpm > 350:
+        speech_rate_level = "unreliable"
+        speech_rate_reliability = "low"
+
+    elif speech_rate_wpm < 90:
+        speech_rate_level = "slow"
+        speech_rate_reliability = "high"
+
+    elif speech_rate_wpm <= 180:
+        speech_rate_level = "normal"
+        speech_rate_reliability = "high"
+
+    elif speech_rate_wpm <= 260:
+        speech_rate_level = "fast"
+        speech_rate_reliability = "medium"
+
+    else:
+        speech_rate_level = "very_fast"
+        speech_rate_reliability = "medium"
 
     return {
-        "word_count": None,
-        "speech_rate_words_per_second": None,
-        "speech_rate_words_per_minute": None,
-        "speech_rate_level": "transcript_required",
+        "word_count": word_count,
+        "speech_rate_words_per_second": safe_float(speech_rate_wps),
+        "speech_rate_words_per_minute": safe_float(speech_rate_wpm),
+        "speech_rate_level": speech_rate_level,
+        "speech_rate_reliability": speech_rate_reliability,
     }
 
+
+def build_audio_quality_flags(features: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Add quality/reliability flags so the dashboard does not over-trust
+    short, quiet, or unrealistic audio segments.
+    """
+    duration = features.get("duration_seconds")
+    energy = features.get("rms_energy_mean")
+    pitch = features.get("pitch_mean_hz")
+    speech_rate_wpm = features.get("speech_rate_words_per_minute")
+    speech_rate_reliability = features.get("speech_rate_reliability")
+
+    short_segment = duration is not None and duration < 2.0
+    very_short_segment = duration is not None and duration < 1.0
+    low_energy_segment = energy is not None and energy < 0.001
+    missing_pitch = pitch is None
+    unrealistic_speech_rate = speech_rate_wpm is not None and speech_rate_wpm > 350
+
+    return {
+        "short_segment": short_segment,
+        "very_short_segment": very_short_segment,
+        "low_energy_segment": low_energy_segment,
+        "missing_pitch": missing_pitch,
+        "unrealistic_speech_rate": unrealistic_speech_rate,
+        "speech_rate_reliability": speech_rate_reliability or "unknown",
+    }
 
 def extract_audio_features(
     audio_path: str,
@@ -338,6 +378,8 @@ def extract_audio_features_from_array(
     features.update(extract_volume_energy(y, sr))
     features.update(extract_pauses(y, sr))
     features.update(estimate_speech_rate(y, sr, transcript_text))
+
+    features["audio_quality_flags"] = build_audio_quality_flags(features)
 
     return features
 
