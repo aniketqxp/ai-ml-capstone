@@ -251,6 +251,83 @@ def build_speaker_audio_feature_summary(sentiment_payload):
         "agent": build_single_speaker_summary(segments, "AGENT"),
     }
 
+def build_customer_escalation_trend(sentiment_payload):
+    """
+    Analyze whether customer escalation increases, decreases, or stays stable
+    across the call.
+
+    This uses only CUSTOMER segments and compares the first half of the call
+    with the second half.
+    """
+    segments = sentiment_payload.get("segments", [])
+
+    customer_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "customer"
+        and segment.get("escalation_score") is not None
+    ]
+
+    if len(customer_segments) < 4:
+        return {
+            "customer_segments_analyzed": len(customer_segments),
+            "first_half_average_escalation": None,
+            "second_half_average_escalation": None,
+            "trend_delta": None,
+            "trend": "not_enough_customer_segments",
+            "trend_explanation": "Not enough customer segments with escalation scores to calculate a reliable trend.",
+        }
+
+    midpoint = len(customer_segments) // 2
+
+    first_half = customer_segments[:midpoint]
+    second_half = customer_segments[midpoint:]
+
+    first_half_scores = [
+        segment.get("escalation_score")
+        for segment in first_half
+        if segment.get("escalation_score") is not None
+    ]
+
+    second_half_scores = [
+        segment.get("escalation_score")
+        for segment in second_half
+        if segment.get("escalation_score") is not None
+    ]
+
+    first_avg = safe_average(first_half_scores)
+    second_avg = safe_average(second_half_scores)
+
+    if first_avg is None or second_avg is None:
+        return {
+            "customer_segments_analyzed": len(customer_segments),
+            "first_half_average_escalation": first_avg,
+            "second_half_average_escalation": second_avg,
+            "trend_delta": None,
+            "trend": "not_enough_customer_segments",
+            "trend_explanation": "Not enough valid escalation scores to calculate customer escalation trend.",
+        }
+
+    trend_delta = round(second_avg - first_avg, 4)
+
+    if trend_delta >= 0.10:
+        trend = "increasing"
+        explanation = "Customer escalation increased in the second half of the call."
+    elif trend_delta <= -0.10:
+        trend = "decreasing"
+        explanation = "Customer escalation decreased in the second half of the call."
+    else:
+        trend = "stable"
+        explanation = "Customer escalation stayed relatively stable across the call."
+
+    return {
+        "customer_segments_analyzed": len(customer_segments),
+        "first_half_average_escalation": first_avg,
+        "second_half_average_escalation": second_avg,
+        "trend_delta": trend_delta,
+        "trend": trend,
+        "trend_explanation": explanation,
+    }
+
 
 def build_audio_feature_series(sentiment_payload):
     """
@@ -385,6 +462,7 @@ def main():
     sentiment["dashboard_audio_feature_series"] = build_audio_feature_series(sentiment)
     sentiment["audio_feature_summary"] = build_audio_feature_summary(sentiment)
     sentiment["speaker_audio_feature_summary"] = build_speaker_audio_feature_summary(sentiment)
+    sentiment["customer_escalation_trend"] = build_customer_escalation_trend(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(sentiment, f, indent=2)

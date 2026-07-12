@@ -42,6 +42,7 @@ def main():
         speaker_summary = data.get("speaker_audio_feature_summary", {})
         customer_summary = speaker_summary.get("customer", {})
         agent_summary = speaker_summary.get("agent", {})
+        customer_trend = data.get("customer_escalation_trend", {})
 
         if (
             has_features
@@ -51,6 +52,7 @@ def main():
             and len(segments_with_explanations) == total
             and customer_summary.get("total_segments") is not None
             and agent_summary.get("total_segments") is not None
+            and customer_trend.get("trend") is not None
         ):
             status_counts["valid"] += 1
         else:
