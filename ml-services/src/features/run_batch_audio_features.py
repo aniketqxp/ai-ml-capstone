@@ -18,6 +18,7 @@ audio selection can be improved later.
 import argparse
 import json
 import subprocess
+import time
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 
@@ -151,6 +152,34 @@ def fallback_find_audio(audio_dir: Path, call_id: str, domain: Optional[str]) ->
 
     return None
 
+def valid_existing_feature_file(feature_path, transcript_path):
+    """
+    Check if the audio feature file already exists and looks valid.
+
+    This lets us skip expensive audio feature extraction when we only need
+    to rerun the merge step.
+    """
+    feature_path = Path(feature_path)
+    transcript_path = Path(transcript_path)
+
+    if not feature_path.exists():
+        return False
+
+    try:
+        feature_data = load_json(feature_path)
+        transcript_data = load_json(transcript_path)
+
+        feature_segments = feature_data.get("segments", [])
+        transcript_segments = transcript_data.get("sentences", [])
+
+        if len(feature_segments) != len(transcript_segments):
+            return False
+
+        return True
+
+    except Exception:
+        return False
+
 
 def run_command(command: List[str]) -> bool:
     print("\nRunning:")
@@ -167,6 +196,12 @@ def run_command(command: List[str]) -> bool:
 
 def main():
     parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--force-extract",
+        action="store_true",
+        help="Recalculate audio features even if feature files already exist.",
+    )
 
     parser.add_argument(
         "--sentiment-dir",
@@ -279,29 +314,42 @@ def main():
             feature_output_path = features_output_dir / domain_folder / f"{call_id}_audio_features.json"
             merged_output_path = merged_output_dir / domain_folder / f"{call_id}_backend_sentiment_with_features.json"
 
-            extract_ok = run_command([
-                "python",
-                "-m",
-                "src.features.audio_feature_extractor",
-                "--transcript-path",
-                str(transcript_path),
-                "--audio-path",
-                str(audio_path),
-                "--output-path",
-                str(feature_output_path),
-            ])
+            call_start_time = time.time()
 
-            if not extract_ok:
-                summary_rows.append({
-                    "call_id": call_id,
-                    "domain": domain,
-                    "status": "failed_feature_extraction",
-                    "transcript_path": str(transcript_path),
-                    "audio_path": str(audio_path),
-                    "total_segments": None,
-                    "matched_segments": None,
-                })
-                continue
+            should_extract = args.force_extract or not valid_existing_feature_file(
+                feature_output_path,
+                transcript_path,
+            )
+
+            if should_extract:
+                print("Audio features: extracting")
+
+                extract_ok = run_command([
+                    "python",
+                    "-m",
+                    "src.features.audio_feature_extractor",
+                    "--transcript-path",
+                    str(transcript_path),
+                    "--audio-path",
+                    str(audio_path),
+                    "--output-path",
+                    str(feature_output_path),
+                ])
+
+                if not extract_ok:
+                    summary_rows.append({
+                        "call_id": call_id,
+                        "domain": domain,
+                        "status": "failed_feature_extraction",
+                        "transcript_path": str(transcript_path),
+                        "audio_path": str(audio_path),
+                        "total_segments": None,
+                        "matched_segments": None,
+                    })
+                    continue
+
+            else:
+                print(f"Audio features: using cached file {feature_output_path}")
 
             merge_ok = run_command([
                 "python",
@@ -327,6 +375,9 @@ def main():
                 })
                 continue
 
+            call_elapsed_time = round(time.time() - call_start_time, 2)
+            print(f"Call processing time: {call_elapsed_time} seconds")
+
             merged = load_json(merged_output_path)
             match_summary = merged.get("audio_feature_match_summary", {})
 
@@ -336,6 +387,8 @@ def main():
                 "status": "success",
                 "transcript_path": str(transcript_path),
                 "audio_path": str(audio_path),
+                "feature_source": "extracted" if should_extract else "cached",
+                "processing_time_seconds": call_elapsed_time,
                 "total_segments": match_summary.get("total_sentiment_segments"),
                 "matched_segments": match_summary.get("matched_segments"),
                 "has_audio_features": merged.get("has_audio_features"),
