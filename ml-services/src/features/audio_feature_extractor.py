@@ -42,6 +42,28 @@ def load_audio_segment(
 
     return y, sr
 
+def slice_audio_segment(
+    full_audio: np.ndarray,
+    sr: int,
+    start_time: Optional[float],
+    end_time: Optional[float],
+) -> np.ndarray:
+    """
+    Slice a segment from audio that was already loaded once.
+
+    This is much faster than calling librosa.load for every segment.
+    """
+    if start_time is None or end_time is None:
+        return full_audio
+
+    start_sample = max(0, int(float(start_time) * sr))
+    end_sample = min(len(full_audio), int(float(end_time) * sr))
+
+    if end_sample <= start_sample:
+        return np.array([], dtype=full_audio.dtype)
+
+    return full_audio[start_sample:end_sample]
+
 
 def safe_float(value):
     """Convert numpy values to normal Python floats for JSON."""
@@ -52,30 +74,51 @@ def safe_float(value):
     return float(value)
 
 
-def extract_pitch(y: np.ndarray, sr: int) -> Dict[str, Any]:
+def extract_pitch(y: np.ndarray, sr: int, pitch_mode: str = "full") -> Dict[str, Any]:
     """
-    Extract pitch using librosa.pyin.
+    Extract pitch features.
 
-    Returns pitch mean, min, max, and variability.
+    full = more accurate but slower, uses librosa.pyin
+    fast = faster, uses librosa.yin
+    skip = fastest, skips pitch extraction
     """
-    if len(y) < sr * 0.2:
+    if y is None or len(y) == 0:
         return {
             "pitch_mean_hz": None,
             "pitch_min_hz": None,
             "pitch_max_hz": None,
             "pitch_std_hz": None,
-            "pitch_level": "unreliable_short_segment",
+            "pitch_level": "unknown",
+            "pitch_mode": pitch_mode,
+        }
+
+    if pitch_mode == "skip":
+        return {
+            "pitch_mean_hz": None,
+            "pitch_min_hz": None,
+            "pitch_max_hz": None,
+            "pitch_std_hz": None,
+            "pitch_level": "skipped",
+            "pitch_mode": pitch_mode,
         }
 
     try:
-        f0, voiced_flag, voiced_prob = librosa.pyin(
-            y,
-            fmin=librosa.note_to_hz("C2"),
-            fmax=librosa.note_to_hz("C7"),
-            sr=sr,
-        )
+        if pitch_mode == "fast":
+            pitch_values = librosa.yin(
+                y,
+                fmin=50,
+                fmax=500,
+                sr=sr,
+            )
+        else:
+            pitch_values, _, _ = librosa.pyin(
+                y,
+                fmin=50,
+                fmax=500,
+                sr=sr,
+            )
 
-        valid_pitch = f0[~np.isnan(f0)]
+        valid_pitch = pitch_values[~np.isnan(pitch_values)]
 
         if len(valid_pitch) == 0:
             return {
@@ -83,25 +126,29 @@ def extract_pitch(y: np.ndarray, sr: int) -> Dict[str, Any]:
                 "pitch_min_hz": None,
                 "pitch_max_hz": None,
                 "pitch_std_hz": None,
-                "pitch_level": "unvoiced_or_unreliable",
+                "pitch_level": "unknown",
+                "pitch_mode": pitch_mode,
             }
 
         pitch_mean = float(np.mean(valid_pitch))
+        pitch_min = float(np.min(valid_pitch))
+        pitch_max = float(np.max(valid_pitch))
         pitch_std = float(np.std(valid_pitch))
 
-        if pitch_mean < 140:
+        if pitch_mean < 120:
             pitch_level = "low"
-        elif pitch_mean < 220:
+        elif pitch_mean <= 220:
             pitch_level = "medium"
         else:
             pitch_level = "high"
 
         return {
             "pitch_mean_hz": safe_float(pitch_mean),
-            "pitch_min_hz": safe_float(np.min(valid_pitch)),
-            "pitch_max_hz": safe_float(np.max(valid_pitch)),
+            "pitch_min_hz": safe_float(pitch_min),
+            "pitch_max_hz": safe_float(pitch_max),
             "pitch_std_hz": safe_float(pitch_std),
             "pitch_level": pitch_level,
+            "pitch_mode": pitch_mode,
         }
 
     except Exception:
@@ -111,6 +158,7 @@ def extract_pitch(y: np.ndarray, sr: int) -> Dict[str, Any]:
             "pitch_max_hz": None,
             "pitch_std_hz": None,
             "pitch_level": "error",
+            "pitch_mode": pitch_mode,
         }
 
 
@@ -243,10 +291,10 @@ def estimate_speech_rate(y: np.ndarray, sr: int, transcript_text: Optional[str] 
 
 def extract_audio_features(
     audio_path: str,
-    start_time: Optional[float] = None,
-    end_time: Optional[float] = None,
+    start_time: float,
+    end_time: float,
     transcript_text: Optional[str] = None,
-    target_sr: int = 16000,
+    pitch_mode: str = "full",
 ) -> Dict[str, Any]:
     """
     Extract all audio features for one file or one timestamped segment.
@@ -260,7 +308,33 @@ def extract_audio_features(
         "sample_rate": sr,
     }
 
-    features.update(extract_pitch(y, sr))
+    features.update(extract_pitch(y, sr, pitch_mode=pitch_mode))
+    features.update(extract_volume_energy(y, sr))
+    features.update(extract_pauses(y, sr))
+    features.update(estimate_speech_rate(y, sr, transcript_text))
+
+    return features
+
+
+def extract_audio_features_from_array(
+    y: np.ndarray,
+    sr: int,
+    transcript_text: Optional[str] = None,
+    pitch_mode: str = "full",
+) -> Dict[str, Any]:
+    """
+    Extract all audio features from an already-loaded audio segment.
+
+    This avoids reloading the audio file for every transcript segment.
+    """
+    duration_seconds = len(y) / sr if sr else 0
+
+    features = {
+        "duration_seconds": safe_float(duration_seconds),
+        "sample_rate": sr,
+    }
+
+    features.update(extract_pitch(y, sr, pitch_mode=pitch_mode))
     features.update(extract_volume_energy(y, sr))
     features.update(extract_pauses(y, sr))
     features.update(estimate_speech_rate(y, sr, transcript_text))
@@ -272,6 +346,7 @@ def extract_features_from_transcript_segments(
     transcript_path: str,
     audio_path: str,
     output_path: str,
+    pitch_mode: str = "full",
 ):
     """
     Extract features for every segment in a transcript JSON using one audio file.
@@ -290,6 +365,10 @@ def extract_features_from_transcript_segments(
     domain = transcript.get("domain")
 
     sentences = transcript.get("sentences", [])
+
+    print(f"Loading full audio once: {audio_path}")
+    full_audio, sr = librosa.load(audio_path, sr=16000, mono=True)
+    print(f"Audio loaded. Duration: {round(len(full_audio) / sr, 2)} seconds")
 
     segment_features: List[Dict[str, Any]] = []
 
@@ -338,11 +417,18 @@ def extract_features_from_transcript_segments(
             continue
 
         try:
-            features = extract_audio_features(
-                audio_path=audio_path,
+            y_segment = slice_audio_segment(
+                full_audio=full_audio,
+                sr=sr,
                 start_time=float(start_time),
                 end_time=float(end_time),
+            )
+
+            features = extract_audio_features_from_array(
+                y=y_segment,
+                sr=sr,
                 transcript_text=text,
+                pitch_mode=pitch_mode,
             )
 
             segment_features.append({
@@ -397,6 +483,12 @@ def main():
     parser.add_argument("--start-time", type=float, default=None)
     parser.add_argument("--end-time", type=float, default=None)
     parser.add_argument("--text", default=None)
+    parser.add_argument(
+    "--pitch-mode",
+    choices=["full", "fast", "skip"],
+    default="full",
+    help="Pitch extraction mode: full is accurate but slow, fast is quicker, skip is fastest.",
+)
 
     args = parser.parse_args()
 
@@ -405,6 +497,7 @@ def main():
             transcript_path=args.transcript_path,
             audio_path=args.audio_path,
             output_path=args.output_path,
+            pitch_mode=args.pitch_mode,
         )
     else:
         features = extract_audio_features(

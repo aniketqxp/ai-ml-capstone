@@ -202,6 +202,12 @@ def main():
         action="store_true",
         help="Recalculate audio features even if feature files already exist.",
     )
+    parser.add_argument(
+        "--pitch-mode",
+        choices=["full", "fast", "skip"],
+        default="full",
+        help="Pitch extraction mode passed to audio_feature_extractor.",
+    )
 
     parser.add_argument(
         "--sentiment-dir",
@@ -334,6 +340,8 @@ def main():
                     str(audio_path),
                     "--output-path",
                     str(feature_output_path),
+                    "--pitch-mode",
+                    args.pitch_mode,
                 ])
 
                 if not extract_ok:
