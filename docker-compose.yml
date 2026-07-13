@@ -5,14 +5,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/capstone
-    depends_on:
-      db:
-        condition: service_healthy
     volumes:
       - ./backend:/app
       - ./data/audio:/data/audio
+      - ./ml-services:/ml-services
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
