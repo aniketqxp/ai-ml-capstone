@@ -38,6 +38,20 @@ const fmt = (s) => {
   return `${m}:${sec.toString().padStart(2, '0')}`;
 };
 
+const formatNumber = (value, digits = 2) => {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) {
+    return 'N/A';
+  }
+  return Number(value).toFixed(digits);
+};
+
+const formatLabel = (value) => {
+  if (value === null || value === undefined || value === '') {
+    return 'N/A';
+  }
+  return String(value);
+};
+
 // Shows how much of the audio has buffered (grey bar behind the playhead)
 function BufferedRanges({ audio, duration }) {
   const [ranges, setRanges] = useState([]);
@@ -186,6 +200,257 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
   );
 }
 
+function AudioFeatureTimeline({ series, duration, currentTime, seek, formatNumber }) {
+  const [selectedMetric, setSelectedMetric] = useState('escalation_score');
+
+  if (!series || series.length === 0 || !duration) return null;
+
+  const metrics = [
+    {
+      key: 'escalation_score',
+      label: 'Escalation',
+      color: '#f97316',
+      format: (v) => formatNumber(v, 3),
+    },
+    {
+      key: 'volume_db_mean',
+      label: 'Volume',
+      color: '#38bdf8',
+      format: (v) => `${formatNumber(v)} dB`,
+    },
+    {
+      key: 'pitch_mean_hz',
+      label: 'Pitch',
+      color: '#a78bfa',
+      format: (v) => `${formatNumber(v)} Hz`,
+    },
+    {
+      key: 'speech_rate_words_per_minute',
+      label: 'Speech Rate',
+      color: '#22c55e',
+      format: (v) => `${formatNumber(v)} WPM`,
+    },
+  ];
+
+  const selectedMetricConfig = metrics.find((m) => m.key === selectedMetric) || metrics[0];
+
+  const getTime = (point) => {
+    if (point.start_time !== null && point.start_time !== undefined) return Number(point.start_time);
+    if (point.start !== null && point.start !== undefined) return Number(point.start);
+    return 0;
+  };
+
+  const getEndTime = (point) => {
+    if (point.end_time !== null && point.end_time !== undefined) return Number(point.end_time);
+    if (point.end !== null && point.end !== undefined) return Number(point.end);
+    return getTime(point) + 0.5;
+  };
+
+  const getSentimentColor = (sentiment) => {
+    if (sentiment === 'Positive') return '#22c55e';
+    if (sentiment === 'Negative') return '#ef4444';
+    if (sentiment === 'Neutral') return '#64748b';
+    if (sentiment === 'Mixed') return '#eab308';
+    return '#334155';
+  };
+
+  const currentPoint =
+    series.find((point) => {
+      const start = getTime(point);
+      const end = getEndTime(point);
+      return currentTime >= start && currentTime <= end;
+    }) || series.reduce((closest, point) => {
+      const t = getTime(point);
+      const closestTime = getTime(closest);
+      return Math.abs(t - currentTime) < Math.abs(closestTime - currentTime) ? point : closest;
+    }, series[0]);
+
+  const playheadX = Math.max(0, Math.min((currentTime / duration) * 100, 100));
+
+  const buildPath = (metricKey) => {
+    const values = series
+      .map((point) => Number(point[metricKey]))
+      .filter((value) => Number.isFinite(value));
+
+    if (values.length === 0) return '';
+
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const range = max - min || 1;
+
+    return series
+      .map((point) => {
+        const x = Math.max(0, Math.min((getTime(point) / duration) * 100, 100));
+        const rawValue = Number(point[metricKey]);
+        const safeValue = Number.isFinite(rawValue) ? rawValue : min;
+        const y = 34 - ((safeValue - min) / range) * 28;
+        return `${x},${y}`;
+      })
+      .join(' ');
+  };
+
+  return (
+    <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+      <div className="flex flex-col gap-1 mb-3">
+        <h3 className="text-sm font-semibold text-slate-300">
+          Sentiment & Audio Timeline
+        </h3>
+        <p className="text-xs text-slate-500">
+          Choose one metric to view over time. Sentiment is shown underneath so the audio pattern can be compared with positive, negative, or neutral moments.
+        </p>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-3">
+        {metrics.map((metric) => (
+          <label
+            key={metric.key}
+            className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs cursor-pointer transition
+              ${selectedMetric === metric.key
+                ? 'border-indigo-500 bg-indigo-950/40 text-white'
+                : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200'}`}
+          >
+            <input
+              type="checkbox"
+              checked={selectedMetric === metric.key}
+              onChange={() => setSelectedMetric(metric.key)}
+              className="accent-indigo-500"
+            />
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: metric.color }}
+            />
+            {metric.label}
+          </label>
+        ))}
+      </div>
+
+      <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div className="rounded-lg bg-slate-950/60 p-3 border border-slate-800">
+          <p className="text-xs text-slate-500">Current metric</p>
+          <div className="mt-1 flex items-center gap-2">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: selectedMetricConfig.color }}
+            />
+            <p className="font-semibold text-slate-200">
+              {selectedMetricConfig.label}: {selectedMetricConfig.format(currentPoint?.[selectedMetricConfig.key])}
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-lg bg-slate-950/60 p-3 border border-slate-800">
+          <p className="text-xs text-slate-500">Current sentiment</p>
+          <div className="mt-1 flex items-center gap-2">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: getSentimentColor(currentPoint?.sentiment) }}
+            />
+            <p className="font-semibold text-slate-200">
+              {formatLabel(currentPoint?.sentiment)}
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-lg bg-slate-950/60 p-3 border border-slate-800">
+          <p className="text-xs text-slate-500">Current emotion</p>
+          <p className="mt-1 font-semibold text-slate-200">
+            {formatLabel(currentPoint?.dominant_emotion)}
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="relative rounded-lg border border-slate-800 bg-slate-950/80 p-3 cursor-pointer"
+        onClick={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const nextTime = (x / rect.width) * duration;
+          seek(nextTime);
+        }}
+      >
+        <svg viewBox="0 0 100 48" preserveAspectRatio="none" className="h-56 w-full">
+          {[4, 12, 20, 28, 36].map((y) => (
+            <line
+              key={y}
+              x1="0"
+              x2="100"
+              y1={y}
+              y2={y}
+              stroke="#1e293b"
+              strokeWidth="0.25"
+            />
+          ))}
+
+          <polyline
+            points={buildPath(selectedMetricConfig.key)}
+            fill="none"
+            stroke={selectedMetricConfig.color}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {series.map((point) => {
+            const startX = Math.max(0, Math.min((getTime(point) / duration) * 100, 100));
+            const endX = Math.max(startX + 0.15, Math.min((getEndTime(point) / duration) * 100, 100));
+            return (
+              <rect
+                key={`${point.segment_index}-${point.seq_id}`}
+                x={startX}
+                y="42"
+                width={Math.max(endX - startX, 0.15)}
+                height="4"
+                fill={getSentimentColor(point.sentiment)}
+                opacity="0.85"
+              />
+            );
+          })}
+
+          <line
+            x1={playheadX}
+            x2={playheadX}
+            y1="0"
+            y2="48"
+            stroke="#ffffff"
+            strokeWidth="0.6"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        <div className="mt-3 flex flex-wrap gap-4 text-xs">
+          <span className="flex items-center gap-1.5 text-slate-400">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: selectedMetricConfig.color }}
+            />
+            {selectedMetricConfig.label}
+          </span>
+
+          <span className="flex items-center gap-1.5 text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            Positive sentiment
+          </span>
+
+          <span className="flex items-center gap-1.5 text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-red-500" />
+            Negative sentiment
+          </span>
+
+          <span className="flex items-center gap-1.5 text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-slate-500" />
+            Neutral sentiment
+          </span>
+        </div>
+
+        <p className="mt-2 text-[10px] text-slate-600">
+          Click anywhere on the chart to jump to that moment in the call.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const audioRef = useRef(null);
   const scrollRef = useRef(null);
@@ -204,6 +469,25 @@ export default function App() {
 
   const { turns, chapters, evaluation } = callData;
   const sentences = sentenceData.sentences;
+  const callSummary = sentimentPayload?.call_summary || {};
+  const audioSummary = sentimentPayload?.audio_feature_summary || {};
+  const speakerSummary = sentimentPayload?.speaker_audio_feature_summary || {};
+  const customerSummary = speakerSummary?.customer || {};
+  const agentSummary = speakerSummary?.agent || {};
+  const customerTrend = sentimentPayload?.customer_escalation_trend || {};
+  const featureSeries = sentimentPayload?.dashboard_audio_feature_series || [];
+
+  const unreliableSpeechCount = sentimentPayload?.segments?.filter(
+    (s) => s?.audio_features?.audio_quality_flags?.unrealistic_speech_rate
+  ).length || 0;
+
+  const maxEscalation = featureSeries.length > 0
+    ? Math.max(...featureSeries.map((s) => Number(s.escalation_score || 0)))
+    : null;
+
+  const maxVolume = featureSeries.length > 0
+    ? Math.max(...featureSeries.map((s) => Number(s.volume_db_mean ?? -999)))
+    : null;
 
   useEffect(() => {
     async function loadSentiment() {
@@ -378,6 +662,158 @@ export default function App() {
       </header>
 
       <main className="flex-grow max-w-6xl w-full mx-auto p-6 flex flex-col gap-5">
+              {/* ── Sentiment + audio feature summary ─────────────────────────── */}
+        {sentimentPayload && (
+          <section className="bg-slate-950 rounded-xl border border-slate-800 p-5 shadow-xl">
+            <div className="flex flex-col gap-1 mb-4">
+              <h2 className="text-sm font-semibold text-slate-300">
+                Sentiment, Escalation & Audio Insights
+              </h2>
+              <p className="text-xs text-slate-500">
+                Wav2Vec2 sentiment output combined with explainable audio features.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Risk Level</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {formatLabel(callSummary.risk_level)}
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Dominant Sentiment</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {formatLabel(callSummary.dominant_sentiment)}
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Avg Volume</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {formatNumber(audioSummary.average_volume_db)} dB
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Avg Speech Rate</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {formatNumber(audioSummary.average_speech_rate_wpm)} WPM
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Customer Escalation Trend</p>
+                <p className="mt-1 text-xl font-semibold text-white">
+                  {formatLabel(customerTrend.trend)}
+                </p>
+
+                <div className="mt-3 grid grid-cols-3 gap-3 text-sm">
+                  <div>
+                    <p className="text-slate-500">First half</p>
+                    <p className="font-semibold text-slate-200">
+                      {formatNumber(customerTrend.first_half_average_escalation, 3)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-slate-500">Second half</p>
+                    <p className="font-semibold text-slate-200">
+                      {formatNumber(customerTrend.second_half_average_escalation, 3)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-slate-500">Delta</p>
+                    <p className="font-semibold text-slate-200">
+                      {formatNumber(customerTrend.trend_delta, 3)}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mt-3 text-xs text-slate-400">
+                  {formatLabel(customerTrend.trend_explanation)}
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <p className="text-xs uppercase text-slate-500">Feature Series Check</p>
+                <div className="mt-3 grid grid-cols-3 gap-3 text-sm">
+                  <div>
+                    <p className="text-slate-500">Segments</p>
+                    <p className="font-semibold text-slate-200">{featureSeries.length}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-500">Max escalation</p>
+                    <p className="font-semibold text-slate-200">{formatNumber(maxEscalation, 3)}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-500">Unreliable speech</p>
+                    <p className="font-semibold text-slate-200">{unreliableSpeechCount}</p>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-slate-400">
+                  Max volume: {formatNumber(maxVolume)} dB · Audio features loaded: {String(sentimentPayload.has_audio_features)}
+                </p>
+              </div>
+            </div>
+
+            {customerSummary?.total_segments !== undefined && agentSummary?.total_segments !== undefined && (
+              <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+                <h3 className="text-sm font-semibold text-slate-300">Customer vs Agent Summary</h3>
+
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="text-slate-500">
+                      <tr>
+                        <th className="py-2">Metric</th>
+                        <th className="py-2">Customer</th>
+                        <th className="py-2">Agent</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-slate-300">
+                      <tr className="border-t border-slate-800">
+                        <td className="py-2 text-slate-500">Dominant sentiment</td>
+                        <td>{formatLabel(customerSummary.dominant_sentiment)}</td>
+                        <td>{formatLabel(agentSummary.dominant_sentiment)}</td>
+                      </tr>
+                      <tr className="border-t border-slate-800">
+                        <td className="py-2 text-slate-500">Dominant emotion</td>
+                        <td>{formatLabel(customerSummary.dominant_emotion)}</td>
+                        <td>{formatLabel(agentSummary.dominant_emotion)}</td>
+                      </tr>
+                      <tr className="border-t border-slate-800">
+                        <td className="py-2 text-slate-500">Avg escalation</td>
+                        <td>{formatNumber(customerSummary.average_escalation_score, 3)}</td>
+                        <td>{formatNumber(agentSummary.average_escalation_score, 3)}</td>
+                      </tr>
+                      <tr className="border-t border-slate-800">
+                        <td className="py-2 text-slate-500">Avg speech rate</td>
+                        <td>{formatNumber(customerSummary.average_speech_rate_wpm)} WPM</td>
+                        <td>{formatNumber(agentSummary.average_speech_rate_wpm)} WPM</td>
+                      </tr>
+                      <tr className="border-t border-slate-800">
+                        <td className="py-2 text-slate-500">High pause segments</td>
+                        <td>{formatLabel(customerSummary.high_pause_segments)}</td>
+                        <td>{formatLabel(agentSummary.high_pause_segments)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+                        <AudioFeatureTimeline
+              series={featureSeries}
+              duration={duration}
+              currentTime={displayTime}
+              seek={seek}
+              formatNumber={formatNumber}
+            />
+          </section>
+        )}
+
+        {/* ── Player + scrubber ─────────────────────────────────────────── */}
         {/* ── Player + scrubber ─────────────────────────────────────────── */}
         <section className="bg-slate-950 rounded-xl border border-slate-800 p-5 shadow-xl">
           <div className="flex items-center gap-4">
@@ -502,14 +938,42 @@ export default function App() {
                     {/* sentence-level emotion color — no labels, pure background */}
                     <div className="text-sm text-slate-200 leading-relaxed">
                       {sents.length > 0
-                        ? sents.map((s) => {
+                                                  ? sents.map((s) => {
                             const sent = sentimentMap.get(s.seq_id);
+                            const audioFlags = sent?.audio_features?.audio_quality_flags || {};
+                            const explanations = sent?.escalation_explanation || [];
+
                             const bg = sent?.sentiment === 'Positive' ? 'bg-emerald-500/20'
                                      : sent?.sentiment === 'Negative' ? 'bg-red-500/25'
                                      : '';
+
                             return (
-                              <span key={s.seq_id} className={`${bg} rounded px-0.5`}>
-                                {s.text}{' '}
+                              <span key={s.seq_id} className="inline">
+                                <span className={`${bg} rounded px-0.5`}>
+                                  {s.text}{' '}
+                                </span>
+
+                                {(audioFlags.unrealistic_speech_rate || audioFlags.low_energy_segment) && (
+                                  <span className="ml-1 inline-flex gap-1 align-middle">
+                                    {audioFlags.unrealistic_speech_rate && (
+                                      <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[9px] text-amber-200 border border-amber-700/50">
+                                        unreliable speech
+                                      </span>
+                                    )}
+
+                                    {audioFlags.low_energy_segment && (
+                                      <span className="rounded-full bg-blue-500/20 px-1.5 py-0.5 text-[9px] text-blue-200 border border-blue-700/50">
+                                        low energy
+                                      </span>
+                                    )}
+                                  </span>
+                                )}
+
+                                {explanations.length > 0 && sent?.sentiment === 'Negative' && (
+                                  <span className="block mt-1 text-[10px] text-slate-400">
+                                    {explanations.slice(0, 2).join(' · ')}
+                                  </span>
+                                )}
                               </span>
                             );
                           })
