@@ -12637,5 +12637,93 @@
       "Moderate escalation score detected: 0.592",
       "14 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 24,
+      "seq_id": 24,
+      "speaker": "CUSTOMER",
+      "start_time": 103.32,
+      "end_time": 109.04,
+      "text": "AB 372949HH -ON.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.592,
+      "review_score": 1.542,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 17,
+      "seq_id": 17,
+      "speaker": "CUSTOMER",
+      "start_time": 70.57,
+      "end_time": 78.8,
+      "text": "Yes, it's O -W -E -N -H -E -L -T -H.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.4088,
+      "review_score": 1.2588,
+      "reasons": [
+        "Negative sentiment detected",
+        "Medium escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 65,
+      "seq_id": 65,
+      "speaker": "CUSTOMER",
+      "start_time": 320.27,
+      "end_time": 331.37,
+      "text": "I just want to make sure that I'm getting seen in an appropriate amount of time because often doctors seem to be in a hurry, and then you only get five minutes out of them before you rush out the door.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3698,
+      "review_score": 1.1698,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 14,
+      "seq_id": 14,
+      "speaker": "CUSTOMER",
+      "start_time": 57.81,
+      "end_time": 64.23,
+      "text": "Yes, I think actually my son just helped me create it, so we should be good to go to schedule the appointment.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3514,
+      "review_score": 1.1514,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 76,
+      "seq_id": 76,
+      "speaker": "CUSTOMER",
+      "start_time": 370.48,
+      "end_time": 375.24,
+      "text": "I can't remember the name of it, but it's an antibiotic ointment that I use for my skin.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.339,
+      "review_score": 1.139,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected"
+      ]
+    }
+  ]
 }

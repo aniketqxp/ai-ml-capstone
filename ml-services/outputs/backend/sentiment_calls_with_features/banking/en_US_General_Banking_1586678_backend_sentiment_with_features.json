@@ -9568,5 +9568,98 @@
       "Customer had 21 high-pause segments",
       "3 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 73,
+      "seq_id": 73,
+      "speaker": "AGENT",
+      "start_time": 353.76,
+      "end_time": 360.12,
+      "text": "Typically, it's post on the scheduled date sometimes depending on weekends or banking holidays.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.689,
+      "review_score": 1.589,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 52,
+      "seq_id": 52,
+      "speaker": "AGENT",
+      "start_time": 262.62,
+      "end_time": 272.64,
+      "text": "You can do it online through your client portal or again by just giving us a call and either myself or a colleague can help you make that change immediately.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.663,
+      "review_score": 1.563,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 35,
+      "seq_id": 35,
+      "speaker": "AGENT",
+      "start_time": 159.98,
+      "end_time": 167.22,
+      "text": "I can help you make those adjustments in the future or a fellow colleague of mine would obviously hop on and help you.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5491,
+      "review_score": 1.3991,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 47,
+      "seq_id": 47,
+      "speaker": "AGENT",
+      "start_time": 227.34,
+      "end_time": 240.28,
+      "text": "Once it processes, you'll typically get an email confirmation and it will show, I guess better said, it will reflect in your savings account the same or next business day.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5851,
+      "review_score": 1.3851,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 81,
+      "seq_id": 81,
+      "speaker": "CUSTOMER",
+      "start_time": 385.45,
+      "end_time": 387.07,
+      "text": "Thank you. You're",
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.4496,
+      "review_score": 1.2996,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High volume detected"
+      ]
+    }
+  ]
 }

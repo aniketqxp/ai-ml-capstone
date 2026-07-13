@@ -14551,5 +14551,90 @@
       "Customer had 14 high-pause segments",
       "15 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 41,
+      "seq_id": 41,
+      "speaker": "CUSTOMER",
+      "start_time": 214.29,
+      "end_time": 215.49,
+      "text": "But the",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2908,
+      "review_score": 1.0408,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 31,
+      "seq_id": 31,
+      "speaker": "CUSTOMER",
+      "start_time": 148.86,
+      "end_time": 151.86,
+      "text": "Crazy, but all right then.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3289,
+      "review_score": 0.9789,
+      "reasons": [
+        "Negative sentiment detected"
+      ]
+    },
+    {
+      "segment_index": 96,
+      "seq_id": 96,
+      "speaker": "AGENT",
+      "start_time": 408.22,
+      "end_time": 409.66,
+      "text": "and eighty -six cents at college.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.274,
+      "review_score": 0.824,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 2,
+      "seq_id": 2,
+      "speaker": "AGENT",
+      "start_time": 19.8,
+      "end_time": 20.96,
+      "text": "My name is Erica Smith.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2634,
+      "review_score": 0.8134,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 85,
+      "seq_id": 85,
+      "speaker": "AGENT",
+      "start_time": 367.84,
+      "end_time": 372.4,
+      "text": "Can you provide the checking account number so I can set that up for you?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.2608,
+      "review_score": 0.8108,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected"
+      ]
+    }
+  ]
 }

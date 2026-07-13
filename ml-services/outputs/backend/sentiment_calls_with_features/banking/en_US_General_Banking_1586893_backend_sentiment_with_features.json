@@ -21070,5 +21070,99 @@
       "Customer had 24 high-pause segments",
       "14 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 95,
+      "seq_id": 95,
+      "speaker": "CUSTOMER",
+      "start_time": 406.56,
+      "end_time": 412.38,
+      "text": "I just wanted to double check that checking is ending in the 6821 account.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5583,
+      "review_score": 1.6083,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 90,
+      "seq_id": 90,
+      "speaker": "AGENT",
+      "start_time": 390.9,
+      "end_time": 396.22,
+      "text": "It's from the checking ending in 6821 to your savings ending in 1159.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6344,
+      "review_score": 1.5344,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 153,
+      "seq_id": 153,
+      "speaker": "AGENT",
+      "start_time": 597.18,
+      "end_time": 601.82,
+      "text": "You'll receive a message two days before each scheduled transfer. And again, once it's completed,",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5463,
+      "review_score": 1.3963,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 42,
+      "seq_id": 42,
+      "speaker": "AGENT",
+      "start_time": 164.28,
+      "end_time": 170.44,
+      "text": "Now, how much would you like to transfer each month from the checking into the savings account?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5509,
+      "review_score": 1.3509,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 182,
+      "seq_id": 182,
+      "speaker": "CUSTOMER",
+      "start_time": 677.45,
+      "end_time": 678.53,
+      "text": "I'll keep that in mind.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3343,
+      "review_score": 1.2343,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

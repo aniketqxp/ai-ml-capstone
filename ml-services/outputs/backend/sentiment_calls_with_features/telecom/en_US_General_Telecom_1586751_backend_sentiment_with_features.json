@@ -9271,5 +9271,105 @@
       "Customer had 23 high-pause segments",
       "7 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 56,
+      "seq_id": 56,
+      "speaker": "CUSTOMER",
+      "start_time": 281.46,
+      "end_time": 285.18,
+      "text": "And just to confirm, the contract terms are the same as before, right?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6167,
+      "review_score": 1.8167,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 68,
+      "seq_id": 68,
+      "speaker": "CUSTOMER",
+      "start_time": 317.42,
+      "end_time": 323.68,
+      "text": "And you have my email to send the information and my address as well.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6138,
+      "review_score": 1.7638,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 5,
+      "seq_id": 5,
+      "speaker": "CUSTOMER",
+      "start_time": 28.3,
+      "end_time": 32.12,
+      "text": "I want to see about upgrading the higher speed plan, if possible.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5729,
+      "review_score": 1.6729,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 49,
+      "seq_id": 49,
+      "speaker": "AGENT",
+      "start_time": 245.96,
+      "end_time": 251.76,
+      "text": "Your plan will update immediately and if you need the new modem, well, you'll need the new modem.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6553,
+      "review_score": 1.6053,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 47,
+      "seq_id": 47,
+      "speaker": "CUSTOMER",
+      "start_time": 235.36,
+      "end_time": 238.5,
+      "text": "I want to make sure I don't run into these issues anymore.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4782,
+      "review_score": 1.5782,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

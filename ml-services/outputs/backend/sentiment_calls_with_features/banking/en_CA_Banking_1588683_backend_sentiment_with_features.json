@@ -13066,5 +13066,98 @@
       "Maximum escalation score reached 0.66",
       "11 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 9,
+      "seq_id": 9,
+      "speaker": "CUSTOMER",
+      "start_time": 43.84,
+      "end_time": 49.2,
+      "text": "Yes, it is 59437289.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6596,
+      "review_score": 1.7096,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 13,
+      "seq_id": 13,
+      "speaker": "CUSTOMER",
+      "start_time": 65.43,
+      "end_time": 67.17,
+      "text": "Ah, it is 444.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6539,
+      "review_score": 1.7039,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 30,
+      "seq_id": 30,
+      "speaker": "CUSTOMER",
+      "start_time": 163.26,
+      "end_time": 169.0,
+      "text": "Ah, yes, it is 4298 -327 -87942.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6445,
+      "review_score": 1.6945,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 39,
+      "seq_id": 39,
+      "speaker": "CUSTOMER",
+      "start_time": 205.5,
+      "end_time": 212.36,
+      "text": "I can't quite remember off the top of my head, and I don't want to go open my banking account, because then I have to, you know, remember my password.",
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.5119,
+      "review_score": 1.4119,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 73,
+      "seq_id": 73,
+      "speaker": "CUSTOMER",
+      "start_time": 358.81,
+      "end_time": 372.02,
+      "text": "Could you send it to owen .mcdougal .grand .sun .19 .37 at gmail .com?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4179,
+      "review_score": 1.3679,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected"
+      ]
+    }
+  ]
 }

@@ -335,6 +335,199 @@ def build_customer_escalation_trend(sentiment_payload):
     }
 
 
+def build_manager_review_recommendation(payload: dict) -> dict:
+    call_summary = payload.get("call_summary", {}) or {}
+    speaker_summary = payload.get("speaker_audio_feature_summary", {}) or {}
+    customer_summary = speaker_summary.get("customer", {}) or {}
+    customer_trend = payload.get("customer_escalation_trend", {}) or {}
+    segments = payload.get("segments", []) or []
+
+    reasons = []
+
+    risk_level = normalize_label(call_summary.get("risk_level"))
+    if risk_level == "high":
+        reasons.append("Call risk level is High")
+
+    trend = normalize_label(customer_trend.get("trend"))
+    if trend == "increasing":
+        reasons.append("Customer escalation increased during the call")
+
+    customer_sentiment = normalize_label(customer_summary.get("dominant_sentiment"))
+    if customer_sentiment == "negative":
+        reasons.append("Customer dominant sentiment is Negative")
+
+    customer_emotion = normalize_label(customer_summary.get("dominant_emotion"))
+    if customer_emotion in {"anger", "fear", "sadness", "disgust"}:
+        reasons.append(f"Customer dominant emotion is {customer_emotion}")
+
+    max_escalation = 0.0
+
+    for segment in segments:
+        score = segment.get("escalation_score")
+
+        if isinstance(score, (int, float)):
+            max_escalation = max(max_escalation, score)
+
+    if max_escalation >= 0.6:
+        reasons.append(f"Maximum escalation score reached {round(max_escalation, 3)}")
+    elif max_escalation >= 0.4:
+        reasons.append(f"Moderate escalation score detected: {round(max_escalation, 3)}")
+
+    high_pause_segments = customer_summary.get("high_pause_segments", 0) or 0
+    if high_pause_segments >= 10:
+        reasons.append(f"Customer had {high_pause_segments} high-pause segments")
+
+    high_volume_segments = customer_summary.get("high_volume_segments", 0) or 0
+    if high_volume_segments >= 10:
+        reasons.append(f"Customer had {high_volume_segments} high-volume segments")
+
+    unreliable_speech_segments = 0
+
+    for segment in segments:
+        flags = (
+            segment.get("audio_features", {}) or {}
+        ).get("audio_quality_flags", {}) or {}
+
+        if flags.get("unrealistic_speech_rate"):
+            unreliable_speech_segments += 1
+
+    if unreliable_speech_segments > 0:
+        reasons.append(
+            f"{unreliable_speech_segments} segments had unreliable speech-rate measurements"
+        )
+
+    review_reasons = [
+        reason for reason in reasons
+        if "unreliable speech-rate" not in reason
+    ]
+
+    review_required = len(review_reasons) > 0
+
+    if risk_level == "high" or max_escalation >= 0.6 or trend == "increasing":
+        review_level = "high"
+    elif review_required:
+        review_level = "medium"
+    else:
+        review_level = "low"
+
+    if not reasons:
+        reasons.append("No strong manager review indicators detected")
+
+    return {
+        "review_required": review_required,
+        "review_level": review_level,
+        "max_escalation_score": round(max_escalation, 4),
+        "reasons": reasons,
+    }
+
+
+
+def calculate_segment_review_score(segment: dict) -> float:
+    """
+    Calculate a simple review priority score for each segment.
+
+    This does not replace the ML escalation score.
+    It combines escalation score, sentiment, emotion, speaker role,
+    and explainability flags to rank the most review-worthy moments.
+    """
+    score = 0.0
+
+    escalation_score = segment.get("escalation_score")
+    if isinstance(escalation_score, (int, float)):
+        score += escalation_score
+
+    sentiment = normalize_label(segment.get("sentiment"))
+    if sentiment == "negative":
+        score += 0.30
+    elif sentiment == "mixed":
+        score += 0.15
+
+    emotion = normalize_label(segment.get("dominant_emotion"))
+    if emotion in {"anger", "angry"}:
+        score += 0.30
+    elif emotion in {"sadness", "sad", "fear", "fearful", "disgust"}:
+        score += 0.20
+
+    speaker = normalize_label(segment.get("speaker"))
+    if speaker == "customer":
+        score += 0.15
+
+    flags = segment.get("explainability_flags") or {}
+
+    if flags.get("high_pitch"):
+        score += 0.10
+
+    if flags.get("high_volume"):
+        score += 0.10
+
+    if flags.get("high_pause"):
+        score += 0.10
+
+    if flags.get("fast_speech"):
+        score += 0.05
+
+    if flags.get("high_escalation_score"):
+        score += 0.20
+
+    if flags.get("medium_escalation_score"):
+        score += 0.10
+
+    return round(score, 4)
+
+def build_top_risky_segments(sentiment_payload: dict, limit: int = 5) -> list:
+    """
+    Select the top review-worthy moments in the call.
+
+    The output is dashboard-ready and includes timestamps, text,
+    sentiment, emotion, escalation score, and explanation reasons.
+    """
+    risky_segments = []
+
+    for segment in sentiment_payload.get("segments", []):
+        review_score = calculate_segment_review_score(segment)
+
+        sentiment = normalize_label(segment.get("sentiment"))
+        escalation_score = segment.get("escalation_score")
+        explanations = segment.get("escalation_explanation") or []
+
+        has_real_reason = any(
+            reason != "No strong escalation indicators detected"
+            for reason in explanations
+        )
+
+        # Keep only segments that have some meaningful signal.
+        if (
+            review_score < 0.55
+            and sentiment != "negative"
+            and not has_real_reason
+        ):
+            continue
+
+        risky_segments.append({
+            "segment_index": segment.get("segment_index"),
+            "seq_id": segment.get("seq_id"),
+            "speaker": segment.get("speaker"),
+            "start_time": segment.get("start_time"),
+            "end_time": segment.get("end_time"),
+            "text": segment.get("text"),
+            "sentiment": segment.get("sentiment"),
+            "dominant_emotion": segment.get("dominant_emotion"),
+            "escalation_score": escalation_score,
+            "review_score": review_score,
+            "reasons": explanations,
+        })
+
+    risky_segments.sort(
+        key=lambda item: (
+            item.get("review_score") or 0,
+            item.get("escalation_score") or 0,
+        ),
+        reverse=True,
+    )
+
+    return risky_segments[:limit]
+
+
 def build_audio_feature_series(sentiment_payload):
     """
     Build a clean call-level feature series for dashboard line graphs.
@@ -471,6 +664,8 @@ def main():
     sentiment["audio_feature_summary"] = build_audio_feature_summary(sentiment)
     sentiment["speaker_audio_feature_summary"] = build_speaker_audio_feature_summary(sentiment)
     sentiment["customer_escalation_trend"] = build_customer_escalation_trend(sentiment)
+    sentiment["manager_review_recommendation"] = build_manager_review_recommendation(sentiment)
+    sentiment["top_risky_segments"] = build_top_risky_segments(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(sentiment, f, indent=2)

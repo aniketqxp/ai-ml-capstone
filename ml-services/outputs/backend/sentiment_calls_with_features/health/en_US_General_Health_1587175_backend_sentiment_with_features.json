@@ -17020,5 +17020,96 @@
       "Customer had 31 high-pause segments",
       "20 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 26,
+      "seq_id": 26,
+      "speaker": "CUSTOMER",
+      "start_time": 117.22,
+      "end_time": 129.83,
+      "text": "I'd prefer Dr. Thompson, but if he's not available within the next week, then I could also see Dr. Madison.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.4508,
+      "review_score": 1.3008,
+      "reasons": [
+        "Negative sentiment detected",
+        "Medium escalation score",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 4,
+      "seq_id": 4,
+      "speaker": "CUSTOMER",
+      "start_time": 20.81,
+      "end_time": 27.21,
+      "text": "I'd like to schedule a follow -up appointment with my general practitioner,",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3468,
+      "review_score": 1.1968,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 62,
+      "seq_id": 62,
+      "speaker": "CUSTOMER",
+      "start_time": 314.3,
+      "end_time": 320.17,
+      "text": "I mean, is there any way you can just talk to her and tell her that I'm almost out?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3748,
+      "review_score": 1.1748,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 17,
+      "seq_id": 17,
+      "speaker": "CUSTOMER",
+      "start_time": 89.54,
+      "end_time": 93.2,
+      "text": "And then also I'm running out of some of my medications.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3395,
+      "review_score": 1.1395,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 38,
+      "seq_id": 38,
+      "speaker": "CUSTOMER",
+      "start_time": 191.76,
+      "end_time": 193.62,
+      "text": "Is there anything like 4 -4 -30?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3009,
+      "review_score": 1.1009,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

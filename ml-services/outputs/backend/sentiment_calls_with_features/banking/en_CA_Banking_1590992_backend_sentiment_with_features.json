@@ -20939,5 +20939,102 @@
       "Customer had 42 high-pause segments",
       "25 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 149,
+      "seq_id": 149,
+      "speaker": "CUSTOMER",
+      "start_time": 429.36,
+      "end_time": 430.58,
+      "text": "Okay, awesome.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5866,
+      "review_score": 1.6366,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 6,
+      "seq_id": 6,
+      "speaker": "CUSTOMER",
+      "start_time": 14.58,
+      "end_time": 19.18,
+      "text": "I've got a couple of days today, and I don't want anything to count.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4353,
+      "review_score": 1.5353,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 56,
+      "seq_id": 56,
+      "speaker": "CUSTOMER",
+      "start_time": 131.92,
+      "end_time": 141.22,
+      "text": "I think it was at the grocery store, and I don't remember exactly, but I think it was around $80 or so.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.4007,
+      "review_score": 1.3507,
+      "reasons": [
+        "Negative sentiment detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 171,
+      "seq_id": 171,
+      "speaker": "AGENT",
+      "start_time": 494.05,
+      "end_time": 496.09,
+      "text": "Did you did you get any notification?",
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.4551,
+      "review_score": 1.3051,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High pitch detected",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 107,
+      "seq_id": 107,
+      "speaker": "CUSTOMER",
+      "start_time": 278.95,
+      "end_time": 284.48,
+      "text": "I'm just wondering if I'll get a text or an email for right away. Okay,",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.3433,
+      "review_score": 1.2933,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

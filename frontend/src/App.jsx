@@ -476,6 +476,8 @@ export default function App() {
   const agentSummary = speakerSummary?.agent || {};
   const customerTrend = sentimentPayload?.customer_escalation_trend || {};
   const featureSeries = sentimentPayload?.dashboard_audio_feature_series || [];
+  const managerReview = sentimentPayload?.manager_review_recommendation || {};
+  const topRiskySegments = sentimentPayload?.top_risky_segments || [];
 
   const unreliableSpeechCount = sentimentPayload?.segments?.filter(
     (s) => s?.audio_features?.audio_quality_flags?.unrealistic_speech_rate
@@ -674,7 +676,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
               <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
                 <p className="text-xs uppercase text-slate-500">Risk Level</p>
                 <p className="mt-1 text-2xl font-semibold text-white">
@@ -683,11 +685,17 @@ export default function App() {
               </div>
 
               <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
-                <p className="text-xs uppercase text-slate-500">Dominant Sentiment</p>
-                <p className="mt-1 text-2xl font-semibold text-white">
-                  {formatLabel(callSummary.dominant_sentiment)}
-                </p>
-              </div>
+  <p className="text-xs uppercase text-slate-500">Overall Sentiment</p>
+  <p className="mt-1 text-2xl font-semibold text-white">
+    {formatLabel(callSummary.dominant_sentiment)}
+  </p>
+</div>
+<div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+  <p className="text-xs uppercase text-slate-500">Customer Sentiment</p>
+  <p className="mt-1 text-2xl font-semibold text-white">
+    {formatLabel(customerSummary.dominant_sentiment)}
+  </p>
+</div>
 
               <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
                 <p className="text-xs uppercase text-slate-500">Avg Volume</p>
@@ -758,6 +766,216 @@ export default function App() {
                 </p>
               </div>
             </div>
+              {sentimentPayload?.manager_review_recommendation && (
+              <div className={`mt-4 rounded-xl border p-4 ${
+                managerReview.review_required
+                  ? 'border-amber-800 bg-amber-950/20'
+                  : 'border-emerald-800 bg-emerald-950/20'
+              }`}>
+                <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <p className="text-xs uppercase text-slate-500">
+                      Manager Review Recommendation
+                    </p>
+
+                    <p className="mt-1 text-xl font-semibold text-white">
+                      {managerReview.review_required ? 'Review Recommended' : 'No Review Required'}
+                    </p>
+
+                    <p className="mt-1 text-xs text-slate-400">
+                      Review level: {formatLabel(managerReview.review_level)}
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg bg-slate-950/60 px-3 py-2 border border-slate-800">
+                    <p className="text-xs text-slate-500">Max escalation</p>
+                    <p className="text-lg font-semibold text-slate-200">
+                      {formatNumber(managerReview.max_escalation_score, 3)}
+                    </p>
+                  </div>
+                </div>
+
+                {managerReview.reasons?.length > 0 && (
+                  <div className="mt-3">
+                    <p className="text-xs uppercase text-slate-500 mb-2">Reasons</p>
+
+                    <ul className="space-y-1">
+                      {managerReview.reasons.map((reason, index) => (
+                        <li key={index} className="text-xs text-slate-300">
+                          • {reason}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {topRiskySegments.length > 0 && (
+
+              <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+
+                <div className="flex flex-col gap-1 mb-3">
+
+                  <h3 className="text-sm font-semibold text-slate-300">
+
+                    Top Risky Moments
+
+                  </h3>
+
+                  <p className="text-xs text-slate-500">
+
+                    These are the highest-priority moments for a manager to review.
+
+                  </p>
+
+                </div>
+
+                <div className="space-y-3">
+
+                  {topRiskySegments.map((segment) => (
+
+                    <button
+
+                      key={`${segment.segment_index}-${segment.seq_id}`}
+
+                      onClick={() => seek(Number(segment.start_time || 0) + 0.02)}
+
+                      className="w-full rounded-lg border border-slate-800 bg-slate-950/60 p-3 text-left hover:border-amber-700 hover:bg-amber-950/10 transition"
+
+                    >
+
+                      <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+
+                        <div>
+
+                          <div className="flex flex-wrap items-center gap-2">
+
+                            <span className="text-xs font-mono text-amber-300">
+
+                              {fmt(Number(segment.start_time || 0))}
+
+                            </span>
+
+                            <span className="text-xs text-slate-500">
+
+                              {formatLabel(segment.speaker)}
+
+                            </span>
+
+                            <span className={`rounded-full border px-2 py-0.5 text-[10px] ${
+
+                              segment.sentiment === 'Negative'
+
+                                ? 'border-red-800 bg-red-950/40 text-red-300'
+
+                                : segment.sentiment === 'Positive'
+
+                                  ? 'border-emerald-800 bg-emerald-950/40 text-emerald-300'
+
+                                  : 'border-slate-700 bg-slate-800 text-slate-300'
+
+                            }`}>
+
+                              {formatLabel(segment.sentiment)}
+
+                            </span>
+
+                            <span className="rounded-full border border-slate-700 bg-slate-800 px-2 py-0.5 text-[10px] text-slate-300">
+
+                              {formatLabel(segment.dominant_emotion)}
+
+                            </span>
+
+                          </div>
+
+                          <p className="mt-2 text-sm text-slate-200 leading-relaxed">
+
+                            {formatLabel(segment.text)}
+
+                          </p>
+
+                        </div>
+
+                        <div className="flex gap-2 md:flex-col md:text-right">
+
+                          <div>
+
+                            <p className="text-[10px] uppercase text-slate-500">
+
+                              Escalation
+
+                            </p>
+
+                            <p className="text-xs font-semibold text-slate-200">
+
+                              {formatNumber(segment.escalation_score, 3)}
+
+                            </p>
+
+                          </div>
+
+                          <div>
+
+                            <p className="text-[10px] uppercase text-slate-500">
+
+                              Review score
+
+                            </p>
+
+                            <p className="text-xs font-semibold text-slate-200">
+
+                              {formatNumber(segment.review_score, 3)}
+
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      {segment.reasons?.length > 0 && (
+
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+
+                          {segment.reasons.slice(0, 3).map((reason, index) => (
+
+                            <span
+
+                              key={index}
+
+                              className="rounded-full border border-amber-900/60 bg-amber-950/20 px-2 py-0.5 text-[10px] text-amber-200"
+
+                            >
+
+                              {reason}
+
+                            </span>
+
+                          ))}
+
+                        </div>
+
+                      )}
+
+                      <p className="mt-2 text-[10px] text-slate-600">
+
+                        Click to jump to this moment in the call.
+
+                      </p>
+
+                    </button>
+
+                  ))}
+
+                </div>
+
+              </div>
+
+            )}
+
+            
 
             {customerSummary?.total_segments !== undefined && agentSummary?.total_segments !== undefined && (
               <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4">

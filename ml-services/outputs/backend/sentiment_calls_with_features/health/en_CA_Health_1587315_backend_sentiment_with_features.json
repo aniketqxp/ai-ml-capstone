@@ -16141,5 +16141,98 @@
       "Customer had 21 high-pause segments",
       "8 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 94,
+      "seq_id": 94,
+      "speaker": "AGENT",
+      "start_time": 345.48,
+      "end_time": 349.46,
+      "text": "So, then you can print it or show it on your phone at any partner's lab.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.649,
+      "review_score": 1.599,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 14,
+      "seq_id": 14,
+      "speaker": "CUSTOMER",
+      "start_time": 49.24,
+      "end_time": 59.3,
+      "text": "It's May 14, 1981 and my number is 514 -223 -0972.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.438,
+      "review_score": 1.388,
+      "reasons": [
+        "Negative sentiment detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 83,
+      "seq_id": 83,
+      "speaker": "CUSTOMER",
+      "start_time": 290.28,
+      "end_time": 293.24,
+      "text": "Do I need to do that before tomorrow's session?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.345,
+      "review_score": 1.245,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 46,
+      "seq_id": 46,
+      "speaker": "AGENT",
+      "start_time": 133.44,
+      "end_time": 137.56,
+      "text": "So, it'll be a 20 minute video consultation through a secure portal.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4341,
+      "review_score": 1.2341,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 64,
+      "seq_id": 64,
+      "speaker": "CUSTOMER",
+      "start_time": 205.19,
+      "end_time": 212.32,
+      "text": "While I've got you, I also need to renew my prescription for amlodipin.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3754,
+      "review_score": 1.2254,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

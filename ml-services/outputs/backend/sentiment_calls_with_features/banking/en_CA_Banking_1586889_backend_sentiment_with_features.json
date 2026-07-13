@@ -16520,5 +16520,96 @@
       "Customer had 22 high-pause segments",
       "7 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 8,
+      "seq_id": 8,
+      "speaker": "CUSTOMER",
+      "start_time": 27.37,
+      "end_time": 32.73,
+      "text": "I have a checking account with your bank, and I just opened a new saving account last week.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3603,
+      "review_score": 1.2603,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 27,
+      "seq_id": 27,
+      "speaker": "CUSTOMER",
+      "start_time": 123.05,
+      "end_time": 130.25,
+      "text": "So I get paid on the first, so let's set it for the second on every month, just to be safe.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3845,
+      "review_score": 1.2345,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 63,
+      "seq_id": 63,
+      "speaker": "CUSTOMER",
+      "start_time": 294.63,
+      "end_time": 303.53,
+      "text": "Now, just in case, say I run into a month where I need to pause the transfers temporarily, is that possible?",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.3634,
+      "review_score": 1.2134,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 109,
+      "seq_id": 109,
+      "speaker": "AGENT",
+      "start_time": 489.46,
+      "end_time": 492.16,
+      "text": "Does everything sound correct so far?",
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.4107,
+      "review_score": 1.2107,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High pitch detected",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 116,
+      "seq_id": 116,
+      "speaker": "CUSTOMER",
+      "start_time": 512.02,
+      "end_time": 515.06,
+      "text": "I had a bit of trouble seeing it earlier this week.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.2971,
+      "review_score": 1.1971,
+      "reasons": [
+        "Negative sentiment detected",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

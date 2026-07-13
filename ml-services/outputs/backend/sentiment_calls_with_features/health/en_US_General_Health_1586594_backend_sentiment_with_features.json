@@ -8983,5 +8983,104 @@
       "Customer had 25 high-pause segments",
       "5 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 15,
+      "seq_id": 15,
+      "speaker": "CUSTOMER",
+      "start_time": 49.57,
+      "end_time": 51.79,
+      "text": "One, two, three, four, five, six.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6605,
+      "review_score": 1.9105,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "High volume detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 27,
+      "seq_id": 27,
+      "speaker": "CUSTOMER",
+      "start_time": 74.58,
+      "end_time": 76.98,
+      "text": "I need something this week if possible.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6548,
+      "review_score": 1.8048,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 28,
+      "seq_id": 28,
+      "speaker": "CUSTOMER",
+      "start_time": 77.66,
+      "end_time": 79.92,
+      "text": "Anything before the end of the week?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6556,
+      "review_score": 1.7556,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 26,
+      "seq_id": 26,
+      "speaker": "CUSTOMER",
+      "start_time": 70.72,
+      "end_time": 74.58,
+      "text": "One, two, three, four, five, six.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5987,
+      "review_score": 1.6487,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 51,
+      "seq_id": 51,
+      "speaker": "CUSTOMER",
+      "start_time": 141.08,
+      "end_time": 146.56,
+      "text": "While I have you on the line, actually, can I also request a refill on my prescription?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5034,
+      "review_score": 1.6034,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

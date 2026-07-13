@@ -11459,5 +11459,100 @@
       "Customer had 12 high-pause segments",
       "1 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 17,
+      "seq_id": 17,
+      "speaker": "CUSTOMER",
+      "start_time": 128.1,
+      "end_time": 131.58,
+      "text": "What do we currently have on our line?",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6113,
+      "review_score": 1.6613,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 65,
+      "seq_id": 65,
+      "speaker": "AGENT",
+      "start_time": 422.02,
+      "end_time": 428.36,
+      "text": "because if you bought the phone outright and just had your own plan, you would be paying the $75 as you would before.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6439,
+      "review_score": 1.5939,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 21,
+      "seq_id": 21,
+      "speaker": "AGENT",
+      "start_time": 156.13,
+      "end_time": 162.45,
+      "text": "Our coverage in almost all rural and urban areas is the largest in Canada.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6927,
+      "review_score": 1.5927,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 13,
+      "seq_id": 13,
+      "speaker": "AGENT",
+      "start_time": 87.68,
+      "end_time": 93.12,
+      "text": "Well, the silver plan is probably, I would recommend your best bet, but there's also the gold and bronze plans.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6339,
+      "review_score": 1.5839,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 64,
+      "seq_id": 64,
+      "speaker": "AGENT",
+      "start_time": 414.3,
+      "end_time": 419.78,
+      "text": "When you have a family plan, it does have lower rates than if you bought the phone outright yourself,",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6232,
+      "review_score": 1.5732,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    }
+  ]
 }

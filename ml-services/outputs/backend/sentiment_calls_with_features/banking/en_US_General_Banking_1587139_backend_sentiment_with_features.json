@@ -23332,5 +23332,95 @@
       "Customer had 21 high-pause segments",
       "34 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 122,
+      "seq_id": 122,
+      "speaker": "CUSTOMER",
+      "start_time": 470.65,
+      "end_time": 473.13,
+      "text": "On the 14th.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5353,
+      "review_score": 1.4853,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected"
+      ]
+    },
+    {
+      "segment_index": 102,
+      "seq_id": 102,
+      "speaker": "CUSTOMER",
+      "start_time": 417.57,
+      "end_time": 424.69,
+      "text": "Do you, is there any way for me to set up automatic transfers so I don't have to like call every time we're going to the bank every time?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3661,
+      "review_score": 1.1661,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 157,
+      "seq_id": 157,
+      "speaker": "CUSTOMER",
+      "start_time": 610.67,
+      "end_time": 617.48,
+      "text": "No, I got the app downloaded, but is like, do I need anything special to get in?",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.4035,
+      "review_score": 1.1535,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score"
+      ]
+    },
+    {
+      "segment_index": 99,
+      "seq_id": 99,
+      "speaker": "CUSTOMER",
+      "start_time": 401.8,
+      "end_time": 403.14,
+      "text": "No, I don't.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3671,
+      "review_score": 1.1171,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 146,
+      "seq_id": 146,
+      "speaker": "CUSTOMER",
+      "start_time": 561.29,
+      "end_time": 562.85,
+      "text": "I got the link in my email.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.3053,
+      "review_score": 1.1053,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

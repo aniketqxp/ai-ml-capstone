@@ -13346,5 +13346,102 @@
       "Customer had 17 high-pause segments",
       "8 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 74,
+      "seq_id": 74,
+      "speaker": "AGENT",
+      "start_time": 488.5,
+      "end_time": 492.12,
+      "text": "I have an appointment on Monday at 1 p .m.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6236,
+      "review_score": 1.6236,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 6,
+      "seq_id": 6,
+      "speaker": "CUSTOMER",
+      "start_time": 22.6,
+      "end_time": 35.51,
+      "text": "My birthday is 10 -10 -65, and I'm calling about scheduling a follow -up appointment with my doctor, Dr. Peng.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.543,
+      "review_score": 1.593,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 31,
+      "seq_id": 31,
+      "speaker": "CUSTOMER",
+      "start_time": 154.13,
+      "end_time": 183.89,
+      "text": "That might work, because I really, really need, regardless if we are able to squeeze me in or not this week, I really need this prescription filled, and I would need a little I know you're trying to accommodate for my needs, but time is a huge factor.",
+      "sentiment": "Negative",
+      "dominant_emotion": "sadness",
+      "escalation_score": 0.4438,
+      "review_score": 1.3938,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 73,
+      "seq_id": 73,
+      "speaker": "AGENT",
+      "start_time": 486.08,
+      "end_time": 488.38,
+      "text": "All right, so you are so welcome.",
+      "sentiment": "Negative",
+      "dominant_emotion": "fear",
+      "escalation_score": 0.5168,
+      "review_score": 1.3668,
+      "reasons": [
+        "Negative sentiment detected",
+        "Emotion may indicate customer distress",
+        "Medium escalation score",
+        "High pitch detected",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 33,
+      "seq_id": 33,
+      "speaker": "CUSTOMER",
+      "start_time": 198.22,
+      "end_time": 225.64,
+      "text": "It may work and be perfect, but if not, perhaps by the end of this day, you could reach out to the doctor and see if he can just fill up this particular prescription, because I can't miss out his medication.",
+      "sentiment": "Negative",
+      "dominant_emotion": "disgust",
+      "escalation_score": 0.4166,
+      "review_score": 1.3666,
+      "reasons": [
+        "Negative sentiment detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Long or frequent pauses detected"
+      ]
+    }
+  ]
 }

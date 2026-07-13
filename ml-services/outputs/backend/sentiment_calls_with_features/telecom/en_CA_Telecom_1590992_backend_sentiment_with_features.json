@@ -24673,5 +24673,102 @@
       "Customer had 44 high-pause segments",
       "20 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 98,
+      "seq_id": 98,
+      "speaker": "AGENT",
+      "start_time": 367.42,
+      "end_time": 368.58,
+      "text": "T -I -N -A",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6241,
+      "review_score": 1.6741,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High pitch detected",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 145,
+      "seq_id": 145,
+      "speaker": "AGENT",
+      "start_time": 597.85,
+      "end_time": 606.49,
+      "text": "So you it would bring you up to one one seventy five for the express package.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6478,
+      "review_score": 1.5478,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 167,
+      "seq_id": 167,
+      "speaker": "CUSTOMER",
+      "start_time": 698.95,
+      "end_time": 702.19,
+      "text": "I really appreciate that credit on my account.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4758,
+      "review_score": 1.4258,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 217,
+      "seq_id": 217,
+      "speaker": "AGENT",
+      "start_time": 837.25,
+      "end_time": 841.03,
+      "text": "After plugging it in and plugging it back out, some people were able to get some.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4637,
+      "review_score": 1.4137,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 137,
+      "seq_id": 137,
+      "speaker": "AGENT",
+      "start_time": 571.89,
+      "end_time": 574.89,
+      "text": "But even if you want to change now to the express package, that's fine.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5551,
+      "review_score": 1.4051,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    }
+  ]
 }

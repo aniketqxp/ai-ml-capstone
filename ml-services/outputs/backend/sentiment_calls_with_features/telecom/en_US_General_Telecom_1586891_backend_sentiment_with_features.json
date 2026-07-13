@@ -16184,5 +16184,101 @@
       "Customer had 33 high-pause segments",
       "9 segments had unreliable speech-rate measurements"
     ]
-  }
+  },
+  "top_risky_segments": [
+    {
+      "segment_index": 108,
+      "seq_id": 108,
+      "speaker": "AGENT",
+      "start_time": 485.28,
+      "end_time": 486.32,
+      "text": "Okay, done.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.626,
+      "review_score": 1.626,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 125,
+      "seq_id": 125,
+      "speaker": "CUSTOMER",
+      "start_time": 556.26,
+      "end_time": 560.78,
+      "text": "Great, and just confirming, I don't need to do anything else to make this upgrade happen.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.4508,
+      "review_score": 1.5508,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High pitch detected",
+        "Fast speech rate detected",
+        "Long or frequent pauses detected"
+      ]
+    },
+    {
+      "segment_index": 33,
+      "seq_id": 33,
+      "speaker": "AGENT",
+      "start_time": 147.57,
+      "end_time": 153.33,
+      "text": "Number one is the 500 MPPS plan for $79 .99 a month.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.6239,
+      "review_score": 1.5239,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "High escalation score",
+        "High volume detected"
+      ]
+    },
+    {
+      "segment_index": 52,
+      "seq_id": 52,
+      "speaker": "AGENT",
+      "start_time": 238.42,
+      "end_time": 243.98,
+      "text": "But since you mentioned your modem has been acting up, we might want to check on that first and send somebody out.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5595,
+      "review_score": 1.4095,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected",
+        "Fast speech rate detected"
+      ]
+    },
+    {
+      "segment_index": 34,
+      "seq_id": 34,
+      "speaker": "AGENT",
+      "start_time": 153.77,
+      "end_time": 162.17,
+      "text": "And then we also have a one gigabyte GBPS plan for $99 .99 a month.",
+      "sentiment": "Negative",
+      "dominant_emotion": "anger",
+      "escalation_score": 0.5842,
+      "review_score": 1.3842,
+      "reasons": [
+        "Negative sentiment detected",
+        "Anger-related emotion detected",
+        "Medium escalation score",
+        "High volume detected"
+      ]
+    }
+  ]
 }
