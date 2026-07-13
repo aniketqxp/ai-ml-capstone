@@ -478,6 +478,7 @@ export default function App() {
   const featureSeries = sentimentPayload?.dashboard_audio_feature_series || [];
   const managerReview = sentimentPayload?.manager_review_recommendation || {};
   const topRiskySegments = sentimentPayload?.top_risky_segments || [];
+  const calibratedSummary = sentimentPayload?.calibrated_sentiment_summary || {};
 
   const unreliableSpeechCount = sentimentPayload?.segments?.filter(
     (s) => s?.audio_features?.audio_quality_flags?.unrealistic_speech_rate
@@ -692,9 +693,12 @@ export default function App() {
 </div>
 <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
   <p className="text-xs uppercase text-slate-500">Customer Sentiment</p>
-  <p className="mt-1 text-2xl font-semibold text-white">
-    {formatLabel(customerSummary.dominant_sentiment)}
-  </p>
+<p className="mt-1 text-2xl font-semibold text-white">
+  {formatLabel(
+    calibratedSummary.customer_sentiment_calibrated ||
+    customerSummary.dominant_sentiment
+  )}
+</p>
 </div>
 
               <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
@@ -757,7 +761,7 @@ export default function App() {
                     <p className="font-semibold text-slate-200">{formatNumber(maxEscalation, 3)}</p>
                   </div>
                   <div>
-                    <p className="text-slate-500">Unreliable speech</p>
+                    <p className="text-slate-500">Speech-rate warnings</p>
                     <p className="font-semibold text-slate-200">{unreliableSpeechCount}</p>
                   </div>
                 </div>
@@ -808,6 +812,19 @@ export default function App() {
                     </ul>
                   </div>
                 )}
+                {managerReview.notes?.length > 0 && (
+  <div className="mt-3 border-t border-slate-800 pt-3">
+    <p className="text-xs uppercase text-slate-500 mb-2">Model Notes</p>
+
+    <ul className="space-y-1">
+      {managerReview.notes.map((note, index) => (
+        <li key={index} className="text-xs text-slate-400">
+          • {note}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
               </div>
             )}
 
@@ -819,13 +836,13 @@ export default function App() {
 
                   <h3 className="text-sm font-semibold text-slate-300">
 
-                    Top Risky Moments
+                    Flagged Sentiment Moments
 
                   </h3>
 
                   <p className="text-xs text-slate-500">
 
-                    These are the highest-priority moments for a manager to review.
+                    These are model-flagged moments with stronger context signals. They are supporting evidence, not automatic escalations.
 
                   </p>
 
@@ -919,7 +936,7 @@ export default function App() {
 
                             <p className="text-[10px] uppercase text-slate-500">
 
-                              Review score
+                              Flag score
 
                             </p>
 
@@ -1175,7 +1192,7 @@ export default function App() {
                                   <span className="ml-1 inline-flex gap-1 align-middle">
                                     {audioFlags.unrealistic_speech_rate && (
                                       <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[9px] text-amber-200 border border-amber-700/50">
-                                        unreliable speech
+                                        speech rate unreliable
                                       </span>
                                     )}
 
@@ -1187,11 +1204,13 @@ export default function App() {
                                   </span>
                                 )}
 
-                                {explanations.length > 0 && sent?.sentiment === 'Negative' && (
-                                  <span className="block mt-1 text-[10px] text-slate-400">
-                                    {explanations.slice(0, 2).join(' · ')}
-                                  </span>
-                                )}
+                                {explanations.length > 0 &&
+  sent?.sentiment === 'Negative' &&
+  topRiskySegments.some((item) => item.seq_id === s.seq_id) && (
+    <span className="block mt-1 text-[10px] text-slate-400">
+      Flagged model signal: {explanations.slice(0, 2).join(' · ')}
+    </span>
+)}
                               </span>
                             );
                           })

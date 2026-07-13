@@ -46,6 +46,11 @@ def main():
                 "dominant_emotion": dominant_emotion,
                 "escalation_score": escalation_score,
                 "processing_status": status,
+                "confidence_level": segment.get("confidence_level"),
+                "prediction_confidence": segment.get("prediction_confidence"),
+                "emotion_confidence": segment.get("emotion_confidence"),
+                "sentiment_confidence": segment.get("sentiment_confidence"),
+                "negative_emotion_probability": segment.get("negative_emotion_probability"),
             }
         )
 

@@ -343,8 +343,21 @@ def main():
                     "audio_escalation_score": result_dict.get("audio_escalation_score"),
                     "risk_level": result_dict.get("risk_level"),
                     "confidence_level": result_dict.get("confidence_level"),
+
+                    # Raw model confidence from EmotionPredictor.
                     "prediction_confidence": result_dict.get("prediction_confidence"),
+                    "emotion_confidence": result_dict.get("prediction_confidence"),
                     "negative_emotion_probability": result_dict.get("negative_emotion_probability"),
+
+                    # Approximate sentiment confidence.
+                    # For negative sentiment, use negative_emotion_probability.
+                    # For positive/neutral sentiment, use prediction_confidence.
+                    "sentiment_confidence": (
+                        result_dict.get("negative_emotion_probability")
+                        if str(result_dict.get("overall_audio_sentiment")).lower() == "negative"
+                        else result_dict.get("prediction_confidence")
+                    ),
+
                     "model_version": result_dict.get("model_version"),
                     "parent_segment_id": segment.get("parent_segment_id"),
                     "text": segment.get("text"),

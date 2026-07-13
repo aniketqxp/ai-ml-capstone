@@ -3,7 +3,7 @@
   "domain": "telecom",
   "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
   "source_file": "outputs/apptek/simple_sentiment_results/telecom/en_US_General_Telecom_1586751_simple_sentiment.json",
-  "generated_at": "2026-06-29T22:11:51.127805+00:00",
+  "generated_at": "2026-07-13T22:33:12.741409+00:00",
   "join_keys": {
     "recommended_unique_key": "call_id + segment_index",
     "transcript_alignment_key": "call_id + seq_id",
@@ -46,6 +46,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1453,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9294708371162415,
+      "emotion_confidence": 0.9294708371162415,
+      "sentiment_confidence": 0.9294708371162415,
+      "negative_emotion_probability": 0.032291261246427894,
       "speaker": "AGENT",
       "start_time": 12.34,
       "end_time": 14.92,
@@ -85,6 +90,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -106,6 +112,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.1973,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.5383853316307068,
+      "emotion_confidence": 0.5383853316307068,
+      "sentiment_confidence": 0.568782146088779,
+      "negative_emotion_probability": 0.568782146088779,
       "speaker": "AGENT",
       "start_time": 15.2,
       "end_time": 17.16,
@@ -142,9 +153,10 @@
         }
       },
       "explainability_flags": {
-        "negative_sentiment": true,
+        "negative_sentiment": false,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -154,10 +166,9 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
-        "Fast speech rate detected"
+        "Fast speech rate detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -168,6 +179,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3393,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.7967657446861267,
+      "emotion_confidence": 0.7967657446861267,
+      "sentiment_confidence": 0.959623655769974,
+      "negative_emotion_probability": 0.959623655769974,
       "speaker": "CUSTOMER",
       "start_time": 18.38,
       "end_time": 22.96,
@@ -207,6 +223,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -229,6 +246,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1416,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9753352999687195,
+      "emotion_confidence": 0.9753352999687195,
+      "sentiment_confidence": 0.9753352999687195,
+      "negative_emotion_probability": 0.01924924342893064,
       "speaker": "CUSTOMER",
       "start_time": 23.32,
       "end_time": 27.86,
@@ -268,6 +290,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -289,6 +312,11 @@
       "dominant_emotion": "anger",
       "escalation_score": 0.5729,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.7445206642150879,
+      "emotion_confidence": 0.7445206642150879,
+      "sentiment_confidence": 0.7675216307397932,
+      "negative_emotion_probability": 0.7675216307397932,
       "speaker": "CUSTOMER",
       "start_time": 28.3,
       "end_time": 32.12,
@@ -325,9 +353,10 @@
         }
       },
       "explainability_flags": {
-        "negative_sentiment": true,
-        "anger_emotion": true,
+        "negative_sentiment": false,
+        "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -337,12 +366,11 @@
         "high_pause": true
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
         "Medium escalation score",
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -353,6 +381,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1655,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9548160433769226,
+      "emotion_confidence": 0.9548160433769226,
+      "sentiment_confidence": 0.9548160433769226,
+      "negative_emotion_probability": 0.04008031031116843,
       "speaker": "AGENT",
       "start_time": 33.5,
       "end_time": 40.04,
@@ -392,6 +425,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -412,6 +446,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.4374,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8370562195777893,
+      "emotion_confidence": 0.8370562195777893,
+      "sentiment_confidence": 0.9883224754594266,
+      "negative_emotion_probability": 0.9883224754594266,
       "speaker": "AGENT",
       "start_time": 40.44,
       "end_time": 47.94,
@@ -451,6 +490,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": false,
@@ -473,6 +513,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.2873,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6230599880218506,
+      "emotion_confidence": 0.6230599880218506,
+      "sentiment_confidence": 0.6566611062735319,
+      "negative_emotion_probability": 0.6566611062735319,
       "speaker": "AGENT",
       "start_time": 48.66,
       "end_time": 53.22,
@@ -509,9 +554,10 @@
         }
       },
       "explainability_flags": {
-        "negative_sentiment": true,
+        "negative_sentiment": false,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -521,10 +567,9 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
-        "Fast speech rate detected"
+        "Fast speech rate detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -535,6 +580,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3351,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9490859508514404,
+      "emotion_confidence": 0.9490859508514404,
+      "sentiment_confidence": 0.9899510056711733,
+      "negative_emotion_probability": 0.9899510056711733,
       "speaker": "CUSTOMER",
       "start_time": 57.35,
       "end_time": 61.41,
@@ -574,6 +624,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -596,6 +647,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.2418,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9224225878715515,
+      "emotion_confidence": 0.9224225878715515,
+      "sentiment_confidence": 0.9758679522201419,
+      "negative_emotion_probability": 0.9758679522201419,
       "speaker": "AGENT",
       "start_time": 61.81,
       "end_time": 66.03,
@@ -635,6 +691,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -656,6 +713,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.2812,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8931404948234558,
+      "emotion_confidence": 0.8931404948234558,
+      "sentiment_confidence": 0.9869348325300962,
+      "negative_emotion_probability": 0.9869348325300962,
       "speaker": "AGENT",
       "start_time": 66.83,
       "end_time": 70.05,
@@ -695,6 +757,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -716,6 +779,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 70.27,
       "end_time": 70.93,
@@ -755,6 +823,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -765,7 +834,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -776,6 +846,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 72.54,
       "end_time": 73.02,
@@ -815,6 +890,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -824,7 +900,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -835,6 +912,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3418,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9240097999572754,
+      "emotion_confidence": 0.9240097999572754,
+      "sentiment_confidence": 0.9755844199098647,
+      "negative_emotion_probability": 0.9755844199098647,
       "speaker": "AGENT",
       "start_time": 75.36,
       "end_time": 79.62,
@@ -874,6 +956,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -896,6 +979,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3656,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8873151540756226,
+      "emotion_confidence": 0.8873151540756226,
+      "sentiment_confidence": 0.9663827666081488,
+      "negative_emotion_probability": 0.9663827666081488,
       "speaker": "CUSTOMER",
       "start_time": 81.53,
       "end_time": 90.63,
@@ -935,6 +1023,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -957,6 +1046,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.4259,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.5815057158470154,
+      "emotion_confidence": 0.5815057158470154,
+      "sentiment_confidence": 0.5815057158470154,
+      "negative_emotion_probability": 0.4097345541231334,
       "speaker": "CUSTOMER",
       "start_time": 92.58,
       "end_time": 99.44,
@@ -996,6 +1090,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -1007,7 +1102,8 @@
       "escalation_explanation": [
         "Medium escalation score",
         "High pitch detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -1018,6 +1114,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 92.92,
       "end_time": 93.2,
@@ -1057,6 +1158,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1067,7 +1169,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -1078,6 +1181,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3412,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.939825177192688,
+      "emotion_confidence": 0.939825177192688,
+      "sentiment_confidence": 0.9899533274583519,
+      "negative_emotion_probability": 0.9899533274583519,
       "speaker": "AGENT",
       "start_time": 99.5,
       "end_time": 101.6,
@@ -1117,6 +1225,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1140,6 +1249,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1854,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9448039531707764,
+      "emotion_confidence": 0.9448039531707764,
+      "sentiment_confidence": 0.9448039531707764,
+      "negative_emotion_probability": 0.04595672502182424,
       "speaker": "AGENT",
       "start_time": 102.14,
       "end_time": 111.42,
@@ -1179,6 +1293,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1199,6 +1314,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.143,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9644873142242432,
+      "emotion_confidence": 0.9644873142242432,
+      "sentiment_confidence": 0.9644873142242432,
+      "negative_emotion_probability": 0.03189930901862681,
       "speaker": "AGENT",
       "start_time": 111.42,
       "end_time": 120.48,
@@ -1238,6 +1358,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1258,6 +1379,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.2273,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.7859334945678711,
+      "emotion_confidence": 0.7859334945678711,
+      "sentiment_confidence": 0.7859334945678711,
+      "negative_emotion_probability": 0.20854845619760454,
       "speaker": "CUSTOMER",
       "start_time": 121.75,
       "end_time": 123.11,
@@ -1297,6 +1423,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1319,6 +1446,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1601,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9728276133537292,
+      "emotion_confidence": 0.9728276133537292,
+      "sentiment_confidence": 0.9728276133537292,
+      "negative_emotion_probability": 0.02027169894427061,
       "speaker": "AGENT",
       "start_time": 124.59,
       "end_time": 131.53,
@@ -1358,6 +1490,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1378,6 +1511,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1429,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9724752902984619,
+      "emotion_confidence": 0.9724752902984619,
+      "sentiment_confidence": 0.9724752902984619,
+      "negative_emotion_probability": 0.02053183678071946,
       "speaker": "AGENT",
       "start_time": 131.73,
       "end_time": 140.95,
@@ -1417,6 +1555,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1438,6 +1577,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.2098,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9492204785346985,
+      "emotion_confidence": 0.9492204785346985,
+      "sentiment_confidence": 0.9492204785346985,
+      "negative_emotion_probability": 0.04286721698008478,
       "speaker": "CUSTOMER",
       "start_time": 141.36,
       "end_time": 142.46,
@@ -1477,6 +1621,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1499,6 +1644,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3418,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8292271494865417,
+      "emotion_confidence": 0.8292271494865417,
+      "sentiment_confidence": 0.9856322330888361,
+      "negative_emotion_probability": 0.9856322330888361,
       "speaker": "CUSTOMER",
       "start_time": 143.12,
       "end_time": 146.98,
@@ -1538,6 +1688,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1561,6 +1712,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1755,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9710158705711365,
+      "emotion_confidence": 0.9710158705711365,
+      "sentiment_confidence": 0.9710158705711365,
+      "negative_emotion_probability": 0.02083163906354457,
       "speaker": "AGENT",
       "start_time": 148.05,
       "end_time": 149.45,
@@ -1600,6 +1756,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1621,6 +1778,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1789,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9685815572738647,
+      "emotion_confidence": 0.9685815572738647,
+      "sentiment_confidence": 0.9685815572738647,
+      "negative_emotion_probability": 0.019206227269023657,
       "speaker": "AGENT",
       "start_time": 149.85,
       "end_time": 161.47,
@@ -1660,6 +1822,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1680,6 +1843,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1043,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9734252691268921,
+      "emotion_confidence": 0.9734252691268921,
+      "sentiment_confidence": 0.9734252691268921,
+      "negative_emotion_probability": 0.023117528297007084,
       "speaker": "AGENT",
       "start_time": 161.79,
       "end_time": 164.43,
@@ -1719,6 +1887,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1740,6 +1909,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 164.81,
       "end_time": 165.33,
@@ -1779,6 +1953,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1788,7 +1963,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -1799,6 +1975,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.2494,
       "processing_status": "success",
+      "confidence_level": "Low",
+      "prediction_confidence": 0.4006824791431427,
+      "emotion_confidence": 0.4006824791431427,
+      "sentiment_confidence": 0.4006824791431427,
+      "negative_emotion_probability": 0.5280404286459088,
       "speaker": "CUSTOMER",
       "start_time": 166.39,
       "end_time": 171.15,
@@ -1838,6 +2019,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1849,7 +2031,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -1860,6 +2043,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.3393,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.5558164715766907,
+      "emotion_confidence": 0.5558164715766907,
+      "sentiment_confidence": 0.5558164715766907,
+      "negative_emotion_probability": 0.43523278494831175,
       "speaker": "CUSTOMER",
       "start_time": 171.83,
       "end_time": 174.65,
@@ -1899,6 +2087,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -1910,7 +2099,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -1921,6 +2111,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.2153,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9222386479377747,
+      "emotion_confidence": 0.9222386479377747,
+      "sentiment_confidence": 0.982447556219995,
+      "negative_emotion_probability": 0.982447556219995,
       "speaker": "AGENT",
       "start_time": 176.75,
       "end_time": 177.87,
@@ -1960,6 +2155,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -1981,6 +2177,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3724,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6530378460884094,
+      "emotion_confidence": 0.6530378460884094,
+      "sentiment_confidence": 0.9866538536734879,
+      "negative_emotion_probability": 0.9866538536734879,
       "speaker": "AGENT",
       "start_time": 177.99,
       "end_time": 181.57,
@@ -2019,7 +2220,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2030,7 +2232,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
         "Long or frequent pauses detected"
       ]
@@ -2043,6 +2244,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3797,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.7740763425827026,
+      "emotion_confidence": 0.7740763425827026,
+      "sentiment_confidence": 0.9109450168907642,
+      "negative_emotion_probability": 0.9109450168907642,
       "speaker": "AGENT",
       "start_time": 183.94,
       "end_time": 192.18,
@@ -2082,6 +2288,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2103,6 +2310,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1453,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9585307836532593,
+      "emotion_confidence": 0.9585307836532593,
+      "sentiment_confidence": 0.9585307836532593,
+      "negative_emotion_probability": 0.027611524215899408,
       "speaker": "AGENT",
       "start_time": 192.98,
       "end_time": 196.64,
@@ -2142,6 +2354,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2163,6 +2376,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3192,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6642383337020874,
+      "emotion_confidence": 0.6642383337020874,
+      "sentiment_confidence": 0.9711431595496833,
+      "negative_emotion_probability": 0.9711431595496833,
       "speaker": "AGENT",
       "start_time": 197.78,
       "end_time": 204.32,
@@ -2201,7 +2419,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2212,7 +2431,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected"
       ]
     },
@@ -2224,6 +2442,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 205.22,
       "end_time": 206.2,
@@ -2263,6 +2486,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -2274,7 +2498,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2285,6 +2510,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1546,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.5744544267654419,
+      "emotion_confidence": 0.5744544267654419,
+      "sentiment_confidence": 0.5744544267654419,
+      "negative_emotion_probability": 0.046784809324890375,
       "speaker": "CUSTOMER",
       "start_time": 206.48,
       "end_time": 207.5,
@@ -2324,6 +2554,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -2333,7 +2564,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High pitch detected"
+        "High pitch detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2344,6 +2576,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1728,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9796796441078186,
+      "emotion_confidence": 0.9796796441078186,
+      "sentiment_confidence": 0.9796796441078186,
+      "negative_emotion_probability": 0.016686711343936622,
       "speaker": "AGENT",
       "start_time": 211.43,
       "end_time": 212.89,
@@ -2383,6 +2620,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2403,6 +2641,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 213.25,
       "end_time": 214.15,
@@ -2442,6 +2685,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2452,7 +2696,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2463,6 +2708,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3062,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9164769649505615,
+      "emotion_confidence": 0.9164769649505615,
+      "sentiment_confidence": 0.9755132782738656,
+      "negative_emotion_probability": 0.9755132782738656,
       "speaker": "AGENT",
       "start_time": 214.39,
       "end_time": 215.77,
@@ -2502,6 +2752,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2524,6 +2775,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 216.5,
       "end_time": 217.02,
@@ -2563,6 +2819,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -2573,7 +2830,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2584,6 +2842,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1478,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9797973036766052,
+      "emotion_confidence": 0.9797973036766052,
+      "sentiment_confidence": 0.9797973036766052,
+      "negative_emotion_probability": 0.016856621019542217,
       "speaker": "AGENT",
       "start_time": 221.77,
       "end_time": 223.21,
@@ -2623,6 +2886,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2643,6 +2907,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 225.19,
       "end_time": 225.71,
@@ -2682,6 +2951,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2693,7 +2963,8 @@
       "escalation_explanation": [
         "High volume detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2704,6 +2975,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.2693,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6932361125946045,
+      "emotion_confidence": 0.6932361125946045,
+      "sentiment_confidence": 0.7532221262808889,
+      "negative_emotion_probability": 0.7532221262808889,
       "speaker": "AGENT",
       "start_time": 226.41,
       "end_time": 229.83,
@@ -2742,7 +3018,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2753,7 +3030,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
         "Fast speech rate detected"
       ]
@@ -2766,6 +3042,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3156,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8190733194351196,
+      "emotion_confidence": 0.8190733194351196,
+      "sentiment_confidence": 0.859700441127643,
+      "negative_emotion_probability": 0.859700441127643,
       "speaker": "CUSTOMER",
       "start_time": 232.0,
       "end_time": 234.3,
@@ -2805,6 +3086,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -2829,6 +3111,11 @@
       "dominant_emotion": "anger",
       "escalation_score": 0.4782,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6659776568412781,
+      "emotion_confidence": 0.6659776568412781,
+      "sentiment_confidence": 0.95666642813012,
+      "negative_emotion_probability": 0.95666642813012,
       "speaker": "CUSTOMER",
       "start_time": 235.36,
       "end_time": 238.5,
@@ -2865,9 +3152,10 @@
         }
       },
       "explainability_flags": {
-        "negative_sentiment": true,
-        "anger_emotion": true,
+        "negative_sentiment": false,
+        "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -2877,12 +3165,11 @@
         "high_pause": true
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
         "Medium escalation score",
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2893,6 +3180,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.2573,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.6428921818733215,
+      "emotion_confidence": 0.6428921818733215,
+      "sentiment_confidence": 0.6428921818733215,
+      "negative_emotion_probability": 0.21651773573830724,
       "speaker": "AGENT",
       "start_time": 240.32,
       "end_time": 245.06,
@@ -2932,6 +3224,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -2941,7 +3234,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High volume detected"
+        "High volume detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -2952,6 +3246,11 @@
       "dominant_emotion": "anger",
       "escalation_score": 0.6553,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9700895547866821,
+      "emotion_confidence": 0.9700895547866821,
+      "sentiment_confidence": 0.9813840823480859,
+      "negative_emotion_probability": 0.9813840823480859,
       "speaker": "AGENT",
       "start_time": 245.96,
       "end_time": 251.76,
@@ -2991,6 +3290,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3015,6 +3315,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1418,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9727521538734436,
+      "emotion_confidence": 0.9727521538734436,
+      "sentiment_confidence": 0.9727521538734436,
+      "negative_emotion_probability": 0.024006396299228072,
       "speaker": "AGENT",
       "start_time": 251.88,
       "end_time": 255.14,
@@ -3054,6 +3359,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3075,6 +3381,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1167,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9753096699714661,
+      "emotion_confidence": 0.9753096699714661,
+      "sentiment_confidence": 0.9753096699714661,
+      "negative_emotion_probability": 0.019339920138008893,
       "speaker": "CUSTOMER",
       "start_time": 259.42,
       "end_time": 260.44,
@@ -3114,6 +3425,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3135,6 +3447,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1039,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.973427951335907,
+      "emotion_confidence": 0.973427951335907,
+      "sentiment_confidence": 0.973427951335907,
+      "negative_emotion_probability": 0.02186805196106434,
       "speaker": "CUSTOMER",
       "start_time": 261.22,
       "end_time": 263.82,
@@ -3174,6 +3491,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3196,6 +3514,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 265.0,
       "end_time": 265.3,
@@ -3235,6 +3558,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3245,7 +3569,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -3256,6 +3581,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1806,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9661468863487244,
+      "emotion_confidence": 0.9661468863487244,
+      "sentiment_confidence": 0.9661468863487244,
+      "negative_emotion_probability": 0.030989397084340453,
       "speaker": "AGENT",
       "start_time": 265.98,
       "end_time": 276.98,
@@ -3295,6 +3625,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3315,6 +3646,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 279.76,
       "end_time": 280.38,
@@ -3354,6 +3690,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3365,7 +3702,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -3376,6 +3714,11 @@
       "dominant_emotion": "anger",
       "escalation_score": 0.6167,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9756051301956177,
+      "emotion_confidence": 0.9756051301956177,
+      "sentiment_confidence": 0.9860773374093696,
+      "negative_emotion_probability": 0.9860773374093696,
       "speaker": "CUSTOMER",
       "start_time": 281.46,
       "end_time": 285.18,
@@ -3415,6 +3758,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3440,6 +3784,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 286.62,
       "end_time": 287.38,
@@ -3479,6 +3828,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3489,7 +3839,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -3500,6 +3851,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1486,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9181299209594727,
+      "emotion_confidence": 0.9181299209594727,
+      "sentiment_confidence": 0.9181299209594727,
+      "negative_emotion_probability": 0.054949425626546144,
       "speaker": "AGENT",
       "start_time": 287.68,
       "end_time": 290.32,
@@ -3539,6 +3895,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3560,6 +3917,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1793,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9740316271781921,
+      "emotion_confidence": 0.9740316271781921,
+      "sentiment_confidence": 0.9740316271781921,
+      "negative_emotion_probability": 0.022698210086673498,
       "speaker": "AGENT",
       "start_time": 290.8,
       "end_time": 295.38,
@@ -3599,6 +3961,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -3620,6 +3983,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.187,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9454389810562134,
+      "emotion_confidence": 0.9454389810562134,
+      "sentiment_confidence": 0.9454389810562134,
+      "negative_emotion_probability": 0.048491983441635966,
       "speaker": "CUSTOMER",
       "start_time": 296.18,
       "end_time": 298.04,
@@ -3659,6 +4027,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3679,6 +4048,11 @@
       "dominant_emotion": "disgust",
       "escalation_score": 0.3353,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9511813521385193,
+      "emotion_confidence": 0.9511813521385193,
+      "sentiment_confidence": 0.9894965551793575,
+      "negative_emotion_probability": 0.9894965551793575,
       "speaker": "CUSTOMER",
       "start_time": 300.1,
       "end_time": 303.32,
@@ -3718,6 +4092,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3740,6 +4115,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.3347,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9216063022613525,
+      "emotion_confidence": 0.9216063022613525,
+      "sentiment_confidence": 0.9712761172559112,
+      "negative_emotion_probability": 0.9712761172559112,
       "speaker": "CUSTOMER",
       "start_time": 306.26,
       "end_time": 308.58,
@@ -3779,6 +4159,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3801,6 +4182,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 312.64,
       "end_time": 312.96,
@@ -3840,6 +4226,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3851,7 +4238,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -3862,6 +4250,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1792,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9365929365158081,
+      "emotion_confidence": 0.9365929365158081,
+      "sentiment_confidence": 0.9365929365158081,
+      "negative_emotion_probability": 0.059925827430561185,
       "speaker": "CUSTOMER",
       "start_time": 313.48,
       "end_time": 314.62,
@@ -3901,6 +4294,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3923,6 +4317,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 314.82,
       "end_time": 315.4,
@@ -3962,6 +4361,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -3972,7 +4372,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -3983,6 +4384,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 316.06,
       "end_time": 316.22,
@@ -4022,6 +4428,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4032,7 +4439,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4043,6 +4451,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 316.92,
       "end_time": 317.04,
@@ -4082,6 +4495,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4092,7 +4506,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4103,6 +4518,11 @@
       "dominant_emotion": "anger",
       "escalation_score": 0.6138,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.875681459903717,
+      "emotion_confidence": 0.875681459903717,
+      "sentiment_confidence": 0.9315666840411723,
+      "negative_emotion_probability": 0.9315666840411723,
       "speaker": "CUSTOMER",
       "start_time": 317.42,
       "end_time": 323.68,
@@ -4142,6 +4562,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4166,6 +4587,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1377,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9566829204559326,
+      "emotion_confidence": 0.9566829204559326,
+      "sentiment_confidence": 0.9566829204559326,
+      "negative_emotion_probability": 0.03825419209897518,
       "speaker": "CUSTOMER",
       "start_time": 323.68,
       "end_time": 325.22,
@@ -4205,6 +4631,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4226,6 +4653,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1417,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9752854704856873,
+      "emotion_confidence": 0.9752854704856873,
+      "sentiment_confidence": 0.9752854704856873,
+      "negative_emotion_probability": 0.019465734367258847,
       "speaker": "AGENT",
       "start_time": 326.38,
       "end_time": 330.3,
@@ -4265,6 +4697,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4286,6 +4719,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1882,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8174802660942078,
+      "emotion_confidence": 0.8174802660942078,
+      "sentiment_confidence": 0.8174802660942078,
+      "negative_emotion_probability": 0.040653221774846315,
       "speaker": "AGENT",
       "start_time": 331.0,
       "end_time": 338.12,
@@ -4325,6 +4763,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4346,6 +4785,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.142,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9748584032058716,
+      "emotion_confidence": 0.9748584032058716,
+      "sentiment_confidence": 0.9748584032058716,
+      "negative_emotion_probability": 0.020603093085810542,
       "speaker": "AGENT",
       "start_time": 338.8,
       "end_time": 342.66,
@@ -4385,6 +4829,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4406,6 +4851,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1987,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9291180968284607,
+      "emotion_confidence": 0.9291180968284607,
+      "sentiment_confidence": 0.9291180968284607,
+      "negative_emotion_probability": 0.04997159447520971,
       "speaker": "AGENT",
       "start_time": 343.18,
       "end_time": 349.68,
@@ -4445,6 +4895,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4466,6 +4917,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.0992,
       "processing_status": "success",
+      "confidence_level": "Medium",
+      "prediction_confidence": 0.5189792513847351,
+      "emotion_confidence": 0.5189792513847351,
+      "sentiment_confidence": 0.5189792513847351,
+      "negative_emotion_probability": 0.03962077014148235,
       "speaker": "AGENT",
       "start_time": 350.26,
       "end_time": 352.82,
@@ -4505,6 +4961,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4514,7 +4971,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High volume detected"
+        "High volume detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4525,6 +4983,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.2063,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9601185917854309,
+      "emotion_confidence": 0.9601185917854309,
+      "sentiment_confidence": 0.9601185917854309,
+      "negative_emotion_probability": 0.03622567933052778,
       "speaker": "AGENT",
       "start_time": 353.36,
       "end_time": 357.06,
@@ -4564,6 +5027,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4585,6 +5049,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 357.44,
       "end_time": 357.84,
@@ -4624,6 +5093,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4634,7 +5104,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4645,6 +5116,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 358.24,
       "end_time": 358.52,
@@ -4684,6 +5160,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4693,7 +5170,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4704,6 +5182,11 @@
       "dominant_emotion": "neutral",
       "escalation_score": 0.1756,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9537353515625,
+      "emotion_confidence": 0.9537353515625,
+      "sentiment_confidence": 0.9537353515625,
+      "negative_emotion_probability": 0.04031809372827411,
       "speaker": "CUSTOMER",
       "start_time": 358.6,
       "end_time": 359.62,
@@ -4743,6 +5226,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4764,6 +5248,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.2678,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9152642488479614,
+      "emotion_confidence": 0.9152642488479614,
+      "sentiment_confidence": 0.9818671506363899,
+      "negative_emotion_probability": 0.9818671506363899,
       "speaker": "CUSTOMER",
       "start_time": 359.8,
       "end_time": 361.5,
@@ -4803,6 +5292,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -4825,6 +5315,11 @@
       "dominant_emotion": "sadness",
       "escalation_score": 0.297,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.8784704208374023,
+      "emotion_confidence": 0.8784704208374023,
+      "sentiment_confidence": 0.9451823444105685,
+      "negative_emotion_probability": 0.9451823444105685,
       "speaker": "AGENT",
       "start_time": 363.29,
       "end_time": 364.59,
@@ -4864,6 +5359,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4887,6 +5383,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 364.77,
       "end_time": 365.25,
@@ -4926,6 +5427,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4935,7 +5437,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -4946,6 +5449,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "AGENT",
       "start_time": 365.57,
       "end_time": 366.35,
@@ -4985,6 +5493,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -4994,7 +5503,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5005,6 +5515,11 @@
       "dominant_emotion": "happy",
       "escalation_score": 0.1663,
       "processing_status": "success",
+      "confidence_level": "High",
+      "prediction_confidence": 0.9751851558685303,
+      "emotion_confidence": 0.9751851558685303,
+      "sentiment_confidence": 0.9751851558685303,
+      "negative_emotion_probability": 0.016640174435451627,
       "speaker": "CUSTOMER",
       "start_time": 365.8,
       "end_time": 366.8,
@@ -5044,6 +5559,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5065,6 +5581,11 @@
       "dominant_emotion": null,
       "escalation_score": null,
       "processing_status": "skipped_too_short",
+      "confidence_level": null,
+      "prediction_confidence": null,
+      "emotion_confidence": null,
+      "sentiment_confidence": null,
+      "negative_emotion_probability": null,
       "speaker": "CUSTOMER",
       "start_time": 367.0,
       "end_time": 367.54,
@@ -5104,6 +5625,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -5114,7 +5636,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     }
   ],
@@ -5159,6 +5682,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5203,9 +5727,10 @@
       },
       "speech_rate_reliability": "medium",
       "explainability_flags": {
-        "negative_sentiment": true,
+        "negative_sentiment": false,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5215,10 +5740,9 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
-        "Fast speech rate detected"
+        "Fast speech rate detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5255,6 +5779,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -5303,6 +5828,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -5347,9 +5873,10 @@
       },
       "speech_rate_reliability": "medium",
       "explainability_flags": {
-        "negative_sentiment": true,
-        "anger_emotion": true,
+        "negative_sentiment": false,
+        "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -5359,12 +5886,11 @@
         "high_pause": true
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
         "Medium escalation score",
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5401,6 +5927,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5447,6 +5974,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": false,
@@ -5492,9 +6020,10 @@
       },
       "speech_rate_reliability": "medium",
       "explainability_flags": {
-        "negative_sentiment": true,
+        "negative_sentiment": false,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5504,10 +6033,9 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
-        "Fast speech rate detected"
+        "Fast speech rate detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5544,6 +6072,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -5592,6 +6121,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5639,6 +6169,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5686,6 +6217,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5696,7 +6228,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5733,6 +6266,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5742,7 +6276,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5779,6 +6314,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5827,6 +6363,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -5875,6 +6412,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -5886,7 +6424,8 @@
       "escalation_explanation": [
         "Medium escalation score",
         "High pitch detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5923,6 +6462,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -5933,7 +6473,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -5970,6 +6511,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6019,6 +6561,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6065,6 +6608,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6111,6 +6655,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6159,6 +6704,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6205,6 +6751,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6252,6 +6799,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6300,6 +6848,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6349,6 +6898,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6396,6 +6946,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6442,6 +6993,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6489,6 +7041,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6498,7 +7051,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -6535,6 +7089,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6546,7 +7101,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -6583,6 +7139,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6594,7 +7151,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -6631,6 +7189,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6677,7 +7236,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6688,7 +7248,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
         "Long or frequent pauses detected"
       ]
@@ -6727,6 +7286,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6774,6 +7334,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6820,7 +7381,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -6831,7 +7393,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected"
       ]
     },
@@ -6869,6 +7430,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6880,7 +7442,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -6917,6 +7480,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -6926,7 +7490,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High pitch detected"
+        "High pitch detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -6963,6 +7528,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7009,6 +7575,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7019,7 +7586,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7056,6 +7624,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7104,6 +7673,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7114,7 +7684,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7151,6 +7722,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7197,6 +7769,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7208,7 +7781,8 @@
       "escalation_explanation": [
         "High volume detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7244,7 +7818,8 @@
       "explainability_flags": {
         "negative_sentiment": true,
         "anger_emotion": false,
-        "sadness_or_fear_emotion": true,
+        "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7255,7 +7830,6 @@
       },
       "escalation_explanation": [
         "Negative sentiment detected",
-        "Emotion may indicate customer distress",
         "High volume detected",
         "Fast speech rate detected"
       ]
@@ -7294,6 +7868,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7341,9 +7916,10 @@
       },
       "speech_rate_reliability": "medium",
       "explainability_flags": {
-        "negative_sentiment": true,
-        "anger_emotion": true,
+        "negative_sentiment": false,
+        "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": true,
         "high_pitch": true,
@@ -7353,12 +7929,11 @@
         "high_pause": true
       },
       "escalation_explanation": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
         "Medium escalation score",
         "High pitch detected",
         "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7395,6 +7970,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7404,7 +7980,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High volume detected"
+        "High volume detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7441,6 +8018,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7491,6 +8069,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7538,6 +8117,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7585,6 +8165,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7633,6 +8214,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7643,7 +8225,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7680,6 +8263,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7726,6 +8310,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7737,7 +8322,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7774,6 +8360,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -7825,6 +8412,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7835,7 +8423,8 @@
       },
       "escalation_explanation": [
         "High volume detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -7872,6 +8461,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7919,6 +8509,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -7966,6 +8557,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8012,6 +8604,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8060,6 +8653,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8108,6 +8702,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8119,7 +8714,8 @@
       "escalation_explanation": [
         "High pitch detected",
         "Speech rate may be unreliable due to short segment length",
-        "Long or frequent pauses detected"
+        "Long or frequent pauses detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8156,6 +8752,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8204,6 +8801,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8214,7 +8812,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8251,6 +8850,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8261,7 +8861,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8298,6 +8899,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8308,7 +8910,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8345,6 +8948,7 @@
         "negative_sentiment": true,
         "anger_emotion": true,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": true,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8395,6 +8999,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8442,6 +9047,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8489,6 +9095,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8536,6 +9143,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8583,6 +9191,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8630,6 +9239,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8639,7 +9249,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "High volume detected"
+        "High volume detected",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8676,6 +9287,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8723,6 +9335,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8733,7 +9346,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8770,6 +9384,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8779,7 +9394,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -8816,6 +9432,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8863,6 +9480,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -8911,6 +9529,7 @@
         "negative_sentiment": true,
         "anger_emotion": false,
         "sadness_or_fear_emotion": true,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8960,6 +9579,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -8969,7 +9589,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -9006,6 +9627,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -9015,7 +9637,8 @@
         "high_pause": false
       },
       "escalation_explanation": [
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     },
     {
@@ -9052,6 +9675,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": false,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": false,
@@ -9099,6 +9723,7 @@
         "negative_sentiment": false,
         "anger_emotion": false,
         "sadness_or_fear_emotion": false,
+        "low_confidence_prediction": true,
         "high_escalation_score": false,
         "medium_escalation_score": false,
         "high_pitch": true,
@@ -9109,7 +9734,8 @@
       },
       "escalation_explanation": [
         "High pitch detected",
-        "Speech rate may be unreliable due to short segment length"
+        "Speech rate may be unreliable due to short segment length",
+        "Low confidence model prediction"
       ]
     }
   ],
@@ -9260,16 +9886,36 @@
     "trend": "stable",
     "trend_explanation": "Customer escalation stayed relatively stable across the call."
   },
+  "calibrated_sentiment_summary": {
+    "customer_sentiment_calibrated": "Concerned",
+    "negative_customer_segments": 12,
+    "positive_customer_segments": 6,
+    "neutral_customer_segments": 20,
+    "strong_negative_customer_segments": 2,
+    "high_escalation_customer_segments": 2,
+    "anger_fear_customer_segments": 2,
+    "negative_customer_ratio": 0.3158,
+    "positive_customer_ratio": 0.1579,
+    "calibration_note": "Calibrated sentiment uses model sentiment, emotion, escalation score, speaker role, and repeated negative signals. It does not use transcript keywords."
+  },
   "manager_review_recommendation": {
     "review_required": true,
     "review_level": "high",
     "max_escalation_score": 0.6553,
+    "customer_negative_escalation_segments": 2,
+    "customer_anger_fear_segments": 2,
+    "customer_strong_negative_segments": 2,
+    "calibrated_customer_sentiment": "Concerned",
     "reasons": [
       "Call risk level is High",
-      "Customer dominant sentiment is Negative",
       "Maximum escalation score reached 0.655",
+      "2 customer segments showed negative anger/fear signals"
+    ],
+    "notes": [
+      "Raw model customer sentiment was Negative",
+      "Raw model customer dominant emotion was neutral",
       "Customer had 23 high-pause segments",
-      "7 segments had unreliable speech-rate measurements"
+      "7 segments had speech-rate reliability warnings"
     ]
   },
   "top_risky_segments": [
@@ -9283,14 +9929,12 @@
       "sentiment": "Negative",
       "dominant_emotion": "anger",
       "escalation_score": 0.6167,
-      "review_score": 1.8167,
+      "review_score": 1.4667,
       "reasons": [
         "Negative sentiment detected",
-        "Anger-related emotion detected",
+        "Emotion may indicate escalation",
         "High escalation score",
-        "High pitch detected",
-        "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Supporting audio signal: High pitch detected"
       ]
     },
     {
@@ -9303,72 +9947,12 @@
       "sentiment": "Negative",
       "dominant_emotion": "anger",
       "escalation_score": 0.6138,
-      "review_score": 1.7638,
+      "review_score": 1.4438,
       "reasons": [
         "Negative sentiment detected",
-        "Anger-related emotion detected",
+        "Emotion may indicate escalation",
         "High escalation score",
-        "High pitch detected",
-        "Long or frequent pauses detected"
-      ]
-    },
-    {
-      "segment_index": 5,
-      "seq_id": 5,
-      "speaker": "CUSTOMER",
-      "start_time": 28.3,
-      "end_time": 32.12,
-      "text": "I want to see about upgrading the higher speed plan, if possible.",
-      "sentiment": "Negative",
-      "dominant_emotion": "anger",
-      "escalation_score": 0.5729,
-      "review_score": 1.6729,
-      "reasons": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
-        "Medium escalation score",
-        "High pitch detected",
-        "Fast speech rate detected",
-        "Long or frequent pauses detected"
-      ]
-    },
-    {
-      "segment_index": 49,
-      "seq_id": 49,
-      "speaker": "AGENT",
-      "start_time": 245.96,
-      "end_time": 251.76,
-      "text": "Your plan will update immediately and if you need the new modem, well, you'll need the new modem.",
-      "sentiment": "Negative",
-      "dominant_emotion": "anger",
-      "escalation_score": 0.6553,
-      "review_score": 1.6053,
-      "reasons": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
-        "High escalation score",
-        "High volume detected",
-        "Fast speech rate detected"
-      ]
-    },
-    {
-      "segment_index": 47,
-      "seq_id": 47,
-      "speaker": "CUSTOMER",
-      "start_time": 235.36,
-      "end_time": 238.5,
-      "text": "I want to make sure I don't run into these issues anymore.",
-      "sentiment": "Negative",
-      "dominant_emotion": "anger",
-      "escalation_score": 0.4782,
-      "review_score": 1.5782,
-      "reasons": [
-        "Negative sentiment detected",
-        "Anger-related emotion detected",
-        "Medium escalation score",
-        "High pitch detected",
-        "Fast speech rate detected",
-        "Long or frequent pauses detected"
+        "Supporting audio signal: High pitch detected"
       ]
     }
   ]
