@@ -26,9 +26,8 @@ class Call(Base):
     call_metadata    = Column(JSONB)
     created_at       = Column(DateTime, default=datetime.utcnow)
 
-    agent       = relationship("Agent", back_populates="calls")
-    jobs        = relationship("Job", back_populates="call")
-    evaluations = relationship("Evaluation", back_populates="call")
+    agent = relationship("Agent", back_populates="calls")
+    jobs  = relationship("Job", back_populates="call")
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -61,7 +60,7 @@ class Evaluation(Base):
     __tablename__ = "evaluations"
 
     evaluation_id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    call_id                = Column(UUID(as_uuid=True), ForeignKey("calls.call_id"), nullable=False)
+    call_id                = Column(UUID(as_uuid=True), nullable=True)
     agent_id               = Column(UUID(as_uuid=True), ForeignKey("agents.agent_id"), nullable=False)
     overall_grade          = Column(String(1))
     weighted_score         = Column(Numeric(5, 2))
@@ -74,41 +73,41 @@ class Evaluation(Base):
     llm_scored             = Column(Boolean, default=True)
     created_at             = Column(DateTime, default=datetime.utcnow)
 
-    call  = relationship("Call", back_populates="evaluations")
-
 class SentimentSegment(Base):
     __tablename__ = "sentiment_segments"
 
-    id                   = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    call_id              = Column(String(100), nullable=False)
-    segment_index        = Column(Integer, nullable=False)
-    segment_key          = Column(String(200))
-    seq_id               = Column(Integer)
-    speaker              = Column(String(20))
-    start_time           = Column(Float)
-    end_time             = Column(Float)
-    text                 = Column(Text)
-    sentiment            = Column(String(20))
-    dominant_emotion     = Column(String(50))
-    escalation_score     = Column(Float)
-    processing_status    = Column(String(30))
-    audio_features       = Column(JSONB)
-    has_audio_features   = Column(Boolean, default=False)
-    audio_feature_version = Column(String(100))
-    domain               = Column(String(50))
-    model_version        = Column(String(100))
-    created_at           = Column(DateTime, default=datetime.utcnow)
+    id                     = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    call_id                = Column(String(100), nullable=False)
+    segment_index          = Column(Integer, nullable=False)
+    segment_key            = Column(String(200))
+    seq_id                 = Column(Integer)
+    speaker                = Column(String(20))
+    start_time             = Column(Float)
+    end_time               = Column(Float)
+    text                   = Column(Text)
+    sentiment              = Column(String(20))
+    dominant_emotion       = Column(String(50))
+    escalation_score       = Column(Float)
+    processing_status      = Column(String(30))
+    audio_features         = Column(JSONB)
+    explainability_flags   = Column(JSONB)
+    escalation_explanation = Column(JSONB)
+    has_audio_features     = Column(Boolean, default=False)
+    audio_feature_version  = Column(String(100))
+    domain                 = Column(String(50))
+    model_version          = Column(String(100))
+    created_at             = Column(DateTime, default=datetime.utcnow)
 
 class CallAudioSummary(Base):
     __tablename__ = "call_audio_summaries"
 
-    id                          = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    call_id                     = Column(String(100), nullable=False)
-    domain                      = Column(String(50))
-    model_version               = Column(String(100))
-    has_audio_features          = Column(Boolean, default=False)
-    audio_feature_version       = Column(String(100))
-    audio_feature_match_summary = Column(JSONB)
+    id                             = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    call_id                        = Column(String(100), nullable=False)
+    domain                         = Column(String(50))
+    model_version                  = Column(String(100))
+    has_audio_features             = Column(Boolean, default=False)
+    audio_feature_version          = Column(String(100))
+    audio_feature_match_summary    = Column(JSONB)
     dashboard_audio_feature_series = Column(JSONB)
-    call_summary                = Column(JSONB)
-    created_at                  = Column(DateTime, default=datetime.utcnow)
+    call_summary                   = Column(JSONB)
+    created_at                     = Column(DateTime, default=datetime.utcnow)

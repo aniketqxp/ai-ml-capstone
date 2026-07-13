@@ -1,4 +1,3 @@
-from datetime import datetime
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -68,6 +67,8 @@ async def ingest_sentiment(
             escalation_score=segment.get("escalation_score"),
             processing_status=segment.get("processing_status"),
             audio_features=audio_features,
+            explainability_flags=segment.get("explainability_flags"),
+            escalation_explanation=segment.get("escalation_explanation"),
             has_audio_features=audio_features is not None,
             audio_feature_version=audio_feature_version,
             domain=domain,
