@@ -84,6 +84,42 @@ const RISK_STYLE = {
   escalate: { label: 'Escalate',      cls: 'bg-red-950 text-red-300 border-red-800' },
 };
 
+// Small hover tooltip — used to explain HOW a score was computed without
+// cluttering the scorecard with modality tags.
+function InfoTip({ tip, children }) {
+  return (
+    <span className="relative group/tip inline-flex items-center">
+      {children}
+      <span className="pointer-events-none absolute z-30 hidden group-hover/tip:block bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-60 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-[10px] leading-relaxed text-slate-300 shadow-xl normal-case tracking-normal font-normal">
+        {tip}
+      </span>
+    </span>
+  );
+}
+
+function InfoDot() {
+  return (
+    <span className="text-slate-500 hover:text-slate-300 border border-slate-700 rounded-full w-3.5 h-3.5 inline-flex items-center justify-center text-[8px] cursor-help select-none">i</span>
+  );
+}
+
+// Human-readable provenance for a hybrid quality score
+function hybridTip(h) {
+  if (!h || h.method !== 'weighted_mean') return 'Scored from transcript text only.';
+  return `Hybrid score: text model ${h.text_score} × ${h.text_weight} + audio model ${h.acoustic_score} × ${h.acoustic_weight}. ` +
+    `Acoustic signal from the ${h.channel.toLowerCase()} channel (audio predictions cover ${Math.round(h.coverage * 100)}% of its sentences).`;
+}
+
+function escTip(h) {
+  if (!h || h.acoustic_risk == null) return 'Risk assessed from transcript text only.';
+  const base = `Text tier: ${h.text_risk}. Acoustic tier: ${h.acoustic_risk} ` +
+    `(customer's vocal escalation — late-call mean ${h.late_mean_escalation}, peak ${h.peak_escalation}).`;
+  if (h.method === 'llm_arbitration')
+    return `${base} The two channels disagreed, so an arbitration model weighed both against the transcript: ${h.arbitration_rationale}`;
+  if (h.method === 'agreement') return `${base} Both channels agree.`;
+  return `${base} Fused as the more severe of the two tiers.`;
+}
+
 function ScoreDots({ score }) {
   const color = score >= 4 ? 'bg-emerald-500' : score === 3 ? 'bg-amber-500' : 'bg-red-500';
   return (
@@ -144,17 +180,56 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
           )}
         </div>
 
-        {/* quality */}
+        {/* expected workflow (v0.4.0) — checklist derived from the call's
+            subject alone, then audited against the actual call */}
+        {evaluation.workflow && (
+          <div className="border-t border-slate-800 pt-3 space-y-1">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-0.5 flex items-center gap-1.5">
+              Expected workflow
+              <InfoTip tip="This checklist was generated from the call's domain and subject alone — the generator never saw the transcript — then each box was audited against the actual call.">
+                <InfoDot />
+              </InfoTip>
+            </div>
+            <div className="text-[10px] text-slate-500 italic pb-1">“{evaluation.workflow.subject}”</div>
+            {evaluation.workflow.expected_steps.map((s, i) => {
+              const sec = s.evidence?.sec;
+              const fired = s.met === true && (sec == null || time >= sec);
+              let icon, ring, txt;
+              if (s.met === false)      { icon = '✕'; ring = 'bg-red-950 text-red-400 border border-red-800'; txt = 'text-red-300'; }
+              else if (s.met == null)   { icon = '–'; ring = 'bg-slate-800 text-slate-600'; txt = 'text-slate-600'; }
+              else if (fired)           { icon = '✓'; ring = 'bg-emerald-900 text-emerald-300 border border-emerald-600'; txt = 'text-emerald-200'; }
+              else                      { icon = '○'; ring = 'bg-slate-800 text-slate-600'; txt = 'text-slate-500'; }
+              const clickable = sec != null;
+              return (
+                <button key={i} disabled={!clickable} onClick={() => clickable && seek(sec + 0.02)}
+                  className={`w-full flex items-center gap-2.5 px-2 py-1 rounded-lg text-left transition-all duration-300
+                    ${clickable ? 'hover:bg-slate-900 cursor-pointer' : 'cursor-default'}
+                    ${fired ? 'bg-emerald-950/30' : ''}`}>
+                  <span className={`w-5 h-5 shrink-0 rounded-full flex items-center justify-center text-[11px] font-bold ${ring}`}>{icon}</span>
+                  <span className={`flex-grow text-[11px] ${txt}`}>{s.step}</span>
+                  {sec != null && <span className="text-[10px] font-mono text-slate-600">{fmt(sec)}</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* quality — hybrid text+acoustic scores; hover ⓘ for the formula */}
         <div className="border-t border-slate-800 pt-3 space-y-2">
-          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Quality · text-derived</div>
+          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5 flex items-center gap-1.5">
+            Quality
+            <InfoTip tip="Each dimension is scored by the text model against the QA rubric; where the audio sentiment model produced predictions for this call, its signal is fused in. Hover a dimension for its exact formula.">
+              <InfoDot />
+            </InfoTip>
+          </div>
           {QUALITY_DIMS.map(([key, name]) => {
             const d = q[key];
             if (!d) return null;
             return (
               <div key={key} className="flex items-center gap-2">
-                <span className="flex-grow text-xs text-slate-300">
+                <span className="flex-grow text-xs text-slate-300 flex items-center gap-1.5">
                   {name}
-                  {d.requires_audio && <span className="ml-1.5 text-[9px] text-amber-500/90 border border-amber-800/60 rounded px-1">audio</span>}
+                  <InfoTip tip={hybridTip(d.hybrid)}><InfoDot /></InfoTip>
                 </span>
                 <ScoreDots score={d.score} />
                 <span className="text-xs font-mono text-slate-400 w-4 text-right">{d.score}</span>
@@ -163,13 +238,14 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
           })}
         </div>
 
-        {/* escalation */}
+        {/* escalation — fused risk (text ∨ acoustic) */}
         <div className="border-t border-slate-800 pt-3 flex items-center gap-2 flex-wrap">
-          <span className={`text-xs font-semibold px-2 py-1 rounded border ${RISK_STYLE[e.risk_level]?.cls || ''}`}>
-            {RISK_STYLE[e.risk_level]?.label || e.risk_level}
-          </span>
+          <InfoTip tip={escTip(e.hybrid)}>
+            <span className={`text-xs font-semibold px-2 py-1 rounded border cursor-help ${RISK_STYLE[e.risk_level]?.cls || ''}`}>
+              {RISK_STYLE[e.risk_level]?.label || e.risk_level}
+            </span>
+          </InfoTip>
           <span className="text-xs text-slate-400">emotion: <span className="text-slate-300">{e.customer_emotion_text}</span></span>
-          {e.requires_audio && <span className="text-[9px] text-amber-500/90 border border-amber-800/60 rounded px-1 py-0.5">audio confirms</span>}
         </div>
 
         {/* summary */}
@@ -182,6 +258,193 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
         <div className="text-[9px] text-slate-600 text-right pt-1">rubric {evaluation.rubric_version}{evaluation.served_by ? ` · ${evaluation.served_by}` : ''}</div>
       </div>
     </section>
+  );
+}
+
+// Where each agent grounded its judgments on THIS call. One lane per agent;
+// every marker is a piece of evidence the agent cited, anchored to its real
+// moment in the audio. Markers light up as playback passes them.
+const LANE_STYLE = {
+  compliance: {
+    label: 'Compliance',
+    on:  'bg-indigo-400 border-indigo-300 shadow-[0_0_6px_rgba(129,140,248,0.8)]',
+    off: 'bg-indigo-900 border-indigo-700',
+    fail: 'bg-red-500 border-red-400',
+  },
+  quality: {
+    label: 'Quality',
+    on:  'bg-emerald-400 border-emerald-300 shadow-[0_0_6px_rgba(52,211,153,0.8)]',
+    off: 'bg-emerald-900 border-emerald-700',
+    fail: 'bg-red-500 border-red-400',
+  },
+  workflow: {
+    label: 'Workflow',
+    on:  'bg-sky-400 border-sky-300 shadow-[0_0_6px_rgba(56,189,248,0.8)]',
+    off: 'bg-sky-900 border-sky-700',
+    fail: 'bg-red-500 border-red-400',
+  },
+  escalation: {
+    label: 'Escalation',
+    on:  'bg-amber-400 border-amber-300 shadow-[0_0_6px_rgba(251,191,36,0.8)]',
+    off: 'bg-amber-900 border-amber-700',
+    fail: 'bg-red-500 border-red-400',
+  },
+};
+
+// valence (-1..+1) → heat color: negative=rose, positive=emerald, neutral=faint slate
+function valColor(v) {
+  if (v == null) return 'transparent';
+  if (v > 0.05) return `rgba(52,211,153,${Math.min(0.85, 0.2 + 0.65 * v)})`;
+  if (v < -0.05) return `rgba(244,63,94,${Math.min(0.85, 0.2 + 0.65 * -v)})`;
+  return 'rgba(100,116,139,0.3)';
+}
+
+function AgentLanes({ evaluation, duration, time, seek }) {
+  const lanes = useMemo(() => {
+    if (!evaluation) return [];
+    const c = evaluation.compliance, q = evaluation.quality, e = evaluation.escalation;
+
+    const comp = [];
+    COMPLIANCE_ITEMS.forEach(([key, name]) => {
+      const it = c[key];
+      if (it?.evidence?.sec != null)
+        comp.push({
+          sec: it.evidence.sec,
+          fail: it.passed === false,
+          tip: `${name} — "${it.evidence.quote}"`,
+        });
+    });
+
+    const qual = [];
+    QUALITY_DIMS.forEach(([key, name]) => {
+      const d = q[key];
+      if (!d) return;
+      (d.evidence || []).forEach((ev) => {
+        if (ev.sec != null)
+          qual.push({
+            sec: ev.sec,
+            fail: false,
+            tip: `${name} ${d.score}/5 — "${ev.quote}"`,
+          });
+      });
+    });
+
+    const wf = (evaluation.workflow?.expected_steps || [])
+      .filter((s) => s.evidence?.sec != null)
+      .map((s) => ({
+        sec: s.evidence.sec,
+        fail: s.met === false,
+        tip: `${s.met === false ? 'missed step' : 'step done'}: ${s.step} — "${s.evidence.quote}"`,
+      }));
+
+    const esc = (e.evidence || [])
+      .filter((ev) => ev.sec != null)
+      .map((ev) => ({
+        sec: ev.sec,
+        fail: e.risk_level !== 'none',
+        tip: `${e.risk_level === 'none' ? 'screened: calm' : `risk: ${e.risk_level}`} — "${ev.quote}"`,
+      }));
+
+    return [
+      { key: 'compliance', markers: comp },
+      { key: 'quality', markers: qual },
+      { key: 'workflow', markers: wf },
+      { key: 'escalation', markers: esc, spark: true },
+    ];
+  }, [evaluation]);
+
+  const traj = evaluation?._acoustic?.trajectory || [];
+  const escPts = traj.filter((t) => t.esc != null);
+  // svg coords: x = position 0-100, y = 20 (score 0) up to 0 (score 1)
+  const sparkPath = escPts.map((t) => `${(t.p * 100).toFixed(1)},${(20 - t.esc * 20).toFixed(1)}`).join(' ');
+  const progress = duration ? Math.min(1, time / duration) : 0;
+
+  if (!evaluation || !duration) return null;
+
+  return (
+    <div className="mt-3 space-y-1">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
+          Agent findings
+        </span>
+        <span className="text-[9px] text-slate-600">
+          markers = judgments anchored to this moment · click to jump
+        </span>
+      </div>
+      {lanes.map(({ key, markers, spark }) => {
+        const s = LANE_STYLE[key];
+        const tall = spark && escPts.length > 0;
+        return (
+          <div key={key} className="flex items-center gap-2">
+            <span className="w-20 shrink-0 text-right text-[9px] font-medium text-slate-500">
+              {s.label}
+            </span>
+            <div className={`relative flex-grow ${tall ? 'h-7' : 'h-4'} rounded bg-slate-900 border border-slate-800 overflow-hidden`}>
+              {tall && (
+                <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
+                  {/* review threshold (late_mean ≥ 0.30) */}
+                  <line x1="0" y1="14" x2="100" y2="14" stroke="rgba(251,191,36,0.25)" strokeWidth="0.4" strokeDasharray="2,1.5" />
+                  {/* full trajectory, dim */}
+                  <polyline points={sparkPath} fill="none" stroke="rgba(251,191,36,0.3)" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+                  {/* played portion, bright */}
+                  <g clipPath="url(#escProgress)">
+                    <polyline points={sparkPath} fill="none" stroke="rgba(251,191,36,0.95)" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+                  </g>
+                  <defs>
+                    <clipPath id="escProgress">
+                      <rect x="0" y="0" width={progress * 100} height="20" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              )}
+              {markers.length === 0 && !tall && (
+                <span className="absolute inset-0 flex items-center pl-2 text-[8px] text-slate-700">
+                  no findings anchored
+                </span>
+              )}
+              {markers.map((m, i) => {
+                const fired = time >= m.sec;
+                const cls = m.fail ? s.fail : fired ? s.on : s.off;
+                return (
+                  <button
+                    key={i}
+                    title={m.tip}
+                    onClick={() => seek(m.sec + 0.02)}
+                    className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border transition-all duration-300 ${cls} hover:scale-150 z-10`}
+                    style={{ left: `${(m.sec / duration) * 100}%` }}
+                  />
+                );
+              })}
+            </div>
+            <span className="w-6 shrink-0 text-[9px] font-mono text-slate-600">
+              {markers.length}
+            </span>
+          </div>
+        );
+      })}
+      {traj.length > 0 && (
+        <div className="flex items-center gap-2">
+          <span className="w-20 shrink-0 text-right text-[9px] font-medium text-slate-500" title="Audio model's per-sentence sentiment, bucketed across the call. Green = positive, red = negative, grey = neutral.">
+            Audio tone
+          </span>
+          <div className="flex-grow space-y-px">
+            {[['agent_val', 'agent'], ['cust_val', 'customer']].map(([field, who]) => (
+              <div key={field} className="flex h-[7px] rounded-sm overflow-hidden bg-slate-900 border border-slate-800">
+                {traj.map((t, i) => (
+                  <div
+                    key={i}
+                    className="flex-1"
+                    title={t[field] != null ? `${who} tone ${t[field] > 0.05 ? 'positive' : t[field] < -0.05 ? 'negative' : 'neutral'} (${Math.round(t.p * 100)}% through call)` : ''}
+                    style={{ backgroundColor: valColor(t[field]), opacity: t.p <= progress ? 1 : 0.35 }}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          <span className="w-6 shrink-0 text-[8px] leading-tight text-slate-600 text-left">ag<br/>cu</span>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -411,6 +674,9 @@ export default function App() {
                 <div className="text-xs text-slate-400 mt-0.5">{activeChapter.summary}</div>
               </div>
             </div>
+
+            {/* agent findings — where each agent grounded its judgments */}
+            <AgentLanes evaluation={evaluation} duration={duration} time={displayTime} seek={seek} />
           </div>
         </section>
 

@@ -414,13 +414,13 @@
     }
   ],
   "evaluation": {
-    "rubric_version": "0.2.0",
+    "rubric_version": "0.4.1",
     "metadata": {
       "call_id": "en_CA_Banking_1586889",
       "domain": "banking",
       "accent": "en-CA",
       "duration_seconds": 636.2,
-      "transcript_model": "faster-whisper small.en/int8"
+      "transcript_model": "faster-whisper small.en/int8 + per-channel"
     },
     "compliance": {
       "name_announced": {
@@ -457,7 +457,7 @@
           "speaker": "AGENT",
           "timestamp": "00:40",
           "sec": 40.49,
-          "turn": 3
+          "turn": 2
         },
         "note": null
       },
@@ -465,11 +465,11 @@
       "resolution_provided": {
         "passed": true,
         "evidence": {
-          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers any time online or by phone. And a confirmation text and email will be sent to you shortly.",
+          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers anytime online or by phone. And a confirmation text and email will be sent to you shortly. Does everything sound correct so far?",
           "speaker": "AGENT",
           "timestamp": "07:33",
           "sec": 452.68,
-          "turn": 35
+          "turn": 34
         },
         "note": null
       },
@@ -484,20 +484,29 @@
         "score": 5,
         "signals_present": [
           "first-call resolution",
-          "appropriate call duration",
+          "appropriate call duration for complexity",
           "no unnecessary holds or transfers"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
+            "quote": "Okay, great. So is there anything else I can help you with today?",
             "speaker": "AGENT",
-            "timestamp": "07:33",
-            "sec": 452.68,
-            "turn": 35
+            "timestamp": "08:17",
+            "sec": 496.53,
+            "turn": 36
           }
         ],
-        "requires_audio": false
+        "requires_audio": false,
+        "hybrid": {
+          "text_score": 5,
+          "acoustic_score": null,
+          "text_weight": 1.0,
+          "acoustic_weight": 0.0,
+          "coverage": null,
+          "channel": null,
+          "method": "text_only"
+        }
       },
       "problem_resolution": {
         "score": 5,
@@ -506,7 +515,7 @@
           "explained pros and cons",
           "waited for customer preference",
           "had a backup plan",
-          "solution fits customer's situation",
+          "solution fits customer's specific situation",
           "explained WHY",
           "issue solved by end",
           "offered alternatives"
@@ -514,17 +523,26 @@
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "So you can adjust or cancel the transfer at any time through the mobile app or online banking. So it's at the top in the transfer section. You can tap on scheduled transfers and then you'll be able to edit the details.",
+            "quote": "Yeah, for sure. So you can just adjust or cancel the transfer at any time through the mobile app or online banking. So it's at the top in the transfer section. So you tap on scheduled transfers and then you'll be able to edit the details.",
             "speaker": "AGENT",
             "timestamp": "03:53",
-            "sec": null,
-            "turn": null
+            "sec": 232.89,
+            "turn": 18
           }
         ],
-        "requires_audio": false
+        "requires_audio": false,
+        "hybrid": {
+          "text_score": 5,
+          "acoustic_score": null,
+          "text_weight": 1.0,
+          "acoustic_weight": 0.0,
+          "coverage": null,
+          "channel": null,
+          "method": "text_only"
+        }
       },
       "clarity": {
-        "score": 4,
+        "score": 5,
         "signals_present": [
           "asked open-ended diagnostic questions",
           "checked understanding",
@@ -535,43 +553,55 @@
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "So how much would you like to transfer each month?",
-            "speaker": "AGENT",
-            "timestamp": "01:33",
-            "sec": 92.86,
-            "turn": 6
-          },
-          {
-            "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account...",
+            "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
             "speaker": "AGENT",
             "timestamp": "07:33",
             "sec": 452.68,
-            "turn": 35
+            "turn": 34
           }
         ],
-        "requires_audio": false
+        "requires_audio": false,
+        "hybrid": {
+          "text_score": 5,
+          "acoustic_score": null,
+          "text_weight": 1.0,
+          "acoustic_weight": 0.0,
+          "coverage": null,
+          "channel": null,
+          "method": "text_only"
+        }
       },
       "professionalism": {
         "score": 5,
         "signals_present": [
-          "proper grammar and complete sentences",
+          "proper grammar and complete sentences throughout",
           "no slang or informal language",
           "knew the answer or actively found it",
           "provided accurate information",
-          "explained WHY",
-          "listened fully without interrupting"
+          "explained WHY, not just what to do",
+          "listened fully without interrupting",
+          "willing to repeat or rephrase when asked"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Absolutely, Mr. Carter, I can help you with that. Before we start, can I verify your identity for security purposes? Could you confirm your date of birth and the last four digits of your checking account number?",
+            "quote": "Okay, that's a smart move. Consistent savings make projects like that a lot easier to handle.",
             "speaker": "AGENT",
-            "timestamp": "00:40",
-            "sec": 40.49,
-            "turn": 3
+            "timestamp": "01:33",
+            "sec": 92.86,
+            "turn": 6
           }
         ],
-        "requires_audio": true
+        "requires_audio": true,
+        "hybrid": {
+          "text_score": 5,
+          "acoustic_score": 4.5,
+          "text_weight": 0.69,
+          "acoustic_weight": 0.31,
+          "coverage": 0.78,
+          "channel": "AGENT",
+          "method": "weighted_mean"
+        }
       },
       "empathy": {
         "score": 4,
@@ -585,50 +615,54 @@
         ],
         "evidence": [
           {
-            "quote": "Okay, that's a smart move. Consistent savings make projects like that a lot easier to handle.",
+            "quote": "Yeah, I can imagine that. Renovations have a way of growing as they go.",
             "speaker": "AGENT",
-            "timestamp": "01:33",
-            "sec": 92.86,
-            "turn": 6
-          },
-          {
-            "quote": "Renovations have a way of growing as they go. What kind of renovation are you planning if you don't mind me asking?",
-            "speaker": "AGENT",
-            "timestamp": "06:01",
-            "sec": 360.95,
-            "turn": 28
+            "timestamp": "05:58",
+            "sec": 358.49,
+            "turn": 26
           }
         ],
-        "requires_audio": true
+        "requires_audio": true,
+        "hybrid": {
+          "text_score": 4,
+          "acoustic_score": 4.5,
+          "text_weight": 0.69,
+          "acoustic_weight": 0.31,
+          "coverage": 0.78,
+          "channel": "AGENT",
+          "method": "weighted_mean"
+        }
       },
       "customer_satisfaction": {
-        "score": 5,
+        "score": 4,
         "signals_present": [
           "problem was identified clearly",
-          "issue was addressed",
-          "clear resolution provided",
-          "agent didn't dismiss or minimize concern",
-          "agent followed through on promises",
+          "issue was actually addressed",
+          "clear resolution was provided",
+          "agent didn't dismiss or minimize the customer's concern",
+          "agent followed through on promises made during the call",
           "first-call resolution achieved"
         ],
         "signals_absent": [],
         "evidence": [
           {
-            "quote": "Everything sounds perfect. Yes, please.",
+            "quote": "Everything sounds perfect.",
             "speaker": "CUSTOMER",
-            "timestamp": "07:28",
-            "sec": 447.55,
-            "turn": 34
-          },
-          {
-            "quote": "That's all for now. Thanks again, Emily. Have a great afternoon.",
-            "speaker": "CUSTOMER",
-            "timestamp": "10:22",
-            "sec": 621.63,
-            "turn": 51
+            "timestamp": "08:14",
+            "sec": 493.91,
+            "turn": 35
           }
         ],
-        "requires_audio": true
+        "requires_audio": true,
+        "hybrid": {
+          "text_score": 5,
+          "acoustic_score": 2.43,
+          "text_weight": 0.78,
+          "acoustic_weight": 0.22,
+          "coverage": 0.55,
+          "channel": "CUSTOMER",
+          "method": "weighted_mean"
+        }
       }
     },
     "escalation": {
@@ -636,12 +670,459 @@
       "customer_emotion_text": "calm",
       "risk_level": "none",
       "evidence": [],
-      "requires_audio": true
+      "requires_audio": true,
+      "hybrid": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "late_mean_escalation": 0.211,
+        "peak_escalation": 0.385,
+        "method": "agreement",
+        "arbitration_rationale": null
+      }
+    },
+    "investigation": null,
+    "workflow": {
+      "subject": "Set up an automatic monthly transfer between checking and savings accounts",
+      "expected_steps": [
+        {
+          "step": "Greet the customer by name and introduce yourself with the bank's name",
+          "rationale": "Establishes a professional and personalized opening to the call.",
+          "met": true,
+          "evidence": {
+            "quote": "Oh, good afternoon. Thank you for calling North Star Bank customer care. My name is Emily. How can I help you today?",
+            "speaker": "AGENT",
+            "timestamp": "00:13",
+            "sec": 13.46,
+            "turn": 0
+          }
+        },
+        {
+          "step": "Verify the customer's identity using security questions or account details",
+          "rationale": "Ensures compliance with security protocols before discussing account transactions.",
+          "met": true,
+          "evidence": {
+            "quote": "Before we start, can I verify your identity for security purposes? Could you confirm your date of birth and the last four digits of your checking account number?",
+            "speaker": "AGENT",
+            "timestamp": "00:40",
+            "sec": 40.49,
+            "turn": 2
+          }
+        },
+        {
+          "step": "Confirm the customer's intent to set up an automatic monthly transfer",
+          "rationale": "Clarifies the purpose of the call and aligns expectations.",
+          "met": true,
+          "evidence": {
+            "quote": "So you'd like to set up an automatic transfer from your checking to your new savings account, correct?",
+            "speaker": "AGENT",
+            "timestamp": "01:07",
+            "sec": 67.43,
+            "turn": 4
+          }
+        },
+        {
+          "step": "Ask for the source and destination account numbers (checking and savings)",
+          "rationale": "Identifies the accounts involved in the transfer setup.",
+          "met": false,
+          "evidence": null
+        },
+        {
+          "step": "Specify the transfer amount and confirm it with the customer",
+          "rationale": "Ensures accuracy in the transfer details to avoid disputes.",
+          "met": true,
+          "evidence": {
+            "quote": "So how much would you like to transfer each month?",
+            "speaker": "AGENT",
+            "timestamp": "01:33",
+            "sec": 92.86,
+            "turn": 6
+          }
+        },
+        {
+          "step": "Confirm the transfer frequency as monthly and the preferred date of the month",
+          "rationale": "Clarifies the timing and frequency of the automatic transfer.",
+          "met": true,
+          "evidence": {
+            "quote": "And would you like that transfer to occur on a specific date each month, like, for example, right after you get your paycheck?",
+            "speaker": "AGENT",
+            "timestamp": "01:51",
+            "sec": 110.67,
+            "turn": 8
+          }
+        },
+        {
+          "step": "Explain any fees, limits, or terms associated with the automatic transfer",
+          "rationale": "Provides transparency about potential costs or restrictions.",
+          "met": true,
+          "evidence": {
+            "quote": "Yes, there's a few limits in place depending on the type of account. So for the regular checking and savings account, like yours, so the maximum automated transfer is $10,000 per month. So since you're transferring $400, you're well within the limit.",
+            "speaker": "AGENT",
+            "timestamp": "03:22",
+            "sec": 201.94,
+            "turn": 16
+          }
+        },
+        {
+          "step": "Confirm the transfer setup details and offer to send a confirmation email or letter",
+          "rationale": "Ensures the customer understands and acknowledges the arrangement.",
+          "met": true,
+          "evidence": {
+            "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers anytime online or by phone. And a confirmation text and email will be sent to you shortly. Does everything sound correct so far?",
+            "speaker": "AGENT",
+            "timestamp": "07:33",
+            "sec": 452.68,
+            "turn": 34
+          }
+        }
+      ]
     },
     "overall_summary": null,
+    "_acoustic": {
+      "trajectory": [
+        {
+          "p": 0.0104,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.0312,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": null
+        },
+        {
+          "p": 0.0521,
+          "esc": 0.272,
+          "cust_val": -0.333,
+          "agent_val": null
+        },
+        {
+          "p": 0.0729,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.0938,
+          "esc": 0.315,
+          "cust_val": 1.0,
+          "agent_val": 0.0
+        },
+        {
+          "p": 0.1146,
+          "esc": 0.334,
+          "cust_val": -1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.1354,
+          "esc": 0.339,
+          "cust_val": -1.0,
+          "agent_val": 0.667
+        },
+        {
+          "p": 0.1562,
+          "esc": 0.104,
+          "cust_val": 1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.1771,
+          "esc": 0.247,
+          "cust_val": -0.5,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.1979,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.5
+        },
+        {
+          "p": 0.2188,
+          "esc": 0.259,
+          "cust_val": -1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.2396,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.5
+        },
+        {
+          "p": 0.2604,
+          "esc": 0.317,
+          "cust_val": 1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.2812,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.3021,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.0
+        },
+        {
+          "p": 0.3229,
+          "esc": 0.224,
+          "cust_val": 0.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.3438,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.667
+        },
+        {
+          "p": 0.3646,
+          "esc": 0.34,
+          "cust_val": -1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.3854,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.4062,
+          "esc": 0.316,
+          "cust_val": -1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.4271,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.4479,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.4688,
+          "esc": 0.297,
+          "cust_val": -1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.4896,
+          "esc": 0.174,
+          "cust_val": 1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.5104,
+          "esc": 0.314,
+          "cust_val": -1.0,
+          "agent_val": 0.333
+        },
+        {
+          "p": 0.5312,
+          "esc": 0.262,
+          "cust_val": 0.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.5521,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.5729,
+          "esc": 0.135,
+          "cust_val": 1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.5938,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.6146,
+          "esc": 0.271,
+          "cust_val": 0.0,
+          "agent_val": 0.0
+        },
+        {
+          "p": 0.6354,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.6562,
+          "esc": 0.281,
+          "cust_val": -1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.6771,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.667
+        },
+        {
+          "p": 0.6979,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.7188,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.0
+        },
+        {
+          "p": 0.7396,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.7604,
+          "esc": 0.298,
+          "cust_val": -1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.7812,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.8021,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.5
+        },
+        {
+          "p": 0.8229,
+          "esc": 0.137,
+          "cust_val": 0.0,
+          "agent_val": 0.0
+        },
+        {
+          "p": 0.8438,
+          "esc": 0.14,
+          "cust_val": 0.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.8646,
+          "esc": 0.259,
+          "cust_val": -1.0,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.8854,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 1.0
+        },
+        {
+          "p": 0.9062,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.5
+        },
+        {
+          "p": 0.9271,
+          "esc": 0.298,
+          "cust_val": -1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.9479,
+          "esc": null,
+          "cust_val": null,
+          "agent_val": 0.667
+        },
+        {
+          "p": 0.9688,
+          "esc": 0.104,
+          "cust_val": 1.0,
+          "agent_val": null
+        },
+        {
+          "p": 0.9896,
+          "esc": 0.104,
+          "cust_val": 1.0,
+          "agent_val": 1.0
+        }
+      ],
+      "n_sentences": 152
+    },
     "_anchor_stats": {
-      "total": 13,
-      "anchored": 12
+      "total": 17,
+      "anchored": 17
+    },
+    "_pipeline": {
+      "nodes": {
+        "assemble": {
+          "duration": 0.03
+        },
+        "chapters": {
+          "duration": 24.9,
+          "served_by": "router",
+          "runs": 1
+        },
+        "compliance": {
+          "duration": 9.7,
+          "served_by": "mistral-small-latest",
+          "runs": 1
+        },
+        "escalation": {
+          "duration": 3.0,
+          "served_by": "mistral-small-latest",
+          "runs": 1
+        },
+        "quality": {
+          "duration": 14.9,
+          "served_by": "mistral-small-latest",
+          "runs": 1
+        },
+        "workflow": {
+          "duration": 24.6,
+          "served_by": "mistral-small-latest",
+          "phases": {
+            "subject": 4.7,
+            "expected": 8.9,
+            "check": 11.0
+          },
+          "runs": 1
+        },
+        "fuse": {
+          "duration": 0.01,
+          "acoustic_available": true,
+          "fused_dims": [
+            "professionalism",
+            "empathy",
+            "customer_satisfaction"
+          ],
+          "acoustic_risk": "none",
+          "disputed": false
+        }
+      },
+      "anchor_passes": 1,
+      "wall_clock": 46.5
     }
   }
 }
