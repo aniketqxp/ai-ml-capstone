@@ -205,7 +205,7 @@ for i, (name, key) in enumerate(legend_items):
     d.text((s(bx + lw_box + lgap), s(ly + 1)), name, font=F_LEGEND, fill="#1E293B")
 
 # ── Save ──────────────────────────────────────────────────────────────────────
-out_dir = r"D:\Desktop\ai-ml-capstone\docs"
+out_dir = os.path.dirname(os.path.abspath(__file__))
 os.makedirs(out_dir, exist_ok=True)
 out_png = os.path.join(out_dir, "wbs_diagram.png")
 img_final = img.resize((W, H), Image.LANCZOS)
