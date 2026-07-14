@@ -1,0 +1,233 @@
+\section{Evaluation Pipeline}
+
+\subsection{Combining Sentiment (Acoustic) Output with the LLM Evaluation Pipeline}
+
+The evaluation graph runs two independent signal sources per call: an LLM
+reads the transcript against the rubric (compliance, quality, workflow,
+escalation), and a separate acoustic sentiment model scores each
+speaker-attributed sentence for valence, dominant emotion, and an
+escalation score. These are combined through a deterministic \emph{fusion}
+step rather than by feeding acoustic output back into the LLM prompt, so
+that the acoustic signal's variance cannot silently perturb the text
+model's judgment, and every fused score remains reproducible and
+auditable after the fact.
+
+Design principle: the fusion module is deterministic \emph{only where
+agreement gives it something to be deterministic about}. Where the two
+signal sources disagree, the disagreement is routed to a dedicated
+arbitration node in the graph rather than resolved by a fixed rule --
+disagreement is precisely the case in which a static formula has no basis
+for preferring one channel over the other.
+
+\paragraph{Quality dimension fusion.}
+Three of the six quality dimensions are acoustically informed:
+\texttt{professionalism} and \texttt{empathy} (agent channel),
+and \texttt{customer\_satisfaction} (customer channel, final third of the
+call weighted $2\times$ to emphasize how the call was left). For a channel
+with mean valence $\bar v \in [-1, 1]$:
+\begin{align}
+  a &= 3 + 2\bar v \qquad \text{(maps $[-1,1] \to [1,5]$)} \\
+  w_a &= W_{\text{cap}} \cdot \text{coverage}, \qquad W_{\text{cap}} = 0.4 \\
+  \text{fused} &= \operatorname{clamp}\big(\operatorname{round}((1-w_a)\cdot \text{text} + w_a \cdot a),\ 1,\ 5\big)
+\end{align}
+where \emph{coverage} is the fraction of that channel's sentences the
+sentiment model successfully processed. The text score is capped at a
+maximum acoustic weight of 0.4, since the rubric's behaviours are defined
+in text; acoustics modulate rather than override. When a call has no
+acoustic data, $w_a = 0$ and the dimension is text-only.
+
+\paragraph{Escalation risk fusion.}
+The customer channel's escalation-score trajectory yields two summary
+statistics: $\text{late\_mean}$ (mean score over the final third of the
+call) and $\text{peak}$ (max score anywhere). An acoustic risk tier is
+assigned from $\text{late\_mean}$ alone:
+\[
+  \text{acoustic\_risk} =
+  \begin{cases}
+    \text{escalate} & \text{late\_mean} \ge 0.50 \\
+    \text{review}   & \text{late\_mean} \ge 0.30 \\
+    \text{none}     & \text{otherwise}
+  \end{cases}
+\]
+This is then merged against the LLM's text-derived risk tier:
+\begin{itemize}
+  \item If both tiers \textbf{agree}, the merge is deterministic
+        (\texttt{method = agreement}).
+  \item If they \textbf{disagree}, the call is routed to an
+        \texttt{arbitrate} node -- a focused LLM call that is given both
+        tier verdicts, the summary statistics, and the trajectory itself,
+        and must return a single adjudicated risk level with a rationale
+        (\texttt{method = llm\_arbitration}).
+\end{itemize}
+\texttt{peak} is retained only as contextual input to the arbitrator; it
+is not used as a tier trigger (see \S\ref{subsec:formula} for why).
+
+\subsection{Evolution of Compliance, Quality, and Workflow Evaluation}
+
+\begin{itemize}
+  \item \textbf{Compliance and quality} moved from a single monolithic
+        prompt to independent, parallel LangGraph nodes, one per rubric
+        section, each validated against its own Pydantic schema and
+        retried independently on malformed output. This isolates failures:
+        a malformed compliance response no longer invalidates the quality
+        or workflow extraction for the same call.
+  \item \textbf{Workflow checking} evaluates a per-call, LLM-generated
+        checklist of expected steps (derived from a call subject
+        extracted in a separate, isolated phase) against the transcript.
+        Two correctness issues were found and fixed this cycle:
+        \begin{enumerate}
+          \item \emph{Subject leakage.} The subject-extraction prompt was
+                allowed to surface call-specific figures (dollar amounts,
+                account numbers, dates), which made generated checklist
+                items trivially satisfiable by the same figures already
+                in the transcript. The prompt now explicitly excludes
+                call-specific detail from the extracted subject.
+          \item \emph{False-vs-null asymmetry.} The step-checking prompt
+                gave the model an escape hatch to mark a step
+                \texttt{null} without matching guidance for when to
+                affirmatively conclude \texttt{false}, which biased the
+                model toward avoiding determinations. An explicit rule
+                was added: \texttt{null} is reserved for steps the
+                transcript genuinely cannot decide; a step that plainly
+                never happened is \texttt{false}.
+          \item \emph{Silent completeness failure.} Under upstream
+                rate-limiting, a retried LLM call could return fewer
+                checklist entries than steps given, and the prior
+                index-based join silently padded the missing entries
+                with \texttt{met = null} -- a truncated response still
+                passed schema validation despite being incomplete. The
+                workflow node now explicitly validates that the returned
+                entry count matches the given step count and raises on
+                mismatch, triggering the existing retry loop.
+        \end{enumerate}
+        After both fixes, a 22-call validation batch showed workflow
+        pass rates spread meaningfully from 38\% to 100\% (previously an
+        artificially high, largely null-contaminated result), with zero
+        null entries remaining across the batch.
+  \item \textbf{Escalation risk} gained a conditional arbitration step
+        (\S\ref{subsec:formula}) in place of a fixed merge rule, changing
+        the fusion step from a single formula for all cases to a
+        two-path design: deterministic on agreement, model-adjudicated on
+        disagreement.
+\end{itemize}
+
+\subsection{Current Fusion Formula / Logic}
+\label{subsec:formula}
+
+The escalation thresholds are empirically fitted rather than asserted.
+Across a 22-call validation batch ($n=21$ calls with paired acoustic
+data), the observed distribution of $\text{late\_mean}$ was: minimum
+0.166, p25 0.219, median 0.227, p75 0.257, p90 0.281, maximum 0.406 (a
+single outlier; the next-highest value was 0.281). The \texttt{review}
+threshold (0.30) was set just above the calm cluster's p90, so only the
+outlier call crosses it; the \texttt{escalate} threshold (0.50) was set
+deliberately outside the observed range, since no call in the batch
+warranted an acoustic-only escalate verdict and the bar should stay high
+until data demonstrates otherwise.
+
+\texttt{peak} was evaluated as a candidate second trigger but discarded:
+its median across the batch was 0.558 and its p90 was 0.696, meaning
+even calm, well-handled calls routinely spike past what would have been
+its threshold. It has no discriminating power as a tier trigger and is
+now recorded only as contextual input to the arbitrator.
+
+Validating this design on the full batch: of the 22 calls, 18 fused by
+deterministic agreement, 1 had no acoustic data (text-only), and 3 were
+routed to arbitration. All 3 arbitrated cases resolved by favoring the
+acoustic signal's read of the call's trajectory over the text-only
+verdict -- including one case where a text-calm transcript was escalated
+to \texttt{review} on the strength of a late-call acoustic escalation
+spike, which then triggered the pipeline's investigation step.
+
+\subsection{LLM Provider Evaluation}
+
+Before wiring a fixed provider into the extraction pipeline, six
+candidate provider/model pairs were benchmarked on the same structured
+extraction task against two contrasting calls (one clean, high-scoring
+banking call; one weaker banking call), so the choice of primary model
+would be evidence-based rather than assumed. Each candidate's raw output
+was auto-scored on four criteria:
+\begin{enumerate}
+  \item \textbf{Schema validity} -- does the output parse and validate
+        against the Pydantic rubric schema?
+  \item \textbf{Evidence fidelity} -- what fraction of quoted evidence
+        strings are verbatim substrings of the transcript (vs.\
+        hallucinated)?
+  \item \textbf{Score spread} -- does the model's quality scoring
+        actually discriminate between the clean and the weaker call, or
+        does it return near-identical scores regardless of call quality?
+  \item \textbf{Conservative bias} -- of the compliance items marked
+        \texttt{PASS}, how many carry supporting evidence (a model that
+        passes items without evidence is over-lenient)?
+\end{enumerate}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Provider / Model} & \textbf{Latency} & \textbf{Evidence Fidelity} & \textbf{Outcome} \\
+\hline
+Mistral (\texttt{mistral-small-latest})            & moderate & high, conservative & \textbf{Primary} -- only candidate whose scores discriminated between the two calls ([5,4,3,5,2] vs.\ [4,4,3,4,2]) \\
+SambaNova (\texttt{Meta-Llama-3.3-70B-Instruct})    & fastest (2.6s) & 75\% & \textbf{Fallback} -- fastest, best raw fidelity, perfectly conservative \\
+GitHub (\texttt{gpt-4o-mini})                       & moderate & reliable JSON & \textbf{Safety} -- always-on free baseline \\
+SambaNova (\texttt{DeepSeek-V3.1})                  & moderate & 50\% & \textbf{Excluded} -- fabricates quotes, the worst failure mode for a compliance system \\
+Gemini (\texttt{gemini-2.0-flash})                  & -- & -- & Benchmarked, not selected \\
+Cohere (\texttt{command-r7b-12-2024})               & -- & -- & Benchmarked, not selected \\
+\hline
+\end{tabular}
+\caption{LLM provider/model comparison for the QA extraction task
+(\texttt{benchmark.py}). Ranking criteria: schema validity, verbatim
+evidence fidelity, cross-call score spread, and conservative compliance
+bias.}
+\end{table}
+
+The three retained tiers (Mistral $\to$ Llama-3.3-70B $\to$
+GPT-4o-mini) were wired into a LiteLLM \texttt{Router} with strict
+priority fallback: a request is served by the primary tier, and on a
+429/timeout/error transparently drops to the next tier with per-tier
+retry and cooldown, so a single provider outage or rate limit does not
+fail the pipeline. This routing policy is derived directly from the
+benchmark results above rather than chosen independently of them.
+
+\subsection{Transcription: Provider Evaluation and Accuracy Metrics}
+
+No structural changes were made to the transcription pipeline this
+cycle. Work was limited to accuracy benchmarking of the current
+transcription approach (per-channel faster-whisper \texttt{small.en},
+stereo channel attribution) as a baseline for evaluating candidate LLM
+transcription providers.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Metric} & \textbf{Value} \\
+\hline
+Calls evaluated & 22 \\
+Total reference words & 32{,}059 \\
+Normalised WER & 9.8\% \\
+Normalised accuracy & \textbf{90.2\%} \\
+Target ($\geq 90\%$) & PASS \\
+\hline
+\end{tabular}
+\caption{Overall transcription accuracy, normalised (Whisper
+\texttt{EnglishTextNormalizer}: canonicalises numbers, contractions, and
+spelling variants; strips disfluency annotations).}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Domain} & \textbf{Calls} & \textbf{Accuracy (normalised)} & \textbf{Pass?} \\
+\hline
+Banking & 10 & 91.1\% & Yes \\
+Health  & 7  & 86.5\% & No \\
+Telecom & 5  & 93.2\% & Yes \\
+\hline
+\end{tabular}
+\caption{Transcription accuracy by domain. Health falls short of the
+90\% target, driven substantially by one outlier call
+(\texttt{en\_CA\_Health\_1590851}, 74.4\% normalised accuracy, 37.9\%
+customer-channel WER) rather than a uniform domain weakness.}
+\end{table}
