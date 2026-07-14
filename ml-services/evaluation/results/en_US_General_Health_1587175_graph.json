@@ -1,0 +1,424 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Health_1587175",
+    "domain": "health",
+    "accent": "en-US_General",
+    "duration_seconds": 643.6,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hi, thank you for calling Southwest Clinic. My name is Erica, how can I help you?",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.2,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hi, thank you for calling Southwest Clinic. My name is Erica, how can I help you?",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.2,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "And Ms. James, can I get your date of birth?",
+        "speaker": "AGENT",
+        "timestamp": "04:06",
+        "sec": 246.43,
+        "turn": 28
+      },
+      "note": null
+    },
+    "identity_method": "date of birth",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "you should be able to get your refill and be good until the date that you have your appointment.",
+        "speaker": "AGENT",
+        "timestamp": "10:28",
+        "sec": 627.93,
+        "turn": 100
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 4,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration for complexity",
+        "no unnecessary holds"
+      ],
+      "signals_absent": [
+        "no unnecessary transfers"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, and just give it like a couple of hours for the prescription to be sent over to because she is currently with a patient. So if you could give it a couple of hours for a doctor medicine to send those prescriptions over to your pharmacy, and then you should be able to get your refill and be good until the date that you have your appointment.",
+          "speaker": "AGENT",
+          "timestamp": "10:09",
+          "sec": 609.34,
+          "turn": 96
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "solution fits customer's specific situation",
+        "explained WHY",
+        "offered alternatives if issue was unsolvable"
+      ],
+      "signals_absent": [
+        "no explicit options presented as A/B/C"
+      ],
+      "evidence": [
+        {
+          "quote": "Let me reach out to Dr. Madison real quick. Can I put you on a brief hold? ... Okay, Ms. James. Yes, I spoke to Dr. Madison, and she is able to send that prescription for seven days.",
+          "speaker": "AGENT",
+          "timestamp": "05:48",
+          "sec": 348.14,
+          "turn": 38
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "provided a recap or summary at the end"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "And is there anything I need to bring with me to the appointment next week on Tuesday?",
+          "speaker": "CUSTOMER",
+          "timestamp": "07:20",
+          "sec": 439.7,
+          "turn": 59
+        },
+        {
+          "quote": "Okay, and just give it like a couple of hours for the prescription to be sent over to because she is currently with a patient. So if you could give it a couple of hours for a doctor medicine to send those prescriptions over to your pharmacy, and then you should be able to get your refill and be good until the date that you have your appointment.",
+          "speaker": "AGENT",
+          "timestamp": "10:09",
+          "sec": 609.34,
+          "turn": 96
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "proper grammar and complete sentences throughout",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Hi, thank you for calling Southwest Clinic. My name is Erica, how can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:13",
+          "sec": 13.2,
+          "turn": 0
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": "AGENT",
+        "method": "text_only"
+      }
+    },
+    "empathy": {
+      "score": 3,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions"
+      ],
+      "signals_absent": [
+        "no validation phrases",
+        "matches emotional register of customer"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, Ms. James, can I get your date of birth?",
+          "speaker": "AGENT",
+          "timestamp": "04:06",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": "AGENT",
+        "method": "text_only"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 5,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was actually addressed",
+        "clear resolution was provided",
+        "agent didn't dismiss or minimize the customer's concern",
+        "agent followed through on promises made during the call",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Great. Thank you so much.",
+          "speaker": "CUSTOMER",
+          "timestamp": "10:36",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": "CUSTOMER",
+        "method": "text_only"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": null,
+      "late_mean_escalation": null,
+      "peak_escalation": null,
+      "method": "text_only",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Requested a follow-up appointment and prescription refill for an ongoing medical issue",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with role and company",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Hi, thank you for calling Southwest Clinic. My name is Erica, how can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:13",
+          "sec": 13.2,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name and date of birth)",
+        "rationale": "Ensures compliance with privacy regulations and confirms the correct patient.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, can I have your first and last name, please?",
+          "speaker": "AGENT",
+          "timestamp": "00:29",
+          "sec": 29.24,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the ongoing medical issue and recent treatment details",
+        "rationale": "Validates the need for the requested follow-up and refill.",
+        "met": true,
+        "evidence": {
+          "quote": "Last time I came in, I had a problem and the doctor prescribed me some medication. It was probably contact dermatitis, but it wouldn't go away. It's actually gotten worse.",
+          "speaker": "CUSTOMER",
+          "timestamp": "01:12",
+          "sec": 72.38,
+          "turn": 9
+        }
+      },
+      {
+        "step": "Review the customer's current medication list and allergies",
+        "rationale": "Ensures safety and prevents adverse drug interactions.",
+        "met": true,
+        "evidence": {
+          "quote": "Yeah, I'm running really low on metformin. I only have a few pills left.",
+          "speaker": "CUSTOMER",
+          "timestamp": "05:04",
+          "sec": 291.49,
+          "turn": 31
+        }
+      },
+      {
+        "step": "Schedule the follow-up appointment for the earliest available slot that meets medical urgency",
+        "rationale": "Addresses the customer's need promptly while adhering to clinical guidelines.",
+        "met": true,
+        "evidence": {
+          "quote": "Yes, she has another one at 4 p.m. One available at 2 p.m., one at 4 p.m.",
+          "speaker": "AGENT",
+          "timestamp": "03:39",
+          "sec": 218.76,
+          "turn": 26
+        }
+      },
+      {
+        "step": "Process the prescription refill request and verify the pharmacy preference",
+        "rationale": "Ensures the medication is sent to the correct location and avoids delays.",
+        "met": true,
+        "evidence": {
+          "quote": "Yes, exactly.",
+          "speaker": "AGENT",
+          "timestamp": "06:28",
+          "sec": 387.88,
+          "turn": 46
+        }
+      },
+      {
+        "step": "Provide clear instructions for pre-appointment preparations (e.g., fasting, medication adjustments)",
+        "rationale": "Optimizes the follow-up visit and ensures accurate test results.",
+        "met": true,
+        "evidence": {
+          "quote": "the only thing that we always request is a copy of your ID driver's license. And, of course, your insurance, if it's the same one that we have on file,",
+          "speaker": "AGENT",
+          "timestamp": "07:27",
+          "sec": 446.72,
+          "turn": 60
+        }
+      },
+      {
+        "step": "Summarize the appointment date, time, refill status, and next steps",
+        "rationale": "Confirms understanding and reduces the risk of miscommunication.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, and just give it like a couple of hours for the prescription to be sent over to because she is currently with a patient.",
+          "speaker": "AGENT",
+          "timestamp": "10:09",
+          "sec": 609.34,
+          "turn": 96
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_anchor_stats": {
+    "total": 19,
+    "anchored": 17
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 2.5,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.9,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 4.3,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 46.2,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.4,
+          "check": 43.0
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.0,
+        "acoustic_available": false,
+        "fused_dims": [],
+        "acoustic_risk": null,
+        "disputed": false
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 50.6
+  }
+}

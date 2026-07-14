@@ -1,0 +1,721 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Banking_1587700",
+    "domain": "banking",
+    "accent": "en-US_General",
+    "duration_seconds": 836.3,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Susan.",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.1,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hello, thank you for calling Washington Mutual.",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.1,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "Can I get your first and last name, please?",
+        "speaker": "AGENT",
+        "timestamp": "00:35",
+        "sec": 35.46,
+        "turn": 6
+      },
+      "note": null
+    },
+    "identity_method": "name",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "I am so happy I could help. If you have any other questions or if you need any other assistance, please give us a call at Washington Mutual, and if you ever reach out to myself or Chelsea, we'll be more than happy to help you set up these payments so that you don't run into this issue again.",
+        "speaker": "AGENT",
+        "timestamp": "13:30",
+        "sec": 810.48,
+        "turn": 56
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration for complexity",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "I will put a note on your account and also go get with my supervisor after I end the call and let them know what's going on.",
+          "speaker": "AGENT",
+          "timestamp": "09:35",
+          "sec": 575.18,
+          "turn": 42
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "offered multiple options",
+        "explained pros and cons of each option",
+        "waited for customer preference",
+        "had a backup plan",
+        "solution fits customer's specific situation",
+        "explained WHY",
+        "issue solved by end",
+        "offered alternatives"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "The other thing that you can do if these types of things occur more often than not, you can always come in and talk to the branch manager and have them put a note in your file or remove the limit altogether.",
+          "speaker": "AGENT",
+          "timestamp": "03:14",
+          "sec": 194.1,
+          "turn": 22
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "asked clarifying questions before solution",
+        "confirmed understanding mid-call"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Do you have an idea of which account you would like for me to transfer those funds from?",
+          "speaker": "AGENT",
+          "timestamp": "02:20",
+          "sec": 139.56,
+          "turn": 18
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "I can ask a supervisor to override this limit for me so that I can make that transfer for you for those funds to be usable today.",
+          "speaker": "AGENT",
+          "timestamp": "01:48",
+          "sec": 108.36,
+          "turn": 16
+        },
+        {
+          "quote": "The transfer typically is immediate. In this case, your funds will also be available immediately. But let me explain the bank's policy a little bit.",
+          "speaker": "AGENT",
+          "timestamp": "06:38",
+          "sec": 398.38,
+          "turn": 36
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.63,
+        "text_weight": 0.67,
+        "acoustic_weight": 0.33,
+        "coverage": 0.82,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions",
+        "matches the emotional register of the customer"
+      ],
+      "signals_absent": [
+        "no explicit validation phrases"
+      ],
+      "evidence": [
+        {
+          "quote": "Oh, no problem.",
+          "speaker": "AGENT",
+          "timestamp": "11:35",
+          "sec": 695.28,
+          "turn": 44
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.63,
+        "text_weight": 0.67,
+        "acoustic_weight": 0.33,
+        "coverage": 0.82,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem identified clearly",
+        "issue addressed",
+        "clear resolution provided",
+        "agent didn't dismiss or minimize concern",
+        "agent followed through on promises",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "That sounds perfect. I'm definitely going to look into that. I said this is a situation that is not going to be eternal, but right now, I do find myself in the need of your services in that capacity. Thank you so much for all the options that you gave me.",
+          "speaker": "CUSTOMER",
+          "timestamp": "11:07",
+          "sec": 667.14,
+          "turn": 43
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.34,
+        "text_weight": 0.71,
+        "acoustic_weight": 0.29,
+        "coverage": 0.72,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "distressed",
+    "risk_level": "none",
+    "evidence": [
+      {
+        "quote": "Quite frankly, I was stressing me out tremendously.",
+        "speaker": "CUSTOMER",
+        "timestamp": "11:07",
+        "sec": 667.14,
+        "turn": 43
+      }
+    ],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.224,
+      "peak_escalation": 0.479,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "requested an immediate one-time transfer from savings to checking account",
+    "expected_steps": [
+      {
+        "step": "greet the customer and offer help",
+        "rationale": "To establish a positive interaction and set the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Hello, thank you for calling Washington Mutual. My name is Susan. How may I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:13",
+          "sec": 13.1,
+          "turn": 0
+        }
+      },
+      {
+        "step": "verify the customer's identity",
+        "rationale": "To ensure security and confirm the caller is authorized to make the transfer.",
+        "met": true,
+        "evidence": {
+          "quote": "Can I get your first and last name, please?",
+          "speaker": "AGENT",
+          "timestamp": "00:35",
+          "sec": 35.46,
+          "turn": 6
+        }
+      },
+      {
+        "step": "confirm the amount to be transferred",
+        "rationale": "To ensure accuracy and avoid any errors in the transaction.",
+        "met": true,
+        "evidence": {
+          "quote": "How much do you need to transfer?",
+          "speaker": "AGENT",
+          "timestamp": "01:37",
+          "sec": 97.47,
+          "turn": 14
+        }
+      },
+      {
+        "step": "confirm the accounts involved in the transfer",
+        "rationale": "To verify that the correct savings and checking accounts are being used.",
+        "met": true,
+        "evidence": {
+          "quote": "I see that you have two checking accounts with us. One is listed as a household account and one is listed as a Christmas account. Which account would you like for me to transfer that $6 ,500 into?",
+          "speaker": "AGENT",
+          "timestamp": "04:15",
+          "sec": 255.24,
+          "turn": 24
+        }
+      },
+      {
+        "step": "explain the transfer process and any fees",
+        "rationale": "To inform the customer of what to expect and any potential costs.",
+        "met": true,
+        "evidence": {
+          "quote": "The transfer typically is immediate. In this case, your funds will also be available immediately. But let me explain the bank's policy a little bit. So typically, if you call to do a transfer of this amount, we do have a 24-hour delay just to make sure that we have all the checks and balances in order before the money can be spent.",
+          "speaker": "AGENT",
+          "timestamp": "06:38",
+          "sec": 398.38,
+          "turn": 36
+        }
+      },
+      {
+        "step": "execute the transfer and provide confirmation",
+        "rationale": "To complete the customer's request and ensure they have a record of the transaction.",
+        "met": true,
+        "evidence": {
+          "quote": "I'm going to go ahead and send you the transaction that we just took care of today. I'm going to text you that information right now, so please let me know as soon as you receive it.",
+          "speaker": "AGENT",
+          "timestamp": "12:32",
+          "sec": 752.23,
+          "turn": 50
+        }
+      },
+      {
+        "step": "recap the transaction details",
+        "rationale": "To confirm the transfer was completed as requested and clarify any remaining questions.",
+        "met": true,
+        "evidence": {
+          "quote": "You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1-0 to your checking account titled Household.",
+          "speaker": "AGENT",
+          "timestamp": "12:32",
+          "sec": 752.23,
+          "turn": 50
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.268,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.166,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0729,
+        "esc": 0.144,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.211,
+        "cust_val": 1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.1146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.29,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.303,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.163,
+        "cust_val": 1.0,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.141,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.196,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.186,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.304,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.75
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.11,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.4271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.38,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.75
+      },
+      {
+        "p": 0.4896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.105,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.25
+      },
+      {
+        "p": 0.5521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5729,
+        "esc": 0.336,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5938,
+        "esc": 0.275,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.266,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6562,
+        "esc": 0.288,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.322,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.7604,
+        "esc": 0.142,
+        "cust_val": 0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.208,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.213,
+        "cust_val": -0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.8438,
+        "esc": 0.205,
+        "cust_val": -0.5,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.479,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.269,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.228,
+        "cust_val": 0.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      }
+    ],
+    "n_sentences": 159
+  },
+  "_anchor_stats": {
+    "total": 19,
+    "anchored": 19
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.04
+      },
+      "chapters": {
+        "duration": 1.9,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 2.0,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 4.2,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 31.5,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.7,
+          "expected": 27.4,
+          "check": 3.5
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.01,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 31.6
+  }
+}

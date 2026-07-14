@@ -1,0 +1,693 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Telecom_1586751",
+    "domain": "telecom",
+    "accent": "en-US_General",
+    "duration_seconds": 367.5,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "This is Alex speaking, how can I help you?",
+        "speaker": "AGENT",
+        "timestamp": "00:12",
+        "sec": 12.34,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "thank you for calling Fast Connect Internet.",
+        "speaker": "AGENT",
+        "timestamp": "00:12",
+        "sec": 12.34,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": false,
+      "evidence": null,
+      "note": "identity was not verified before discussing account details"
+    },
+    "identity_method": null,
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "I will send you an email confirmation with the new plan details, shipping info for the modem, and then I'll include a step -by -step guide for installation.",
+        "speaker": "AGENT",
+        "timestamp": "04:25",
+        "sec": 265.0,
+        "turn": 26
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay, I will go ahead and get that processed for you right now.",
+          "speaker": "AGENT",
+          "timestamp": "04:00",
+          "sec": 240.32,
+          "turn": 24
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "explained why",
+        "solution fits customer situation"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "So if you're going to switch over, I'd definitely recommend 250 to 500 MBPS plans.",
+          "speaker": "AGENT",
+          "timestamp": "01:40",
+          "sec": 99.5,
+          "turn": 12
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "open-ended questions",
+        "confirmed understanding mid-call"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "What would you like to go with the $250 or the $500?",
+          "speaker": "AGENT",
+          "timestamp": "03:42",
+          "sec": 221.77,
+          "turn": 22
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "complete sentences",
+        "accurate information"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "I can help you set it up once the upgrade is processed.",
+          "speaker": "AGENT",
+          "timestamp": "02:28",
+          "sec": 148.05,
+          "turn": 16
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.53,
+        "text_weight": 0.67,
+        "acoustic_weight": 0.33,
+        "coverage": 0.83,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "validation phrases",
+        "uses customer name"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "that can definitely be frustrating, especially if you're relying on it for work.",
+          "speaker": "AGENT",
+          "timestamp": "00:34",
+          "sec": 33.5,
+          "turn": 2
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.53,
+        "text_weight": 0.67,
+        "acoustic_weight": 0.33,
+        "coverage": 0.83,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "issue addressed",
+        "clear resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "You've been extremely helpful.",
+          "speaker": "CUSTOMER",
+          "timestamp": "05:57",
+          "sec": 357.44,
+          "turn": 31
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.49,
+        "text_weight": 0.73,
+        "acoustic_weight": 0.27,
+        "coverage": 0.68,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [
+      {
+        "quote": "Thank you so much, Alec. You've been extremely helpful.",
+        "speaker": "CUSTOMER",
+        "timestamp": "06:03",
+        "sec": 357.44,
+        "turn": 31
+      }
+    ],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.266,
+      "peak_escalation": 0.617,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "upgrade to a higher speed internet plan and request a new modem",
+    "expected_steps": [
+      {
+        "step": "Greet the customer and offer help",
+        "rationale": "Establish a positive interaction and set the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Ring ring, thank you for calling Fast Connect Internet. This is Alex speaking, how can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:12",
+          "sec": 12.34,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity",
+        "rationale": "Ensure security and confirm the account holder's authorization.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Ask about the current internet plan",
+        "rationale": "Understand the customer's existing service to provide relevant upgrade options.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, and do you know what plan you're currently on?",
+          "speaker": "AGENT",
+          "timestamp": "01:15",
+          "sec": 75.36,
+          "turn": 6
+        }
+      },
+      {
+        "step": "Present available higher speed internet plans",
+        "rationale": "Inform the customer of options that meet their needs for an upgrade.",
+        "met": true,
+        "evidence": {
+          "quote": "So if you're going to switch over, I'd definitely recommend 250 to 500 MBPS plans. Both would give you a much smoother performance and network connection for remote work, video calls, large file transfers.",
+          "speaker": "AGENT",
+          "timestamp": "01:40",
+          "sec": 99.5,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Confirm the customer's choice of new plan",
+        "rationale": "Ensure the customer is satisfied with their selection before proceeding.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, I will go ahead and get that processed for you right now.",
+          "speaker": "AGENT",
+          "timestamp": "04:00",
+          "sec": 240.32,
+          "turn": 24
+        }
+      },
+      {
+        "step": "Discuss the new modem requirements",
+        "rationale": "Inform the customer about the modem needed for the upgraded plan.",
+        "met": true,
+        "evidence": {
+          "quote": "Great question. Your current modem supports speeds up to 300, so it'll work for the $250 plan, but for the $500, we'd recommend our newer modem for optimal performance.",
+          "speaker": "AGENT",
+          "timestamp": "02:28",
+          "sec": 148.05,
+          "turn": 16
+        }
+      },
+      {
+        "step": "Schedule the modem delivery or installation",
+        "rationale": "Ensure the customer knows when to expect their new equipment.",
+        "met": true,
+        "evidence": {
+          "quote": "I can get it shipped out to you today with instructions for setup.",
+          "speaker": "AGENT",
+          "timestamp": "04:00",
+          "sec": 240.32,
+          "turn": 24
+        }
+      },
+      {
+        "step": "Recap the changes and confirm the order details",
+        "rationale": "Summarize the transaction to ensure clarity and customer satisfaction.",
+        "met": true,
+        "evidence": {
+          "quote": "Awesome. I will send you an email confirmation with the new plan details, shipping info for the modem, and then I'll include a step-by-step guide for installation.",
+          "speaker": "AGENT",
+          "timestamp": "04:25",
+          "sec": 265.0,
+          "turn": 26
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.339,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.357,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.335,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.366,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.426,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.2396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.227,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2812,
+        "esc": 0.21,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.342,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.294,
+        "cust_val": 0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.3854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.155,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.5104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.397,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.11,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.617,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.261,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.7396,
+        "esc": 0.335,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7604,
+        "esc": 0.179,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.614,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.138,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.176,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.268,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9896,
+        "esc": 0.166,
+        "cust_val": 1.0,
+        "agent_val": null
+      }
+    ],
+    "n_sentences": 84
+  },
+  "_anchor_stats": {
+    "total": 17,
+    "anchored": 17
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.02
+      },
+      "chapters": {
+        "duration": 9.9,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 26.5,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 25.7,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 34.8,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 53.6,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 23.2,
+          "expected": 27.2,
+          "check": 3.1
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 53.7
+  }
+}

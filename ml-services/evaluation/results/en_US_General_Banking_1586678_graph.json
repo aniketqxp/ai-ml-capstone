@@ -1,0 +1,701 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Banking_1586678",
+    "domain": "banking",
+    "accent": "en-US_General",
+    "duration_seconds": 398.5,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Alex.",
+        "speaker": "AGENT",
+        "timestamp": "00:24",
+        "sec": 24.24,
+        "turn": 2
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling B &F Bank.",
+        "speaker": "AGENT",
+        "timestamp": "06:21",
+        "sec": 380.73,
+        "turn": 32
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": false,
+      "evidence": null,
+      "note": "no identity verification performed before discussing account details"
+    },
+    "identity_method": null,
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Yeah, no problem. Thank you for calling B &F Bank. I hope you have a great day.",
+        "speaker": "AGENT",
+        "timestamp": "06:21",
+        "sec": 380.73,
+        "turn": 32
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Yeah, no problem. Thank you for calling B &F Bank. I hope you have a great day.",
+          "speaker": "AGENT",
+          "timestamp": "06:21",
+          "sec": 380.73,
+          "turn": 32
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "offered multiple options",
+        "explained pros and cons",
+        "solution fits customer's situation",
+        "explained WHY",
+        "issue solved by end"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Yeah, so for your account type, the monthly automatic transfer limit is going to be at 5000. So with your requested amount of 500, it's well within the limit. If you ever wanted to increase it, you obviously have the ability to do so.",
+          "speaker": "AGENT",
+          "timestamp": "02:23",
+          "sec": 143.32,
+          "turn": 14
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "asked clarifying questions"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Do you know how much you'd like to transfer each month? Or would you like me to go over some suggestions based on your accounts balances and stuff?",
+          "speaker": "AGENT",
+          "timestamp": "01:49",
+          "sec": 108.85,
+          "turn": 12
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Yeah, so for your account type, the monthly automatic transfer limit is going to be at 5000. So with your requested amount of 500, it's well within the limit. If you ever wanted to increase it, you obviously have the ability to do so.",
+          "speaker": "AGENT",
+          "timestamp": "02:23",
+          "sec": 143.32,
+          "turn": 14
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.7,
+        "text_weight": 0.64,
+        "acoustic_weight": 0.36,
+        "coverage": 0.89,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions",
+        "matches the emotional register of the customer"
+      ],
+      "signals_absent": [
+        "no explicit validation phrase"
+      ],
+      "evidence": [
+        {
+          "quote": "Yeah, totally understandable.",
+          "speaker": "AGENT",
+          "timestamp": "04:43",
+          "sec": 282.7,
+          "turn": 22
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.7,
+        "text_weight": 0.64,
+        "acoustic_weight": 0.36,
+        "coverage": 0.89,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 5,
+      "signals_present": [
+        "problem identified clearly",
+        "issue addressed",
+        "clear resolution provided",
+        "agent didn't dismiss or minimize concern",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Alright, that's exactly what I needed to know. Thank you so much for walking me through everything, Alex. I feel a lot better now that I'm set.",
+          "speaker": "CUSTOMER",
+          "timestamp": "06:10",
+          "sec": 370.05,
+          "turn": 31
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.29,
+        "text_weight": 0.72,
+        "acoustic_weight": 0.28,
+        "coverage": 0.69,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.219,
+      "peak_escalation": 0.45,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Customer requested setting up an automatic monthly transfer from checking to a new savings account",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with the bank's name",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Hey, good morning, Ashley. My name is Alex. I'd be happy to help you with that.",
+          "speaker": "AGENT",
+          "timestamp": "00:24",
+          "sec": 24.24,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Verify the customer's identity using security questions or account details",
+        "rationale": "Ensures compliance with security protocols before discussing account actions.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Confirm the customer's intent to set up an automatic monthly transfer",
+        "rationale": "Clarifies the purpose of the call and aligns expectations.",
+        "met": true,
+        "evidence": {
+          "quote": "My name is Ashley and I'm calling because I like to set up an automatic monthly transfer from my checking account to a new savings account I just opened.",
+          "speaker": "CUSTOMER",
+          "timestamp": "00:07",
+          "sec": 7.27,
+          "turn": 1
+        }
+      },
+      {
+        "step": "Verify the source account (checking) and destination account (new savings) details",
+        "rationale": "Ensures the correct accounts are selected to avoid errors.",
+        "met": true,
+        "evidence": {
+          "quote": "Can I start by getting your checking account number and the new savings account number so we can get everything set up properly?",
+          "speaker": "AGENT",
+          "timestamp": "00:24",
+          "sec": 24.24,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Ask for the transfer amount and frequency (monthly) and confirm the date for the first transfer",
+        "rationale": "Specifies the transfer parameters to set up the automatic payment correctly.",
+        "met": true,
+        "evidence": {
+          "quote": "Do you know how much you'd like to transfer each month? Or would you like me to go over some suggestions based on your accounts balances and stuff?",
+          "speaker": "AGENT",
+          "timestamp": "01:49",
+          "sec": 108.85,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Explain any fees, minimum balance requirements, or transfer limits for the savings account",
+        "rationale": "Provides transparency about potential impacts on the customer's account.",
+        "met": true,
+        "evidence": {
+          "quote": "Yeah, so for your account type, the monthly automatic transfer limit is going to be at 5000. So with your requested amount of 500, it's well within the limit.",
+          "speaker": "AGENT",
+          "timestamp": "02:23",
+          "sec": 143.32,
+          "turn": 14
+        }
+      },
+      {
+        "step": "Confirm the customer's understanding and agreement to the transfer terms",
+        "rationale": "Ensures the customer is fully informed before finalizing the setup.",
+        "met": true,
+        "evidence": {
+          "quote": "Yeah, that makes perfect sense. It's great that you're planning ahead.",
+          "speaker": "AGENT",
+          "timestamp": "01:49",
+          "sec": 108.85,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Schedule the transfer, provide a confirmation number, and offer to send details via email or mail",
+        "rationale": "Finalizes the action and provides the customer with a record of the setup.",
+        "met": true,
+        "evidence": {
+          "quote": "You will be receiving an email shortly with a confirmation on how I did.",
+          "speaker": "AGENT",
+          "timestamp": "06:26",
+          "sec": null,
+          "turn": null
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.2,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.374,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.269,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.172,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.242,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.14,
+        "cust_val": 0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.357,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.3021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.313,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.208,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.173,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.18,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.213,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.311,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.159,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.27,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.176,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5729,
+        "esc": 0.323,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.179,
+        "cust_val": 0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6562,
+        "esc": 0.232,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.143,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.205,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.171,
+        "cust_val": 0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.173,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.45,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      }
+    ],
+    "n_sentences": 87
+  },
+  "_anchor_stats": {
+    "total": 16,
+    "anchored": 15
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.02
+      },
+      "chapters": {
+        "duration": 2.0,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 3.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 6.7,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.8,
+          "expected": 2.4,
+          "check": 3.5
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.01,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 10.3
+  }
+}

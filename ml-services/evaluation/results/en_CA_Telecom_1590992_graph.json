@@ -1,0 +1,780 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_CA_Telecom_1590992",
+    "domain": "telecom",
+    "accent": "en-CA",
+    "duration_seconds": 854.7,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": false,
+      "evidence": null,
+      "note": "Agent did not state their own name at the start of the call"
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling internet up.",
+        "speaker": "AGENT",
+        "timestamp": "00:00",
+        "sec": 0.0,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "Could you please confirm your phone number associated with your account?",
+        "speaker": "AGENT",
+        "timestamp": "01:36",
+        "sec": 95.66,
+        "turn": 10
+      },
+      "note": null
+    },
+    "identity_method": "phone number",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "So you it would bring you up to one one seventy five for the express package.",
+        "speaker": "AGENT",
+        "timestamp": "09:58",
+        "sec": 597.85,
+        "turn": 52
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "All right. I'm very sorry to hear that and thank you for sharing your experience.",
+          "speaker": "AGENT",
+          "timestamp": "00:20",
+          "sec": 20.2,
+          "turn": 2
+        },
+        {
+          "quote": "But yeah, we're really sorry about this.",
+          "speaker": "AGENT",
+          "timestamp": "03:26",
+          "sec": 205.72,
+          "turn": 18
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained WHY",
+        "solution fits customer's situation",
+        "offered alternatives"
+      ],
+      "signals_absent": [
+        "no explicit options presented as A/B/C"
+      ],
+      "evidence": [
+        {
+          "quote": "It looks like you have the standard plan, which is about 100 MBPS. Yeah. It looks like you have the standard plan. So far, it looks like there was an issue. I believe you're not the only one that experienced this.",
+          "speaker": "AGENT",
+          "timestamp": "02:12",
+          "sec": 132.12,
+          "turn": 14
+        },
+        {
+          "quote": "But if you have data, that would be wonderful because usually what you can do as well is just use your data.",
+          "speaker": "AGENT",
+          "timestamp": "07:34",
+          "sec": 454.3,
+          "turn": 42
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "asked clarifying questions"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Can I ask how long has this been happening for you?",
+          "speaker": "AGENT",
+          "timestamp": "00:20",
+          "sec": 20.2,
+          "turn": 2
+        },
+        {
+          "quote": "Okay. And around what time? Like would you say, you know, it starts lagging in the morning or does it usually kick in in the afternoon?",
+          "speaker": "AGENT",
+          "timestamp": "00:35",
+          "sec": 34.53,
+          "turn": 4
+        },
+        {
+          "quote": "Okay. They're all on. Okay. Usually when they're on, it means that there's no issue, but maybe there's something deeper that we can look into.",
+          "speaker": "AGENT",
+          "timestamp": "01:36",
+          "sec": 95.66,
+          "turn": 10
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Thank you for calling internet up. How can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:00",
+          "sec": 0.0,
+          "turn": 0
+        },
+        {
+          "quote": "Okay. Greenview Heights. Okay. Yeah, actually, just upon checking here, I do see there was an outage. And this is not just for you. There's a building just two minutes away from you that's also experiencing an outage.",
+          "speaker": "AGENT",
+          "timestamp": "02:46",
+          "sec": null,
+          "turn": null
+        },
+        {
+          "quote": "So it would bring you up to one hundred and seventy five for the express package. It's the it comes with a lot faster Internet and you don't have to worry about any outages because you'll be getting through that the express package.",
+          "speaker": "AGENT",
+          "timestamp": "09:58",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 4.23,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.79,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions",
+        "matches the emotional register of the customer"
+      ],
+      "signals_absent": [
+        "no explicit validation phrases"
+      ],
+      "evidence": [
+        {
+          "quote": "Thank you for calling internet up. How can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:00",
+          "sec": 0.0,
+          "turn": 0
+        },
+        {
+          "quote": "All right. I'm very sorry to hear that and thank you for sharing your experience.",
+          "speaker": "AGENT",
+          "timestamp": "00:20",
+          "sec": 20.2,
+          "turn": 2
+        },
+        {
+          "quote": "I know that by the end of today, the outage will be situated. It's just for a couple hours. of Our I guess our signals are down. So you're not the only one that's been calling. A lot of people have been calling. And we really do apologize about this.",
+          "speaker": "AGENT",
+          "timestamp": "11:54",
+          "sec": 714.17,
+          "turn": 64
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 4.23,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.79,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 5,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was addressed",
+        "clear resolution provided",
+        "agent didn't dismiss or minimize concern",
+        "followed through on promises",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay. Awesome. Yeah. You've been very helpful.",
+          "speaker": "CUSTOMER",
+          "timestamp": "12:38",
+          "sec": 757.54,
+          "turn": 65
+        },
+        {
+          "quote": "No, I don't think so. I will do what you said and yeah, see what happens.",
+          "speaker": "CUSTOMER",
+          "timestamp": "13:30",
+          "sec": 810.44,
+          "turn": 69
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.59,
+        "text_weight": 0.8,
+        "acoustic_weight": 0.2,
+        "coverage": 0.5,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [
+      "repeat_attempts"
+    ],
+    "customer_emotion_text": "distressed",
+    "risk_level": "none",
+    "evidence": [
+      {
+        "quote": "my internet has been really, really slow for the last few days and I have to work from home here and it's causing me a lot of issues and super frustrating. I don't know what to do here.",
+        "speaker": "CUSTOMER",
+        "timestamp": "00:03",
+        "sec": 2.77,
+        "turn": 1
+      }
+    ],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "review",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.201,
+      "peak_escalation": 0.476,
+      "method": "llm_arbitration",
+      "arbitration_rationale": "Sided with acoustic channel: mean escalation in final third was low (0.201) and trajectory declined toward call end, indicating resolved frustration despite initial distress in text."
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Reported slow internet causing work disruptions and requested troubleshooting assistance",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself and your company",
+        "rationale": "Establishes professionalism and confirms the customer's identity context",
+        "met": true,
+        "evidence": {
+          "quote": "Thank you for calling internet up. How can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:00",
+          "sec": 0.0,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's account details (e.g., phone number or account ID)",
+        "rationale": "Ensures the agent is assisting the correct customer and accesses relevant account information",
+        "met": true,
+        "evidence": {
+          "quote": "Could you please confirm your phone number associated with your account?",
+          "speaker": "AGENT",
+          "timestamp": "01:36",
+          "sec": 95.66,
+          "turn": 10
+        }
+      },
+      {
+        "step": "Acknowledge the reported issue and express empathy for the work disruption",
+        "rationale": "Validates the customer's concern and builds rapport before troubleshooting",
+        "met": true,
+        "evidence": {
+          "quote": "All right. I'm very sorry to hear that and thank you for sharing your experience.",
+          "speaker": "AGENT",
+          "timestamp": "00:20",
+          "sec": 20.2,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Ask the customer to describe the specific symptoms and when they started",
+        "rationale": "Gathers detailed information to diagnose the issue accurately",
+        "met": true,
+        "evidence": {
+          "quote": "Can I ask how long has this been happening for you?",
+          "speaker": "AGENT",
+          "timestamp": "00:20",
+          "sec": 20.2,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Guide the customer through basic troubleshooting steps (e.g., restarting modem/router, checking cables)",
+        "rationale": "Attempts to resolve the issue quickly with minimal intervention",
+        "met": true,
+        "evidence": {
+          "quote": "So what we can do is try to do some troubleshooting and see if that might be okay for you. That's probably the only thing that we can do right now is just go through some troubleshooting and see if there's any difference that can be made on your end.",
+          "speaker": "AGENT",
+          "timestamp": "03:41",
+          "sec": 221.16,
+          "turn": 20
+        }
+      },
+      {
+        "step": "Confirm if the troubleshooting resolved the issue or if symptoms persist",
+        "rationale": "Determines next steps based on whether the problem is resolved or requires escalation",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "If unresolved, check service status in the customer's area and offer alternative solutions (e.g., technician dispatch, equipment replacement)",
+        "rationale": "Provides actionable next steps if basic troubleshooting fails",
+        "met": true,
+        "evidence": {
+          "quote": "I believe you're not the only one that experienced this. It might just be an issue in our area or in your area. I'm just going to double check whether or not this might just be an outage in your area.",
+          "speaker": "AGENT",
+          "timestamp": "02:12",
+          "sec": 132.12,
+          "turn": 14
+        }
+      },
+      {
+        "step": "Summarize the steps taken and set expectations for follow-up or next actions",
+        "rationale": "Ensures the customer understands the resolution process and any pending actions",
+        "met": true,
+        "evidence": {
+          "quote": "And again, you can also use your data. So if you feel like if you feel like, OK, I need something now because I have to hop on a meeting, I need to make sure that I have some kind of signal or some kind of data or just use your your data on your phone if you can. That's that's what we've been advising our our customers so far.",
+          "speaker": "AGENT",
+          "timestamp": "12:57",
+          "sec": 777.49,
+          "turn": 66
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": 0.293,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.28,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.363,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.0729,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.145,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.142,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.214,
+        "cust_val": 1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.1562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.8
+      },
+      {
+        "p": 0.2188,
+        "esc": 0.149,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.75
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.277,
+        "cust_val": -0.667,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.239,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.3438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.167,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.6
+      },
+      {
+        "p": 0.4062,
+        "esc": 0.174,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.219,
+        "cust_val": 0.5,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.211,
+        "cust_val": -0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.395,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.271,
+        "cust_val": 1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.5312,
+        "esc": 0.207,
+        "cust_val": 1.0,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.402,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.185,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.25,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.282,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7396,
+        "esc": 0.324,
+        "cust_val": -0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.8
+      },
+      {
+        "p": 0.7812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.6
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.179,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.152,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.153,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.144,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.9271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.9688,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": 0.75
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      }
+    ],
+    "n_sentences": 228
+  },
+  "_anchor_stats": {
+    "total": 26,
+    "anchored": 24
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.02
+      },
+      "chapters": {
+        "duration": 2.8,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.6,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "escalation": {
+        "duration": 1.0,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "quality": {
+        "duration": 5.6,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 6.9,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.4,
+          "check": 3.7
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.0,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": true
+      },
+      "arbitrate": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "verdict": "none"
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 14.1
+  }
+}

@@ -1,0 +1,691 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Health_1586594",
+    "domain": "health",
+    "accent": "en-US_General",
+    "duration_seconds": 281.5,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": false,
+      "evidence": null,
+      "note": "Agent did not state their own name at the start of the call"
+    },
+    "company_announced": {
+      "passed": false,
+      "evidence": null,
+      "note": "Agent did not state the company or bank name"
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": false,
+      "evidence": null,
+      "note": "Agent did not verify customer identity before discussing account details"
+    },
+    "identity_method": null,
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Well, you're very welcome, Alex. We'll see you virtually on Thursday at 2 p .m. Take care and have a blessed day.",
+        "speaker": "AGENT",
+        "timestamp": "04:15",
+        "sec": 255.38,
+        "turn": 26
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration (4:42 for simple booking/refill)",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Absolutely. I can help you with that.",
+          "speaker": "AGENT",
+          "timestamp": "00:35",
+          "sec": 35.26,
+          "turn": 2
+        },
+        {
+          "quote": "We'll see you virtually on Thursday at 2 p.m.",
+          "speaker": "AGENT",
+          "timestamp": "04:15",
+          "sec": 255.38,
+          "turn": 26
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "solution fits customer's specific situation",
+        "explained WHY (forms/lab work needed)",
+        "offered alternatives (lab tests if outdated)",
+        "respected customer's choice (proceeded with booking)"
+      ],
+      "signals_absent": [
+        "no explicit options A/B/C presented"
+      ],
+      "evidence": [
+        {
+          "quote": "for diabetes management, as you know, we may need to do a redo on some diagnostics. You'll also need to complete an updated health history and consent form online before the call.",
+          "speaker": "AGENT",
+          "timestamp": "03:07",
+          "sec": 187.16,
+          "turn": 20
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions (e.g., pharmacy preference)",
+        "checked understanding (implicitly via confirmation)",
+        "asked clarifying questions (patient ID, lab work status)"
+      ],
+      "signals_absent": [
+        "no explicit recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?",
+          "speaker": "AGENT",
+          "timestamp": "02:39",
+          "sec": 158.56,
+          "turn": 18
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Absolutely. Let me check for you. We have appointments available on Thursday, October 23rd at 10 a.m. or 2 p.m. and Friday, October 24th at 11 a.m. Eastern.",
+          "speaker": "AGENT",
+          "timestamp": "01:22",
+          "sec": 82.44,
+          "turn": 14
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.29,
+        "text_weight": 0.73,
+        "acoustic_weight": 0.27,
+        "coverage": 0.67,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 3,
+      "signals_present": [
+        "uses customer's name naturally (Alex Johnson)",
+        "acknowledges the concern before moving to solutions"
+      ],
+      "signals_absent": [
+        "no validation phrases",
+        "no explicit emotional acknowledgment"
+      ],
+      "evidence": [
+        {
+          "quote": "Thanks for your call. So yes, we do offer virtual consultations for ongoing care.",
+          "speaker": "AGENT",
+          "timestamp": "00:54",
+          "sec": 54.07,
+          "turn": 12
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": 3.29,
+        "text_weight": 0.73,
+        "acoustic_weight": 0.27,
+        "coverage": 0.67,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was addressed (booking + refill request)",
+        "clear resolution provided",
+        "agent didn't dismiss or minimize concern",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "That seems like I think I have all that stuff sorted out. That covers everything that I need. Thanks for your help.",
+          "speaker": "CUSTOMER",
+          "timestamp": "03:43",
+          "sec": 223.42,
+          "turn": 23
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 1.44,
+        "text_weight": 0.76,
+        "acoustic_weight": 0.24,
+        "coverage": 0.59,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.281,
+      "peak_escalation": 0.66,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Requested a telemedicine consultation for diabetes management and a prescription refill.",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with title and company.",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Well, hello. Good afternoon. Absolutely. I can help you with that. May I ask for your name, please, before we begin?",
+          "speaker": "AGENT",
+          "timestamp": "00:35",
+          "sec": 35.26,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Verify the customer\u2019s identity using at least two identifiers (e.g., full name and date of birth).",
+        "rationale": "Ensures compliance with privacy regulations and confirms the correct patient.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Confirm the customer\u2019s request for a telemedicine consultation for diabetes management and a prescription refill.",
+        "rationale": "Clarifies the purpose of the call and aligns expectations.",
+        "met": true,
+        "evidence": {
+          "quote": "Sure. Sure. It's Alex Johnson. I have an ID number.",
+          "speaker": "CUSTOMER",
+          "timestamp": "00:44",
+          "sec": 44.09,
+          "turn": 3
+        }
+      },
+      {
+        "step": "Ask about the customer\u2019s current diabetes management plan, medications, and any recent changes in symptoms.",
+        "rationale": "Gathers essential clinical information to assess the need for consultation and refill.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Explain the telemedicine consultation process, including scheduling, technology requirements, and any preparation needed.",
+        "rationale": "Ensures the customer understands what to expect and how to participate.",
+        "met": true,
+        "evidence": {
+          "quote": "You'll receive a confirmation email with the video link shortly. Is there anything? Oh, let's wait for that confirmation to go through.",
+          "speaker": "AGENT",
+          "timestamp": "01:57",
+          "sec": 117.04,
+          "turn": 16
+        }
+      },
+      {
+        "step": "Verify the customer\u2019s preferred date and time for the telemedicine consultation.",
+        "rationale": "Confirms availability and schedules the appointment efficiently.",
+        "met": true,
+        "evidence": {
+          "quote": "Absolutely. Let me check for you. We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m. or 2 p .m. and Friday, October 24th at 11 a .m. Eastern. Would any of those times work for you?",
+          "speaker": "AGENT",
+          "timestamp": "01:22",
+          "sec": 82.44,
+          "turn": 14
+        }
+      },
+      {
+        "step": "Confirm the prescription refill details, including medication name, dosage, and pharmacy preference.",
+        "rationale": "Ensures accuracy in the refill request and avoids dispensing errors.",
+        "met": true,
+        "evidence": {
+          "quote": "Of course, I'll add that note for Dr. Carter to review during your consultation, and if she approves it, we'll send it electronically to your pharmacy. Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?",
+          "speaker": "AGENT",
+          "timestamp": "02:39",
+          "sec": 158.56,
+          "turn": 18
+        }
+      },
+      {
+        "step": "Provide next steps, including confirmation of the consultation appointment, refill processing, and any follow-up actions.",
+        "rationale": "Closes the call with clear instructions and sets expectations for the customer.",
+        "met": true,
+        "evidence": {
+          "quote": "Well, you're very welcome, Alex. We'll see you virtually on Thursday at 2 p .m. Take care and have a blessed day.",
+          "speaker": "AGENT",
+          "timestamp": "04:15",
+          "sec": 255.38,
+          "turn": 26
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.327,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.28,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.0938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.338,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.66,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.2604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.599,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.655,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.3854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.247,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.314,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.366,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.6146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.375,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6979,
+        "esc": 0.146,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.299,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.317,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.331,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.268,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.452,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      }
+    ],
+    "n_sentences": 81
+  },
+  "_anchor_stats": {
+    "total": 14,
+    "anchored": 14
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.02
+      },
+      "chapters": {
+        "duration": 2.4,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 4.5,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 7.4,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.8,
+          "check": 3.9
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.0,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 7.4
+  }
+}

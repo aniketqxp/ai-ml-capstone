@@ -1,0 +1,720 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_CA_Health_1590851",
+    "domain": "health",
+    "accent": "en-CA",
+    "duration_seconds": 842.4,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": false,
+      "evidence": null,
+      "note": "agent did not state their own name at the start of the call"
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Sunrise Health Center, how may I help you?",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.07,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "and your date of birth?",
+        "speaker": "AGENT",
+        "timestamp": "00:50",
+        "sec": 50.16,
+        "turn": 4
+      },
+      "note": null
+    },
+    "identity_method": "date of birth",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Yeah, for sure. Okay, so I've changed that on our end. When you do go to see Dr. B, make sure that you have your health card and your what's it called? Sorry, the name of the document is escaping me. ... Yeah. And we're learning more and more about the long COVID. So hopefully, Dr. B, we'll have some more updated information for you on that as well.",
+        "speaker": "AGENT",
+        "timestamp": "12:38",
+        "sec": 643.42,
+        "turn": 52
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 4,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration for complexity",
+        "no unnecessary holds"
+      ],
+      "signals_absent": [
+        "unnecessary transfers"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, so I've changed that on our end. When you do go to see Dr. B, make sure that you have your health card and your...",
+          "speaker": "AGENT",
+          "timestamp": "10:43",
+          "sec": 643.42,
+          "turn": 52
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "solution fits customer's specific situation",
+        "explained WHY",
+        "offered alternatives"
+      ],
+      "signals_absent": [
+        "no explicit options presented as A/B/C"
+      ],
+      "evidence": [
+        {
+          "quote": "Yeah, that's a really good question. I'm going to flag that for Dr. B, so that he can discuss that with you at the appointment.",
+          "speaker": "AGENT",
+          "timestamp": "03:32",
+          "sec": 211.98,
+          "turn": 28
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [
+        "asked clarifying questions before jumping to a solution",
+        "checked understanding"
+      ],
+      "signals_absent": [
+        "no open-ended diagnostic questions",
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, and then, with the blood work paperwork that you're sending me, is it the kind where it has control to it, like, I have to fast before, or I can't have any water?",
+          "speaker": "CUSTOMER",
+          "timestamp": "06:07",
+          "sec": 367.0,
+          "turn": 39
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "proper grammar and complete sentences throughout",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay, can I grab your last name and just make sure I have your your profile loaded here,",
+          "speaker": "AGENT",
+          "timestamp": "00:39",
+          "sec": 39.39,
+          "turn": 2
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.46,
+        "text_weight": 0.7,
+        "acoustic_weight": 0.3,
+        "coverage": 0.75,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 2,
+      "signals_present": [
+        "uses customer's name naturally"
+      ],
+      "signals_absent": [
+        "no validation phrases",
+        "no acknowledgment of frustration",
+        "flat, scripted responses"
+      ],
+      "evidence": [
+        {
+          "quote": "Yeah, that's a really good question. I'm going to flag that for Dr. B, so that he can discuss that with you at the appointment.",
+          "speaker": "AGENT",
+          "timestamp": "03:32",
+          "sec": 211.98,
+          "turn": 28
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 2,
+        "acoustic_score": 3.46,
+        "text_weight": 0.7,
+        "acoustic_weight": 0.3,
+        "coverage": 0.75,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 3,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was addressed",
+        "clear resolution provided",
+        "agent followed through on promises"
+      ],
+      "signals_absent": [
+        "no escalation threat from customer"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, and then, with these prescription refills, do I have to wait for that meeting, or are you able to send those through...",
+          "speaker": "CUSTOMER",
+          "timestamp": "04:45",
+          "sec": 285.38,
+          "turn": 37
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.5,
+        "text_weight": 0.66,
+        "acoustic_weight": 0.34,
+        "coverage": 0.85,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [
+      "repeat_attempts"
+    ],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [
+      {
+        "quote": "My prescription for progesterone and estrogen hasn't changed in, like, 10 years, but I have to always call every three months to get another prescription in three-month windows.",
+        "speaker": "CUSTOMER",
+        "timestamp": "03:00",
+        "sec": 179.76,
+        "turn": 27
+      }
+    ],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.254,
+      "peak_escalation": 0.72,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Requested a doctor appointment and prescription refills for existing medications",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with the company name",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Sunrise Health Center, how may I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:13",
+          "sec": 13.07,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name and date of birth)",
+        "rationale": "Ensures compliance with privacy regulations and confirms the correct patient record.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, can I grab your last name and just make sure I have your your profile loaded here,",
+          "speaker": "AGENT",
+          "timestamp": "00:39",
+          "sec": 39.39,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the customer's request for a doctor appointment and prescription refills",
+        "rationale": "Clarifies the purpose of the call and ensures alignment with the customer's needs.",
+        "met": true,
+        "evidence": {
+          "quote": "I need four different refills.",
+          "speaker": "CUSTOMER",
+          "timestamp": "02:38",
+          "sec": 102.32,
+          "turn": 9
+        }
+      },
+      {
+        "step": "Ask for the specific medications requiring refills and the last date each was filled",
+        "rationale": "Gathers necessary details to process refills accurately.",
+        "met": true,
+        "evidence": {
+          "quote": "A bunch of them on here, but how about you tell me which of them that you need refills for?",
+          "speaker": "AGENT",
+          "timestamp": "02:10",
+          "sec": 130.28,
+          "turn": 10
+        }
+      },
+      {
+        "step": "Check the customer's current pharmacy location and update if needed",
+        "rationale": "Ensures prescriptions are sent to the correct pharmacy for pickup.",
+        "met": true,
+        "evidence": {
+          "quote": "Did you want when these refills do go through, do you still want it to go to the shoppers on main or did you want them to go to a different pharmacy?",
+          "speaker": "AGENT",
+          "timestamp": "10:32",
+          "sec": 430.6,
+          "turn": 48
+        }
+      },
+      {
+        "step": "Schedule the doctor appointment by confirming preferred date, time, and reason for visit",
+        "rationale": "Secures the appointment and ensures the customer's availability and needs are met.",
+        "met": true,
+        "evidence": {
+          "quote": "You're going to get two emails. You'll get one that confirms the appointment, one that has your lab requisition.",
+          "speaker": "AGENT",
+          "timestamp": "13:40",
+          "sec": 820.09,
+          "turn": 70
+        }
+      },
+      {
+        "step": "Explain the prescription refill process, including processing time and pickup instructions",
+        "rationale": "Sets clear expectations for the customer and reduces follow-up calls.",
+        "met": true,
+        "evidence": {
+          "quote": "Probably, if not tomorrow, the next day, it'll be in.",
+          "speaker": "AGENT",
+          "timestamp": "05:38",
+          "sec": 338.25,
+          "turn": 38
+        }
+      },
+      {
+        "step": "Provide a summary of the appointment and refill details, then confirm with the customer",
+        "rationale": "Reinforces understanding and reduces the risk of errors or misunderstandings.",
+        "met": true,
+        "evidence": {
+          "quote": "So great. I think I've got everything from my end that I need for your appointment.",
+          "speaker": "AGENT",
+          "timestamp": "13:34",
+          "sec": 798.92,
+          "turn": 68
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": 0.494,
+        "cust_val": 0.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.508,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.623,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.433,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.372,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.461,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.207,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.382,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.242,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2188,
+        "esc": 0.307,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.497,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.226,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.357,
+        "cust_val": 0.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.629,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.649,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.349,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.4062,
+        "esc": 0.597,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.37,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.36,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.178,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.699,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5312,
+        "esc": 0.321,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6979,
+        "esc": 0.151,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.7188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7396,
+        "esc": 0.226,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.7812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.224,
+        "cust_val": -0.5,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.351,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.8646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.289,
+        "cust_val": 0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.303,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      }
+    ],
+    "n_sentences": 159
+  },
+  "_anchor_stats": {
+    "total": 18,
+    "anchored": 18
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 1.9,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 2.1,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "escalation": {
+        "duration": 1.1,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 4.0,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 43.7,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.5,
+          "check": 40.5
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 46.0
+  }
+}

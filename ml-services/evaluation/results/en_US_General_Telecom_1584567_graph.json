@@ -1,0 +1,706 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Telecom_1584567",
+    "domain": "telecom",
+    "accent": "en-US_General",
+    "duration_seconds": 899.9,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Angela.",
+        "speaker": "AGENT",
+        "timestamp": "00:12",
+        "sec": 12.4,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling Verizon Wireless.",
+        "speaker": "AGENT",
+        "timestamp": "00:12",
+        "sec": 12.4,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "First, let me go ahead and get your customer ID number or your phone number so that I can look up your account.",
+        "speaker": "AGENT",
+        "timestamp": "01:37",
+        "sec": 77.08,
+        "turn": 12
+      },
+      "note": null
+    },
+    "identity_method": "customer ID",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Okay, great. Well, we appreciate you being a Verizon customer. Anytime you have any trouble, feel free just to reach out to us again, either online or through the phone. And I thank you for your service, and have a lovely day.",
+        "speaker": "AGENT",
+        "timestamp": "14:44",
+        "sec": 884.02,
+        "turn": 102
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 3,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration"
+      ],
+      "signals_absent": [
+        "unnecessary holds",
+        "unnecessary transfers"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay. Would you like to go ahead and make a payment today?",
+          "speaker": "AGENT",
+          "timestamp": "08:40",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained pros and cons",
+        "explained WHY",
+        "solution fits customer's situation"
+      ],
+      "signals_absent": [
+        "no explicit backup plan",
+        "no alternatives offered"
+      ],
+      "evidence": [
+        {
+          "quote": "Based on your current needs and your usage levels, I feel that if you upgrade to the Platinum Plus package, you would be able to get a lot more speed and you won't have any more problems with simultaneous connections.",
+          "speaker": "AGENT",
+          "timestamp": "04:44",
+          "sec": 283.62,
+          "turn": 32
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "open-ended diagnostic questions",
+        "checks understanding",
+        "asks clarifying questions"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "How many users with computers or laptops access your internet currently?",
+          "speaker": "AGENT",
+          "timestamp": "03:05",
+          "sec": 185.26,
+          "turn": 24
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "accurate information",
+        "explained WHY"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Thank you for calling Verizon Wireless. My name is Angela. How can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:12",
+          "sec": 12.4,
+          "turn": 0
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.13,
+        "text_weight": 0.71,
+        "acoustic_weight": 0.29,
+        "coverage": 0.73,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 3,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges concern before moving to solutions"
+      ],
+      "signals_absent": [
+        "no validation phrase",
+        "no matching emotional register"
+      ],
+      "evidence": [
+        {
+          "quote": "Well, I'm sorry to hear that you're having trouble with the internet.",
+          "speaker": "AGENT",
+          "timestamp": "00:38",
+          "sec": 37.65,
+          "turn": 2
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": 3.13,
+        "text_weight": 0.71,
+        "acoustic_weight": 0.29,
+        "coverage": 0.73,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem identified clearly",
+        "issue addressed",
+        "clear resolution provided",
+        "followed through on promises"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "That was great.",
+          "speaker": "CUSTOMER",
+          "timestamp": "12:13",
+          "sec": 732.52,
+          "turn": 77
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.18,
+        "text_weight": 0.69,
+        "acoustic_weight": 0.31,
+        "coverage": 0.78,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.224,
+      "peak_escalation": 0.713,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Inquire about internet service issues and upgrade to a higher-tier package",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself and the company",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Thank you for calling Verizon Wireless. My name is Angela. How can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:12",
+          "sec": 12.4,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Ask the customer to describe the internet service issues they are experiencing",
+        "rationale": "Identifies the problem and allows the agent to address concerns before discussing upgrades.",
+        "met": true,
+        "evidence": {
+          "quote": "Can you tell me a little bit more about your specific problem?",
+          "speaker": "AGENT",
+          "timestamp": "00:38",
+          "sec": 37.65,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Verify the customer's account details (e.g., account number, name, or address)",
+        "rationale": "Ensures the agent is speaking with the correct account holder for security and accuracy.",
+        "met": true,
+        "evidence": {
+          "quote": "Let me go ahead and get your customer ID number or your phone number so that I can look up your account.",
+          "speaker": "AGENT",
+          "timestamp": "01:37",
+          "sec": 77.08,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Confirm the current internet package and speed the customer is subscribed to",
+        "rationale": "Provides context for the upgrade discussion and ensures the agent understands the baseline service.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Listen to the customer's description of issues and troubleshoot briefly (e.g., check for outages, restart instructions)",
+        "rationale": "Attempts to resolve the issue in real-time and demonstrates proactive service.",
+        "met": true,
+        "evidence": {
+          "quote": "Have you tried turning off your modem and turning it back on?",
+          "speaker": "AGENT",
+          "timestamp": "01:01",
+          "sec": null,
+          "turn": null
+        }
+      },
+      {
+        "step": "Explain the benefits of upgrading to a higher-tier package (e.g., faster speeds, better reliability, additional features)",
+        "rationale": "Highlights value to encourage the customer to consider the upgrade.",
+        "met": true,
+        "evidence": {
+          "quote": "Based on your current needs and your usage levels, I feel that if you upgrade to the Platinum Plus package, you would be able to get a lot more speed and you won't have any more problems with simultaneous connections.",
+          "speaker": "AGENT",
+          "timestamp": "04:44",
+          "sec": 283.62,
+          "turn": 32
+        }
+      },
+      {
+        "step": "Provide pricing details for the higher-tier package, including any promotional offers or long-term commitments",
+        "rationale": "Ensures transparency and helps the customer make an informed decision.",
+        "met": true,
+        "evidence": {
+          "quote": "The premium package will be a little bit higher. It'll be $89 per month, but you will see a dramatic increase in speed. And you will also have no problem with multiple connections, simultaneous connections.",
+          "speaker": "AGENT",
+          "timestamp": "05:27",
+          "sec": 327.08,
+          "turn": 36
+        }
+      },
+      {
+        "step": "Ask the customer if they would like to proceed with the upgrade or schedule it for a later date",
+        "rationale": "Closes the loop on the upgrade discussion and confirms next steps.",
+        "met": true,
+        "evidence": {
+          "quote": "would you like to go ahead and make a payment today?",
+          "speaker": "AGENT",
+          "timestamp": "08:40",
+          "sec": 519.8,
+          "turn": 48
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.415,
+        "cust_val": 0.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.241,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.149,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.152,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.65,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.25
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.353,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.502,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.25
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.486,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.315,
+        "cust_val": -0.333,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.188,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.143,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.155,
+        "cust_val": 1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.196,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.75
+      },
+      {
+        "p": 0.4062,
+        "esc": 0.339,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.4271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.644,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.493,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.427,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.152,
+        "cust_val": 0.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.5312,
+        "esc": 0.257,
+        "cust_val": 1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.248,
+        "cust_val": 1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.5938,
+        "esc": 0.272,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.235,
+        "cust_val": 1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6562,
+        "esc": 0.27,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.079,
+        "cust_val": 1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.268,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.25
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.399,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.272,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.146,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.8438,
+        "esc": 0.136,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.204,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.12,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.184,
+        "cust_val": 1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9688,
+        "esc": 0.247,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      }
+    ],
+    "n_sentences": 192
+  },
+  "_anchor_stats": {
+    "total": 17,
+    "anchored": 15
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 3.0,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 2.0,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 3.3,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 6.8,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.5,
+          "check": 3.5
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 10.2
+  }
+}
