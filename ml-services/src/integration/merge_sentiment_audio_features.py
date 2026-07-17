@@ -1376,6 +1376,302 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
     }
 
 
+def build_agent_empathy_tone_alignment(payload: dict) -> dict:
+    """
+    Build an agent empathy and tone-alignment summary.
+
+    This compares agent tone against customer emotional state using only:
+    - speaker role
+    - sentiment
+    - dominant emotion
+    - confidence
+    - escalation score
+    - strong customer concern signals
+    - temporal customer trajectory
+    - multi-signal escalation intelligence
+
+    It does not use transcript keywords.
+    """
+    segments = payload.get("segments", []) or []
+
+    temporal_trajectory = payload.get("temporal_emotion_trajectory", {}) or {}
+    multi_signal = payload.get("multi_signal_escalation_intelligence", {}) or {}
+    manager_review = payload.get("manager_review_recommendation", {}) or {}
+
+    temporal_unresolved = bool(temporal_trajectory.get("unresolved_end_risk"))
+    temporal_direction = normalize_label(temporal_trajectory.get("trajectory_direction"))
+    multi_signal_type = normalize_label(multi_signal.get("escalation_type"))
+    manager_review_required = bool(manager_review.get("review_required"))
+
+    customer_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "customer"
+    ]
+
+    agent_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "agent"
+    ]
+
+    if not agent_segments:
+        return {
+            "alignment_level": "insufficient_agent_data",
+            "empathy_score": None,
+            "tone_risk_level": "unknown",
+            "customer_handling": "not_enough_data",
+            "supportive_agent_segments": 0,
+            "neutral_agent_segments": 0,
+            "risky_agent_segments": 0,
+            "customer_concern_segments": 0,
+            "main_reasons": [
+                "No agent segments were available to evaluate tone alignment."
+            ],
+            "supporting_metrics": {
+                "customer_segments": len(customer_segments),
+                "agent_segments": 0,
+            },
+        }
+
+    customer_concern_segments = [
+        segment for segment in customer_segments
+        if (
+            is_strong_negative_customer_signal(segment)
+            or (
+                is_confident_segment(segment)
+                and safe_float(segment.get("escalation_score"), 0.0) >= 0.45
+                and normalize_label(segment.get("sentiment")) == "negative"
+            )
+        )
+    ]
+
+    supportive_agent_segments = []
+    neutral_agent_segments = []
+    risky_agent_segments = []
+    low_confidence_agent_segments = []
+
+    for segment in agent_segments:
+        sentiment = normalize_label(segment.get("sentiment"))
+        emotion = normalize_label(segment.get("dominant_emotion"))
+        escalation_score = safe_float(segment.get("escalation_score"), 0.0)
+        emotion_confidence = safe_float(segment.get("emotion_confidence"), 0.0)
+        sentiment_confidence = safe_float(segment.get("sentiment_confidence"), 0.0)
+        confidence = max(emotion_confidence, sentiment_confidence)
+
+        confident = is_confident_segment(segment)
+
+        if not confident:
+            low_confidence_agent_segments.append(segment)
+
+        is_risky_agent_tone = (
+            confident
+            and (
+                escalation_score >= 0.50
+                or (
+                    sentiment == "negative"
+                    and escalation_score >= 0.40
+                    and confidence >= 0.65
+                )
+                or (
+                    emotion in {"anger", "angry", "fear", "fearful", "disgust"}
+                    and escalation_score >= 0.40
+                    and confidence >= 0.65
+                )
+            )
+        )
+
+        is_supportive_agent_tone = (
+            confident
+            and sentiment in {"positive", "neutral"}
+            and emotion not in {"anger", "angry", "fear", "fearful", "disgust"}
+            and escalation_score < 0.35
+        )
+
+        if is_risky_agent_tone:
+            risky_agent_segments.append(segment)
+        elif is_supportive_agent_tone:
+            supportive_agent_segments.append(segment)
+        else:
+            neutral_agent_segments.append(segment)
+
+    total_agent_segments = len(agent_segments)
+
+    supportive_ratio = round(len(supportive_agent_segments) / total_agent_segments, 4)
+    risky_ratio = round(len(risky_agent_segments) / total_agent_segments, 4)
+    low_confidence_agent_ratio = round(len(low_confidence_agent_segments) / total_agent_segments, 4)
+
+    avg_agent_escalation = safe_average([
+        safe_float(segment.get("escalation_score"), 0.0)
+        for segment in agent_segments
+        if segment.get("escalation_score") is not None
+    ])
+
+    if avg_agent_escalation is None:
+        avg_agent_escalation = 0.0
+
+    avg_customer_escalation = safe_average([
+        safe_float(segment.get("escalation_score"), 0.0)
+        for segment in customer_segments
+        if segment.get("escalation_score") is not None
+    ])
+
+    if avg_customer_escalation is None:
+        avg_customer_escalation = 0.0
+
+    empathy_score = 80
+
+    if supportive_ratio >= 0.50:
+        empathy_score += 12
+    elif supportive_ratio >= 0.30:
+        empathy_score += 6
+
+    if risky_ratio >= 0.20:
+        empathy_score -= 25
+    elif risky_ratio >= 0.10:
+        empathy_score -= 15
+    elif risky_ratio > 0:
+        empathy_score -= 8
+
+    if len(customer_concern_segments) > 0 and len(risky_agent_segments) == 0:
+        empathy_score += 8
+
+    if len(customer_concern_segments) > 0 and supportive_ratio >= 0.30:
+        empathy_score += 5
+
+    if temporal_direction == "improved" and not temporal_unresolved:
+        empathy_score += 8
+
+    if temporal_unresolved:
+        empathy_score -= 10
+
+    if manager_review_required and risky_ratio >= 0.10:
+        empathy_score -= 8
+
+    if low_confidence_agent_ratio >= 0.40:
+        empathy_score -= 5
+
+    empathy_score = max(0, min(100, round(empathy_score)))
+
+    if risky_ratio >= 0.20:
+        tone_risk_level = "high"
+    elif risky_ratio >= 0.08:
+        tone_risk_level = "medium"
+    elif len(risky_agent_segments) > 0:
+        tone_risk_level = "low_medium"
+    else:
+        tone_risk_level = "low"
+
+    if (
+        empathy_score >= 85
+        and tone_risk_level == "low"
+        and not temporal_unresolved
+    ):
+        alignment_level = "supportive"
+        customer_handling = "effective"
+
+    elif (
+        empathy_score >= 70
+        and tone_risk_level in {"low", "low_medium"}
+    ):
+        alignment_level = "mostly_supportive"
+        customer_handling = "generally_effective"
+
+    elif (
+        tone_risk_level in {"medium", "high"}
+        and len(customer_concern_segments) > 0
+    ):
+        alignment_level = "needs_review"
+        customer_handling = "tone_may_affect_customer_experience"
+
+    elif tone_risk_level in {"medium", "high"}:
+        alignment_level = "agent_tone_risk"
+        customer_handling = "agent_tone_needs_coaching"
+
+    elif temporal_unresolved:
+        alignment_level = "mixed"
+        customer_handling = "customer_concern_not_fully_resolved"
+
+    else:
+        alignment_level = "neutral"
+        customer_handling = "acceptable"
+
+    main_reasons = []
+
+    if alignment_level in {"supportive", "mostly_supportive"}:
+        main_reasons.append(
+            "Agent tone stayed mostly positive or neutral during the call."
+        )
+
+    if len(customer_concern_segments) > 0 and len(risky_agent_segments) == 0:
+        main_reasons.append(
+            "Customer concern signals were present, but no strong risky agent tone was detected."
+        )
+
+    if len(customer_concern_segments) == 0:
+        main_reasons.append(
+            "No strong high-confidence customer concern segments were detected."
+        )
+
+    if len(supportive_agent_segments) > 0:
+        main_reasons.append(
+            f"{len(supportive_agent_segments)} supportive agent tone segment(s) were detected."
+        )
+
+    if len(risky_agent_segments) > 0:
+        main_reasons.append(
+            f"{len(risky_agent_segments)} risky agent tone segment(s) were detected."
+        )
+
+    if temporal_direction == "improved" and not temporal_unresolved:
+        main_reasons.append(
+            "Customer emotion improved by the end of the call."
+        )
+
+    if temporal_unresolved:
+        main_reasons.append(
+            "Customer emotion still showed unresolved end-risk, so the interaction may need review."
+        )
+
+    if multi_signal_type == "calm_resolved":
+        main_reasons.append(
+            "The multi-signal escalation layer classified the call as calm resolved."
+        )
+
+    if low_confidence_agent_ratio >= 0.30:
+        main_reasons.append(
+            "Some agent tone measurements had low confidence, so the score should be interpreted carefully."
+        )
+
+    if not main_reasons:
+        main_reasons.append(
+            "Agent tone did not show major empathy or risk indicators."
+        )
+
+    return {
+        "alignment_level": alignment_level,
+        "empathy_score": empathy_score,
+        "tone_risk_level": tone_risk_level,
+        "customer_handling": customer_handling,
+        "supportive_agent_segments": len(supportive_agent_segments),
+        "neutral_agent_segments": len(neutral_agent_segments),
+        "risky_agent_segments": len(risky_agent_segments),
+        "customer_concern_segments": len(customer_concern_segments),
+        "main_reasons": main_reasons,
+        "supporting_metrics": {
+            "customer_segments": len(customer_segments),
+            "agent_segments": len(agent_segments),
+            "supportive_agent_ratio": supportive_ratio,
+            "risky_agent_ratio": risky_ratio,
+            "low_confidence_agent_segments": len(low_confidence_agent_segments),
+            "low_confidence_agent_ratio": low_confidence_agent_ratio,
+            "average_agent_escalation": round(avg_agent_escalation, 4),
+            "average_customer_escalation": round(avg_customer_escalation, 4),
+            "temporal_direction": temporal_direction,
+            "temporal_unresolved_end_risk": temporal_unresolved,
+            "multi_signal_escalation_type": multi_signal_type,
+            "manager_review_required": manager_review_required,
+        },
+    }
+
 def calculate_segment_review_score(segment: dict) -> float:
     """
     Calculate a sentiment/audio-only flag score.
@@ -1661,6 +1957,7 @@ def main():
     sentiment["manager_review_recommendation"] = build_manager_review_recommendation(sentiment)
     sentiment["multi_signal_escalation_intelligence"] = build_multi_signal_escalation_intelligence(sentiment)
     sentiment["temporal_emotion_trajectory"] = build_temporal_emotion_trajectory(sentiment)
+    sentiment["agent_empathy_tone_alignment"] = build_agent_empathy_tone_alignment(sentiment)
     sentiment["top_risky_segments"] = build_top_risky_segments(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:

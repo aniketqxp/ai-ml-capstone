@@ -12549,6 +12549,36 @@
       "The final phase still contains strong customer concern signals, so the call may need follow-up or review."
     ]
   },
+  "agent_empathy_tone_alignment": {
+    "alignment_level": "mostly_supportive",
+    "empathy_score": 79,
+    "tone_risk_level": "low_medium",
+    "customer_handling": "generally_effective",
+    "supportive_agent_segments": 39,
+    "neutral_agent_segments": 22,
+    "risky_agent_segments": 5,
+    "customer_concern_segments": 14,
+    "main_reasons": [
+      "Agent tone stayed mostly positive or neutral during the call.",
+      "39 supportive agent tone segment(s) were detected.",
+      "5 risky agent tone segment(s) were detected.",
+      "Customer emotion still showed unresolved end-risk, so the interaction may need review."
+    ],
+    "supporting_metrics": {
+      "customer_segments": 40,
+      "agent_segments": 66,
+      "supportive_agent_ratio": 0.5909,
+      "risky_agent_ratio": 0.0758,
+      "low_confidence_agent_segments": 17,
+      "low_confidence_agent_ratio": 0.2576,
+      "average_agent_escalation": 0.2573,
+      "average_customer_escalation": 0.4134,
+      "temporal_direction": "improved",
+      "temporal_unresolved_end_risk": true,
+      "multi_signal_escalation_type": "agent_tone_risk",
+      "manager_review_required": true
+    }
+  },
   "top_risky_segments": [
     {
       "segment_index": 89,

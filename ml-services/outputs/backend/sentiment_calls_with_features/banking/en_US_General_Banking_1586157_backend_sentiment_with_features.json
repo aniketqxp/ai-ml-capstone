@@ -15761,5 +15761,36 @@
       "The final phase did not contain strong unresolved customer escalation signals."
     ]
   },
+  "agent_empathy_tone_alignment": {
+    "alignment_level": "supportive",
+    "empathy_score": 87,
+    "tone_risk_level": "low",
+    "customer_handling": "effective",
+    "supportive_agent_segments": 39,
+    "neutral_agent_segments": 39,
+    "risky_agent_segments": 0,
+    "customer_concern_segments": 0,
+    "main_reasons": [
+      "Agent tone stayed mostly positive or neutral during the call.",
+      "No strong high-confidence customer concern segments were detected.",
+      "39 supportive agent tone segment(s) were detected.",
+      "The multi-signal escalation layer classified the call as calm resolved.",
+      "Some agent tone measurements had low confidence, so the score should be interpreted carefully."
+    ],
+    "supporting_metrics": {
+      "customer_segments": 58,
+      "agent_segments": 78,
+      "supportive_agent_ratio": 0.5,
+      "risky_agent_ratio": 0.0,
+      "low_confidence_agent_segments": 33,
+      "low_confidence_agent_ratio": 0.4231,
+      "average_agent_escalation": 0.1428,
+      "average_customer_escalation": 0.1766,
+      "temporal_direction": "stable",
+      "temporal_unresolved_end_risk": false,
+      "multi_signal_escalation_type": "calm_resolved",
+      "manager_review_required": false
+    }
+  },
   "top_risky_segments": []
 }

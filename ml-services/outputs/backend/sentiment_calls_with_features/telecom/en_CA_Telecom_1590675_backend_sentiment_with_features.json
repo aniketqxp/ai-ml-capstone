@@ -12324,6 +12324,34 @@
       "The final phase did not contain strong unresolved customer escalation signals."
     ]
   },
+  "agent_empathy_tone_alignment": {
+    "alignment_level": "needs_review",
+    "empathy_score": 58,
+    "tone_risk_level": "high",
+    "customer_handling": "tone_may_affect_customer_experience",
+    "supportive_agent_segments": 36,
+    "neutral_agent_segments": 24,
+    "risky_agent_segments": 16,
+    "customer_concern_segments": 1,
+    "main_reasons": [
+      "36 supportive agent tone segment(s) were detected.",
+      "16 risky agent tone segment(s) were detected."
+    ],
+    "supporting_metrics": {
+      "customer_segments": 28,
+      "agent_segments": 76,
+      "supportive_agent_ratio": 0.4737,
+      "risky_agent_ratio": 0.2105,
+      "low_confidence_agent_segments": 21,
+      "low_confidence_agent_ratio": 0.2763,
+      "average_agent_escalation": 0.3122,
+      "average_customer_escalation": 0.2219,
+      "temporal_direction": "stable",
+      "temporal_unresolved_end_risk": false,
+      "multi_signal_escalation_type": "agent_tone_risk",
+      "manager_review_required": true
+    }
+  },
   "top_risky_segments": [
     {
       "segment_index": 17,

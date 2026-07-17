@@ -493,6 +493,9 @@ export default function App() {
   const temporalTrajectory =
     sentimentPayload?.temporal_emotion_trajectory || {};
 
+  const agentEmpathyTone =
+    sentimentPayload?.agent_empathy_tone_alignment || {};
+
   const unreliableSpeechCount = sentimentPayload?.segments?.filter(
     (s) => s?.audio_features?.audio_quality_flags?.unrealistic_speech_rate
   ).length || 0;
@@ -1313,6 +1316,127 @@ export default function App() {
           </p>
           <ul className="space-y-1">
             {temporalTrajectory.main_reasons
+              .slice(0, 5)
+              .map((reason, index) => (
+                <li
+                  key={`${reason}-${index}`}
+                  className="text-xs text-slate-300 leading-relaxed"
+                >
+                  • {reason}
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+    </div>
+)}
+
+
+{agentEmpathyTone &&
+  Object.keys(agentEmpathyTone).length > 0 && (
+    <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-lg">
+      <div className="flex flex-col gap-1 mb-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-emerald-400">
+          Agent Empathy & Tone Alignment
+        </p>
+        <h3 className="text-lg font-semibold text-slate-100">
+          {formatActionLabel(agentEmpathyTone.alignment_level)}
+        </h3>
+        <p className="text-xs text-slate-400">
+          Compares agent tone against customer emotional state to estimate empathy,
+          supportiveness, and tone risk.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Empathy Score
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {agentEmpathyTone.empathy_score ?? 'N/A'}
+            {agentEmpathyTone.empathy_score !== null &&
+              agentEmpathyTone.empathy_score !== undefined &&
+              '/100'}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Tone Risk
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(agentEmpathyTone.tone_risk_level)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Customer Handling
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(agentEmpathyTone.customer_handling)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Customer Concern Segments
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {agentEmpathyTone.customer_concern_segments ?? 'N/A'}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Supportive Agent Segments
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {agentEmpathyTone.supportive_agent_segments ?? 'N/A'}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Neutral Agent Segments
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {agentEmpathyTone.neutral_agent_segments ?? 'N/A'}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Risky Agent Segments
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {agentEmpathyTone.risky_agent_segments ?? 'N/A'}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Avg Agent Escalation
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatNumber(
+              agentEmpathyTone.supporting_metrics?.average_agent_escalation,
+              3
+            )}
+          </p>
+        </div>
+      </div>
+
+      {agentEmpathyTone.main_reasons?.length > 0 && (
+        <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+          <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+            Tone alignment explanation
+          </p>
+          <ul className="space-y-1">
+            {agentEmpathyTone.main_reasons
               .slice(0, 5)
               .map((reason, index) => (
                 <li
