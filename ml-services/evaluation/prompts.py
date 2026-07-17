@@ -359,7 +359,12 @@ unknown. Reserve met=null for steps the text genuinely cannot decide \
 (audio-only behaviour, transcript cut off mid-call) or steps made \
 inapplicable by how the call unfolded. An audit that returns mostly null has \
 failed at its job.
-5. OUTPUT: a single JSON object, no markdown fences, no commentary."""
+5. A step listing multiple items with "or" / "any" (e.g. "explain any \
+fees, minimum balance requirements, or transfer limits") is disjunctive: \
+met=true if AT LEAST ONE listed item was substantively covered: cite that \
+item's quote as evidence. met=false only if NONE of the listed items were \
+covered anywhere in the call.
+6. OUTPUT: a single JSON object, no markdown fences, no commentary."""
 
 WORKFLOW_CHECK_SKELETON = """\
 Return EXACTLY this JSON shape (one entry per given step, same order):
@@ -368,6 +373,65 @@ Return EXACTLY this JSON shape (one entry per given step, same order):
     {"step": "...", "rationale": "...", "met": true, "evidence": {"quote": "...", "speaker": "AGENT", "timestamp": "00:15"}},
     {"step": "...", "rationale": "...", "met": false, "evidence": null}
   ]
+}"""
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# WORKFLOW RECHECK (v0.4.2) — single-item second pass, isolated per step.
+# Fires ONLY on steps the main check marked met=false. Because it never sees
+# the other 7 steps, it cannot perturb anything the main pass already got
+# right -- unlike editing WORKFLOW_CHECK_SYSTEM itself, whose added rules
+# were shown (by repeated A/B testing) to bleed into unrelated steps' verdicts
+# even when the added rule's content had nothing to do with them.
+# ─────────────────────────────────────────────────────────────────────────────
+
+WORKFLOW_RECHECK_SYSTEM = """\
+You are a call QA auditor doing a SECOND-PASS check on ONE checklist item \
+that a first-pass audit marked as missed (met=false). Your only job is to \
+double-check that single verdict against the full transcript -- you are not \
+scoring any other item.
+
+A first-pass auditor sometimes marks a step false because it looked for a \
+DIRECT QUESTION and didn't find one, while missing that the same information \
+was actually established another way later in the call (e.g. the agent \
+read back or confirmed the specific value instead of asking for it \
+up front). Your job is to catch that specific failure mode -- and only that \
+failure mode. Do not relitigate the whole call.
+
+Decide:
+  met=true  — the step's specific requirement is actually satisfied \
+somewhere in the transcript, even if not phrased as a direct question \
+(a read-back, recap, or confirmation stating the concrete value counts).
+  met=false — confirm the original verdict: it was never satisfied.
+
+EVIDENCE RULES (strict -- this is what most often goes wrong on second pass):
+- The quote must be copied verbatim from a single transcript turn.
+- The quote must contain the ACTUAL, SPECIFIC content the step asks for \
+(e.g. if the step asks for account numbers, the quote must contain the \
+literal numbers -- not just the words "checking account" or "savings \
+account" with no number attached). A quote that is merely on-topic but \
+lacks the concrete value does NOT satisfy the step: keep met=false.
+- If you cannot find a quote meeting that bar, you must return met=false \
+with evidence=null. Do not lower the bar to find something to cite.
+- The quote must serve the exact purpose stated in the step's RATIONALE, \
+not merely share similar words with it. In particular: account numbers or \
+other details exchanged to CARRY OUT a transaction (e.g. to set up a \
+transfer) are not, by themselves, evidence that the customer's IDENTITY \
+was verified -- and vice versa. If the quote's real purpose in context was \
+a different checklist item, it does not count here: met=false.
+
+OUTPUT: a single JSON object, no markdown fences, no commentary."""
+
+WORKFLOW_RECHECK_SKELETON = """\
+Return EXACTLY this JSON shape:
+{
+  "met": true,
+  "evidence": {"quote": "...", "speaker": "AGENT", "timestamp": "00:15"}
+}
+or if still unmet:
+{
+  "met": false,
+  "evidence": null
 }"""
 
 

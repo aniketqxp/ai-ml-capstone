@@ -19,7 +19,7 @@ from typing import List, Literal
 from rubric import (
     ComplianceChecklist, QualityDimensions, EscalationRisk,
     InvestigationReport, CallMetadata, CallEvaluation, RUBRIC_VERSION_GRAPH,
-    CallWorkflow, WorkflowStep,
+    CallWorkflow, WorkflowStep, Evidence,
 )
 from prompts import (
     COMPLIANCE_SYSTEM, COMPLIANCE_SKELETON,
@@ -30,6 +30,7 @@ from prompts import (
     SUBJECT_SYSTEM, SUBJECT_SKELETON,
     WORKFLOW_GEN_SYSTEM, WORKFLOW_GEN_SKELETON,
     WORKFLOW_CHECK_SYSTEM, WORKFLOW_CHECK_SKELETON,
+    WORKFLOW_RECHECK_SYSTEM, WORKFLOW_RECHECK_SKELETON,
 )
 
 load_env()
@@ -367,12 +368,44 @@ def workflow_node(state):
             step=ds.step, rationale=ds.rationale,
             met=cs.met if cs else None,
             evidence=cs.evidence if cs else None))
+
+    # single-item recheck pass: fires ONLY on met=false steps, isolated from
+    # the other steps so it can never perturb something the main pass already
+    # got right. Catches the specific failure mode where the main pass wants
+    # a direct question and misses that the value was established via a
+    # later read-back/confirmation instead.
+    def _recheck_validator(d):
+        if "met" not in d:
+            raise ValueError("missing met")
+        return d
+
+    dt_d = 0.0
+    for s in steps:
+        if s.met is not False:
+            continue
+        recheck_packet = (
+            f"CHECKLIST ITEM: {s.step}\n"
+            f"RATIONALE: {s.rationale}\n"
+            f"FIRST-PASS VERDICT: met=false\n\n"
+            f"TRANSCRIPT:\n{state['packet']}")
+        try:
+            rc, dt_r, _ = _llm_eval_with_retry(
+                system=WORKFLOW_RECHECK_SYSTEM, skeleton=WORKFLOW_RECHECK_SKELETON,
+                packet=recheck_packet, validator=_recheck_validator)
+        except RuntimeError:
+            continue
+        dt_d += dt_r
+        if rc.get("met") is True and rc.get("evidence"):
+            s.met = True
+            s.evidence = Evidence.model_validate(rc["evidence"])
+
     met = sum(1 for s in steps if s.met is True)
     missed = sum(1 for s in steps if s.met is False)
     print(f"  [workflow] audit in {dt_c:.1f}s: {met} met, {missed} missed, "
-          f"{len(steps) - met - missed} n/a of {len(steps)}")
+          f"{len(steps) - met - missed} n/a of {len(steps)}"
+          + (f"  (+{dt_d:.1f}s recheck)" if dt_d else ""))
 
-    dt = dt_a + dt_b + dt_c
+    dt = dt_a + dt_b + dt_c + dt_d
     return {"workflow": CallWorkflow(subject=subj.subject,
                                      expected_steps=steps).model_dump(),
             "node_meta": {"workflow": {"duration": round(dt, 1),
