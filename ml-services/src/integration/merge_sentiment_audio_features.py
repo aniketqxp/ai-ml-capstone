@@ -1010,6 +1010,349 @@ def build_multi_signal_escalation_intelligence(payload: dict) -> dict:
         },
     }
 
+def build_temporal_emotion_trajectory(payload: dict) -> dict:
+    """
+    Build a temporal customer emotion trajectory across the call.
+
+    This groups the customer side of the call into ordered phases and explains
+    whether the emotional state improved, worsened, stayed stable, or ended unresolved.
+
+    It uses only sentiment/audio/model outputs:
+    - sentiment
+    - dominant emotion
+    - emotion confidence
+    - sentiment confidence
+    - negative emotion probability
+    - escalation score
+    - speaker role
+    - audio reliability
+
+    It does not use transcript keywords.
+    """
+    segments = payload.get("segments", []) or []
+
+    customer_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "customer"
+    ]
+
+    customer_segments = [
+        segment for segment in customer_segments
+        if segment.get("escalation_score") is not None
+    ]
+
+    if len(customer_segments) < 3:
+        return {
+            "overall_pattern": "insufficient_customer_data",
+            "trajectory_direction": "unknown",
+            "start_state": "not_enough_data",
+            "end_state": "not_enough_data",
+            "peak_emotional_phase": None,
+            "deescalation_detected": False,
+            "unresolved_end_risk": False,
+            "phase_count": 0,
+            "phase_summary": [],
+            "main_reasons": [
+                "Not enough customer segments were available to build a temporal emotion trajectory."
+            ],
+        }
+
+    phase_count = 5
+    total_customer_segments = len(customer_segments)
+    phase_size = max(total_customer_segments // phase_count, 1)
+
+    phases = []
+
+    for phase_index in range(phase_count):
+        start_index = phase_index * phase_size
+
+        if phase_index == phase_count - 1:
+            end_index = total_customer_segments
+        else:
+            end_index = min((phase_index + 1) * phase_size, total_customer_segments)
+
+        phase_segments = customer_segments[start_index:end_index]
+
+        if not phase_segments:
+            continue
+
+        escalation_scores = [
+            safe_float(segment.get("escalation_score"), 0.0)
+            for segment in phase_segments
+        ]
+
+        confidence_scores = []
+        negative_probabilities = []
+        confident_segments = []
+        low_confidence_segments = []
+        negative_segments = []
+        positive_segments = []
+        neutral_segments = []
+        strong_negative_segments = []
+
+        emotion_counts = {}
+        sentiment_counts = {}
+
+        for segment in phase_segments:
+            sentiment = normalize_label(segment.get("sentiment"))
+            emotion = normalize_label(segment.get("dominant_emotion"))
+            emotion_confidence = safe_float(segment.get("emotion_confidence"), 0.0)
+            sentiment_confidence = safe_float(segment.get("sentiment_confidence"), 0.0)
+            negative_probability = safe_float(segment.get("negative_emotion_probability"), 0.0)
+
+            confidence_scores.append(max(emotion_confidence, sentiment_confidence))
+            negative_probabilities.append(negative_probability)
+
+            if is_confident_segment(segment):
+                confident_segments.append(segment)
+            else:
+                low_confidence_segments.append(segment)
+
+            if sentiment == "negative":
+                negative_segments.append(segment)
+            elif sentiment == "positive":
+                positive_segments.append(segment)
+            else:
+                neutral_segments.append(segment)
+
+            if emotion:
+                emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
+
+            if sentiment:
+                sentiment_counts[sentiment] = sentiment_counts.get(sentiment, 0) + 1
+
+            if is_strong_negative_customer_signal(segment):
+                strong_negative_segments.append(segment)
+
+        avg_escalation = safe_average(escalation_scores)
+        avg_confidence = safe_average(confidence_scores)
+        avg_negative_probability = safe_average(negative_probabilities)
+
+        if avg_escalation is None:
+            avg_escalation = 0.0
+
+        if avg_confidence is None:
+            avg_confidence = 0.0
+
+        if avg_negative_probability is None:
+            avg_negative_probability = 0.0
+
+        dominant_emotion = "unknown"
+        if emotion_counts:
+            dominant_emotion = max(emotion_counts, key=emotion_counts.get)
+
+        dominant_sentiment = "unknown"
+        if sentiment_counts:
+            dominant_sentiment = max(sentiment_counts, key=sentiment_counts.get)
+
+        negative_ratio = 0.0
+        positive_ratio = 0.0
+        low_confidence_ratio = 0.0
+
+        if phase_segments:
+            negative_ratio = round(len(negative_segments) / len(phase_segments), 4)
+            positive_ratio = round(len(positive_segments) / len(phase_segments), 4)
+            low_confidence_ratio = round(len(low_confidence_segments) / len(phase_segments), 4)
+
+        if (
+            len(strong_negative_segments) > 0
+            or avg_escalation >= 0.55
+            or avg_negative_probability >= 0.70
+        ):
+            phase_state = "high_concern"
+        elif (
+            negative_ratio >= 0.35
+            or avg_escalation >= 0.40
+            or avg_negative_probability >= 0.45
+        ):
+            phase_state = "mild_concern"
+        elif (
+            positive_ratio >= 0.35
+            and avg_escalation < 0.35
+            and avg_negative_probability < 0.40
+        ):
+            phase_state = "positive_or_reassured"
+        elif avg_escalation < 0.30 and avg_negative_probability < 0.35:
+            phase_state = "calm"
+        else:
+            phase_state = "neutral_mixed"
+
+        phases.append({
+            "phase_id": f"phase_{phase_index + 1}",
+            "phase_label": f"Phase {phase_index + 1}",
+            "segment_start_index": start_index,
+            "segment_end_index": end_index - 1,
+            "customer_segment_count": len(phase_segments),
+            "phase_state": phase_state,
+            "dominant_sentiment": dominant_sentiment,
+            "dominant_emotion": dominant_emotion,
+            "average_escalation": round(avg_escalation, 4),
+            "average_confidence": round(avg_confidence, 4),
+            "average_negative_probability": round(avg_negative_probability, 4),
+            "negative_segment_ratio": negative_ratio,
+            "positive_segment_ratio": positive_ratio,
+            "low_confidence_ratio": low_confidence_ratio,
+            "strong_negative_customer_segments": len(strong_negative_segments),
+        })
+
+    if not phases:
+        return {
+            "overall_pattern": "insufficient_customer_data",
+            "trajectory_direction": "unknown",
+            "start_state": "not_enough_data",
+            "end_state": "not_enough_data",
+            "peak_emotional_phase": None,
+            "deescalation_detected": False,
+            "unresolved_end_risk": False,
+            "phase_count": 0,
+            "phase_summary": [],
+            "main_reasons": [
+                "Customer segments were available, but no valid trajectory phases could be created."
+            ],
+        }
+
+    start_phase = phases[0]
+    end_phase = phases[-1]
+
+    peak_phase = max(
+        phases,
+        key=lambda phase: (
+            phase.get("average_escalation", 0.0),
+            phase.get("strong_negative_customer_segments", 0),
+            phase.get("average_negative_probability", 0.0),
+        ),
+    )
+
+    start_escalation = safe_float(start_phase.get("average_escalation"), 0.0)
+    end_escalation = safe_float(end_phase.get("average_escalation"), 0.0)
+    peak_escalation = safe_float(peak_phase.get("average_escalation"), 0.0)
+
+    trajectory_delta = round(end_escalation - start_escalation, 4)
+
+    if trajectory_delta <= -0.08:
+        trajectory_direction = "improved"
+    elif trajectory_delta >= 0.08:
+        trajectory_direction = "worsened"
+    else:
+        trajectory_direction = "stable"
+
+    deescalation_detected = (
+        peak_escalation - end_escalation >= 0.10
+        and end_escalation < 0.40
+    )
+
+    unresolved_end_risk = (
+        end_phase.get("phase_state") in {"high_concern", "mild_concern"}
+        or end_phase.get("strong_negative_customer_segments", 0) > 0
+        or end_escalation >= 0.45
+    )
+
+    high_concern_phases = [
+        phase for phase in phases
+        if phase.get("phase_state") == "high_concern"
+    ]
+
+    mild_concern_phases = [
+        phase for phase in phases
+        if phase.get("phase_state") == "mild_concern"
+    ]
+
+    positive_or_calm_end = end_phase.get("phase_state") in {
+        "calm",
+        "positive_or_reassured",
+        "neutral_mixed",
+    }
+
+    if (
+        not high_concern_phases
+        and not mild_concern_phases
+        and positive_or_calm_end
+    ):
+        overall_pattern = "stable_positive_resolution"
+
+    elif (
+        len(high_concern_phases) > 0
+        and deescalation_detected
+        and positive_or_calm_end
+    ):
+        overall_pattern = "deescalated_after_peak"
+
+    elif (
+        len(mild_concern_phases) > 0
+        and trajectory_direction in {"improved", "stable"}
+        and not unresolved_end_risk
+    ):
+        overall_pattern = "mild_concern_resolved"
+
+    elif unresolved_end_risk and trajectory_direction == "worsened":
+        overall_pattern = "worsening_unresolved_escalation"
+
+    elif unresolved_end_risk:
+        overall_pattern = "unresolved_customer_concern"
+
+    elif trajectory_direction == "improved":
+        overall_pattern = "improved_resolution"
+
+    elif trajectory_direction == "worsened":
+        overall_pattern = "worsening_attention_needed"
+
+    else:
+        overall_pattern = "stable_mixed"
+
+    main_reasons = []
+
+    main_reasons.append(
+        f"Customer trajectory moved from {start_phase.get('phase_state')} to {end_phase.get('phase_state')}."
+    )
+
+    if trajectory_direction == "improved":
+        main_reasons.append(
+            f"Average customer escalation decreased from {round(start_escalation, 4)} to {round(end_escalation, 4)}."
+        )
+    elif trajectory_direction == "worsened":
+        main_reasons.append(
+            f"Average customer escalation increased from {round(start_escalation, 4)} to {round(end_escalation, 4)}."
+        )
+    else:
+        main_reasons.append(
+            f"Average customer escalation stayed relatively stable from {round(start_escalation, 4)} to {round(end_escalation, 4)}."
+        )
+
+    main_reasons.append(
+        f"The highest emotional phase was {peak_phase.get('phase_label')} with average escalation {round(peak_escalation, 4)}."
+    )
+
+    if deescalation_detected:
+        main_reasons.append(
+            "A de-escalation pattern was detected because escalation dropped after the peak phase."
+        )
+
+    if unresolved_end_risk:
+        main_reasons.append(
+            "The final phase still contains customer concern signals, so the call may need follow-up or review."
+        )
+    else:
+        main_reasons.append(
+            "The final phase did not contain strong unresolved customer escalation signals."
+        )
+
+    return {
+        "overall_pattern": overall_pattern,
+        "trajectory_direction": trajectory_direction,
+        "start_state": start_phase.get("phase_state"),
+        "end_state": end_phase.get("phase_state"),
+        "peak_emotional_phase": peak_phase.get("phase_id"),
+        "peak_emotional_phase_label": peak_phase.get("phase_label"),
+        "deescalation_detected": deescalation_detected,
+        "unresolved_end_risk": unresolved_end_risk,
+        "phase_count": len(phases),
+        "trajectory_delta": trajectory_delta,
+        "start_escalation": round(start_escalation, 4),
+        "end_escalation": round(end_escalation, 4),
+        "peak_escalation": round(peak_escalation, 4),
+        "phase_summary": phases,
+        "main_reasons": main_reasons,
+    }
 
 def calculate_segment_review_score(segment: dict) -> float:
     """
@@ -1295,6 +1638,7 @@ def main():
     sentiment["calibrated_sentiment_summary"] = build_calibrated_call_sentiment(sentiment)
     sentiment["manager_review_recommendation"] = build_manager_review_recommendation(sentiment)
     sentiment["multi_signal_escalation_intelligence"] = build_multi_signal_escalation_intelligence(sentiment)
+    sentiment["temporal_emotion_trajectory"] = build_temporal_emotion_trajectory(sentiment)
     sentiment["top_risky_segments"] = build_top_risky_segments(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
