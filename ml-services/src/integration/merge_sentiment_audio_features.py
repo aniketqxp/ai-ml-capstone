@@ -627,6 +627,389 @@ def build_manager_review_recommendation(payload: dict) -> dict:
         "notes": notes,
     }
 
+def build_multi_signal_escalation_intelligence(payload: dict) -> dict:
+    """
+    Build a business-level escalation intelligence layer from sentiment and audio signals.
+
+    This is not a raw model prediction. It combines:
+    - customer escalation trend
+    - final-third customer escalation
+    - strong negative customer signals
+    - agent tone risk
+    - model confidence
+    - audio reliability
+    - manager review output
+
+    It does not use transcript keywords.
+    """
+    segments = payload.get("segments", []) or []
+    manager_review = payload.get("manager_review_recommendation", {}) or {}
+    customer_trend = payload.get("customer_escalation_trend", {}) or {}
+
+    customer_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "customer"
+    ]
+
+    agent_segments = [
+        segment for segment in segments
+        if normalize_label(segment.get("speaker")) == "agent"
+    ]
+
+    customer_scored_segments = [
+        segment for segment in customer_segments
+        if segment.get("escalation_score") is not None
+    ]
+
+    if not customer_scored_segments:
+        return {
+            "escalation_type": "insufficient_confidence",
+            "risk_level": "unknown",
+            "decision_confidence": "low",
+            "evidence_strength": "weak",
+            "customer_emotional_trajectory": "not_enough_data",
+            "agent_tone_alignment": "not_enough_data",
+            "resolution_effectiveness_score": None,
+            "manager_action": "manual_review_recommended",
+            "main_reasons": [
+                "Not enough customer segments with escalation scores were available."
+            ],
+            "supporting_metrics": {
+                "customer_segments": len(customer_segments),
+                "agent_segments": len(agent_segments),
+            },
+        }
+
+    total_customer = len(customer_scored_segments)
+    third_size = max(total_customer // 3, 1)
+
+    first_third = customer_scored_segments[:third_size]
+    final_third = customer_scored_segments[-third_size:]
+
+    first_third_scores = [
+        safe_float(segment.get("escalation_score"), 0.0)
+        for segment in first_third
+    ]
+
+    final_third_scores = [
+        safe_float(segment.get("escalation_score"), 0.0)
+        for segment in final_third
+    ]
+
+    first_third_avg = safe_average(first_third_scores)
+    final_third_avg = safe_average(final_third_scores)
+
+    if first_third_avg is None:
+        first_third_avg = 0.0
+
+    if final_third_avg is None:
+        final_third_avg = 0.0
+
+    trajectory_delta = round(final_third_avg - first_third_avg, 4)
+
+    if trajectory_delta <= -0.08:
+        customer_emotional_trajectory = "improved"
+    elif trajectory_delta >= 0.08:
+        customer_emotional_trajectory = "worsened"
+    else:
+        customer_emotional_trajectory = "stable"
+
+    strong_negative_customer_segments = [
+        segment for segment in customer_segments
+        if is_strong_negative_customer_signal(segment)
+    ]
+
+    final_third_strong_negative_segments = [
+        segment for segment in final_third
+        if is_strong_negative_customer_signal(segment)
+    ]
+
+    customer_high_escalation_segments = [
+        segment for segment in customer_segments
+        if (
+            safe_float(segment.get("escalation_score"), 0.0) >= 0.55
+            and is_confident_segment(segment)
+        )
+    ]
+
+    agent_tone_risk_segments = []
+
+    for segment in agent_segments:
+        sentiment = normalize_label(segment.get("sentiment"))
+        emotion = normalize_label(segment.get("dominant_emotion"))
+        escalation_score = safe_float(segment.get("escalation_score"), 0.0)
+
+        if (
+            sentiment == "negative"
+            and escalation_score >= 0.50
+            and is_confident_segment(segment)
+        ):
+            agent_tone_risk_segments.append(segment)
+
+        elif (
+            emotion in {"anger", "angry", "fear", "fearful", "disgust"}
+            and escalation_score >= 0.50
+            and is_confident_segment(segment)
+        ):
+            agent_tone_risk_segments.append(segment)
+
+    low_confidence_segments = [
+        segment for segment in segments
+        if not is_confident_segment(segment)
+    ]
+
+    customer_low_confidence_segments = [
+        segment for segment in customer_segments
+        if not is_confident_segment(segment)
+    ]
+
+    audio_segments = [
+        segment for segment in segments
+        if segment.get("audio_features") is not None
+    ]
+
+    audio_coverage_ratio = 0.0
+    if segments:
+        audio_coverage_ratio = round(len(audio_segments) / len(segments), 4)
+
+    low_confidence_ratio = 0.0
+    if segments:
+        low_confidence_ratio = round(len(low_confidence_segments) / len(segments), 4)
+
+    max_escalation = 0.0
+    for segment in segments:
+        max_escalation = max(
+            max_escalation,
+            safe_float(segment.get("escalation_score"), 0.0),
+        )
+
+    review_required = bool(manager_review.get("review_required"))
+    review_level = normalize_label(manager_review.get("review_level"))
+
+    if (
+        strong_negative_customer_segments
+        and agent_tone_risk_segments
+    ):
+        agent_tone_alignment = "needs_review"
+    elif (
+        strong_negative_customer_segments
+        and not agent_tone_risk_segments
+    ):
+        agent_tone_alignment = "supportive"
+    elif (
+        not strong_negative_customer_segments
+        and agent_tone_risk_segments
+    ):
+        agent_tone_alignment = "agent_tone_risk"
+    else:
+        agent_tone_alignment = "neutral"
+
+    resolution_effectiveness_score = 100
+
+    if customer_emotional_trajectory == "worsened":
+        resolution_effectiveness_score -= 20
+    elif customer_emotional_trajectory == "improved":
+        resolution_effectiveness_score += 5
+
+    if final_third_avg >= 0.50:
+        resolution_effectiveness_score -= 20
+    elif final_third_avg >= 0.35:
+        resolution_effectiveness_score -= 10
+
+    if len(strong_negative_customer_segments) >= 3:
+        resolution_effectiveness_score -= 20
+    elif len(strong_negative_customer_segments) >= 1:
+        resolution_effectiveness_score -= 10
+
+    if len(final_third_strong_negative_segments) >= 1:
+        resolution_effectiveness_score -= 15
+
+    if len(agent_tone_risk_segments) >= 2:
+        resolution_effectiveness_score -= 15
+    elif len(agent_tone_risk_segments) == 1:
+        resolution_effectiveness_score -= 8
+
+    if review_required:
+        resolution_effectiveness_score -= 10
+
+    if low_confidence_ratio >= 0.40:
+        resolution_effectiveness_score -= 8
+    elif low_confidence_ratio >= 0.25:
+        resolution_effectiveness_score -= 4
+
+    resolution_effectiveness_score = max(
+        0,
+        min(100, round(resolution_effectiveness_score)),
+    )
+
+    if (
+        len(strong_negative_customer_segments) == 0
+        and final_third_avg < 0.35
+        and customer_emotional_trajectory in {"stable", "improved"}
+        and not review_required
+    ):
+        escalation_type = "calm_resolved"
+        risk_level = "low"
+        manager_action = "no_review_required"
+
+    elif (
+        len(strong_negative_customer_segments) <= 1
+        and final_third_avg < 0.45
+        and not review_required
+    ):
+        escalation_type = "mild_concern"
+        risk_level = "medium"
+        manager_action = "optional_coaching"
+
+    elif (
+        len(agent_tone_risk_segments) > 0
+        and len(strong_negative_customer_segments) > 0
+    ):
+        escalation_type = "agent_tone_risk"
+        risk_level = "high"
+        manager_action = "coaching_required"
+
+    elif (
+        len(strong_negative_customer_segments) >= 2
+        and final_third_avg >= 0.45
+    ):
+        escalation_type = "unresolved_escalation"
+        risk_level = "high"
+        manager_action = "immediate_review"
+
+    elif (
+        len(strong_negative_customer_segments) >= 1
+        or len(customer_high_escalation_segments) >= 1
+        or review_level in {"medium", "high"}
+    ):
+        escalation_type = "customer_frustration"
+        risk_level = "high" if review_level == "high" or max_escalation >= 0.60 else "medium"
+        manager_action = "manager_review_required"
+
+    elif low_confidence_ratio >= 0.45:
+        escalation_type = "insufficient_confidence"
+        risk_level = "unknown"
+        manager_action = "manual_review_recommended"
+
+    else:
+        escalation_type = "mixed_signals"
+        risk_level = "medium"
+        manager_action = "manual_review_recommended"
+
+    evidence_points = 0
+
+    if len(strong_negative_customer_segments) >= 1:
+        evidence_points += 2
+
+    if len(customer_high_escalation_segments) >= 1:
+        evidence_points += 2
+
+    if final_third_avg >= 0.45:
+        evidence_points += 2
+
+    if customer_emotional_trajectory == "worsened":
+        evidence_points += 1
+
+    if len(agent_tone_risk_segments) >= 1:
+        evidence_points += 1
+
+    if max_escalation >= 0.60:
+        evidence_points += 2
+
+    if evidence_points >= 5:
+        evidence_strength = "strong"
+    elif evidence_points >= 2:
+        evidence_strength = "moderate"
+    else:
+        evidence_strength = "weak"
+
+    if audio_coverage_ratio >= 0.90 and low_confidence_ratio < 0.30:
+        if evidence_strength in {"strong", "weak"}:
+            decision_confidence = "high"
+        else:
+            decision_confidence = "medium"
+    elif audio_coverage_ratio >= 0.70:
+        decision_confidence = "medium"
+    else:
+        decision_confidence = "low"
+
+    main_reasons = []
+
+    if escalation_type == "calm_resolved":
+        main_reasons.append("No strong high-confidence customer negative escalation signals were found.")
+        main_reasons.append("Customer escalation stayed stable or improved by the end of the call.")
+        main_reasons.append("The final third of the call remained below the high-risk escalation range.")
+
+    if customer_emotional_trajectory == "improved":
+        main_reasons.append("Customer escalation decreased from the first third to the final third of the call.")
+    elif customer_emotional_trajectory == "worsened":
+        main_reasons.append("Customer escalation increased from the first third to the final third of the call.")
+    else:
+        main_reasons.append("Customer escalation stayed relatively stable across the call.")
+
+    if len(strong_negative_customer_segments) > 0:
+        main_reasons.append(
+            f"{len(strong_negative_customer_segments)} strong negative customer signal(s) were detected."
+        )
+
+    if len(final_third_strong_negative_segments) > 0:
+        main_reasons.append(
+            f"{len(final_third_strong_negative_segments)} strong negative customer signal(s) appeared in the final third of the call."
+        )
+
+    if len(agent_tone_risk_segments) > 0:
+        main_reasons.append(
+            f"{len(agent_tone_risk_segments)} agent tone risk segment(s) were detected."
+        )
+
+    if max_escalation >= 0.60:
+        main_reasons.append(
+            f"Maximum escalation score reached {round(max_escalation, 4)}."
+        )
+
+    if review_required:
+        main_reasons.append("The manager review layer marked this call as requiring review.")
+
+    if low_confidence_ratio >= 0.30:
+        main_reasons.append(
+            "A noticeable portion of segments had low confidence, so the decision should be reviewed with care."
+        )
+
+    if not main_reasons:
+        main_reasons.append("No major escalation indicators were detected.")
+
+    return {
+        "escalation_type": escalation_type,
+        "risk_level": risk_level,
+        "decision_confidence": decision_confidence,
+        "evidence_strength": evidence_strength,
+        "customer_emotional_trajectory": customer_emotional_trajectory,
+        "agent_tone_alignment": agent_tone_alignment,
+        "resolution_effectiveness_score": resolution_effectiveness_score,
+        "manager_action": manager_action,
+        "main_reasons": main_reasons,
+        "supporting_metrics": {
+            "total_segments": len(segments),
+            "customer_segments": len(customer_segments),
+            "agent_segments": len(agent_segments),
+            "audio_coverage_ratio": audio_coverage_ratio,
+            "low_confidence_segments": len(low_confidence_segments),
+            "customer_low_confidence_segments": len(customer_low_confidence_segments),
+            "low_confidence_ratio": low_confidence_ratio,
+            "customer_first_third_escalation": round(first_third_avg, 4),
+            "customer_final_third_escalation": round(final_third_avg, 4),
+            "customer_trajectory_delta": trajectory_delta,
+            "strong_negative_customer_segments": len(strong_negative_customer_segments),
+            "final_third_strong_negative_customer_segments": len(final_third_strong_negative_segments),
+            "customer_high_escalation_segments": len(customer_high_escalation_segments),
+            "agent_tone_risk_segments": len(agent_tone_risk_segments),
+            "max_escalation_score": round(max_escalation, 4),
+            "manager_review_required": review_required,
+            "manager_review_level": review_level,
+            "existing_customer_trend": customer_trend.get("trend"),
+        },
+    }
+
 
 def calculate_segment_review_score(segment: dict) -> float:
     """
@@ -911,6 +1294,7 @@ def main():
     sentiment["customer_escalation_trend"] = build_customer_escalation_trend(sentiment)
     sentiment["calibrated_sentiment_summary"] = build_calibrated_call_sentiment(sentiment)
     sentiment["manager_review_recommendation"] = build_manager_review_recommendation(sentiment)
+    sentiment["multi_signal_escalation_intelligence"] = build_multi_signal_escalation_intelligence(sentiment)
     sentiment["top_risky_segments"] = build_top_risky_segments(sentiment)
 
     with output_path.open("w", encoding="utf-8") as f:
