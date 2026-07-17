@@ -1,5 +1,5 @@
 {
-  "call": "call_1",
+  "call": "en_CA_Banking_1586889",
   "model": "faster-whisper small.en/int8 + stereo channel attribution",
   "duration": 636.22,
   "turns": [
@@ -723,8 +723,14 @@
         {
           "step": "Ask for the source and destination account numbers (checking and savings)",
           "rationale": "Identifies the accounts involved in the transfer setup.",
-          "met": false,
-          "evidence": null
+          "met": true,
+          "evidence": {
+            "quote": "so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November?",
+            "speaker": "AGENT",
+            "timestamp": "02:12",
+            "sec": 131.96,
+            "turn": 10
+          }
         },
         {
           "step": "Specify the transfer amount and confirm it with the customer",
