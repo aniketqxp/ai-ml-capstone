@@ -63,7 +63,7 @@
       "score": 5,
       "signals_present": [
         "first-call resolution",
-        "appropriate call duration",
+        "appropriate call duration for complexity",
         "no unnecessary holds or transfers"
       ],
       "signals_absent": [],
@@ -90,11 +90,10 @@
     "problem_resolution": {
       "score": 5,
       "signals_present": [
-        "offered multiple options",
         "explained pros and cons",
-        "solution fits customer's situation",
+        "solution fits customer's specific situation",
         "explained WHY",
-        "issue solved by end"
+        "offered alternatives if issue was unsolvable"
       ],
       "signals_absent": [],
       "evidence": [
@@ -122,10 +121,10 @@
       "signals_present": [
         "asked open-ended diagnostic questions",
         "checked understanding",
-        "asked clarifying questions"
+        "asked clarifying questions before jumping to a solution"
       ],
       "signals_absent": [
-        "no recap at end"
+        "no recap or summary at the end"
       ],
       "evidence": [
         {
@@ -150,11 +149,11 @@
     "professionalism": {
       "score": 4,
       "signals_present": [
-        "proper grammar and complete sentences",
+        "proper grammar and complete sentences throughout",
         "no slang or informal language",
         "knew the answer or actively found it",
         "provided accurate information",
-        "explained WHY",
+        "explained WHY, not just what to do",
         "listened fully without interrupting"
       ],
       "signals_absent": [],
@@ -186,7 +185,7 @@
         "matches the emotional register of the customer"
       ],
       "signals_absent": [
-        "no explicit validation phrase"
+        "no explicit validation phrases"
       ],
       "evidence": [
         {
@@ -211,10 +210,11 @@
     "customer_satisfaction": {
       "score": 5,
       "signals_present": [
-        "problem identified clearly",
-        "issue addressed",
-        "clear resolution provided",
-        "agent didn't dismiss or minimize concern",
+        "problem was identified clearly",
+        "issue was actually addressed",
+        "clear resolution was provided",
+        "agent didn't dismiss or minimize the customer's concern",
+        "agent followed through on promises made during the call",
         "first-call resolution achieved"
       ],
       "signals_absent": [],
@@ -260,7 +260,7 @@
     "expected_steps": [
       {
         "step": "Greet the customer by name and introduce yourself with the bank's name",
-        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "rationale": "Establishes a professional and personalized opening to the call.",
         "met": true,
         "evidence": {
           "quote": "Hey, good morning, Ashley. My name is Alex. I'd be happy to help you with that.",
@@ -278,7 +278,7 @@
       },
       {
         "step": "Confirm the customer's intent to set up an automatic monthly transfer",
-        "rationale": "Clarifies the purpose of the call and aligns expectations.",
+        "rationale": "Clarifies the purpose of the call to align with the customer's request.",
         "met": true,
         "evidence": {
           "quote": "My name is Ashley and I'm calling because I like to set up an automatic monthly transfer from my checking account to a new savings account I just opened.",
@@ -289,8 +289,8 @@
         }
       },
       {
-        "step": "Verify the source account (checking) and destination account (new savings) details",
-        "rationale": "Ensures the correct accounts are selected to avoid errors.",
+        "step": "Verify the source account (checking) and destination account (new savings account) details",
+        "rationale": "Ensures the correct accounts are selected for the transfer setup.",
         "met": true,
         "evidence": {
           "quote": "Can I start by getting your checking account number and the new savings account number so we can get everything set up properly?",
@@ -301,8 +301,8 @@
         }
       },
       {
-        "step": "Ask for the transfer amount and frequency (monthly) and confirm the date for the first transfer",
-        "rationale": "Specifies the transfer parameters to set up the automatic payment correctly.",
+        "step": "Ask for the transfer amount and confirm it with the customer",
+        "rationale": "Prevents errors by explicitly agreeing on the transfer amount.",
         "met": true,
         "evidence": {
           "quote": "Do you know how much you'd like to transfer each month? Or would you like me to go over some suggestions based on your accounts balances and stuff?",
@@ -313,8 +313,20 @@
         }
       },
       {
+        "step": "Specify the transfer frequency (monthly) and the preferred date of the month",
+        "rationale": "Ensures the transfer schedule meets the customer's needs.",
+        "met": true,
+        "evidence": {
+          "quote": "We can schedule it for let's say the first of every month.",
+          "speaker": "AGENT",
+          "timestamp": "03:40",
+          "sec": 220.34,
+          "turn": 18
+        }
+      },
+      {
         "step": "Explain any fees, minimum balance requirements, or transfer limits for the savings account",
-        "rationale": "Provides transparency about potential impacts on the customer's account.",
+        "rationale": "Provides transparency about potential impacts on the customer's accounts.",
         "met": true,
         "evidence": {
           "quote": "Yeah, so for your account type, the monthly automatic transfer limit is going to be at 5000. So with your requested amount of 500, it's well within the limit.",
@@ -325,20 +337,8 @@
         }
       },
       {
-        "step": "Confirm the customer's understanding and agreement to the transfer terms",
-        "rationale": "Ensures the customer is fully informed before finalizing the setup.",
-        "met": true,
-        "evidence": {
-          "quote": "Yeah, that makes perfect sense. It's great that you're planning ahead.",
-          "speaker": "AGENT",
-          "timestamp": "01:49",
-          "sec": 108.85,
-          "turn": 12
-        }
-      },
-      {
-        "step": "Schedule the transfer, provide a confirmation number, and offer to send details via email or mail",
-        "rationale": "Finalizes the action and provides the customer with a record of the setup.",
+        "step": "Confirm the transfer setup details and offer to send a confirmation email or letter",
+        "rationale": "Provides documentation and reassurance of the completed action.",
         "met": true,
         "evidence": {
           "quote": "You will be receiving an email shortly with a confirmation on how I did.",
@@ -651,40 +651,40 @@
   "_pipeline": {
     "nodes": {
       "assemble": {
-        "duration": 0.02
+        "duration": 0.03
       },
       "chapters": {
-        "duration": 2.0,
+        "duration": 18.7,
         "served_by": "router",
         "runs": 1
       },
       "compliance": {
-        "duration": 1.8,
+        "duration": 2.1,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "escalation": {
-        "duration": 0.8,
+        "duration": 1.2,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "quality": {
-        "duration": 3.7,
+        "duration": 4.0,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "workflow": {
-        "duration": 6.7,
+        "duration": 7.4,
         "served_by": "mistral-small-latest",
         "phases": {
-          "subject": 0.8,
-          "expected": 2.4,
-          "check": 3.5
+          "subject": 1.2,
+          "expected": 2.3,
+          "check": 3.3
         },
         "runs": 1
       },
       "fuse": {
-        "duration": 0.01,
+        "duration": 0.69,
         "acoustic_available": true,
         "fused_dims": [
           "professionalism",
@@ -696,6 +696,6 @@
       }
     },
     "anchor_passes": 1,
-    "wall_clock": 10.3
+    "wall_clock": 31.1
   }
 }

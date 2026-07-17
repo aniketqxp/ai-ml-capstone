@@ -38,7 +38,7 @@
     "identity_verified": {
       "passed": false,
       "evidence": null,
-      "note": "no identity verification observed before account discussion"
+      "note": "no identity verification observed before discussing account details"
     },
     "identity_method": null,
     "resolution_provided": {
@@ -60,80 +60,22 @@
   },
   "quality": {
     "efficiency": {
-      "score": 5,
-      "signals_present": [
-        "first-call resolution",
-        "appropriate call duration",
-        "no unnecessary holds or transfers"
-      ],
-      "signals_absent": [],
-      "evidence": [
-        {
-          "quote": "I've got it booked here right now.",
-          "speaker": "AGENT",
-          "timestamp": "09:03",
-          "sec": 543.0,
-          "turn": 30
-        }
-      ],
-      "requires_audio": false,
-      "hybrid": {
-        "text_score": 5,
-        "acoustic_score": null,
-        "text_weight": 1.0,
-        "acoustic_weight": 0.0,
-        "coverage": null,
-        "channel": null,
-        "method": "text_only"
-      }
-    },
-    "problem_resolution": {
-      "score": 5,
-      "signals_present": [
-        "offered multiple options",
-        "explained pros and cons",
-        "waited for customer preference",
-        "solution fits customer's situation",
-        "explained why"
-      ],
-      "signals_absent": [],
-      "evidence": [
-        {
-          "quote": "Well, what you currently have right now is looking at your file is you have long distance calling free for both the United Canada all across and also free along the texting as well.",
-          "speaker": "AGENT",
-          "timestamp": "02:15",
-          "sec": 135.26,
-          "turn": 6
-        }
-      ],
-      "requires_audio": false,
-      "hybrid": {
-        "text_score": 5,
-        "acoustic_score": null,
-        "text_weight": 1.0,
-        "acoustic_weight": 0.0,
-        "coverage": null,
-        "channel": null,
-        "method": "text_only"
-      }
-    },
-    "clarity": {
       "score": 4,
       "signals_present": [
-        "asked open-ended diagnostic questions",
-        "checked understanding",
-        "asked clarifying questions"
+        "first-call resolution",
+        "appropriate call duration for complexity",
+        "no unnecessary holds or transfers"
       ],
       "signals_absent": [
-        "no recap at end"
+        "no unnecessary holds or transfers"
       ],
       "evidence": [
         {
-          "quote": "What do we currently have on our line? That would be very interesting to me to know.",
-          "speaker": "CUSTOMER",
-          "timestamp": "02:08",
-          "sec": 128.1,
-          "turn": 5
+          "quote": "I can set it up for you right now.",
+          "speaker": "AGENT",
+          "timestamp": "07:35",
+          "sec": 454.97,
+          "turn": 24
         }
       ],
       "requires_audio": false,
@@ -147,24 +89,92 @@
         "method": "text_only"
       }
     },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "offered multiple options",
+        "explained pros and cons of each option",
+        "solution fits customer's specific situation",
+        "explained WHY"
+      ],
+      "signals_absent": [
+        "no explicit backup plan mentioned"
+      ],
+      "evidence": [
+        {
+          "quote": "Well, the silver plan is probably, I would recommend your best bet, but there's also the gold and bronze plans. The bronze plan is about $25 cheaper and you get less features with it, such as there's no roaming capabilities.",
+          "speaker": "AGENT",
+          "timestamp": "01:28",
+          "sec": 87.68,
+          "turn": 4
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding mid-call"
+      ],
+      "signals_absent": [
+        "no recap or summary at end",
+        "no clarifying questions before jumping to solution"
+      ],
+      "evidence": [
+        {
+          "quote": "What you currently have right now is looking at your file is you have long distance calling free for both the United Canada all across and also free along the texting as well.",
+          "speaker": "AGENT",
+          "timestamp": "02:15",
+          "sec": 135.26,
+          "turn": 6
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
     "professionalism": {
       "score": 4,
       "signals_present": [
         "proper grammar and complete sentences",
         "accurate information",
-        "explained why",
+        "explained WHY",
         "listened fully without interrupting"
       ],
       "signals_absent": [
-        "no slang or informal language"
+        "informal language ('super duper')"
       ],
       "evidence": [
         {
-          "quote": "Well, what you currently have right now is looking at your file is you have long distance calling free for both the United Canada all across and also free along the texting as well.",
+          "quote": "Well, the silver plan is probably, I would recommend your best bet, but there's also the gold and bronze plans.",
           "speaker": "AGENT",
-          "timestamp": "02:15",
-          "sec": 135.26,
-          "turn": 6
+          "timestamp": "01:28",
+          "sec": 87.68,
+          "turn": 4
+        },
+        {
+          "quote": "I'm very glad that we could help you. I hope that you have a great day, Ms. Granfield.",
+          "speaker": "AGENT",
+          "timestamp": "09:48",
+          "sec": 588.22,
+          "turn": 34
         }
       ],
       "requires_audio": true,
@@ -181,11 +191,11 @@
     "empathy": {
       "score": 3,
       "signals_present": [
-        "uses customer's name",
+        "uses customer's name naturally",
         "acknowledges the concern before moving to solutions"
       ],
       "signals_absent": [
-        "no validation phrase",
+        "no validation phrases",
         "no matching emotional register"
       ],
       "evidence": [
@@ -211,16 +221,16 @@
     "customer_satisfaction": {
       "score": 5,
       "signals_present": [
-        "problem identified clearly",
-        "issue addressed",
+        "problem was identified clearly",
+        "issue was addressed",
         "clear resolution provided",
-        "agent followed through on promises",
+        "customer didn't mention switching to competitor",
         "first-call resolution achieved"
       ],
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "No, that works for me. That sounds super duper. Thank you,",
+          "quote": "That sounds super duper. Thank you,",
           "speaker": "CUSTOMER",
           "timestamp": "09:42",
           "sec": 582.04,
@@ -256,10 +266,10 @@
   },
   "investigation": null,
   "workflow": {
-    "subject": "Customer inquired about adding a second mobile line to an existing family plan.",
+    "subject": "Customer inquired about adding a second mobile line to an existing family plan and scheduling home Wi-Fi installation.",
     "expected_steps": [
       {
-        "step": "Greet the customer by name and introduce yourself with company and department.",
+        "step": "Greet the customer by name and introduce yourself with company name",
         "rationale": "Establishes professionalism and sets the tone for the call.",
         "met": true,
         "evidence": {
@@ -271,14 +281,14 @@
         }
       },
       {
-        "step": "Verify the customer's identity using at least two identifiers (e.g., account number and billing address).",
-        "rationale": "Ensures security and compliance with privacy policies.",
+        "step": "Verify the customer's identity using account details or security questions",
+        "rationale": "Ensures compliance with security protocols and prevents unauthorized account access.",
         "met": false,
         "evidence": null
       },
       {
-        "step": "Confirm the customer's current mobile plan details and family plan status.",
-        "rationale": "Verifies the existing setup before proposing changes.",
+        "step": "Confirm the customer's current mobile plan and account status",
+        "rationale": "Verifies eligibility for adding a second line and ensures no existing issues.",
         "met": true,
         "evidence": {
           "quote": "Well, what you currently have right now is looking at your file is you have long distance calling free for both the United Canada all across and also free along the texting as well. So that covers the entirety of Canada with no extra fees or anything else.",
@@ -289,44 +299,44 @@
         }
       },
       {
-        "step": "Ask the customer about the type of second line they wish to add (e.g., smartphone, basic phone, or data-only device).",
-        "rationale": "Clarifies the line type to ensure accurate pricing and compatibility.",
+        "step": "Ask the customer for the desired mobile number or SIM card preference for the second line",
+        "rationale": "Clarifies the specific line to be added to avoid confusion.",
         "met": false,
         "evidence": null
       },
       {
-        "step": "Explain the available plan options for adding a second line, including pricing and any promotions.",
-        "rationale": "Provides clear information to help the customer make an informed decision.",
+        "step": "Explain the pricing, data limits, and any promotional offers for adding a second line",
+        "rationale": "Provides transparency on costs and benefits before proceeding.",
         "met": true,
         "evidence": {
-          "quote": "Well, the silver plan is probably, I would recommend your best bet, but there's also the gold and bronze plans. The bronze plan is about $25 cheaper and you get less features with it, such as there's no roaming capabilities. So if you do go to the United States, that does count as roaming, which as the silver plan gives you free roaming for only $7 a month. The gold plan also does include international long distance calling from other countries not limited to just the U .S.",
+          "quote": "Well, if you're looking at your existing plan, I'm seeing here that you pay $75 a month, but that also includes the actual phone itself. So if you're looking at just the plan without the actual phone, you're looking at about $50 a month. Now, as I mentioned, add to a second line, what you can do is we have bronze, silver, and gold packages. The silver package is probably the one that I would recommend for you. It is another $50, but you keep all the same benefits. If you want the cheaper plan, because you don't think that the second phone line is going to be used as much, that has a lower limit on how much you can use the data.",
           "speaker": "AGENT",
-          "timestamp": "01:28",
-          "sec": 87.68,
-          "turn": 4
+          "timestamp": "05:33",
+          "sec": 332.6,
+          "turn": 14
         }
       },
       {
-        "step": "Confirm the customer's choice of plan and line type, including any associated fees or terms.",
-        "rationale": "Ensures mutual understanding before proceeding with the addition.",
+        "step": "Schedule the home Wi-Fi installation by confirming preferred date, time, and address",
+        "rationale": "Ensures accurate scheduling and avoids scheduling conflicts.",
         "met": true,
         "evidence": {
-          "quote": "So I've got it down here, and I'll get the paperwork started for you right away, as they say. I will email you all the details for the new plan and have the new phone shipped out for you with your new number already activated.",
+          "quote": "Well, whatever time is best for you, what we do is we give you a call beforehand and we also send you an email. To indicate how far away our technician is. And with that, you can let us know if that's a good time or not for us to be able to show up. When we show up, the installation process to set up your Wi-Fi is usually only about 15 to 20 minutes unless we run into a major issue.",
           "speaker": "AGENT",
-          "timestamp": "09:22",
-          "sec": 562.4,
-          "turn": 32
+          "timestamp": "03:52",
+          "sec": 232.46,
+          "turn": 10
         }
       },
       {
-        "step": "Verify the customer's preferred billing method and confirm the new line's activation date.",
-        "rationale": "Finalizes the setup and ensures billing accuracy.",
+        "step": "Confirm the customer's understanding of any installation fees or equipment requirements",
+        "rationale": "Prevents surprises and ensures the customer is fully informed.",
         "met": false,
         "evidence": null
       },
       {
-        "step": "Summarize the changes, provide confirmation details, and offer next steps (e.g., device delivery or SIM card options).",
-        "rationale": "Confirms the transaction and leaves the customer with clear follow-up actions.",
+        "step": "Summarize the changes, next steps, and provide a confirmation number or reference",
+        "rationale": "Reinforces the agreement and provides a record for future reference.",
         "met": true,
         "evidence": {
           "quote": "I will email you all the details for the new plan and have the new phone shipped out for you with your new number already activated.",
@@ -633,46 +643,46 @@
     "n_sentences": 104
   },
   "_anchor_stats": {
-    "total": 14,
-    "anchored": 14
+    "total": 15,
+    "anchored": 15
   },
   "_pipeline": {
     "nodes": {
       "assemble": {
-        "duration": 0.01
+        "duration": 0.02
       },
       "chapters": {
-        "duration": 2.7,
+        "duration": 19.1,
         "served_by": "router",
         "runs": 1
       },
       "compliance": {
-        "duration": 1.6,
+        "duration": 2.1,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "escalation": {
-        "duration": 0.7,
+        "duration": 1.1,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "quality": {
-        "duration": 3.6,
+        "duration": 4.4,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "workflow": {
-        "duration": 6.5,
+        "duration": 9.1,
         "served_by": "mistral-small-latest",
         "phases": {
-          "subject": 0.7,
+          "subject": 1.1,
           "expected": 2.3,
-          "check": 3.5
+          "check": 4.1
         },
         "runs": 1
       },
       "fuse": {
-        "duration": 0.0,
+        "duration": 0.08,
         "acoustic_available": true,
         "fused_dims": [
           "professionalism",
@@ -684,6 +694,6 @@
       }
     },
     "anchor_passes": 1,
-    "wall_clock": 6.6
+    "wall_clock": 30.4
   }
 }

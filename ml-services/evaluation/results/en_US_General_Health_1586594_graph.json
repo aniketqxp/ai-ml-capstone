@@ -26,7 +26,7 @@
     "identity_verified": {
       "passed": false,
       "evidence": null,
-      "note": "Agent did not verify customer identity before discussing account details"
+      "note": "Agent did not verify the customer's identity before discussing account details"
     },
     "identity_method": null,
     "resolution_provided": {
@@ -51,24 +51,31 @@
       "score": 5,
       "signals_present": [
         "first-call resolution",
-        "appropriate call duration (4:42 for simple booking/refill)",
+        "appropriate call duration for complexity",
         "no unnecessary holds or transfers"
       ],
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Absolutely. I can help you with that.",
+          "quote": "Absolutely. Let me check for you. We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m. or 2 p .m. and Friday, October 24th at 11 a .m. Eastern. Would any of those times work for you?",
           "speaker": "AGENT",
-          "timestamp": "00:35",
-          "sec": 35.26,
-          "turn": 2
+          "timestamp": "01:22",
+          "sec": 82.44,
+          "turn": 14
         },
         {
-          "quote": "We'll see you virtually on Thursday at 2 p.m.",
+          "quote": "Sure, sure, sure. Yes, Dr. Carter has that 2 p .m. slot open. I'll book you in for Thursday, October 23rd at 2 p .m. with her. You'll receive a confirmation email with the video link shortly.",
           "speaker": "AGENT",
-          "timestamp": "04:15",
-          "sec": 255.38,
-          "turn": 26
+          "timestamp": "01:57",
+          "sec": 117.04,
+          "turn": 16
+        },
+        {
+          "quote": "Okay. That seems like I think I have all that stuff sorted out. That covers everything that I need. Thanks for your help.",
+          "speaker": "CUSTOMER",
+          "timestamp": "03:43",
+          "sec": 223.42,
+          "turn": 23
         }
       ],
       "requires_audio": false,
@@ -86,20 +93,32 @@
       "score": 5,
       "signals_present": [
         "solution fits customer's specific situation",
-        "explained WHY (forms/lab work needed)",
-        "offered alternatives (lab tests if outdated)",
-        "respected customer's choice (proceeded with booking)"
+        "explained WHY",
+        "offered alternatives if issue unsolvable",
+        "respected customer's choice"
       ],
-      "signals_absent": [
-        "no explicit options A/B/C presented"
-      ],
+      "signals_absent": [],
       "evidence": [
         {
-          "quote": "for diabetes management, as you know, we may need to do a redo on some diagnostics. You'll also need to complete an updated health history and consent form online before the call.",
+          "quote": "Of course, I'll add that note for Dr. Carter to review during your consultation, and if she approves it, we'll send it electronically to your pharmacy.",
+          "speaker": "AGENT",
+          "timestamp": "02:39",
+          "sec": 158.56,
+          "turn": 18
+        },
+        {
+          "quote": "Well, for diabetes management, as you know, can we ask Dr. Carter for recent blood work, like things the A1C or the glucose levels. If you have not done those in the past three months, we can arrange them for you.",
           "speaker": "AGENT",
           "timestamp": "03:07",
           "sec": 187.16,
           "turn": 20
+        },
+        {
+          "quote": "Okay. That seems like I think I have all that stuff sorted out. That covers everything that I need. Thanks for your help.",
+          "speaker": "CUSTOMER",
+          "timestamp": "03:43",
+          "sec": 223.42,
+          "turn": 23
         }
       ],
       "requires_audio": false,
@@ -116,20 +135,34 @@
     "clarity": {
       "score": 4,
       "signals_present": [
-        "asked open-ended diagnostic questions (e.g., pharmacy preference)",
-        "checked understanding (implicitly via confirmation)",
-        "asked clarifying questions (patient ID, lab work status)"
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "asked clarifying questions before jumping to solution"
       ],
       "signals_absent": [
-        "no explicit recap at end"
+        "no recap at end"
       ],
       "evidence": [
         {
-          "quote": "Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?",
+          "quote": "Absolutely. Let me check for you. We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m. or 2 p .m. and Friday, October 24th at 11 a .m. Eastern. Would any of those times work for you?",
           "speaker": "AGENT",
-          "timestamp": "02:39",
-          "sec": 158.56,
-          "turn": 18
+          "timestamp": "01:22",
+          "sec": 82.44,
+          "turn": 14
+        },
+        {
+          "quote": "Do I need any lab tests done before the appointment? And are there any forms on any fill out?",
+          "speaker": "CUSTOMER",
+          "timestamp": "02:56",
+          "sec": 175.89,
+          "turn": 19
+        },
+        {
+          "quote": "Well, for diabetes management, as you know, can we ask Dr. Carter for recent blood work, like things the A1C or the glucose levels. If you have not done those in the past three months, we can arrange them for you.",
+          "speaker": "AGENT",
+          "timestamp": "03:07",
+          "sec": 187.16,
+          "turn": 20
         }
       ],
       "requires_audio": false,
@@ -156,11 +189,25 @@
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Absolutely. Let me check for you. We have appointments available on Thursday, October 23rd at 10 a.m. or 2 p.m. and Friday, October 24th at 11 a.m. Eastern.",
+          "quote": "Well, hello. Good afternoon. Absolutely. I can help you with that. May I ask for your name, please, before we begin?",
+          "speaker": "AGENT",
+          "timestamp": "00:35",
+          "sec": 35.26,
+          "turn": 2
+        },
+        {
+          "quote": "Absolutely. Let me check for you. We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m. or 2 p .m. and Friday, October 24th at 11 a .m. Eastern. Would any of those times work for you?",
           "speaker": "AGENT",
           "timestamp": "01:22",
           "sec": 82.44,
           "turn": 14
+        },
+        {
+          "quote": "Of course, I'll add that note for Dr. Carter to review during your consultation, and if she approves it, we'll send it electronically to your pharmacy.",
+          "speaker": "AGENT",
+          "timestamp": "02:39",
+          "sec": 158.56,
+          "turn": 18
         }
       ],
       "requires_audio": true,
@@ -177,20 +224,26 @@
     "empathy": {
       "score": 3,
       "signals_present": [
-        "uses customer's name naturally (Alex Johnson)",
-        "acknowledges the concern before moving to solutions"
+        "uses customer's name naturally"
       ],
       "signals_absent": [
-        "no validation phrases",
-        "no explicit emotional acknowledgment"
+        "no validation phrase",
+        "no acknowledgment of customer's emotional state"
       ],
       "evidence": [
         {
-          "quote": "Thanks for your call. So yes, we do offer virtual consultations for ongoing care.",
+          "quote": "Well, hello. Good afternoon. Absolutely. I can help you with that. May I ask for your name, please, before we begin?",
           "speaker": "AGENT",
-          "timestamp": "00:54",
-          "sec": 54.07,
-          "turn": 12
+          "timestamp": "00:35",
+          "sec": 35.26,
+          "turn": 2
+        },
+        {
+          "quote": "Well, you're very welcome, Alex. We'll see you virtually on Thursday at 2 p .m. Take care and have a blessed day.",
+          "speaker": "AGENT",
+          "timestamp": "04:15",
+          "sec": 255.38,
+          "turn": 26
         }
       ],
       "requires_audio": true,
@@ -208,7 +261,7 @@
       "score": 4,
       "signals_present": [
         "problem was identified clearly",
-        "issue was addressed (booking + refill request)",
+        "issue was addressed",
         "clear resolution provided",
         "agent didn't dismiss or minimize concern",
         "first-call resolution achieved"
@@ -216,11 +269,25 @@
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "That seems like I think I have all that stuff sorted out. That covers everything that I need. Thanks for your help.",
+          "quote": "I'd like us to schedule a telemedicine consultation for my chronic condition. It's for diabetes management.",
+          "speaker": "CUSTOMER",
+          "timestamp": "00:24",
+          "sec": 23.73,
+          "turn": 1
+        },
+        {
+          "quote": "Okay. That seems like I think I have all that stuff sorted out. That covers everything that I need. Thanks for your help.",
           "speaker": "CUSTOMER",
           "timestamp": "03:43",
           "sec": 223.42,
           "turn": 23
+        },
+        {
+          "quote": "Thank you so much.",
+          "speaker": "CUSTOMER",
+          "timestamp": "04:23",
+          "sec": 263.24,
+          "turn": 27
         }
       ],
       "requires_audio": true,
@@ -252,10 +319,10 @@
   },
   "investigation": null,
   "workflow": {
-    "subject": "Requested a telemedicine consultation for diabetes management and a prescription refill.",
+    "subject": "Schedule a telemedicine consultation for diabetes management and request a prescription refill",
     "expected_steps": [
       {
-        "step": "Greet the customer by name and introduce yourself with title and company.",
+        "step": "Greet the customer by name and introduce yourself and the company",
         "rationale": "Establishes professionalism and sets the tone for the call.",
         "met": true,
         "evidence": {
@@ -267,47 +334,29 @@
         }
       },
       {
-        "step": "Verify the customer\u2019s identity using at least two identifiers (e.g., full name and date of birth).",
-        "rationale": "Ensures compliance with privacy regulations and confirms the correct patient.",
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name and date of birth)",
+        "rationale": "Ensures compliance with privacy and security protocols.",
         "met": false,
         "evidence": null
       },
       {
-        "step": "Confirm the customer\u2019s request for a telemedicine consultation for diabetes management and a prescription refill.",
+        "step": "Confirm the customer's reason for calling: scheduling a telemedicine consultation for diabetes management and requesting a prescription refill",
         "rationale": "Clarifies the purpose of the call and aligns expectations.",
         "met": true,
         "evidence": {
-          "quote": "Sure. Sure. It's Alex Johnson. I have an ID number.",
+          "quote": "I'd like us to schedule a telemedicine consultation for my chronic condition. It's for diabetes management.",
           "speaker": "CUSTOMER",
-          "timestamp": "00:44",
-          "sec": 44.09,
-          "turn": 3
+          "timestamp": "00:24",
+          "sec": 23.73,
+          "turn": 1
         }
       },
       {
-        "step": "Ask about the customer\u2019s current diabetes management plan, medications, and any recent changes in symptoms.",
-        "rationale": "Gathers essential clinical information to assess the need for consultation and refill.",
-        "met": false,
-        "evidence": null
-      },
-      {
-        "step": "Explain the telemedicine consultation process, including scheduling, technology requirements, and any preparation needed.",
-        "rationale": "Ensures the customer understands what to expect and how to participate.",
+        "step": "Ask for the customer's preferred date and time for the telemedicine consultation",
+        "rationale": "Determines availability and ensures the consultation is scheduled promptly.",
         "met": true,
         "evidence": {
-          "quote": "You'll receive a confirmation email with the video link shortly. Is there anything? Oh, let's wait for that confirmation to go through.",
-          "speaker": "AGENT",
-          "timestamp": "01:57",
-          "sec": 117.04,
-          "turn": 16
-        }
-      },
-      {
-        "step": "Verify the customer\u2019s preferred date and time for the telemedicine consultation.",
-        "rationale": "Confirms availability and schedules the appointment efficiently.",
-        "met": true,
-        "evidence": {
-          "quote": "Absolutely. Let me check for you. We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m. or 2 p .m. and Friday, October 24th at 11 a .m. Eastern. Would any of those times work for you?",
+          "quote": "Would any of those times work for you?",
           "speaker": "AGENT",
           "timestamp": "01:22",
           "sec": 82.44,
@@ -315,11 +364,29 @@
         }
       },
       {
-        "step": "Confirm the prescription refill details, including medication name, dosage, and pharmacy preference.",
-        "rationale": "Ensures accuracy in the refill request and avoids dispensing errors.",
+        "step": "Confirm the customer's current diabetes management plan, medications, and any recent changes",
+        "rationale": "Ensures the consultation is tailored to the customer's current health status.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Request the name and dosage of the medication needing a refill",
+        "rationale": "Identifies the specific prescription to process the refill request accurately.",
         "met": true,
         "evidence": {
-          "quote": "Of course, I'll add that note for Dr. Carter to review during your consultation, and if she approves it, we'll send it electronically to your pharmacy. Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?",
+          "quote": "It's a Metformin 500 milligrams.",
+          "speaker": "CUSTOMER",
+          "timestamp": "02:19",
+          "sec": 139.18,
+          "turn": 17
+        }
+      },
+      {
+        "step": "Verify the customer's pharmacy preference and location for the prescription refill",
+        "rationale": "Ensures the medication is sent to the correct pharmacy for pickup or delivery.",
+        "met": true,
+        "evidence": {
+          "quote": "Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?",
           "speaker": "AGENT",
           "timestamp": "02:39",
           "sec": 158.56,
@@ -327,15 +394,15 @@
         }
       },
       {
-        "step": "Provide next steps, including confirmation of the consultation appointment, refill processing, and any follow-up actions.",
-        "rationale": "Closes the call with clear instructions and sets expectations for the customer.",
+        "step": "Summarize the scheduled consultation details, refill request, and next steps",
+        "rationale": "Confirms understanding and provides clarity on follow-up actions.",
         "met": true,
         "evidence": {
-          "quote": "Well, you're very welcome, Alex. We'll see you virtually on Thursday at 2 p .m. Take care and have a blessed day.",
+          "quote": "I'll book you in for Thursday, October 23rd at 2 p.m. with her. You'll receive a confirmation email with the video link shortly.",
           "speaker": "AGENT",
-          "timestamp": "04:15",
-          "sec": 255.38,
-          "turn": 26
+          "timestamp": "01:57",
+          "sec": 117.04,
+          "turn": 16
         }
       }
     ]
@@ -635,8 +702,8 @@
     "n_sentences": 81
   },
   "_anchor_stats": {
-    "total": 14,
-    "anchored": 14
+    "total": 24,
+    "anchored": 24
   },
   "_pipeline": {
     "nodes": {
@@ -644,37 +711,37 @@
         "duration": 0.02
       },
       "chapters": {
-        "duration": 2.4,
+        "duration": 20.9,
         "served_by": "router",
         "runs": 1
       },
       "compliance": {
-        "duration": 1.7,
+        "duration": 1.8,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "escalation": {
-        "duration": 0.8,
+        "duration": 1.0,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "quality": {
-        "duration": 4.5,
+        "duration": 7.1,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "workflow": {
-        "duration": 7.4,
+        "duration": 8.2,
         "served_by": "mistral-small-latest",
         "phases": {
-          "subject": 0.7,
-          "expected": 2.8,
-          "check": 3.9
+          "subject": 1.0,
+          "expected": 2.4,
+          "check": 3.2
         },
         "runs": 1
       },
       "fuse": {
-        "duration": 0.0,
+        "duration": 0.08,
         "acoustic_available": true,
         "fused_dims": [
           "professionalism",
@@ -686,6 +753,6 @@
       }
     },
     "anchor_passes": 1,
-    "wall_clock": 7.4
+    "wall_clock": 36.0
   }
 }

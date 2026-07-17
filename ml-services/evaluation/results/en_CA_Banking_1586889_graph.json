@@ -5,7 +5,7 @@
     "domain": "banking",
     "accent": "en-CA",
     "duration_seconds": 636.2,
-    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+    "transcript_model": "faster-whisper small.en/int8"
   },
   "compliance": {
     "name_announced": {
@@ -42,7 +42,7 @@
         "speaker": "AGENT",
         "timestamp": "00:40",
         "sec": 40.49,
-        "turn": 2
+        "turn": 3
       },
       "note": null
     },
@@ -50,11 +50,11 @@
     "resolution_provided": {
       "passed": true,
       "evidence": {
-        "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers anytime online or by phone. And a confirmation text and email will be sent to you shortly. Does everything sound correct so far?",
+        "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers any time online or by phone. And a confirmation text and email will be sent to you shortly.",
         "speaker": "AGENT",
         "timestamp": "07:33",
         "sec": 452.68,
-        "turn": 34
+        "turn": 35
       },
       "note": null
     },
@@ -69,17 +69,17 @@
       "score": 5,
       "signals_present": [
         "first-call resolution",
-        "appropriate call duration for complexity",
+        "appropriate call duration",
         "no unnecessary holds or transfers"
       ],
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Okay, great. So is there anything else I can help you with today?",
+          "quote": "So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
           "speaker": "AGENT",
-          "timestamp": "08:17",
-          "sec": 496.53,
-          "turn": 36
+          "timestamp": "07:33",
+          "sec": 452.68,
+          "turn": 35
         }
       ],
       "requires_audio": false,
@@ -96,23 +96,19 @@
     "problem_resolution": {
       "score": 5,
       "signals_present": [
-        "offered multiple options",
         "explained pros and cons",
-        "waited for customer preference",
-        "had a backup plan",
         "solution fits customer's specific situation",
         "explained WHY",
-        "issue solved by end",
         "offered alternatives"
       ],
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Yeah, for sure. So you can just adjust or cancel the transfer at any time through the mobile app or online banking. So it's at the top in the transfer section. So you tap on scheduled transfers and then you'll be able to edit the details.",
+          "quote": "North Star Bank offers a home project savings bonus. So if you maintain automatic transfers for six months or more, you can get an extra 0.5% for the following three months.",
           "speaker": "AGENT",
-          "timestamp": "03:53",
-          "sec": 232.89,
-          "turn": 18
+          "timestamp": "06:48",
+          "sec": 408.25,
+          "turn": 32
         }
       ],
       "requires_audio": false,
@@ -127,27 +123,34 @@
       }
     },
     "clarity": {
-      "score": 5,
+      "score": 4,
       "signals_present": [
-        "asked open-ended diagnostic questions",
+        "open-ended diagnostic questions",
         "checked understanding",
-        "asked clarifying questions",
-        "confirmed understanding mid-call",
-        "provided a recap or summary at the end"
+        "provided a recap at the end"
       ],
-      "signals_absent": [],
+      "signals_absent": [
+        "no mid-call confirmation"
+      ],
       "evidence": [
         {
-          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
+          "quote": "So how much would you like to transfer each month?",
+          "speaker": "AGENT",
+          "timestamp": "01:33",
+          "sec": 92.86,
+          "turn": 6
+        },
+        {
+          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account.",
           "speaker": "AGENT",
           "timestamp": "07:33",
           "sec": 452.68,
-          "turn": 34
+          "turn": 35
         }
       ],
       "requires_audio": false,
       "hybrid": {
-        "text_score": 5,
+        "text_score": 4,
         "acoustic_score": null,
         "text_weight": 1.0,
         "acoustic_weight": 0.0,
@@ -159,22 +162,21 @@
     "professionalism": {
       "score": 5,
       "signals_present": [
-        "proper grammar and complete sentences throughout",
+        "proper grammar and complete sentences",
         "no slang or informal language",
         "knew the answer or actively found it",
         "provided accurate information",
-        "explained WHY, not just what to do",
-        "listened fully without interrupting",
-        "willing to repeat or rephrase when asked"
+        "explained WHY",
+        "listened fully without interrupting"
       ],
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Okay, that's a smart move. Consistent savings make projects like that a lot easier to handle.",
+          "quote": "Absolutely, Mr. Carter, I can help you with that. Before we start, can I verify your identity for security purposes?",
           "speaker": "AGENT",
-          "timestamp": "01:33",
-          "sec": 92.86,
-          "turn": 6
+          "timestamp": "00:40",
+          "sec": 40.49,
+          "turn": 3
         }
       ],
       "requires_audio": true,
@@ -196,15 +198,15 @@
         "matches the emotional register of the customer"
       ],
       "signals_absent": [
-        "no explicit validation phrases"
+        "no explicit validation phrase"
       ],
       "evidence": [
         {
-          "quote": "Yeah, I can imagine that. Renovations have a way of growing as they go.",
+          "quote": "Okay, that's a smart move. Consistent savings make projects like that a lot easier to handle.",
           "speaker": "AGENT",
-          "timestamp": "05:58",
-          "sec": 358.49,
-          "turn": 26
+          "timestamp": "01:33",
+          "sec": 92.86,
+          "turn": 6
         }
       ],
       "requires_audio": true,
@@ -231,11 +233,11 @@
       "signals_absent": [],
       "evidence": [
         {
-          "quote": "Everything sounds perfect.",
+          "quote": "Everything sounds perfect. Yes, please.",
           "speaker": "CUSTOMER",
-          "timestamp": "08:14",
-          "sec": 493.91,
-          "turn": 35
+          "timestamp": "07:28",
+          "sec": 447.55,
+          "turn": 34
         }
       ],
       "requires_audio": true,
@@ -267,11 +269,11 @@
   },
   "investigation": null,
   "workflow": {
-    "subject": "Set up an automatic monthly transfer between checking and savings accounts",
+    "subject": "set up an automatic monthly transfer between checking and savings accounts",
     "expected_steps": [
       {
-        "step": "Greet the customer by name and introduce yourself with the bank's name",
-        "rationale": "Establishes a professional and personalized opening to the call.",
+        "step": "Greet the customer by name and introduce yourself and the bank.",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
         "met": true,
         "evidence": {
           "quote": "Oh, good afternoon. Thank you for calling North Star Bank customer care. My name is Emily. How can I help you today?",
@@ -282,38 +284,44 @@
         }
       },
       {
-        "step": "Verify the customer's identity using security questions or account details",
-        "rationale": "Ensures compliance with security protocols before discussing account transactions.",
+        "step": "Verify the customer's identity using security questions or account details.",
+        "rationale": "Ensures compliance with security protocols before proceeding.",
         "met": true,
         "evidence": {
           "quote": "Before we start, can I verify your identity for security purposes? Could you confirm your date of birth and the last four digits of your checking account number?",
           "speaker": "AGENT",
           "timestamp": "00:40",
           "sec": 40.49,
-          "turn": 2
+          "turn": 3
         }
       },
       {
-        "step": "Confirm the customer's intent to set up an automatic monthly transfer",
-        "rationale": "Clarifies the purpose of the call and aligns expectations.",
+        "step": "Confirm the customer's intent to set up an automatic monthly transfer.",
+        "rationale": "Clarifies the purpose of the call to avoid misunderstandings.",
         "met": true,
         "evidence": {
           "quote": "So you'd like to set up an automatic transfer from your checking to your new savings account, correct?",
           "speaker": "AGENT",
-          "timestamp": "01:07",
-          "sec": 67.43,
+          "timestamp": "00:54",
+          "sec": 54.26,
           "turn": 4
         }
       },
       {
-        "step": "Ask for the source and destination account numbers (checking and savings)",
-        "rationale": "Identifies the accounts involved in the transfer setup.",
-        "met": false,
-        "evidence": null
+        "step": "Ask for the source account (checking) and destination account (savings) details.",
+        "rationale": "Identifies the accounts involved in the transfer.",
+        "met": true,
+        "evidence": {
+          "quote": "So you'd like to set up an automatic transfer from your checking to your new savings account, correct?",
+          "speaker": "AGENT",
+          "timestamp": "00:54",
+          "sec": 54.26,
+          "turn": 4
+        }
       },
       {
-        "step": "Specify the transfer amount and confirm it with the customer",
-        "rationale": "Ensures accuracy in the transfer details to avoid disputes.",
+        "step": "Specify the transfer amount and confirm it with the customer.",
+        "rationale": "Ensures the correct amount is set for the automatic transfer.",
         "met": true,
         "evidence": {
           "quote": "So how much would you like to transfer each month?",
@@ -324,39 +332,39 @@
         }
       },
       {
-        "step": "Confirm the transfer frequency as monthly and the preferred date of the month",
-        "rationale": "Clarifies the timing and frequency of the automatic transfer.",
+        "step": "Choose the transfer date and confirm it aligns with the customer's preference.",
+        "rationale": "Determines when the transfer will occur each month.",
         "met": true,
         "evidence": {
-          "quote": "And would you like that transfer to occur on a specific date each month, like, for example, right after you get your paycheck?",
+          "quote": "And would you like that transfer to occur on a specific date each month? Like, for example, right after you get your paycheck? Okay, so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.",
           "speaker": "AGENT",
-          "timestamp": "01:51",
-          "sec": 110.67,
-          "turn": 8
+          "timestamp": "01:43",
+          "sec": 103.45,
+          "turn": 7
         }
       },
       {
-        "step": "Explain any fees, limits, or terms associated with the automatic transfer",
-        "rationale": "Provides transparency about potential costs or restrictions.",
+        "step": "Review the transfer terms, including frequency, amount, and any fees or limits.",
+        "rationale": "Ensures the customer understands the agreement before finalizing.",
         "met": true,
         "evidence": {
-          "quote": "Yes, there's a few limits in place depending on the type of account. So for the regular checking and savings account, like yours, so the maximum automated transfer is $10,000 per month. So since you're transferring $400, you're well within the limit.",
+          "quote": "So for the regular checking and savings account, like yours, so the maximum automated transfer is $10,000 per month. So since you're transferring $400 you're well within the limit.",
           "speaker": "AGENT",
-          "timestamp": "03:22",
-          "sec": 201.94,
-          "turn": 16
+          "timestamp": "03:27",
+          "sec": 206.52,
+          "turn": 15
         }
       },
       {
-        "step": "Confirm the transfer setup details and offer to send a confirmation email or letter",
-        "rationale": "Ensures the customer understands and acknowledges the arrangement.",
+        "step": "Confirm the setup and provide a reference number or confirmation details.",
+        "rationale": "Provides the customer with proof of the completed transfer setup.",
         "met": true,
         "evidence": {
-          "quote": "So I can summarize what we've done today. So we set up an automatic transfer of $400 from your checking to your savings account. It's going to start on November 2nd, 2025 and repeat monthly until further notice. You're enrolled in the home project savings bonus program. And you can pause, change, or cancel your transfers anytime online or by phone. And a confirmation text and email will be sent to you shortly. Does everything sound correct so far?",
+          "quote": "So soon you're going to get a confirmation email and a text notification one day before each scheduled transfer.",
           "speaker": "AGENT",
-          "timestamp": "07:33",
-          "sec": 452.68,
-          "turn": 34
+          "timestamp": "04:40",
+          "sec": 279.96,
+          "turn": 20
         }
       }
     ]
@@ -656,8 +664,8 @@
     "n_sentences": 152
   },
   "_anchor_stats": {
-    "total": 17,
-    "anchored": 17
+    "total": 19,
+    "anchored": 19
   },
   "_pipeline": {
     "nodes": {
@@ -665,32 +673,32 @@
         "duration": 0.03
       },
       "chapters": {
-        "duration": 24.9,
+        "duration": 18.8,
         "served_by": "router",
         "runs": 1
       },
       "compliance": {
-        "duration": 9.7,
+        "duration": 2.6,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "escalation": {
-        "duration": 3.0,
+        "duration": 1.1,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "quality": {
-        "duration": 14.9,
+        "duration": 4.7,
         "served_by": "mistral-small-latest",
         "runs": 1
       },
       "workflow": {
-        "duration": 24.6,
+        "duration": 6.8,
         "served_by": "mistral-small-latest",
         "phases": {
-          "subject": 4.7,
-          "expected": 8.9,
-          "check": 11.0
+          "subject": 1.0,
+          "expected": 2.1,
+          "check": 3.7
         },
         "runs": 1
       },
@@ -707,6 +715,6 @@
       }
     },
     "anchor_passes": 1,
-    "wall_clock": 46.5
+    "wall_clock": 28.9
   }
 }
