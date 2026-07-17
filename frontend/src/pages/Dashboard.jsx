@@ -88,6 +88,10 @@ export default function Dashboard() {
       })()
     : null;
 
+  const callRank = calls
+    ? Object.fromEntries(calls.map((c, i) => [c.call_id, i + 1]))
+    : {};
+
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const pageSafe = Math.min(page, totalPages);
   const paged = sorted.slice((pageSafe - 1) * PAGE_SIZE, pageSafe * PAGE_SIZE);
@@ -207,9 +211,9 @@ export default function Dashboard() {
                     </td>
                   </tr>
                 )}
-                {paged.map((c, i) => {
+                {paged.map((c) => {
                   const risk = RISK_STYLE[c.risk_level];
-                  const rank = (pageSafe - 1) * PAGE_SIZE + i + 1;
+                  const rank = callRank[c.call_id];
                   const label = `Call ${String(rank).padStart(String(calls.length).length, '0')}`;
                   return (
                     <tr key={c.call_id} className="border-b border-slate-100 dark:border-slate-800/60 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
