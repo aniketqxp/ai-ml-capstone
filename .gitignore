@@ -37,6 +37,13 @@ data/na_testset/*
 *.wav
 *.mp3
 
+# Generated per-call dashboard data (regenerate via
+# ml-services/evaluation/export_frontend.py) -- destined for Supabase later
+frontend/public/calls/
+frontend/public/calls_index.json
+frontend/public/sentence_segments/
+frontend/public/sentiment/
+
 # Operating system files
 .DS_Store
 Thumbs.db
