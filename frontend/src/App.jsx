@@ -52,6 +52,13 @@ const formatLabel = (value) => {
   return String(value);
 };
 
+const formatActionLabel = (value) => {
+  if (!value) return 'N/A';
+  return String(value)
+    .replaceAll('_', ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 // Shows how much of the audio has buffered (grey bar behind the playhead)
 function BufferedRanges({ audio, duration }) {
   const [ranges, setRanges] = useState([]);
@@ -479,6 +486,12 @@ export default function App() {
   const managerReview = sentimentPayload?.manager_review_recommendation || {};
   const topRiskySegments = sentimentPayload?.top_risky_segments || [];
   const calibratedSummary = sentimentPayload?.calibrated_sentiment_summary || {};
+
+  const multiSignalIntelligence =
+    sentimentPayload?.multi_signal_escalation_intelligence || {};
+
+  const temporalTrajectory =
+    sentimentPayload?.temporal_emotion_trajectory || {};
 
   const unreliableSpeechCount = sentimentPayload?.segments?.filter(
     (s) => s?.audio_features?.audio_quality_flags?.unrealistic_speech_rate
@@ -994,6 +1007,326 @@ export default function App() {
 
             
 
+            {multiSignalIntelligence &&
+  Object.keys(multiSignalIntelligence).length > 0 && (
+    <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-lg">
+      <div className="flex flex-col gap-1 mb-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
+          Multi-Signal Escalation Intelligence
+        </p>
+        <h3 className="text-lg font-semibold text-slate-100">
+          {formatActionLabel(multiSignalIntelligence.escalation_type)}
+        </h3>
+        <p className="text-xs text-slate-400">
+          Combined sentiment, emotion confidence, escalation trend, audio reliability,
+          speaker role, and manager-review signals.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Risk Level
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(multiSignalIntelligence.risk_level)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Decision Confidence
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(multiSignalIntelligence.decision_confidence)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Evidence Strength
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(multiSignalIntelligence.evidence_strength)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Resolution Score
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {multiSignalIntelligence.resolution_effectiveness_score ?? 'N/A'}
+            {multiSignalIntelligence.resolution_effectiveness_score !== null &&
+              multiSignalIntelligence.resolution_effectiveness_score !== undefined &&
+              '/100'}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Customer Trajectory
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(
+              multiSignalIntelligence.customer_emotional_trajectory
+            )}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Agent Tone Alignment
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(multiSignalIntelligence.agent_tone_alignment)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Manager Action
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(multiSignalIntelligence.manager_action)}
+          </p>
+        </div>
+      </div>
+
+      {multiSignalIntelligence.main_reasons?.length > 0 && (
+        <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+          <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+            Why this decision?
+          </p>
+          <ul className="space-y-1">
+            {multiSignalIntelligence.main_reasons
+              .slice(0, 5)
+              .map((reason, index) => (
+                <li
+                  key={`${reason}-${index}`}
+                  className="text-xs text-slate-300 leading-relaxed"
+                >
+                  • {reason}
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+
+      {multiSignalIntelligence.supporting_metrics && (
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div className="rounded-lg bg-slate-950/50 border border-slate-800 p-3">
+            <p className="text-slate-500">Final-third escalation</p>
+            <p className="mt-1 font-semibold text-slate-200">
+              {formatNumber(
+                multiSignalIntelligence.supporting_metrics
+                  .customer_final_third_escalation,
+                3
+              )}
+            </p>
+          </div>
+
+          <div className="rounded-lg bg-slate-950/50 border border-slate-800 p-3">
+            <p className="text-slate-500">Trajectory delta</p>
+            <p className="mt-1 font-semibold text-slate-200">
+              {formatNumber(
+                multiSignalIntelligence.supporting_metrics
+                  .customer_trajectory_delta,
+                3
+              )}
+            </p>
+          </div>
+
+          <div className="rounded-lg bg-slate-950/50 border border-slate-800 p-3">
+            <p className="text-slate-500">Strong customer signals</p>
+            <p className="mt-1 font-semibold text-slate-200">
+              {
+                multiSignalIntelligence.supporting_metrics
+                  .strong_negative_customer_segments
+              }
+            </p>
+          </div>
+
+          <div className="rounded-lg bg-slate-950/50 border border-slate-800 p-3">
+            <p className="text-slate-500">Agent tone risks</p>
+            <p className="mt-1 font-semibold text-slate-200">
+              {
+                multiSignalIntelligence.supporting_metrics
+                  .agent_tone_risk_segments
+              }
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+)}
+
+{temporalTrajectory &&
+  Object.keys(temporalTrajectory).length > 0 && (
+    <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-lg">
+      <div className="flex flex-col gap-1 mb-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-purple-400">
+          Customer Emotion Journey
+        </p>
+        <h3 className="text-lg font-semibold text-slate-100">
+          {formatActionLabel(temporalTrajectory.overall_pattern)}
+        </h3>
+        <p className="text-xs text-slate-400">
+          Temporal view of how customer emotion changed across the call phases.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Direction
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(temporalTrajectory.trajectory_direction)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Start State
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(temporalTrajectory.start_state)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            End State
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatActionLabel(temporalTrajectory.end_state)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            End Risk
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {temporalTrajectory.unresolved_end_risk ? 'Unresolved' : 'Resolved'}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Start Escalation
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatNumber(temporalTrajectory.start_escalation, 3)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            End Escalation
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatNumber(temporalTrajectory.end_escalation, 3)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Peak Escalation
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatNumber(temporalTrajectory.peak_escalation, 3)}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
+          <p className="text-[10px] uppercase tracking-wide text-slate-500">
+            Peak Phase
+          </p>
+          <p className="mt-1 text-sm font-semibold text-slate-100">
+            {formatLabel(temporalTrajectory.peak_emotional_phase_label)}
+          </p>
+        </div>
+      </div>
+
+      {temporalTrajectory.phase_summary?.length > 0 && (
+        <div className="mb-4">
+          <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+            Emotion phases
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+            {temporalTrajectory.phase_summary.map((phase) => (
+              <div
+                key={phase.phase_id}
+                className="rounded-xl border border-slate-800 bg-slate-950/70 p-3"
+              >
+                <p className="text-xs font-semibold text-slate-200">
+                  {phase.phase_label}
+                </p>
+
+                <p className="mt-1 text-[11px] text-purple-300">
+                  {formatActionLabel(phase.phase_state)}
+                </p>
+
+                <div className="mt-3 space-y-1 text-[11px] text-slate-400">
+                  <p>
+                    Escalation:{' '}
+                    <span className="text-slate-200">
+                      {formatNumber(phase.average_escalation, 3)}
+                    </span>
+                  </p>
+                  <p>
+                    Sentiment:{' '}
+                    <span className="text-slate-200">
+                      {formatActionLabel(phase.dominant_sentiment)}
+                    </span>
+                  </p>
+                  <p>
+                    Emotion:{' '}
+                    <span className="text-slate-200">
+                      {formatActionLabel(phase.dominant_emotion)}
+                    </span>
+                  </p>
+                  <p>
+                    Confidence:{' '}
+                    <span className="text-slate-200">
+                      {formatNumber(phase.average_confidence, 2)}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {temporalTrajectory.main_reasons?.length > 0 && (
+        <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+          <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+            Journey explanation
+          </p>
+          <ul className="space-y-1">
+            {temporalTrajectory.main_reasons
+              .slice(0, 5)
+              .map((reason, index) => (
+                <li
+                  key={`${reason}-${index}`}
+                  className="text-xs text-slate-300 leading-relaxed"
+                >
+                  • {reason}
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+    </div>
+)}
             {customerSummary?.total_segments !== undefined && agentSummary?.total_segments !== undefined && (
               <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4">
                 <h3 className="text-sm font-semibold text-slate-300">Customer vs Agent Summary</h3>

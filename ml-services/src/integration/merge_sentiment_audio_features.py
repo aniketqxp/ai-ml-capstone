@@ -1017,28 +1017,20 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
     This groups the customer side of the call into ordered phases and explains
     whether the emotional state improved, worsened, stayed stable, or ended unresolved.
 
-    It uses only sentiment/audio/model outputs:
-    - sentiment
-    - dominant emotion
-    - emotion confidence
-    - sentiment confidence
-    - negative emotion probability
-    - escalation score
-    - speaker role
-    - audio reliability
-
-    It does not use transcript keywords.
+    It uses only sentiment/audio/model outputs and does not use transcript keywords.
     """
     segments = payload.get("segments", []) or []
+
+    multi_signal = payload.get("multi_signal_escalation_intelligence", {}) or {}
+    manager_review = payload.get("manager_review_recommendation", {}) or {}
+
+    multi_signal_type = normalize_label(multi_signal.get("escalation_type"))
+    manager_review_required = bool(manager_review.get("review_required"))
 
     customer_segments = [
         segment for segment in segments
         if normalize_label(segment.get("speaker")) == "customer"
-    ]
-
-    customer_segments = [
-        segment for segment in customer_segments
-        if segment.get("escalation_score") is not None
+        and segment.get("escalation_score") is not None
     ]
 
     if len(customer_segments) < 3:
@@ -1051,43 +1043,35 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
             "deescalation_detected": False,
             "unresolved_end_risk": False,
             "phase_count": 0,
+            "trajectory_delta": None,
+            "start_escalation": None,
+            "end_escalation": None,
+            "peak_escalation": None,
             "phase_summary": [],
             "main_reasons": [
                 "Not enough customer segments were available to build a temporal emotion trajectory."
             ],
         }
 
-    phase_count = 5
+    phase_count = min(5, len(customer_segments))
     total_customer_segments = len(customer_segments)
-    phase_size = max(total_customer_segments // phase_count, 1)
-
     phases = []
 
     for phase_index in range(phase_count):
-        start_index = phase_index * phase_size
-
-        if phase_index == phase_count - 1:
-            end_index = total_customer_segments
-        else:
-            end_index = min((phase_index + 1) * phase_size, total_customer_segments)
+        start_index = round(phase_index * total_customer_segments / phase_count)
+        end_index = round((phase_index + 1) * total_customer_segments / phase_count)
 
         phase_segments = customer_segments[start_index:end_index]
 
         if not phase_segments:
             continue
 
-        escalation_scores = [
-            safe_float(segment.get("escalation_score"), 0.0)
-            for segment in phase_segments
-        ]
-
+        escalation_scores = []
         confidence_scores = []
         negative_probabilities = []
-        confident_segments = []
         low_confidence_segments = []
         negative_segments = []
         positive_segments = []
-        neutral_segments = []
         strong_negative_segments = []
 
         emotion_counts = {}
@@ -1096,24 +1080,23 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         for segment in phase_segments:
             sentiment = normalize_label(segment.get("sentiment"))
             emotion = normalize_label(segment.get("dominant_emotion"))
+
+            escalation_score = safe_float(segment.get("escalation_score"), 0.0)
             emotion_confidence = safe_float(segment.get("emotion_confidence"), 0.0)
             sentiment_confidence = safe_float(segment.get("sentiment_confidence"), 0.0)
             negative_probability = safe_float(segment.get("negative_emotion_probability"), 0.0)
 
+            escalation_scores.append(escalation_score)
             confidence_scores.append(max(emotion_confidence, sentiment_confidence))
             negative_probabilities.append(negative_probability)
 
-            if is_confident_segment(segment):
-                confident_segments.append(segment)
-            else:
+            if not is_confident_segment(segment):
                 low_confidence_segments.append(segment)
 
             if sentiment == "negative":
                 negative_segments.append(segment)
             elif sentiment == "positive":
                 positive_segments.append(segment)
-            else:
-                neutral_segments.append(segment)
 
             if emotion:
                 emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
@@ -1130,10 +1113,8 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
 
         if avg_escalation is None:
             avg_escalation = 0.0
-
         if avg_confidence is None:
             avg_confidence = 0.0
-
         if avg_negative_probability is None:
             avg_negative_probability = 0.0
 
@@ -1145,35 +1126,47 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         if sentiment_counts:
             dominant_sentiment = max(sentiment_counts, key=sentiment_counts.get)
 
-        negative_ratio = 0.0
-        positive_ratio = 0.0
-        low_confidence_ratio = 0.0
+        negative_ratio = round(len(negative_segments) / len(phase_segments), 4)
+        positive_ratio = round(len(positive_segments) / len(phase_segments), 4)
+        low_confidence_ratio = round(len(low_confidence_segments) / len(phase_segments), 4)
 
-        if phase_segments:
-            negative_ratio = round(len(negative_segments) / len(phase_segments), 4)
-            positive_ratio = round(len(positive_segments) / len(phase_segments), 4)
-            low_confidence_ratio = round(len(low_confidence_segments) / len(phase_segments), 4)
+        has_strong_negative_signal = len(strong_negative_segments) > 0
 
         if (
-            len(strong_negative_segments) > 0
-            or avg_escalation >= 0.55
-            or avg_negative_probability >= 0.70
+            has_strong_negative_signal
+            or avg_escalation >= 0.45
+            or (
+                avg_negative_probability >= 0.75
+                and avg_escalation >= 0.35
+                and negative_ratio >= 0.50
+            )
         ):
             phase_state = "high_concern"
+
         elif (
-            negative_ratio >= 0.35
-            or avg_escalation >= 0.40
-            or avg_negative_probability >= 0.45
+            avg_escalation >= 0.35
+            or (
+                avg_negative_probability >= 0.65
+                and avg_escalation >= 0.30
+                and negative_ratio >= 0.45
+            )
         ):
             phase_state = "mild_concern"
+
         elif (
             positive_ratio >= 0.35
             and avg_escalation < 0.35
-            and avg_negative_probability < 0.40
+            and not has_strong_negative_signal
         ):
             phase_state = "positive_or_reassured"
-        elif avg_escalation < 0.30 and avg_negative_probability < 0.35:
+
+        elif (
+            avg_escalation < 0.30
+            and avg_negative_probability < 0.65
+            and not has_strong_negative_signal
+        ):
             phase_state = "calm"
+
         else:
             phase_state = "neutral_mixed"
 
@@ -1205,6 +1198,10 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
             "deescalation_detected": False,
             "unresolved_end_risk": False,
             "phase_count": 0,
+            "trajectory_delta": None,
+            "start_escalation": None,
+            "end_escalation": None,
+            "peak_escalation": None,
             "phase_summary": [],
             "main_reasons": [
                 "Customer segments were available, but no valid trajectory phases could be created."
@@ -1237,14 +1234,18 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         trajectory_direction = "stable"
 
     deescalation_detected = (
-        peak_escalation - end_escalation >= 0.10
+        peak_escalation - end_escalation >= 0.08
         and end_escalation < 0.40
     )
 
     unresolved_end_risk = (
-        end_phase.get("phase_state") in {"high_concern", "mild_concern"}
+        end_phase.get("phase_state") == "high_concern"
         or end_phase.get("strong_negative_customer_segments", 0) > 0
         or end_escalation >= 0.45
+        or (
+            end_phase.get("phase_state") == "mild_concern"
+            and manager_review_required
+        )
     )
 
     high_concern_phases = [
@@ -1261,9 +1262,28 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         "calm",
         "positive_or_reassured",
         "neutral_mixed",
+        "mild_concern",
     }
 
+    total_strong_negative_customer_segments = sum(
+        phase.get("strong_negative_customer_segments", 0)
+        for phase in phases
+    )
+
     if (
+        multi_signal_type == "calm_resolved"
+        and not manager_review_required
+        and total_strong_negative_customer_segments == 0
+        and end_escalation < 0.35
+    ):
+        unresolved_end_risk = False
+
+        if trajectory_direction == "improved":
+            overall_pattern = "improved_resolution"
+        else:
+            overall_pattern = "stable_positive_resolution"
+
+    elif (
         not high_concern_phases
         and not mild_concern_phases
         and positive_or_calm_end
@@ -1274,6 +1294,7 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         len(high_concern_phases) > 0
         and deescalation_detected
         and positive_or_calm_end
+        and not unresolved_end_risk
     ):
         overall_pattern = "deescalated_after_peak"
 
@@ -1329,7 +1350,7 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
 
     if unresolved_end_risk:
         main_reasons.append(
-            "The final phase still contains customer concern signals, so the call may need follow-up or review."
+            "The final phase still contains strong customer concern signals, so the call may need follow-up or review."
         )
     else:
         main_reasons.append(
@@ -1353,6 +1374,7 @@ def build_temporal_emotion_trajectory(payload: dict) -> dict:
         "phase_summary": phases,
         "main_reasons": main_reasons,
     }
+
 
 def calculate_segment_review_score(segment: dict) -> float:
     """

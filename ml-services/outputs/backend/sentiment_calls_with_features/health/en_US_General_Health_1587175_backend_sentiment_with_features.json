@@ -18319,13 +18319,13 @@
     }
   },
   "temporal_emotion_trajectory": {
-    "overall_pattern": "mild_concern_resolved",
+    "overall_pattern": "deescalated_after_peak",
     "trajectory_direction": "stable",
-    "start_state": "high_concern",
+    "start_state": "neutral_mixed",
     "end_state": "calm",
     "peak_emotional_phase": "phase_3",
     "peak_emotional_phase_label": "Phase 3",
-    "deescalation_detected": false,
+    "deescalation_detected": true,
     "unresolved_end_risk": false,
     "phase_count": 5,
     "trajectory_delta": -0.0779,
@@ -18339,7 +18339,7 @@
         "segment_start_index": 0,
         "segment_end_index": 8,
         "customer_segment_count": 9,
-        "phase_state": "high_concern",
+        "phase_state": "neutral_mixed",
         "dominant_sentiment": "negative",
         "dominant_emotion": "sadness",
         "average_escalation": 0.2792,
@@ -18373,7 +18373,7 @@
         "segment_start_index": 18,
         "segment_end_index": 26,
         "customer_segment_count": 9,
-        "phase_state": "high_concern",
+        "phase_state": "mild_concern",
         "dominant_sentiment": "negative",
         "dominant_emotion": "sadness",
         "average_escalation": 0.3009,
@@ -18390,7 +18390,7 @@
         "segment_start_index": 27,
         "segment_end_index": 35,
         "customer_segment_count": 9,
-        "phase_state": "mild_concern",
+        "phase_state": "calm",
         "dominant_sentiment": "negative",
         "dominant_emotion": "sadness",
         "average_escalation": 0.2448,
@@ -18420,9 +18420,10 @@
       }
     ],
     "main_reasons": [
-      "Customer trajectory moved from high_concern to calm.",
+      "Customer trajectory moved from neutral_mixed to calm.",
       "Average customer escalation stayed relatively stable from 0.2792 to 0.2013.",
       "The highest emotional phase was Phase 3 with average escalation 0.3009.",
+      "A de-escalation pattern was detected because escalation dropped after the peak phase.",
       "The final phase did not contain strong unresolved customer escalation signals."
     ]
   },

@@ -17209,14 +17209,14 @@
     }
   },
   "temporal_emotion_trajectory": {
-    "overall_pattern": "unresolved_customer_concern",
+    "overall_pattern": "stable_positive_resolution",
     "trajectory_direction": "stable",
-    "start_state": "mild_concern",
-    "end_state": "mild_concern",
+    "start_state": "calm",
+    "end_state": "calm",
     "peak_emotional_phase": "phase_3",
     "peak_emotional_phase_label": "Phase 3",
     "deescalation_detected": false,
-    "unresolved_end_risk": true,
+    "unresolved_end_risk": false,
     "phase_count": 5,
     "trajectory_delta": -0.0128,
     "start_escalation": 0.2479,
@@ -17229,7 +17229,7 @@
         "segment_start_index": 0,
         "segment_end_index": 7,
         "customer_segment_count": 8,
-        "phase_state": "mild_concern",
+        "phase_state": "calm",
         "dominant_sentiment": "neutral",
         "dominant_emotion": "neutral",
         "average_escalation": 0.2479,
@@ -17246,7 +17246,7 @@
         "segment_start_index": 8,
         "segment_end_index": 15,
         "customer_segment_count": 8,
-        "phase_state": "mild_concern",
+        "phase_state": "calm",
         "dominant_sentiment": "negative",
         "dominant_emotion": "sadness",
         "average_escalation": 0.2423,
@@ -17263,7 +17263,7 @@
         "segment_start_index": 16,
         "segment_end_index": 23,
         "customer_segment_count": 8,
-        "phase_state": "mild_concern",
+        "phase_state": "calm",
         "dominant_sentiment": "negative",
         "dominant_emotion": "disgust",
         "average_escalation": 0.2782,
@@ -17280,7 +17280,7 @@
         "segment_start_index": 24,
         "segment_end_index": 31,
         "customer_segment_count": 8,
-        "phase_state": "mild_concern",
+        "phase_state": "positive_or_reassured",
         "dominant_sentiment": "positive",
         "dominant_emotion": "happy",
         "average_escalation": 0.2775,
@@ -17297,7 +17297,7 @@
         "segment_start_index": 32,
         "segment_end_index": 39,
         "customer_segment_count": 8,
-        "phase_state": "mild_concern",
+        "phase_state": "calm",
         "dominant_sentiment": "negative",
         "dominant_emotion": "neutral",
         "average_escalation": 0.2351,
@@ -17310,10 +17310,10 @@
       }
     ],
     "main_reasons": [
-      "Customer trajectory moved from mild_concern to mild_concern.",
+      "Customer trajectory moved from calm to calm.",
       "Average customer escalation stayed relatively stable from 0.2479 to 0.2351.",
       "The highest emotional phase was Phase 3 with average escalation 0.2782.",
-      "The final phase still contains customer concern signals, so the call may need follow-up or review."
+      "The final phase did not contain strong unresolved customer escalation signals."
     ]
   },
   "top_risky_segments": []

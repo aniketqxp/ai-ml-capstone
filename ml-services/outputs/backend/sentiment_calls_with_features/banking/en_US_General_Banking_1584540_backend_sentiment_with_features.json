@@ -12447,7 +12447,7 @@
     "end_state": "high_concern",
     "peak_emotional_phase": "phase_1",
     "peak_emotional_phase_label": "Phase 1",
-    "deescalation_detected": false,
+    "deescalation_detected": true,
     "unresolved_end_risk": true,
     "phase_count": 5,
     "trajectory_delta": -0.0983,
@@ -12545,7 +12545,8 @@
       "Customer trajectory moved from high_concern to high_concern.",
       "Average customer escalation decreased from 0.4834 to 0.3851.",
       "The highest emotional phase was Phase 1 with average escalation 0.4834.",
-      "The final phase still contains customer concern signals, so the call may need follow-up or review."
+      "A de-escalation pattern was detected because escalation dropped after the peak phase.",
+      "The final phase still contains strong customer concern signals, so the call may need follow-up or review."
     ]
   },
   "top_risky_segments": [
