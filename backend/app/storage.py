@@ -111,7 +111,15 @@ def download_bytes(key, use_cache=True):
     if use_cache and cp.exists():
         return cp.read_bytes()
     r = requests.get(public_url(key), timeout=_TIMEOUT)
-    if r.status_code == 404:
+    missing = r.status_code == 404
+    if r.status_code == 400:
+        try:
+            payload = r.json()
+            missing = (str(payload.get("statusCode")) == "404"
+                       or payload.get("error") == "not_found")
+        except ValueError:
+            pass
+    if missing:
         raise FileNotFoundError(key)
     if r.status_code != 200:
         raise StorageError(f"download {key} failed: {r.status_code}")
