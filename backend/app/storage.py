@@ -61,8 +61,14 @@ def public_url(key):
 # ── writes ──────────────────────────────────────────────────────────────────
 
 def upload_bytes(key, data, content_type="application/octet-stream"):
+    # `apikey` header (not just Authorization: Bearer) is required for the new
+    # sb_secret_ key format -- the object endpoint parses Bearer tokens as JWTs
+    # and rejects the non-JWT key with "Invalid Compact JWS". Sending both is
+    # compatible with legacy JWT service_role keys too.
+    k = _service_key()
     headers = {
-        "Authorization": f"Bearer {_service_key()}",
+        "apikey": k,
+        "Authorization": f"Bearer {k}",
         "Content-Type": content_type,
         "x-upsert": "true",          # overwrite -> idempotent re-runs
     }
