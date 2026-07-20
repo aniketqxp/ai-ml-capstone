@@ -68,11 +68,15 @@ def get_router():
 
 
 def chat_json_routed(system, user, temperature=0.1, max_tokens=4000,
-                     return_meta=False):
+                     return_meta=False, tier="qa-primary"):
     """
-    Routed JSON completion: tries primary, transparently falls back on failure.
-    Returns the JSON string (extracted from any markdown fences). With
+    Routed JSON completion: tries `tier`, transparently falls back on API
+    failure. Returns the JSON string (extracted from any markdown fences). With
     return_meta=True, returns (json_str, served_model_string).
+
+    `tier` selects the starting deployment (qa-primary/qa-fallback/qa-safety).
+    Callers escalate deliberately when a 200-OK response is unparseable JSON --
+    a model-quality failure the transport-level router never sees.
     """
     router = get_router()
     messages = [
@@ -80,7 +84,7 @@ def chat_json_routed(system, user, temperature=0.1, max_tokens=4000,
         {"role": "user",   "content": user},
     ]
     resp = router.completion(
-        model="qa-primary",
+        model=tier,
         messages=messages,
         temperature=temperature,
         max_tokens=max_tokens,

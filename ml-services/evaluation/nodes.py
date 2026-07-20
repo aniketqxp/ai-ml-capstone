@@ -65,13 +65,21 @@ def _feedback_text(quotes):
             "do not merge text from multiple turns.")
 
 
-def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=2,
+# provider escalation order for eval nodes: a malformed/invalid 200-OK
+# response is a model-quality failure the transport-level router never sees,
+# so retrying the same provider on the same content fails identically. We
+# escalate the PROVIDER per attempt instead -- a different model's JSON
+# behaviour almost always parses where another's choked.
+_TIER_SEQUENCE = ("qa-primary", "qa-fallback", "qa-safety")
+
+
+def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=3,
                          feedback=None):
     """
     Call the LLM router, parse JSON, validate with `validator`, retry on
-    failure with error feedback. Returns (validated_model, dt, served_model).
-    `feedback` is an optional revision note (e.g. failed anchor quotes)
-    appended to the user prompt.
+    failure with error feedback AND provider escalation. Returns
+    (validated_model, dt, served_model). `feedback` is an optional revision
+    note (e.g. failed anchor quotes) appended to the user prompt.
     """
     from router import chat_json_routed
 
@@ -81,8 +89,9 @@ def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=2,
     last_err = None
 
     for attempt in range(1, max_attempts + 1):
+        tier = _TIER_SEQUENCE[min(attempt - 1, len(_TIER_SEQUENCE) - 1)]
         t0 = time.time()
-        raw, served = chat_json_routed(system, user, return_meta=True)
+        raw, served = chat_json_routed(system, user, return_meta=True, tier=tier)
         dt = time.time() - t0
         try:
             data = json.loads(_strip_fences(raw))
@@ -90,8 +99,8 @@ def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=2,
             return result, dt, served
         except (json.JSONDecodeError, ValidationError, ValueError) as e:
             last_err = e
-            print(f"  [{system[:40]}...] attempt {attempt} failed "
-                  f"({type(e).__name__}); retrying...")
+            print(f"  [{system[:40]}...] attempt {attempt} ({tier}) failed "
+                  f"({type(e).__name__}); escalating provider...")
             user = (f"{packet}\n\n{skeleton}"
                     + (f"\n\n{feedback}" if feedback else "")
                     + f"\n\nYour previous output was invalid: "
