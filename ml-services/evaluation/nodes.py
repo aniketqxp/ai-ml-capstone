@@ -70,7 +70,7 @@ def _feedback_text(quotes):
 # so retrying the same provider on the same content fails identically. We
 # escalate the PROVIDER per attempt instead -- a different model's JSON
 # behaviour almost always parses where another's choked.
-_TIER_SEQUENCE = ("qa-primary", "qa-fallback", "qa-safety")
+_TIER_SEQUENCE = ("qa-primary", "qa-safety", "qa-safety")
 
 
 def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=3,

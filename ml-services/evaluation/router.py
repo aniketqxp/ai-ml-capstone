@@ -48,7 +48,18 @@ def _model_list():
     ]
 
 # strict priority: primary -> fallback -> safety
-FALLBACKS = [{"qa-primary": ["qa-fallback", "qa-safety"]}]
+# Strict priority:
+# primary -> SambaNova -> GitHub safety
+# SambaNova -> GitHub safety
+#
+# The second mapping is necessary because evaluation nodes may explicitly
+# escalate to qa-fallback after receiving malformed JSON from the primary.
+# If SambaNova then fails because of quota, billing, or availability, the
+# request must still continue to GitHub Models.
+FALLBACKS = [
+    {"qa-primary": ["qa-fallback", "qa-safety"]},
+    {"qa-fallback": ["qa-safety"]},
+]
 
 _router = None
 
