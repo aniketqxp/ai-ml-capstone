@@ -31,13 +31,14 @@ import os, json, time, argparse
 from typing import List
 from pydantic import BaseModel, Field, ValidationError
 
+import paths
 from env_util import load_env
 from assemble import load_manifest, assemble_turns, estimate_duration, mmss
 from llm_client import chat_json
 from extract import strip_fences
 
 load_env()
-DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
+DATA = str(paths.NA_TESTSET)
 
 
 # ── Schema ────────────────────────────────────────────────────────────────────

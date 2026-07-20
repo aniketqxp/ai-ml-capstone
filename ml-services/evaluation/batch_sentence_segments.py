@@ -26,11 +26,13 @@ import re
 import argparse
 from pathlib import Path
 
-# ── config ────────────────────────────────────────────────────────────────────
-RESULTS_ROOT = Path(__file__).parent.parent.parent / "data" / "na_testset" / "results"
-OUTPUT_ROOT  = Path(__file__).parent.parent.parent / "data" / "sentence_segments"
+import paths
 
-TARGET_DOMAINS = {"banking", "health", "telecom"}
+# ── config ────────────────────────────────────────────────────────────────────
+RESULTS_ROOT = paths.NA_TESTSET / "results"
+OUTPUT_ROOT  = paths.SENTENCE_SEG_ROOT
+
+DEFAULT_DOMAINS = {"banking", "health", "telecom"}
 
 MIN_DURATION_S = 1.5   # merge non-terminated fragments shorter than this
 GAP_SPLIT_S    = 2.0   # silence gap that always starts a new sentence
@@ -109,10 +111,12 @@ def interleave(agent_sents: list, customer_sents: list) -> list:
     return combined
 
 
-def segment_call(src_path: Path) -> dict:
-    with open(src_path, encoding="utf-8") as f:
-        data = json.load(f)
+def segment_transcript(data: dict) -> dict:
+    """Sentence-segment a loaded per-channel transcript dict (pure, no I/O).
 
+    Shared with the single-call orchestrator so batch and live paths produce
+    byte-identical segmentation from the same word-level transcript.
+    """
     agent_sents    = words_to_sentences(data.get("agent", []),    "AGENT")
     customer_sents = words_to_sentences(data.get("customer", []), "CUSTOMER")
     all_sents      = interleave(agent_sents, customer_sents)
@@ -127,6 +131,12 @@ def segment_call(src_path: Path) -> dict:
         "customer_sentences": len(customer_sents),
         "sentences":          all_sents,
     }
+
+
+def segment_call(src_path: Path) -> dict:
+    with open(src_path, encoding="utf-8") as f:
+        data = json.load(f)
+    return segment_transcript(data)
 
 
 def collect_sources(domains: set) -> list[tuple[str, Path]]:
@@ -156,8 +166,9 @@ def collect_sources(domains: set) -> list[tuple[str, Path]]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--domains", nargs="+",
-                    default=sorted(TARGET_DOMAINS),
-                    choices=sorted(TARGET_DOMAINS))
+                    default=sorted(DEFAULT_DOMAINS),
+                    help="domains to segment (any manifest domain; "
+                         "default: banking health telecom)")
     args = ap.parse_args()
     domains = set(args.domains)
 

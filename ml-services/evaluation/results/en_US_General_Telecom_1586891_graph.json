@@ -1,0 +1,762 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Telecom_1586891",
+    "domain": "telecom",
+    "accent": "en-US_General",
+    "duration_seconds": 633.7,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Stacey.",
+        "speaker": "AGENT",
+        "timestamp": "00:21",
+        "sec": 21.13,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling BrightLink Internet Support.",
+        "speaker": "AGENT",
+        "timestamp": "00:21",
+        "sec": 21.13,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "Can you tell me your name please?",
+        "speaker": "AGENT",
+        "timestamp": "00:39",
+        "sec": 38.76,
+        "turn": 2
+      },
+      "note": null
+    },
+    "identity_method": "name",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "the upgrade will activate within 24 hours, though usually it's much faster. Sometimes it happens within an hour, and look out for an email confirmation and a text message when it's all live.",
+        "speaker": "AGENT",
+        "timestamp": "08:02",
+        "sec": 482.04,
+        "turn": 42
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration (10:34 for plan upgrade + troubleshooting)",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Great. Now let me process that upgrade. This will take about 30 seconds.",
+          "speaker": "AGENT",
+          "timestamp": "07:08",
+          "sec": 427.52,
+          "turn": 36
+        },
+        {
+          "quote": "No, that's it. You're all set.",
+          "speaker": "AGENT",
+          "timestamp": "09:23",
+          "sec": 563.1,
+          "turn": 52
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "offered multiple options (500 MBPS and 1 GBPS)",
+        "explained pros and cons of each option",
+        "waited for customer preference before proceeding",
+        "had a backup plan (remote signal refresh, technician visit)",
+        "solution fits customer's specific situation (remote work, video calls)",
+        "explained WHY (modem compatibility, Wi-Fi 6 recommendation)",
+        "issue was solved by the end",
+        "offered alternatives (router upgrade, Speed Plus Protection)"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "So you've got two main upgrade paths available in your area. Number one is the 500 MPPS plan for $79 .99 a month. And then we also have a one gigabyte GBPS plan for $99 .99 a month.",
+          "speaker": "AGENT",
+          "timestamp": "02:23",
+          "sec": 142.94,
+          "turn": 12
+        },
+        {
+          "quote": "Most likely, yes, I see your modem model here. It's a BrightLink AX1200. That one supports up to one GBPS. So you're good.",
+          "speaker": "AGENT",
+          "timestamp": "05:56",
+          "sec": 356.44,
+          "turn": 28
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions (e.g., modem status, router type)",
+        "checked understanding (e.g., 'Is that correct?')",
+        "asked clarifying questions before jumping to a solution",
+        "confirmed understanding mid-call (e.g., 'That's still solid.')"
+      ],
+      "signals_absent": [
+        "no recap or summary at the end"
+      ],
+      "evidence": [
+        {
+          "quote": "Can you tell me your name please?",
+          "speaker": "AGENT",
+          "timestamp": "00:39",
+          "sec": 38.76,
+          "turn": 2
+        },
+        {
+          "quote": "Okay, I see you're currently on our 100 MBPS residential plan at $59 .99 a month. Now is that correct?",
+          "speaker": "AGENT",
+          "timestamp": "01:20",
+          "sec": 79.72,
+          "turn": 8
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences throughout",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY, not just what to do",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Good morning! Thank you for calling BrightLink Internet Support. My name is Stacey. Now how can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:21",
+          "sec": 21.13,
+          "turn": 0
+        },
+        {
+          "quote": "So the 500 MBPS plan gives you about five times your current speed. It's great for video conferencing, 4K streaming, and like large file uploads.",
+          "speaker": "AGENT",
+          "timestamp": "03:09",
+          "sec": 188.69,
+          "turn": 14
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.14,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.8,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "validation phrases (e.g., 'I totally understand your frustration')",
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions",
+        "matches the emotional register of the customer"
+      ],
+      "signals_absent": [
+        "no pauses to let customer finish speaking (e.g., customer interrupted at 01:18)"
+      ],
+      "evidence": [
+        {
+          "quote": "I totally understand. Definitely. Remote work definitely demands more bandwidth, especially with uploads and calls running at the same time.",
+          "speaker": "AGENT",
+          "timestamp": "02:02",
+          "sec": 121.91,
+          "turn": 10
+        },
+        {
+          "quote": "You're very welcome, Taylor. I'm glad we could get that sorted.",
+          "speaker": "AGENT",
+          "timestamp": "09:35",
+          "sec": 574.94,
+          "turn": 54
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 3.14,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.8,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was addressed (upgrade + troubleshooting)",
+        "clear resolution was provided",
+        "agent didn't dismiss or minimize the customer's concern",
+        "agent followed through on promises (speed test link, upgrade processing)",
+        "first-call resolution achieved",
+        "customer didn't mention switching to a competitor"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Perfect, you've been super helpful, Stacey.",
+          "speaker": "CUSTOMER",
+          "timestamp": "09:31",
+          "sec": 571.26,
+          "turn": 53
+        },
+        {
+          "quote": "Hopefully, no more lag on my video calls.",
+          "speaker": "CUSTOMER",
+          "timestamp": "10:00",
+          "sec": 600.11,
+          "turn": 57
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 1.97,
+        "text_weight": 0.73,
+        "acoustic_weight": 0.27,
+        "coverage": 0.68,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.291,
+      "peak_escalation": 0.451,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Customer requested an upgrade to a faster internet plan due to remote work needs.",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself and the company.",
+        "rationale": "Establishes a professional and personalized opening to build rapport.",
+        "met": true,
+        "evidence": {
+          "quote": "Good morning! Thank you for calling BrightLink Internet Support. My name is Stacey. Now how can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:21",
+          "sec": 21.13,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using account details or security questions.",
+        "rationale": "Ensures compliance with security protocols before discussing account changes.",
+        "met": true,
+        "evidence": {
+          "quote": "Can you tell me your name please?",
+          "speaker": "AGENT",
+          "timestamp": "00:39",
+          "sec": 38.76,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the customer's current internet plan and usage details.",
+        "rationale": "Validates the need for an upgrade by understanding their current service limitations.",
+        "met": true,
+        "evidence": {
+          "quote": "I see you're currently on our 100 MBPS residential plan at $59 .99 a month. Now is that correct?",
+          "speaker": "AGENT",
+          "timestamp": "01:20",
+          "sec": 79.72,
+          "turn": 8
+        }
+      },
+      {
+        "step": "Ask open-ended questions about their remote work setup and internet usage patterns.",
+        "rationale": "Gathers specific information to justify the upgrade and tailor recommendations.",
+        "met": true,
+        "evidence": {
+          "quote": "Remote work definitely demands more bandwidth, especially with uploads and calls running at the same time.",
+          "speaker": "AGENT",
+          "timestamp": "02:02",
+          "sec": 121.91,
+          "turn": 10
+        }
+      },
+      {
+        "step": "Explain the available faster internet plans, including speeds, pricing, and any promotions.",
+        "rationale": "Provides clear options for the customer to make an informed decision.",
+        "met": true,
+        "evidence": {
+          "quote": "So you've got two main upgrade paths available in your area. Number one is the 500 MPPS plan for $79 .99 a month. And then we also have a one gigabyte GBPS plan for $99 .99 a month.",
+          "speaker": "AGENT",
+          "timestamp": "02:23",
+          "sec": 142.94,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Assess the customer's budget and willingness to pay for the upgraded plan.",
+        "rationale": "Ensures the proposed solution aligns with their financial expectations.",
+        "met": true,
+        "evidence": {
+          "quote": "If you're already on a month to month plan, you can switch any time. But if you choose a 12 month contract, we lock in that $79 .99 rate for a full year and we would waive the $50 upgrade fee.",
+          "speaker": "AGENT",
+          "timestamp": "03:09",
+          "sec": 188.69,
+          "turn": 14
+        }
+      },
+      {
+        "step": "Confirm the customer's choice of plan and schedule the upgrade activation date.",
+        "rationale": "Finalizes the upgrade details and sets clear expectations for implementation.",
+        "met": true,
+        "evidence": {
+          "quote": "Great. Now let me process that upgrade. This will take about 30 seconds.",
+          "speaker": "AGENT",
+          "timestamp": "07:08",
+          "sec": 427.52,
+          "turn": 36
+        }
+      },
+      {
+        "step": "Explain any potential service interruptions, equipment changes, or next steps.",
+        "rationale": "Manages customer expectations and reduces confusion about the upgrade process.",
+        "met": true,
+        "evidence": {
+          "quote": "The upgrade will activate within 24 hours, though usually it's much faster. Sometimes it happens within an hour, and look out for an email confirmation and a text message when it's all live.",
+          "speaker": "AGENT",
+          "timestamp": "08:02",
+          "sec": 482.04,
+          "turn": 42
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.218,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.198,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.149,
+        "cust_val": 1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.1146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.242,
+        "cust_val": -0.667,
+        "agent_val": null
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.1979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2188,
+        "esc": 0.319,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.2396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.335,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.298,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.174,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.302,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.305,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.353,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.158,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.328,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.311,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5729,
+        "esc": 0.277,
+        "cust_val": -0.5,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.141,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.365,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.347,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.118,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.8438,
+        "esc": 0.451,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.303,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.279,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.31,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      }
+    ],
+    "n_sentences": 148
+  },
+  "_anchor_stats": {
+    "total": 24,
+    "anchored": 24
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 2.0,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 9.4,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 8.0,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.6,
+          "expected": 2.2,
+          "check": 5.2
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 9.6
+  }
+}

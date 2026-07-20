@@ -24,7 +24,14 @@ from typing import Optional, List, Literal
 from pydantic import BaseModel, Field
 
 RUBRIC_VERSION = "0.1.0"          # legacy monolithic path (extract.py)
-RUBRIC_VERSION_GRAPH = "0.2.0"    # graph path with customer_satisfaction
+RUBRIC_VERSION_GRAPH = "0.4.1"    # graph path: 0.2.0 added customer_satisfaction,
+                                  # 0.3.0 added evidence re-anchor loop +
+                                  # escalation investigation node,
+                                  # 0.4.0 added acoustic-text fusion (hybrid
+                                  # scores) + expected-workflow track,
+                                  # 0.4.1 refit fusion thresholds on the
+                                  # 22-call batch + arbitrate node on
+                                  # text/acoustic disagreement
 
 Speaker = Literal["AGENT", "CUSTOMER"]
 
@@ -71,13 +78,29 @@ class ComplianceChecklist(BaseModel):
 #    names, split into text vs audio. The text LLM fills text signals + a score;
 #    `requires_audio` flags dimensions whose FULL judgment also needs WP3.
 # ─────────────────────────────────────────────────────────────────────────────
+class HybridScore(BaseModel):
+    """Provenance for a fused score (v0.4.0). method='text_only' means the
+    acoustic model contributed nothing (no data / dimension is text-defined)."""
+    text_score: int = Field(ge=1, le=5, description="LLM score from text signals alone.")
+    acoustic_score: Optional[float] = Field(default=None, description="Acoustic subscore mapped to 1-5.")
+    text_weight: float
+    acoustic_weight: float
+    coverage: Optional[float] = Field(
+        default=None, description="Fraction of channel sentences the audio model processed.")
+    channel: Optional[str] = Field(default=None, description="Speaker channel the acoustic signal came from.")
+    method: Literal["weighted_mean", "text_only"] = "text_only"
+
+
 class QualityDimension(BaseModel):
-    score: int = Field(ge=1, le=5, description="1=poor, 5=excellent, judged from TEXT signals only.")
+    score: int = Field(ge=1, le=5, description="1=poor, 5=excellent. Text LLM score; "
+                       "overwritten with the fused score when acoustic data exists (v0.4.0).")
     signals_present: List[str] = Field(default_factory=list, description="Rubric behaviours observed.")
     signals_absent: List[str] = Field(default_factory=list, description="Expected behaviours not observed.")
     evidence: List[Evidence] = Field(default_factory=list)
     requires_audio: bool = Field(
         default=False, description="True if a complete judgment also needs acoustic signals (WP3).")
+    hybrid: Optional[HybridScore] = Field(
+        default=None, description="How this score was computed (v0.4.0+). Null in older evaluations.")
 
 
 class QualityDimensions(BaseModel):
@@ -114,15 +137,78 @@ RedFlag = Literal[
 ]
 
 
+class EscalationFusion(BaseModel):
+    """Provenance for the fused risk level.
+    v0.4.0 fused via ordinal max (more severe tier wins, "ordinal_max").
+    v0.4.1: tiers that AGREE merge deterministically ("agreement"); tiers
+    that DISAGREE are resolved by an arbitration LLM node that weighs both
+    signals in context ("llm_arbitration") -- disagreement is exactly where
+    mechanical merging has nothing to stand on (batch evidence: of 10 calls
+    where either channel flagged risk, both flagged on only 1)."""
+    text_risk: Literal["none", "review", "escalate"]
+    acoustic_risk: Optional[Literal["none", "review", "escalate"]] = None
+    late_mean_escalation: Optional[float] = Field(
+        default=None, description="Mean customer escalation_score over the final third of the call.")
+    peak_escalation: Optional[float] = Field(
+        default=None, description="Max customer escalation_score anywhere in the call. Context only "
+                                  "since v0.4.1 -- not a tier trigger (batch median 0.56 gave it no "
+                                  "discriminating power).")
+    method: Literal["agreement", "llm_arbitration", "ordinal_max", "text_only"] = "text_only"
+    arbitration_rationale: Optional[str] = Field(
+        default=None, description="Arbitrator's reasoning when method='llm_arbitration'.")
+
+
 class EscalationRisk(BaseModel):
     red_flags: List[RedFlag] = Field(default_factory=list)
     customer_emotion_text: Literal["calm", "mild_frustration", "frustrated", "angry", "distressed"] = Field(
         description="Emotion inferred from TEXT only; audio model confirms before action.")
     risk_level: Literal["none", "review", "escalate"] = Field(
-        description="none / review (manager may review) / escalate (immediate).")
+        description="none / review (manager may review) / escalate (immediate). "
+                    "Fused with the acoustic tier when audio data exists (v0.4.0).")
     evidence: List[Evidence] = Field(default_factory=list)
     requires_audio: bool = Field(
         default=True, description="Emotion intensity needs acoustic confirmation.")
+    hybrid: Optional[EscalationFusion] = Field(
+        default=None, description="How risk_level was computed (v0.4.0+). Null in older evaluations.")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. INVESTIGATION (v0.3.0) -- produced ONLY when risk_level != "none".
+#    A conditional deep-dive that turns escalation red flags into a
+#    manager-ready incident report.
+# ─────────────────────────────────────────────────────────────────────────────
+class InvestigationReport(BaseModel):
+    summary: str = Field(description="2-3 sentence incident summary for a manager.")
+    contributing_factors: List[str] = Field(
+        default_factory=list, description="What led to the escalation risk (agent + customer side).")
+    recommended_action: str = Field(description="Concrete next step for the reviewing manager.")
+    priority: Literal["low", "medium", "high"] = Field(
+        description="Review urgency. escalate risk -> high, review risk -> low/medium.")
+    evidence: List[Evidence] = Field(default_factory=list)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. EXPECTED WORKFLOW (v0.4.0) -- three isolated LLM phases:
+#    a. subject: one sentence stating what the customer contacted about
+#       (the REQUEST only, never the outcome).
+#    b. expected steps: generated from domain + subject ONLY -- the model has
+#       not seen the transcript, so expectations cannot be contaminated by
+#       what actually happened on the call.
+#    c. check: audits the transcript against that independent checklist.
+# ─────────────────────────────────────────────────────────────────────────────
+class WorkflowStep(BaseModel):
+    step: str = Field(description="Short imperative phrase, e.g. 'Verify customer identity'.")
+    rationale: Optional[str] = Field(default=None, description="Why this step is expected for this call type.")
+    met: Optional[bool] = Field(
+        default=None, description="True=performed, False=missed, None=not determinable/applicable. "
+                                  "Filled by the check phase; null before checking.")
+    evidence: Optional[Evidence] = None
+
+
+class CallWorkflow(BaseModel):
+    subject: str = Field(description="One-sentence gist of what the customer wanted (request, not outcome).")
+    expected_steps: List[WorkflowStep] = Field(
+        description="4-8 boxes a competent agent should check for a call with this subject.")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -142,6 +228,12 @@ class CallEvaluation(BaseModel):
     compliance: ComplianceChecklist
     quality: QualityDimensions
     escalation: EscalationRisk
+    investigation: Optional[InvestigationReport] = Field(
+        default=None,
+        description="Deep-dive incident report. Only populated when risk_level != 'none' (v0.3.0+).")
+    workflow: Optional[CallWorkflow] = Field(
+        default=None,
+        description="Subject-derived expected workflow + audit results (v0.4.0+).")
     overall_summary: Optional[str] = Field(
         default=None, description="2-3 sentence plain-language summary for the dashboard.")
 

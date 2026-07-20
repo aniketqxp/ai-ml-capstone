@@ -1,0 +1,741 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Banking_1587139",
+    "domain": "banking",
+    "accent": "en-US_General",
+    "duration_seconds": 770.1,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Erica Smith.",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.04,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hi, thank you for calling Central Bank.",
+        "speaker": "AGENT",
+        "timestamp": "00:13",
+        "sec": 13.04,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "Can I have your date of birth, Stacey Brown?",
+        "speaker": "AGENT",
+        "timestamp": "00:42",
+        "sec": 41.79,
+        "turn": 4
+      },
+      "note": null
+    },
+    "identity_method": null,
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Is there anything else that I can assist you with at the time?",
+        "speaker": "AGENT",
+        "timestamp": "10:01",
+        "sec": 600.52,
+        "turn": 128
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 3,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration for complexity"
+      ],
+      "signals_absent": [
+        "no unnecessary holds or transfers"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay, so I see here that I can expedite your transfer, but it will still take one business day to clear into your checking account. Would you like to put that note in the system?",
+          "speaker": "AGENT",
+          "timestamp": "04:13",
+          "sec": 253.08,
+          "turn": 52
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained WHY",
+        "solution fits customer's situation",
+        "offered alternatives"
+      ],
+      "signals_absent": [
+        "no explicit pros/cons of options"
+      ],
+      "evidence": [
+        {
+          "quote": "Right, right. I do understand and I apologize for that, but the bank policy does require two business days for any transfers within the bank.",
+          "speaker": "AGENT",
+          "timestamp": "03:00",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "What is the amount that you're interested in transferring from your savings to your checking, Miss Brown?",
+          "speaker": "AGENT",
+          "timestamp": "01:34",
+          "sec": 105.3,
+          "turn": 22
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "accurate information",
+        "explained WHY"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay, just to confirm, you said 831-264-82773, correct?",
+          "speaker": "AGENT",
+          "timestamp": "01:34",
+          "sec": 94.37,
+          "turn": 18
+        },
+        {
+          "quote": "It's been in effect for about a year. I do apologize.",
+          "speaker": "AGENT",
+          "timestamp": "04:03",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.64,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.79,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 2,
+      "signals_present": [
+        "uses customer's name naturally"
+      ],
+      "signals_absent": [
+        "no validation phrases",
+        "no acknowledgment of frustration",
+        "flat responses"
+      ],
+      "evidence": [
+        {
+          "quote": "Miss Brown",
+          "speaker": "AGENT",
+          "timestamp": "01:34",
+          "sec": 57.62,
+          "turn": 6
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 2,
+        "acoustic_score": 2.64,
+        "text_weight": 0.68,
+        "acoustic_weight": 0.32,
+        "coverage": 0.79,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem identified clearly",
+        "issue addressed",
+        "clear resolution provided",
+        "followed through on promises"
+      ],
+      "signals_absent": [
+        "no escalation threat"
+      ],
+      "evidence": [
+        {
+          "quote": "Okay. Nope. That's it, then.",
+          "speaker": "CUSTOMER",
+          "timestamp": "12:14",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.08,
+        "text_weight": 0.83,
+        "acoustic_weight": 0.17,
+        "coverage": 0.44,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [
+      "explicit_dissatisfaction",
+      "repeat_attempts"
+    ],
+    "customer_emotion_text": "frustrated",
+    "risk_level": "none",
+    "evidence": [
+      {
+        "quote": "I mean, this is ridiculous. You guys should look like I've been a customer for like 10 years. I've never had this kind of problem before.",
+        "speaker": "CUSTOMER",
+        "timestamp": "03:54",
+        "sec": 233.52,
+        "turn": 45
+      },
+      {
+        "quote": "It's ridiculous.",
+        "speaker": "CUSTOMER",
+        "timestamp": "04:09",
+        "sec": 249.0,
+        "turn": 51
+      }
+    ],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "review",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.252,
+      "peak_escalation": 0.535,
+      "method": "llm_arbitration",
+      "arbitration_rationale": "Sided with acoustic channel; vocal spikes were isolated mid-call and resolved with clear next-day transfer confirmation, despite text noting frustration and repeat attempts."
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "requested an immediate transfer from savings to checking and set up a recurring monthly transfer between accounts",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with the bank's name",
+        "rationale": "Establishes professionalism and confirms the customer's identity context",
+        "met": true,
+        "evidence": {
+          "quote": "Hi, thank you for calling Central Bank. My name is Erica Smith. How may I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:13",
+          "sec": 13.04,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using security questions or account details",
+        "rationale": "Ensures compliance with banking security protocols before processing transactions",
+        "met": true,
+        "evidence": {
+          "quote": "Can I have your first and last name first?",
+          "speaker": "AGENT",
+          "timestamp": "00:27",
+          "sec": 27.45,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the customer's intent to transfer funds from savings to checking",
+        "rationale": "Clarifies the primary transaction request to avoid misunderstandings",
+        "met": true,
+        "evidence": {
+          "quote": "you did say you were interested in transferring money from your savings to your checking?",
+          "speaker": "AGENT",
+          "timestamp": "01:06",
+          "sec": null,
+          "turn": null
+        }
+      },
+      {
+        "step": "Ask for the transfer amount and confirm it verbally with the customer",
+        "rationale": "Ensures accuracy of the transaction and prevents errors in fund movement",
+        "met": true,
+        "evidence": {
+          "quote": "What is the amount that you're interested in transferring from your savings to your checking, Miss Brown?",
+          "speaker": "AGENT",
+          "timestamp": "01:45",
+          "sec": 105.3,
+          "turn": 22
+        }
+      },
+      {
+        "step": "Specify the date for the immediate transfer and confirm customer approval",
+        "rationale": "Clarifies timing and ensures the customer agrees to the transaction schedule",
+        "met": true,
+        "evidence": {
+          "quote": "When is the date that you would like to have this transfer scheduled?",
+          "speaker": "AGENT",
+          "timestamp": "02:15",
+          "sec": 135.0,
+          "turn": 28
+        }
+      },
+      {
+        "step": "Explain and confirm the setup of a recurring monthly transfer between accounts",
+        "rationale": "Ensures the customer understands the recurring nature and terms of the additional transfer",
+        "met": true,
+        "evidence": {
+          "quote": "I can go ahead and set that up for you. And I'm also sending you a link to the mobile app so that you can go ahead and download it on your smartphone.",
+          "speaker": "AGENT",
+          "timestamp": "08:39",
+          "sec": 519.08,
+          "turn": 104
+        }
+      },
+      {
+        "step": "Review all transfer details (amounts, dates, accounts) and obtain final customer confirmation",
+        "rationale": "Prevents errors by summarizing the full transaction plan before execution",
+        "met": true,
+        "evidence": {
+          "quote": "so setting up automatic transfers. Would you like to set an expiration date for those automatic transfers?",
+          "speaker": "AGENT",
+          "timestamp": "09:00",
+          "sec": 539.89,
+          "turn": 110
+        }
+      },
+      {
+        "step": "Provide confirmation details (reference numbers, next steps) and offer further assistance",
+        "rationale": "Ensures the customer has clear documentation and knows how to follow up if needed",
+        "met": true,
+        "evidence": {
+          "quote": "You have spoken to Erica Smith. And if you would like to write down my direct line, so that if you have any issues with the transfer or anything in the app, you can call me directly.",
+          "speaker": "AGENT",
+          "timestamp": "12:17",
+          "sec": 736.69,
+          "turn": 176
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.216,
+        "cust_val": -0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0521,
+        "esc": 0.203,
+        "cust_val": -0.5,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.3,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.179,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.23,
+        "cust_val": -0.667,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.1771,
+        "esc": 0.304,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.299,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2188,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.224,
+        "cust_val": -0.5,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.233,
+        "cust_val": -0.667,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2812,
+        "esc": 0.19,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.267,
+        "cust_val": -1.0,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.153,
+        "cust_val": 0.5,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.168,
+        "cust_val": 0.0,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.263,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.222,
+        "cust_val": -0.667,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.306,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.367,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4688,
+        "esc": 0.366,
+        "cust_val": -1.0,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.165,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.5104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.25
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.435,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.5729,
+        "esc": 0.179,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.212,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6562,
+        "esc": 0.173,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.291,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.273,
+        "cust_val": -0.5,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7604,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.301,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": 0.333,
+        "cust_val": -1.0,
+        "agent_val": -0.667
+      },
+      {
+        "p": 0.8229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.8854,
+        "esc": 0.282,
+        "cust_val": -1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.237,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.9271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9896,
+        "esc": 0.107,
+        "cust_val": 0.0,
+        "agent_val": null
+      }
+    ],
+    "n_sentences": 218
+  },
+  "_anchor_stats": {
+    "total": 21,
+    "anchored": 17
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 2.2,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 1.1,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 3.6,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 6.6,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.8,
+          "expected": 2.4,
+          "check": 3.5
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.01,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": true
+      },
+      "arbitrate": {
+        "duration": 1.0,
+        "served_by": "mistral-small-latest",
+        "verdict": "none"
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 12.5
+  }
+}

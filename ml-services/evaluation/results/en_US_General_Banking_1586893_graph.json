@@ -1,0 +1,725 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Banking_1586893",
+    "domain": "banking",
+    "accent": "en-US_General",
+    "duration_seconds": 695.7,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "My name is Sophia Carson.",
+        "speaker": "AGENT",
+        "timestamp": "00:15",
+        "sec": 15.09,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling Summit National Bank.",
+        "speaker": "AGENT",
+        "timestamp": "00:15",
+        "sec": 15.09,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "May I please verify your identity? I have to ask some identity questions. Could you confirm your full name, date of birth, and the last four digits of your social security number?",
+        "speaker": "AGENT",
+        "timestamp": "00:39",
+        "sec": 39.09,
+        "turn": 2
+      },
+      "note": null
+    },
+    "identity_method": "date of birth",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "So let me just summarize today's call to make sure we're all set and all clear. We have a monthly transfer scheduled of 750 from your checkings to your savings. The first transfer will begin on November 5th next month. The notifications were enabled for reminders and the low balance and the pause resume option is available anytime. That sounds all correct.",
+        "speaker": "AGENT",
+        "timestamp": "10:06",
+        "sec": 605.82,
+        "turn": 60
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay. It's officially scheduled. That's all done. You'll receive a confirmation email in about two minutes and you'll see the transfer listed in your upcoming transactions tab online.",
+          "speaker": "AGENT",
+          "timestamp": "07:00",
+          "sec": 419.7,
+          "turn": 40
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "solution fits customer's specific situation",
+        "explained WHY",
+        "offered alternatives",
+        "respected customer's choice"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Excellent question. So for personal savings accounts, federal guidelines allow up to six outgoing transfers or withdrawals per month. However, since this is an incoming transfer into savings, you can deposit as many times as you'd like. There is no cap or maximum on that.",
+          "speaker": "AGENT",
+          "timestamp": "04:20",
+          "sec": 259.95,
+          "turn": 26
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "asked open-ended diagnostic questions",
+        "checked understanding",
+        "asked clarifying questions before jumping to a solution"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Could you tell me the account numbers you'd like to use or should I pull them from your linked accounts?",
+          "speaker": "AGENT",
+          "timestamp": "02:00",
+          "sec": 120.48,
+          "turn": 14
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 5,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained WHY",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Okay, good morning. Thank you for calling Summit National Bank. My name is Sophia Carson. How can I help you today?",
+          "speaker": "AGENT",
+          "timestamp": "00:15",
+          "sec": 15.09,
+          "turn": 0
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 3.36,
+        "text_weight": 0.72,
+        "acoustic_weight": 0.28,
+        "coverage": 0.69,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions",
+        "matches the emotional register of the customer"
+      ],
+      "signals_absent": [
+        "no explicit validation phrases"
+      ],
+      "evidence": [
+        {
+          "quote": "That sounds like a great plan. Cool. Congratulations on taking that step.",
+          "speaker": "AGENT",
+          "timestamp": "02:00",
+          "sec": 120.48,
+          "turn": 14
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 3.36,
+        "text_weight": 0.72,
+        "acoustic_weight": 0.28,
+        "coverage": 0.69,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem was identified clearly",
+        "issue was actually addressed",
+        "clear resolution was provided",
+        "agent didn't dismiss or minimize the customer's concern",
+        "agent followed through on promises made during the call",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "That's perfect, Sophia. You've been amazing to deal with.",
+          "speaker": "CUSTOMER",
+          "timestamp": "10:31",
+          "sec": 630.64,
+          "turn": 61
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.37,
+        "text_weight": 0.8,
+        "acoustic_weight": 0.2,
+        "coverage": 0.5,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.227,
+      "peak_escalation": 0.558,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Set up a recurring monthly transfer from checking to savings for home renovation savings",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with the bank's name",
+        "rationale": "Establishes a professional and personalized opening to build rapport.",
+        "met": true,
+        "evidence": {
+          "quote": "Okay, good morning. Thank you for calling Summit National Bank. My name is Sophia Carson.",
+          "speaker": "AGENT",
+          "timestamp": "00:15",
+          "sec": 15.09,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name, account number, or last four digits of SSN)",
+        "rationale": "Ensures compliance with security protocols and prevents unauthorized access.",
+        "met": true,
+        "evidence": {
+          "quote": "Could you confirm your full name, date of birth, and the last four digits of your social security number?",
+          "speaker": "AGENT",
+          "timestamp": "00:39",
+          "sec": 39.09,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the customer's intent to set up a recurring monthly transfer",
+        "rationale": "Clarifies the purpose of the call and aligns expectations.",
+        "met": true,
+        "evidence": {
+          "quote": "So you'd like to set up a recurring transfer from checking to savings. Is that correct?",
+          "speaker": "AGENT",
+          "timestamp": "01:23",
+          "sec": 82.9,
+          "turn": 12
+        }
+      },
+      {
+        "step": "Ask for the transfer amount and the specific date each month the transfer should occur",
+        "rationale": "Gathers critical details to configure the transfer accurately.",
+        "met": true,
+        "evidence": {
+          "quote": "Now, how much would you like to transfer each month from the checking into the savings account?",
+          "speaker": "AGENT",
+          "timestamp": "02:26",
+          "sec": 146.49,
+          "turn": 16
+        }
+      },
+      {
+        "step": "Specify the source account (checking) and destination account (savings) for the transfer",
+        "rationale": "Ensures the transfer is routed to the correct accounts.",
+        "met": true,
+        "evidence": {
+          "quote": "So it looks like your Summit everyday checking and your goal builder savings account.",
+          "speaker": "AGENT",
+          "timestamp": "02:13",
+          "sec": 146.49,
+          "turn": 16
+        }
+      },
+      {
+        "step": "Explain any fees, limits, or terms associated with the recurring transfer",
+        "rationale": "Provides transparency and avoids future disputes or surprises.",
+        "met": true,
+        "evidence": {
+          "quote": "Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.",
+          "speaker": "AGENT",
+          "timestamp": "04:10",
+          "sec": 229.78,
+          "turn": 24
+        }
+      },
+      {
+        "step": "Confirm the customer's understanding and agreement to the transfer terms",
+        "rationale": "Ensures the customer is fully informed before finalizing the setup.",
+        "met": true,
+        "evidence": {
+          "quote": "So just to confirm with you here, the transfer amount is 750 US dollars. It's from the checking ending in 6821 to your savings ending in 1159.",
+          "speaker": "AGENT",
+          "timestamp": "06:40",
+          "sec": 357.35,
+          "turn": 32
+        }
+      },
+      {
+        "step": "Schedule the transfer to begin on the next available date or as requested",
+        "rationale": "Activates the recurring transfer as per the customer's instructions.",
+        "met": true,
+        "evidence": {
+          "quote": "It's officially scheduled. That's all done.",
+          "speaker": "AGENT",
+          "timestamp": "07:00",
+          "sec": 419.7,
+          "turn": 40
+        }
+      },
+      {
+        "step": "Provide a confirmation number or reference and summarize the transfer details",
+        "rationale": "Offers the customer a record of the transaction for future reference.",
+        "met": true,
+        "evidence": {
+          "quote": "You'll receive a confirmation email in about two minutes and you'll see the transfer listed in your upcoming transactions tab online.",
+          "speaker": "AGENT",
+          "timestamp": "07:00",
+          "sec": 419.7,
+          "turn": 40
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.327,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.75
+      },
+      {
+        "p": 0.0729,
+        "esc": 0.283,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0938,
+        "esc": 0.215,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1354,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.227,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.337,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2188,
+        "esc": 0.254,
+        "cust_val": 1.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.363,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.2812,
+        "esc": 0.236,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.3021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.306,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.206,
+        "cust_val": 0.0,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.284,
+        "cust_val": 0.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.4062,
+        "esc": 0.342,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.293,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.25
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.558,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.117,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.105,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5729,
+        "esc": 0.195,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.5938,
+        "esc": 0.297,
+        "cust_val": -1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.249,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.376,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.6771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.6979,
+        "esc": 0.144,
+        "cust_val": 0.5,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.306,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.7604,
+        "esc": 0.153,
+        "cust_val": 0.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.7812,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8229,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8438,
+        "esc": 0.334,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.157,
+        "cust_val": 0.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.334,
+        "cust_val": -1.0,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.334,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9688,
+        "esc": 0.135,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      }
+    ],
+    "n_sentences": 194
+  },
+  "_anchor_stats": {
+    "total": 19,
+    "anchored": 19
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 2.4,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 2.1,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 3.7,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "workflow": {
+        "duration": 45.5,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "phases": {
+          "subject": 0.6,
+          "expected": 2.5,
+          "check": 42.3
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 1,
+    "wall_clock": 45.6
+  }
+}

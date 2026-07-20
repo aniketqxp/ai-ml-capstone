@@ -1,0 +1,686 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_CA_Banking_1590992",
+    "domain": "banking",
+    "accent": "en-CA",
+    "duration_seconds": 547.4,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "This is Julia.",
+        "speaker": "AGENT",
+        "timestamp": "00:01",
+        "sec": 1.3,
+        "turn": 0
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Thank you for calling Greenville Bank.",
+        "speaker": "AGENT",
+        "timestamp": "00:01",
+        "sec": 1.3,
+        "turn": 0
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": true,
+      "evidence": {
+        "quote": "I just need you to confirm.",
+        "speaker": "AGENT",
+        "timestamp": "00:21",
+        "sec": 76.01,
+        "turn": 18
+      },
+      "note": null
+    },
+    "identity_method": "security questions",
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "I can go ahead and help you with transferring $500.",
+        "speaker": "AGENT",
+        "timestamp": "03:48",
+        "sec": 220.45,
+        "turn": 40
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Yes, it is there. Awesome. You are amazing. Thank you for doing that so quickly.",
+          "speaker": "CUSTOMER",
+          "timestamp": "08:27",
+          "sec": 506.54,
+          "turn": 83
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 4,
+      "signals_present": [
+        "explained why"
+      ],
+      "signals_absent": [
+        "no explicit options"
+      ],
+      "evidence": [
+        {
+          "quote": "Well, actually, sometimes it does take a few hours, but because this is only $500, it shouldn't.",
+          "speaker": "AGENT",
+          "timestamp": "04:04",
+          "sec": 244.47,
+          "turn": 44
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 3,
+      "signals_present": [
+        "open-ended questions"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "What was the amount of your last purchase?",
+          "speaker": "AGENT",
+          "timestamp": "02:06",
+          "sec": 125.51,
+          "turn": 26
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "complete sentences",
+        "accurate information"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Thank you for calling Greenville Bank. This is Julia. How can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:01",
+          "sec": 1.3,
+          "turn": 0
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 4.01,
+        "text_weight": 0.76,
+        "acoustic_weight": 0.24,
+        "coverage": 0.61,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 3,
+      "signals_present": [
+        "uses customer name"
+      ],
+      "signals_absent": [
+        "no validation phrase"
+      ],
+      "evidence": [
+        {
+          "quote": "Absolutely. Yeah, well, you know what, we're here, we're always here to help.",
+          "speaker": "AGENT",
+          "timestamp": "07:22",
+          "sec": 442.18,
+          "turn": 72
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 3,
+        "acoustic_score": 4.01,
+        "text_weight": 0.76,
+        "acoustic_weight": 0.24,
+        "coverage": 0.61,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "issue addressed",
+        "clear resolution"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Perfect. I love it. Thank you so much.",
+          "speaker": "CUSTOMER",
+          "timestamp": "09:03",
+          "sec": 532.8,
+          "turn": 85
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 3.2,
+        "text_weight": 0.76,
+        "acoustic_weight": 0.24,
+        "coverage": 0.6,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.227,
+      "peak_escalation": 0.587,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "request a one-time transfer of funds from savings to checking account",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself and the bank",
+        "rationale": "Establishes professionalism and confirms the customer's identity context",
+        "met": true,
+        "evidence": {
+          "quote": "Thank you for calling Greenville Bank. This is Julia. How can I help you?",
+          "speaker": "AGENT",
+          "timestamp": "00:01",
+          "sec": 1.3,
+          "turn": 0
+        }
+      },
+      {
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name, account number, or security questions)",
+        "rationale": "Ensures compliance with security protocols and prevents unauthorized transactions",
+        "met": true,
+        "evidence": {
+          "quote": "can I confirm your first name? [...] Is that spelled B -E -T -T -Y? [...] And is this phone number that you're calling from the same number on your account?",
+          "speaker": "AGENT",
+          "timestamp": "00:21",
+          "sec": 21.4,
+          "turn": 2
+        }
+      },
+      {
+        "step": "Confirm the customer's savings and checking account details (e.g., last four digits of account numbers)",
+        "rationale": "Prevents errors by verifying the correct accounts are involved in the transfer",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Ask for the transfer amount and confirm it verbally with the customer",
+        "rationale": "Ensures the customer intends the correct amount to be transferred",
+        "met": true,
+        "evidence": {
+          "quote": "And how much are you looking to transfer today? [...] Okay, I don't need that much. [...] Yeah, it would be $500 is all I need to transfer. [...] $500. Okay.",
+          "speaker": "AGENT",
+          "timestamp": "00:45",
+          "sec": 45.29,
+          "turn": 8
+        }
+      },
+      {
+        "step": "State the transfer date and confirm it with the customer (e.g., immediate or future date)",
+        "rationale": "Clarifies timing expectations and avoids misunderstandings about when funds will be available",
+        "met": true,
+        "evidence": {
+          "quote": "once it does get transferred, the funds will show up immediately [...] So you should get it within a few seconds, actually.",
+          "speaker": "AGENT",
+          "timestamp": "03:51",
+          "sec": 230.82,
+          "turn": 42
+        }
+      },
+      {
+        "step": "Explain any fees, limits, or processing times associated with the transfer",
+        "rationale": "Provides transparency and manages customer expectations regarding the transaction",
+        "met": true,
+        "evidence": {
+          "quote": "You do have a limit on your account here. It looks like you have a limit of $10 ,000 per day to transfer.",
+          "speaker": "AGENT",
+          "timestamp": "00:57",
+          "sec": 56.96,
+          "turn": 10
+        }
+      },
+      {
+        "step": "Obtain verbal confirmation from the customer to proceed with the transfer",
+        "rationale": "Ensures the customer explicitly authorizes the transaction before execution",
+        "met": true,
+        "evidence": {
+          "quote": "So I can actually go ahead and process that $500 transfer for you right now. Is that something you're still looking to do right now?",
+          "speaker": "AGENT",
+          "timestamp": "07:22",
+          "sec": null,
+          "turn": null
+        }
+      },
+      {
+        "step": "Provide a confirmation number and recap the transfer details (amount, accounts, date)",
+        "rationale": "Gives the customer a reference and confirms the transaction was completed as requested",
+        "met": false,
+        "evidence": null
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0312,
+        "esc": 0.328,
+        "cust_val": -0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.079,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.181,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.178,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.1979,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.184,
+        "cust_val": 1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.2604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.2812,
+        "esc": 0.269,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3021,
+        "esc": 0.287,
+        "cust_val": -0.5,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.235,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.277,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.371,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.2,
+        "cust_val": 1.0,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.4062,
+        "esc": 0.241,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4479,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.4896,
+        "esc": 0.132,
+        "cust_val": 0.0,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.5104,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5312,
+        "esc": 0.191,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.343,
+        "cust_val": -1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.5938,
+        "esc": 0.154,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.6146,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.223,
+        "cust_val": 0.333,
+        "agent_val": null
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.333
+      },
+      {
+        "p": 0.6771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.6979,
+        "esc": 0.211,
+        "cust_val": 1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.095,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.7604,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": 0.667
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.353,
+        "cust_val": -0.333,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.304,
+        "cust_val": -1.0,
+        "agent_val": 0.5
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8646,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.9062,
+        "esc": 0.213,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.9271,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.173,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.9688,
+        "esc": 0.217,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.9896,
+        "esc": 0.141,
+        "cust_val": 1.0,
+        "agent_val": 1.0
+      }
+    ],
+    "n_sentences": 192
+  },
+  "_anchor_stats": {
+    "total": 16,
+    "anchored": 15
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.03
+      },
+      "chapters": {
+        "duration": 2.4,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 32.3,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "runs": 2
+      },
+      "escalation": {
+        "duration": 0.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 38.6,
+        "served_by": "github/gpt-4o-mini-2024-07-18",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 7.0,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.7,
+          "expected": 2.6,
+          "check": 3.7
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.02,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 45.7
+  }
+}

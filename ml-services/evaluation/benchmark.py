@@ -22,6 +22,7 @@ import os, json, time, argparse, re
 from typing import Optional
 from pydantic import ValidationError
 
+import paths
 from env_util import load_env
 from assemble import load_manifest, build_packet
 from rubric import CallEvaluation, RUBRIC_VERSION
@@ -30,7 +31,7 @@ from extract import SYSTEM, SKELETON, strip_fences
 
 load_env()
 
-DATA = r"d:\Desktop\ai-ml-capstone\data\na_testset"
+DATA = str(paths.NA_TESTSET)
 
 # ── Candidate models (provider, model_override or None for default) ───────────
 CANDIDATES = [

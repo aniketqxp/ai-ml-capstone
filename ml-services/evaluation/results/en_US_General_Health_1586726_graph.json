@@ -1,0 +1,763 @@
+{
+  "rubric_version": "0.4.1",
+  "metadata": {
+    "call_id": "en_US_General_Health_1586726",
+    "domain": "health",
+    "accent": "en-US_General",
+    "duration_seconds": 376.2,
+    "transcript_model": "faster-whisper small.en/int8 + per-channel"
+  },
+  "compliance": {
+    "name_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hi, this is Dr. Sampson from Quick Care Telehealth. Am I speaking with Ashley?",
+        "speaker": "AGENT",
+        "timestamp": "00:15",
+        "sec": 15.3,
+        "turn": 3
+      },
+      "note": null
+    },
+    "company_announced": {
+      "passed": true,
+      "evidence": {
+        "quote": "Hi, this is Dr. Sampson from Quick Care Telehealth. Am I speaking with Ashley?",
+        "speaker": "AGENT",
+        "timestamp": "00:15",
+        "sec": 15.3,
+        "turn": 3
+      },
+      "note": null
+    },
+    "recording_disclosure": {
+      "passed": false,
+      "evidence": null,
+      "note": "never stated"
+    },
+    "identity_verified": {
+      "passed": false,
+      "evidence": null,
+      "note": "no identity verification observed"
+    },
+    "identity_method": null,
+    "resolution_provided": {
+      "passed": true,
+      "evidence": {
+        "quote": "Yep. Well, that's exactly right. You're all set. Is there anything else you'd like me to note before the appointment?",
+        "speaker": "AGENT",
+        "timestamp": "05:54",
+        "sec": 354.38,
+        "turn": 31
+      },
+      "note": null
+    },
+    "transfer_next_steps": {
+      "passed": null,
+      "evidence": null,
+      "note": "no transfer"
+    }
+  },
+  "quality": {
+    "efficiency": {
+      "score": 5,
+      "signals_present": [
+        "first-call resolution",
+        "appropriate call duration",
+        "no unnecessary holds or transfers"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Absolutely. We can help you with that. Are you able to tell me a little bit about your condition so I make sure we schedule you with the right provider?",
+          "speaker": "AGENT",
+          "timestamp": "00:32",
+          "sec": 32.48,
+          "turn": 5
+        },
+        {
+          "quote": "Yeah, we have slots on Wednesday afternoon and Thursday morning. Do either of those work?",
+          "speaker": "AGENT",
+          "timestamp": "01:08",
+          "sec": 67.99,
+          "turn": 9
+        },
+        {
+          "quote": "Yep. Well, that's exactly right. You're all set.",
+          "speaker": "AGENT",
+          "timestamp": "05:54",
+          "sec": 354.38,
+          "turn": 31
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "problem_resolution": {
+      "score": 5,
+      "signals_present": [
+        "solution fits customer's specific situation",
+        "explained why",
+        "offered alternatives",
+        "waited for customer preference"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Yeah, great question. So for the thyroid follow ups, Dr. Miller usually orders a blood panel. This needs to be done fasted in the morning, so I can send you the lab requisition electronically so you can get it scheduled before your visit. That way, the results will be ready for your 1030.",
+          "speaker": "AGENT",
+          "timestamp": "03:17",
+          "sec": 197.07,
+          "turn": 17
+        },
+        {
+          "quote": "Yeah, let me check. You said Dr. Miller. Yeah, Dr. Miller has a 1030 Thursday telehealth slot. I can reserve that for you if you're ready.",
+          "speaker": "AGENT",
+          "timestamp": "01:38",
+          "sec": 97.54,
+          "turn": 11
+        },
+        {
+          "quote": "Yeah, I can note that in your chart, so Dr. Miller can review and authorize the refill during your appointment.",
+          "speaker": "AGENT",
+          "timestamp": "02:42",
+          "sec": null,
+          "turn": null
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "clarity": {
+      "score": 4,
+      "signals_present": [
+        "open-ended diagnostic questions",
+        "checks understanding",
+        "asked clarifying questions"
+      ],
+      "signals_absent": [
+        "no recap at end"
+      ],
+      "evidence": [
+        {
+          "quote": "Are you able to tell me a little bit about your condition so I make sure we schedule you with the right provider?",
+          "speaker": "AGENT",
+          "timestamp": "00:32",
+          "sec": 32.48,
+          "turn": 5
+        },
+        {
+          "quote": "Yeah, great question. So for the thyroid follow ups, Dr. Miller usually orders a blood panel.",
+          "speaker": "AGENT",
+          "timestamp": "03:17",
+          "sec": 197.07,
+          "turn": 17
+        },
+        {
+          "quote": "Is there anything else you want me to get on your chart?",
+          "speaker": "AGENT",
+          "timestamp": "02:42",
+          "sec": 161.82,
+          "turn": 15
+        }
+      ],
+      "requires_audio": false,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": null,
+        "text_weight": 1.0,
+        "acoustic_weight": 0.0,
+        "coverage": null,
+        "channel": null,
+        "method": "text_only"
+      }
+    },
+    "professionalism": {
+      "score": 4,
+      "signals_present": [
+        "proper grammar and complete sentences",
+        "no slang or informal language",
+        "knew the answer or actively found it",
+        "provided accurate information",
+        "explained why",
+        "listened fully without interrupting"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "Absolutely. We can help you with that. Are you able to tell me a little bit about your condition so I make sure we schedule you with the right provider?",
+          "speaker": "AGENT",
+          "timestamp": "00:32",
+          "sec": 32.48,
+          "turn": 5
+        },
+        {
+          "quote": "Yeah, great question. So for the thyroid follow ups, Dr. Miller usually orders a blood panel. This needs to be done fasted in the morning, so I can send you the lab requisition electronically so you can get it scheduled before your visit.",
+          "speaker": "AGENT",
+          "timestamp": "03:17",
+          "sec": 197.07,
+          "turn": 17
+        },
+        {
+          "quote": "Yep. Well, that's exactly right. You're all set.",
+          "speaker": "AGENT",
+          "timestamp": "05:54",
+          "sec": 354.38,
+          "turn": 31
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.56,
+        "text_weight": 0.71,
+        "acoustic_weight": 0.29,
+        "coverage": 0.73,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "empathy": {
+      "score": 4,
+      "signals_present": [
+        "uses customer's name naturally",
+        "acknowledges the concern before moving to solutions"
+      ],
+      "signals_absent": [
+        "no explicit validation phrase"
+      ],
+      "evidence": [
+        {
+          "quote": "My pleasure, Ashley. I'll get everything over to the doctor. We'll talk soon.",
+          "speaker": "AGENT",
+          "timestamp": "06:09",
+          "sec": 368.78,
+          "turn": 33
+        },
+        {
+          "quote": "Yeah, of course. I'm ultimately here to help, so just let me know.",
+          "speaker": "AGENT",
+          "timestamp": "02:13",
+          "sec": 133.37,
+          "turn": 13
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 4,
+        "acoustic_score": 2.56,
+        "text_weight": 0.71,
+        "acoustic_weight": 0.29,
+        "coverage": 0.73,
+        "channel": "AGENT",
+        "method": "weighted_mean"
+      }
+    },
+    "customer_satisfaction": {
+      "score": 4,
+      "signals_present": [
+        "problem identified clearly",
+        "issue addressed",
+        "clear resolution provided",
+        "agent didn't dismiss or minimize",
+        "first-call resolution achieved"
+      ],
+      "signals_absent": [],
+      "evidence": [
+        {
+          "quote": "All right. Cool. So just to confirm everything with you, Thursday at 10 .30 AM, Dr. Miller refill noted, lab requisition set, and telehealth link is coming to my email. Okay.",
+          "speaker": "CUSTOMER",
+          "timestamp": "05:39",
+          "sec": 339.11,
+          "turn": 30
+        },
+        {
+          "quote": "Thank you so much, doctor. It just makes everything a lot less stressful.",
+          "speaker": "CUSTOMER",
+          "timestamp": "06:02",
+          "sec": 362.28,
+          "turn": 32
+        }
+      ],
+      "requires_audio": true,
+      "hybrid": {
+        "text_score": 5,
+        "acoustic_score": 2.91,
+        "text_weight": 0.73,
+        "acoustic_weight": 0.27,
+        "coverage": 0.67,
+        "channel": "CUSTOMER",
+        "method": "weighted_mean"
+      }
+    }
+  },
+  "escalation": {
+    "red_flags": [],
+    "customer_emotion_text": "calm",
+    "risk_level": "none",
+    "evidence": [],
+    "requires_audio": true,
+    "hybrid": {
+      "text_risk": "none",
+      "acoustic_risk": "none",
+      "late_mean_escalation": 0.261,
+      "peak_escalation": 0.586,
+      "method": "agreement",
+      "arbitration_rationale": null
+    }
+  },
+  "investigation": null,
+  "workflow": {
+    "subject": "Request to schedule a telemedicine consultation for a chronic thyroid condition and a prescription refill",
+    "expected_steps": [
+      {
+        "step": "Greet the customer by name and introduce yourself with title/company",
+        "rationale": "Establishes professionalism and sets the tone for the call.",
+        "met": true,
+        "evidence": {
+          "quote": "Hi, this is Dr. Sampson from Quick Care Telehealth. Am I speaking with Ashley?",
+          "speaker": "AGENT",
+          "timestamp": "00:15",
+          "sec": 15.3,
+          "turn": 3
+        }
+      },
+      {
+        "step": "Verify the customer's identity using at least two identifiers (e.g., full name and date of birth)",
+        "rationale": "Ensures compliance with privacy regulations and confirms the correct patient.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Confirm the customer's chronic thyroid condition and current medication details",
+        "rationale": "Validates the need for the telemedicine consultation and prescription refill.",
+        "met": true,
+        "evidence": {
+          "quote": "It's a chronic thyroid condition and I've been managing it with my regular doctor, but I like to follow up virtually this week.",
+          "speaker": "CUSTOMER",
+          "timestamp": "00:42",
+          "sec": 41.5,
+          "turn": 6
+        }
+      },
+      {
+        "step": "Ask the customer to confirm the preferred date and time for the telemedicine consultation",
+        "rationale": "Schedules the appointment based on the customer's availability.",
+        "met": true,
+        "evidence": {
+          "quote": "Yeah, we have slots on Wednesday afternoon and Thursday morning. Do either of those work?",
+          "speaker": "AGENT",
+          "timestamp": "01:08",
+          "sec": 67.99,
+          "turn": 9
+        }
+      },
+      {
+        "step": "Explain the telemedicine consultation process, including technology requirements and any preparation needed",
+        "rationale": "Ensures the customer is informed and prepared for the consultation.",
+        "met": true,
+        "evidence": {
+          "quote": "Yeah, great question. So for the thyroid follow ups, Dr. Miller usually orders a blood panel. This needs to be done fasted in the morning, so I can send you the lab requisition electronically so you can get it scheduled before your visit. That way, the results will be ready for your 1030. We can probably get you on the schedule for like 945, so that way you don't have to wait too long to eat.",
+          "speaker": "AGENT",
+          "timestamp": "03:17",
+          "sec": 197.07,
+          "turn": 17
+        }
+      },
+      {
+        "step": "Verify the customer's current prescription details and confirm the refill request",
+        "rationale": "Confirms the medication, dosage, and refill quantity to avoid errors.",
+        "met": true,
+        "evidence": {
+          "quote": "Yes, no problem. I can note that in your chart, so Dr. Miller can review and authorize the refill during your appointment.",
+          "speaker": "AGENT",
+          "timestamp": "02:42",
+          "sec": 161.82,
+          "turn": 15
+        }
+      },
+      {
+        "step": "Discuss any potential side effects or concerns related to the medication or condition",
+        "rationale": "Provides an opportunity for the customer to ask questions and ensures safety.",
+        "met": false,
+        "evidence": null
+      },
+      {
+        "step": "Provide a summary of the scheduled consultation, prescription refill details, and next steps",
+        "rationale": "Confirms understanding and sets clear expectations for the customer.",
+        "met": true,
+        "evidence": {
+          "quote": "Yep. Well, that's exactly right. You're all set.",
+          "speaker": "AGENT",
+          "timestamp": "05:54",
+          "sec": 354.38,
+          "turn": 31
+        }
+      }
+    ]
+  },
+  "overall_summary": null,
+  "_acoustic": {
+    "trajectory": [
+      {
+        "p": 0.0104,
+        "esc": 0.173,
+        "cust_val": 1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.0312,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.0521,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.0729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.0938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.1146,
+        "esc": 0.203,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.1354,
+        "esc": 0.15,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1562,
+        "esc": 0.332,
+        "cust_val": -1.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.1771,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.1979,
+        "esc": 0.37,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.2188,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.2396,
+        "esc": 0.174,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.2604,
+        "esc": 0.157,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.2812,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.3021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.3229,
+        "esc": 0.173,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3438,
+        "esc": 0.222,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.3646,
+        "esc": 0.116,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.3854,
+        "esc": 0.146,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.4271,
+        "esc": 0.38,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4479,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.4688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.4896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.5104,
+        "esc": 0.141,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5312,
+        "esc": 0.104,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.5521,
+        "esc": 0.266,
+        "cust_val": 0.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.5729,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.333
+      },
+      {
+        "p": 0.5938,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6146,
+        "esc": 0.141,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6354,
+        "esc": 0.142,
+        "cust_val": 0.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.6562,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.6771,
+        "esc": 0.335,
+        "cust_val": -1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.6979,
+        "esc": 0.335,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.7188,
+        "esc": 0.304,
+        "cust_val": -1.0,
+        "agent_val": 1.0
+      },
+      {
+        "p": 0.7396,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.7604,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.7812,
+        "esc": 0.178,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8021,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.8229,
+        "esc": 0.292,
+        "cust_val": 1.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8438,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -0.5
+      },
+      {
+        "p": 0.8646,
+        "esc": 0.273,
+        "cust_val": 0.0,
+        "agent_val": null
+      },
+      {
+        "p": 0.8854,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": null
+      },
+      {
+        "p": 0.9062,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9271,
+        "esc": 0.173,
+        "cust_val": 1.0,
+        "agent_val": -1.0
+      },
+      {
+        "p": 0.9479,
+        "esc": 0.191,
+        "cust_val": -0.5,
+        "agent_val": null
+      },
+      {
+        "p": 0.9688,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": 0.0
+      },
+      {
+        "p": 0.9896,
+        "esc": null,
+        "cust_val": null,
+        "agent_val": -1.0
+      }
+    ],
+    "n_sentences": 103
+  },
+  "_anchor_stats": {
+    "total": 25,
+    "anchored": 24
+  },
+  "_pipeline": {
+    "nodes": {
+      "assemble": {
+        "duration": 0.01
+      },
+      "chapters": {
+        "duration": 1.8,
+        "served_by": "router",
+        "runs": 1
+      },
+      "compliance": {
+        "duration": 1.8,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "escalation": {
+        "duration": 0.6,
+        "served_by": "mistral-small-latest",
+        "runs": 1
+      },
+      "quality": {
+        "duration": 6.0,
+        "served_by": "mistral-small-latest",
+        "runs": 2
+      },
+      "workflow": {
+        "duration": 6.6,
+        "served_by": "mistral-small-latest",
+        "phases": {
+          "subject": 0.6,
+          "expected": 2.4,
+          "check": 3.6
+        },
+        "runs": 1
+      },
+      "fuse": {
+        "duration": 0.01,
+        "acoustic_available": true,
+        "fused_dims": [
+          "professionalism",
+          "empathy",
+          "customer_satisfaction"
+        ],
+        "acoustic_risk": "none",
+        "disputed": false
+      }
+    },
+    "anchor_passes": 2,
+    "wall_clock": 12.7
+  }
+}

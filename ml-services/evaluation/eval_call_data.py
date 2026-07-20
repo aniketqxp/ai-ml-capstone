@@ -10,13 +10,14 @@ compliance panel can light up each check at the moment its evidence occurs.
 Usage:  python eval_call_data.py
 """
 import os, json, time
+import paths
 from env_util import load_env
 from extract import SYSTEM, SKELETON, strip_fences
 from router import chat_json_routed
 from rubric import CallEvaluation, RUBRIC_VERSION
 
 load_env()
-CALL_DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\frontend\src\call_data.json"
+CALL_DATA = str(paths.FRONTEND_ROOT / "src" / "call_data.json")
 
 
 def mmss(s):
