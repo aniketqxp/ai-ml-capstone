@@ -2,7 +2,8 @@ import uuid
 import os
 import shutil
 from datetime import datetime
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Call, Job, Transcript, Evaluation, SentimentSegment
@@ -10,6 +11,19 @@ from app import worker, storage
 from app.routing import apply_action_routing
 
 router = APIRouter(prefix="/calls", tags=["calls"])
+
+
+class AnalyzeRequest(BaseModel):
+    call_ids: list[uuid.UUID] = Field(min_length=1, max_length=10)
+
+
+def _latest_job(db, call_id):
+    return (
+        db.query(Job)
+        .filter(Job.call_id == call_id)
+        .order_by(Job.created_at.desc())
+        .first()
+    )
 
 
 def _incoming_dir(public_id):
@@ -92,12 +106,108 @@ async def ingest_call(
         "created_at": job.created_at.isoformat()
     }
 
+
+@router.get("/catalog")
+def get_catalog(db: Session = Depends(get_db)):
+    """Return analyzed and staged calls in one dashboard-facing shape."""
+    rows = db.query(Call).order_by(Call.created_at.desc()).all()
+    catalog = []
+    for call in rows:
+        meta = dict(call.call_metadata or {})
+        public_id = meta.get("public_call_id")
+        if not public_id:
+            continue
+
+        summary = dict(meta.get("index_summary") or {})
+        job = _latest_job(db, call.call_id)
+        analyzed = bool(summary)
+        item = {
+            **summary,
+            "call_id": public_id,
+            "db_call_id": str(call.call_id),
+            "domain": summary.get("domain") or meta.get("domain"),
+            "accent": summary.get("accent") or meta.get("accent"),
+            "duration": summary.get("duration") or call.duration_seconds,
+            "analyzed": analyzed,
+            "status": job.status if job else ("analyzed" if analyzed else "available"),
+            "stage": job.stage if job else ("done" if analyzed else "uploaded"),
+            "error": job.error if job else None,
+            "job_id": str(job.job_id) if job else None,
+        }
+        catalog.append(item)
+    return catalog
+
+
+@router.post("/analyze", status_code=status.HTTP_202_ACCEPTED)
+def analyze_calls(payload: AnalyzeRequest, db: Session = Depends(get_db)):
+    """Queue staged calls, reusing an active job when a request is repeated."""
+    calls = {
+        call.call_id: call
+        for call in db.query(Call).filter(Call.call_id.in_(payload.call_ids)).all()
+    }
+    missing = [str(call_id) for call_id in payload.call_ids if call_id not in calls]
+    if missing:
+        raise HTTPException(
+            status_code=404,
+            detail={"message": "call not found", "call_ids": missing},
+        )
+
+    jobs = []
+    for call_id in payload.call_ids:
+        call = calls[call_id]
+        meta = dict(call.call_metadata or {})
+        public_id = meta.get("public_call_id")
+        if not public_id:
+            raise HTTPException(status_code=409, detail=f"call {call_id} is not pipeline-managed")
+
+        active = _latest_job(db, call_id)
+        if active and active.status in ("queued", "processing"):
+            jobs.append({
+                "call_id": str(call_id),
+                "public_call_id": public_id,
+                "job_id": str(active.job_id),
+                "status": active.status,
+                "created": False,
+            })
+            continue
+
+        if meta.get("index_summary"):
+            jobs.append({
+                "call_id": str(call_id),
+                "public_call_id": public_id,
+                "job_id": str(active.job_id) if active else None,
+                "status": "already_analyzed",
+                "created": False,
+            })
+            continue
+
+        job = Job(call_id=call_id, status="queued", stage="uploaded")
+        db.add(job)
+        db.flush()
+        jobs.append({
+            "call_id": str(call_id),
+            "public_call_id": public_id,
+            "job_id": str(job.job_id),
+            "status": job.status,
+            "created": True,
+        })
+
+    db.commit()
+    for item in jobs:
+        if item["created"]:
+            worker.enqueue(item["job_id"])
+    return {"jobs": jobs}
+
 @router.get("/{call_id}/status")
 def get_call_status(call_id: str, db: Session = Depends(get_db)):
-    job = db.query(Job).filter(Job.call_id == uuid.UUID(call_id)).first()
+    try:
+        db_call_id = uuid.UUID(call_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="invalid call id")
+    job = _latest_job(db, db_call_id)
     if not job:
         raise HTTPException(status_code=404, detail="call not found")
-    call = db.query(Call).filter(Call.call_id == uuid.UUID(call_id)).first()
+    call = db.query(Call).filter(Call.call_id == db_call_id).first()
     public_id = (call.call_metadata or {}).get("public_call_id") if call else None
     return {
         "call_id": call_id,

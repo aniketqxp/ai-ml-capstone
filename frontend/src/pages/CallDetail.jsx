@@ -6,6 +6,7 @@ import { BufferedRanges } from '../components/BufferedRanges';
 import { CompliancePanel } from '../components/CompliancePanel';
 import { AgentLanes } from '../components/AgentLanes';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { apiUrl } from '../api';
 
 async function fetchJsonOptional(url) {
   try {
@@ -48,7 +49,7 @@ function CallDetailInner({ callId }) {
     let cancelled = false;
     setCallData(null);
     setLoadError(null);
-    fetch(`/calls/${callId}.json`)
+    fetch(apiUrl(`/calls/${callId}.json`))
       .then((res) => {
         if (!res.ok) throw new Error(`call "${callId}" not found`);
         return res.json();
@@ -62,11 +63,11 @@ function CallDetailInner({ callId }) {
 
     // per-sentence sentiment overlay — only generated for a handful of calls
     // so far; missing files degrade to plain (untinted) transcript turns.
-    fetchJsonOptional(`/sentence_segments/${callId}.json`).then((data) => {
+    fetchJsonOptional(apiUrl(`/sentence_segments/${callId}.json`)).then((data) => {
       if (cancelled) return;
       setSentences(data?.sentences || []);
     });
-    fetchJsonOptional(`/sentiment/${callId}.json`).then((data) => {
+    fetchJsonOptional(apiUrl(`/sentiment/${callId}.json`)).then((data) => {
       if (cancelled) return;
       const m = new Map();
       (data?.segments || []).forEach((s) => m.set(s.seq_id, s));
@@ -381,7 +382,7 @@ function CallDetailInner({ callId }) {
         </div>
       </main>
 
-      <audio ref={audioRef} src={`/audio/${callData.call}.mp3`} preload="auto" />
+      <audio ref={audioRef} src={apiUrl(`/audio/${callData.call}.mp3`)} preload="auto" />
     </div>
   );
 }
