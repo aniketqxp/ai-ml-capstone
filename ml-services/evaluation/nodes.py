@@ -11,6 +11,7 @@ import time
 
 from pydantic import ValidationError
 
+import paths
 from env_util import load_env
 from assemble import load_manifest, build_packet, assemble_turns, estimate_duration
 from pydantic import BaseModel
@@ -34,7 +35,7 @@ from prompts import (
 )
 
 load_env()
-DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
+DATA = str(paths.NA_TESTSET)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

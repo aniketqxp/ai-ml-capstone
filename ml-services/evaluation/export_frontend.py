@@ -32,20 +32,21 @@ import json
 import shutil
 import subprocess
 
+import paths
 from assemble import load_manifest, DATA
 from segment import segment
 
 EVAL_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR_NAME = "results"
 
-FRONTEND = r"D:\Desktop\Main\Projects\ai-ml-capstone\frontend"
-CALLS_OUT = os.path.join(FRONTEND, "public", "calls")
-AUDIO_OUT = os.path.join(FRONTEND, "public", "audio")
-INDEX_OUT = os.path.join(FRONTEND, "public", "calls_index.json")
+PUBLIC = str(paths.FRONTEND_PUBLIC)
+CALLS_OUT = os.path.join(PUBLIC, "calls")
+AUDIO_OUT = os.path.join(PUBLIC, "audio")
+INDEX_OUT = os.path.join(PUBLIC, "calls_index.json")
 
 DEMO_CALL = "en_CA_Banking_1586889"
-DEMO_CALL_DATA = os.path.join(FRONTEND, "src", "call_data.json")
-DEMO_AUDIO_SRC = os.path.join(FRONTEND, "public", "call_1.mp3")
+DEMO_CALL_DATA = str(paths.FRONTEND_ROOT / "src" / "call_data.json")
+DEMO_AUDIO_SRC = os.path.join(PUBLIC, "call_1.mp3")
 
 
 def build_turns(result):

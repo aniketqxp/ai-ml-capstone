@@ -39,7 +39,9 @@ Data layout: data/sentiment/{domain}/{call_id}.json          (model output)
 import os
 import json
 
-SENTIMENT_ROOT = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\sentiment"
+import paths
+
+SENTIMENT_ROOT = str(paths.SENTIMENT_ROOT)
 
 W_ACOUSTIC_CAP = 0.4          # max acoustic weight at 100% coverage
 LATE_FRACTION = 1 / 3         # "end of call" window for trajectory metrics

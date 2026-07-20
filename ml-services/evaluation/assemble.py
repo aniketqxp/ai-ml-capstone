@@ -18,8 +18,10 @@ Usage:
 """
 import os, json, argparse
 
-DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
-MANIFEST = os.path.join(DATA, "manifest.json")
+import paths
+
+DATA = str(paths.NA_TESTSET)
+MANIFEST = str(paths.MANIFEST)
 
 
 def mmss(seconds):
@@ -28,8 +30,17 @@ def mmss(seconds):
 
 
 def load_manifest():
+    """Dataset manifest merged with the runtime registry of ingested calls.
+
+    Runtime entries win on call_id collision so a re-ingested call can carry
+    corrected metadata without touching the dataset manifest.
+    """
     with open(MANIFEST, encoding="utf-8") as f:
-        return {m["call_id"]: m for m in json.load(f)}
+        manifest = {m["call_id"]: m for m in json.load(f)}
+    if paths.RUNTIME_MANIFEST.exists():
+        with open(paths.RUNTIME_MANIFEST, encoding="utf-8") as f:
+            manifest.update({m["call_id"]: m for m in json.load(f)})
+    return manifest
 
 
 def assemble_turns(result):

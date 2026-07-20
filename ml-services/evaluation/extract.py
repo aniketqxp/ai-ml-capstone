@@ -14,13 +14,14 @@ Usage:
 import os, json, argparse, time
 from pydantic import ValidationError
 
+import paths
 from env_util import load_env
 from assemble import load_manifest, build_packet
 from rubric import CallEvaluation, CallMetadata, RUBRIC_VERSION
 from llm_client import chat_json
 
 load_env()
-DATA = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\na_testset"
+DATA = str(paths.NA_TESTSET)
 
 SYSTEM = f"""You are a meticulous call-center QA analyst. You evaluate a single customer-service call against a fixed rubric and output ONLY a JSON object. Rubric version {RUBRIC_VERSION}.
 

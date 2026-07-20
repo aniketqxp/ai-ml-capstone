@@ -9,6 +9,7 @@ Output: frontend/src/call_data.json
     chapters:[{index,label,summary,start,end,start_turn}] }
 """
 import os, json, time
+import paths
 from env_util import load_env
 from segment import SYSTEM, SKELETON, numbered_transcript
 from router import chat_json_routed
@@ -16,7 +17,7 @@ from extract import strip_fences
 
 load_env()
 
-FRONTEND = r"d:\Desktop\Main\Projects\ai-ml-capstone\frontend"
+FRONTEND = str(paths.FRONTEND_ROOT)
 TRANSCRIPT = os.path.join(FRONTEND, "transcript_data.json")
 OUT = os.path.join(FRONTEND, "src", "call_data.json")
 

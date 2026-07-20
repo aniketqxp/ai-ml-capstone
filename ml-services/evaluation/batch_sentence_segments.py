@@ -26,11 +26,13 @@ import re
 import argparse
 from pathlib import Path
 
-# ── config ────────────────────────────────────────────────────────────────────
-RESULTS_ROOT = Path(__file__).parent.parent.parent / "data" / "na_testset" / "results"
-OUTPUT_ROOT  = Path(__file__).parent.parent.parent / "data" / "sentence_segments"
+import paths
 
-TARGET_DOMAINS = {"banking", "health", "telecom"}
+# ── config ────────────────────────────────────────────────────────────────────
+RESULTS_ROOT = paths.NA_TESTSET / "results"
+OUTPUT_ROOT  = paths.SENTENCE_SEG_ROOT
+
+DEFAULT_DOMAINS = {"banking", "health", "telecom"}
 
 MIN_DURATION_S = 1.5   # merge non-terminated fragments shorter than this
 GAP_SPLIT_S    = 2.0   # silence gap that always starts a new sentence
@@ -156,8 +158,9 @@ def collect_sources(domains: set) -> list[tuple[str, Path]]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--domains", nargs="+",
-                    default=sorted(TARGET_DOMAINS),
-                    choices=sorted(TARGET_DOMAINS))
+                    default=sorted(DEFAULT_DOMAINS),
+                    help="domains to segment (any manifest domain; "
+                         "default: banking health telecom)")
     args = ap.parse_args()
     domains = set(args.domains)
 

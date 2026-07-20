@@ -20,10 +20,12 @@ from pathlib import Path
 from faster_whisper import WhisperModel
 
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "evaluation"))
 from transcribe_channels import transcribe_call
+import paths
 
-DATA_DIR = r"d:\Desktop\ai-ml-capstone\data\na_testset"
-MANIFEST = os.path.join(DATA_DIR, "manifest.json")
+DATA_DIR = str(paths.NA_TESTSET)
+MANIFEST = str(paths.MANIFEST)
 RESULTS  = os.path.join(DATA_DIR, "results")
 
 DOMAIN_PROMPTS = {

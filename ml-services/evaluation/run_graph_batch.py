@@ -18,10 +18,11 @@ import time
 import argparse
 import traceback
 
+import paths
 from graph import build_graph
 from rubric import RUBRIC_VERSION_GRAPH
 
-SENTIMENT_ROOT = r"d:\Desktop\Main\Projects\ai-ml-capstone\data\sentiment"
+SENTIMENT_ROOT = str(paths.SENTIMENT_ROOT)
 
 
 def calls_with_sentiment(only=None):
