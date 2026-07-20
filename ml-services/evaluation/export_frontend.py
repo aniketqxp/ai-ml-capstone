@@ -105,9 +105,16 @@ def merge_audio(agent_wav, customer_wav, out_mp3):
     return True
 
 
-def export_call(call_id, manifest):
-    meta = manifest[call_id]
+def export_call_artifacts(call_id, meta, out_calls_dir, out_audio_dir):
+    """Build one call's frontend artifacts into the given output dirs.
 
+    Writes {call_id}.json (turns + chapters + evaluation) and the merged
+    2-channel mp3. Reads the graph evaluation and the per-channel transcript
+    already on disk; runs one chapter LLM call. Channel WAVs are expected at
+    the dataset convention DATA/{accent}/{call_id}_{agent,customer}.wav (the
+    orchestrator places fresh-call channels there before calling this).
+    Returns the call dict, which summarize() turns into a dashboard index row.
+    """
     eval_path = os.path.join(EVAL_DIR, "results", f"{call_id}_graph.json")
     with open(eval_path, encoding="utf-8") as f:
         evaluation = json.load(f)
@@ -131,18 +138,22 @@ def export_call(call_id, manifest):
         "chapters": chapters,
         "evaluation": evaluation,
     }
-    os.makedirs(CALLS_OUT, exist_ok=True)
-    with open(os.path.join(CALLS_OUT, f"{call_id}.json"), "w", encoding="utf-8") as f:
+    os.makedirs(out_calls_dir, exist_ok=True)
+    with open(os.path.join(out_calls_dir, f"{call_id}.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
 
     ok = merge_audio(
         os.path.join(DATA, meta["accent"], f"{call_id}_agent.wav"),
         os.path.join(DATA, meta["accent"], f"{call_id}_customer.wav"),
-        os.path.join(AUDIO_OUT, f"{call_id}.mp3"),
+        os.path.join(out_audio_dir, f"{call_id}.mp3"),
     )
     print(f"  [{call_id}] {len(turns)} turns, {len(chapters)} chapters, "
           f"audio {'ok' if ok else 'FAILED'}")
     return out
+
+
+def export_call(call_id, manifest):
+    return export_call_artifacts(call_id, manifest[call_id], CALLS_OUT, AUDIO_OUT)
 
 
 def summarize(call_id, out):

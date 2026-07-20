@@ -111,10 +111,12 @@ def interleave(agent_sents: list, customer_sents: list) -> list:
     return combined
 
 
-def segment_call(src_path: Path) -> dict:
-    with open(src_path, encoding="utf-8") as f:
-        data = json.load(f)
+def segment_transcript(data: dict) -> dict:
+    """Sentence-segment a loaded per-channel transcript dict (pure, no I/O).
 
+    Shared with the single-call orchestrator so batch and live paths produce
+    byte-identical segmentation from the same word-level transcript.
+    """
     agent_sents    = words_to_sentences(data.get("agent", []),    "AGENT")
     customer_sents = words_to_sentences(data.get("customer", []), "CUSTOMER")
     all_sents      = interleave(agent_sents, customer_sents)
@@ -129,6 +131,12 @@ def segment_call(src_path: Path) -> dict:
         "customer_sentences": len(customer_sents),
         "sentences":          all_sents,
     }
+
+
+def segment_call(src_path: Path) -> dict:
+    with open(src_path, encoding="utf-8") as f:
+        data = json.load(f)
+    return segment_transcript(data)
 
 
 def collect_sources(domains: set) -> list[tuple[str, Path]]:

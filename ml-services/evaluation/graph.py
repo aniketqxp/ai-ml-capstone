@@ -299,6 +299,30 @@ def print_graph_report(ev, dt):
 # CLI
 # ─────────────────────────────────────────────────────────────────────────────
 
+def evaluate_call(call_id, results_dir="results"):
+    """Run the evaluation graph for one call and return the evaluation dict.
+
+    The `_pipeline` execution trace (node timings, anchor passes, wall clock)
+    is attached for the frontend pipeline strip. No file I/O -- callers (the
+    CLI below, the single-call orchestrator, the worker) decide where it goes.
+    """
+    graph = build_graph()
+    t0 = time.time()
+    final = graph.invoke({
+        "call_id": call_id,
+        "results_dir": results_dir,
+    })
+    dt = time.time() - t0
+
+    ev = final["evaluation"]
+    ev["_pipeline"] = {
+        "nodes": final.get("node_meta", {}),
+        "anchor_passes": final.get("anchor_attempts", 1),
+        "wall_clock": round(dt, 1),
+    }
+    return ev
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="Graph-based call evaluation (parallel LLM nodes)")
@@ -306,27 +330,12 @@ def main():
     ap.add_argument("--results_dir", default="results_channels")
     args = ap.parse_args()
 
-    graph = build_graph()
-
     print(f"\nEvaluating {args.call_id} via graph pipeline "
           f"(rubric {RUBRIC_VERSION_GRAPH})...")
     print("-" * 68)
 
-    t0 = time.time()
-    final = graph.invoke({
-        "call_id": args.call_id,
-        "results_dir": args.results_dir,
-    })
-    dt = time.time() - t0
-
-    ev = final["evaluation"]
-
-    # execution trace for the frontend pipeline strip
-    ev["_pipeline"] = {
-        "nodes": final.get("node_meta", {}),
-        "anchor_passes": final.get("anchor_attempts", 1),
-        "wall_clock": round(dt, 1),
-    }
+    ev = evaluate_call(args.call_id, args.results_dir)
+    dt = ev["_pipeline"]["wall_clock"]
 
     # save
     here = os.path.dirname(os.path.abspath(__file__))

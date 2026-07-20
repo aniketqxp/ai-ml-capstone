@@ -21,31 +21,14 @@ from faster_whisper import WhisperModel
 
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "evaluation"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "pipeline"))
 from transcribe_channels import transcribe_call
+from prompts_domain import prompt_for
 import paths
 
 DATA_DIR = str(paths.NA_TESTSET)
 MANIFEST = str(paths.MANIFEST)
 RESULTS  = os.path.join(DATA_DIR, "results")
-
-DOMAIN_PROMPTS = {
-    "banking": (
-        "Banking and customer service call between an agent and a customer. "
-        "Topics include accounts, transfers, payments, balances, credit cards, "
-        "loans, account numbers, and online banking."
-    ),
-    "health": (
-        "Healthcare customer service call between an agent and a patient or caller. "
-        "Topics include appointments, medical records, prescriptions, insurance "
-        "coverage, billing, referrals, and health plan benefits."
-    ),
-    "telecom": (
-        "Telecommunications customer service call between an agent and a customer. "
-        "Topics include mobile plans, internet service, data usage, billing, "
-        "account management, and technical support."
-    ),
-}
-FALLBACK_PROMPT = "Customer service call between an agent and a customer."
 
 
 def main():
@@ -85,8 +68,7 @@ def main():
         os.makedirs(out_dir, exist_ok=True)
         out = os.path.join(out_dir, m["call_id"] + ".json")
 
-        domain = m.get("domain", "").lower()
-        prompt = DOMAIN_PROMPTS.get(domain, FALLBACK_PROMPT)
+        prompt = prompt_for(m.get("domain", ""))
 
         t0 = time.time()
         try:
