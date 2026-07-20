@@ -3,6 +3,7 @@ import os
 import shutil
 from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Call, Job, Transcript, Evaluation, SentimentSegment
@@ -13,11 +14,6 @@ def process_job(job_id: str, call_id: str):
     print(f"[worker] Job {job_id} queued for call {call_id}")
 
 def apply_action_routing(evaluation: Evaluation, max_escalation_score: float = None):
-    """
-    Task 4.3 — Deterministic action routing logic.
-    Reads evaluation scores and sets flags automatically.
-    """
-    # Escalation risk from Llama (0-10 scale)
     if evaluation.escalation_risk is not None:
         if evaluation.escalation_risk >= 7:
             evaluation.escalation_flag = True
@@ -25,12 +21,10 @@ def apply_action_routing(evaluation: Evaluation, max_escalation_score: float = N
         elif evaluation.escalation_risk >= 4:
             evaluation.coaching_required = True
 
-    # Grade-based routing
     if evaluation.overall_grade == "F":
         evaluation.manual_review_required = True
         evaluation.coaching_required = True
 
-    # Sentiment-based escalation (Clara's Wav2Vec2 score 0.0-1.0)
     if max_escalation_score is not None:
         if max_escalation_score >= 0.7:
             evaluation.escalation_flag = True
@@ -77,6 +71,93 @@ async def ingest_call(
         "status": "queued",
         "audio_path": audio_path,
         "created_at": job.created_at.isoformat()
+    }
+
+@router.get("/summary")
+def get_calls_summary(db: Session = Depends(get_db)):
+    sentiment_data = db.query(
+        SentimentSegment.call_id,
+        SentimentSegment.domain,
+        func.max(SentimentSegment.escalation_score).label("max_escalation"),
+        func.avg(SentimentSegment.escalation_score).label("avg_escalation"),
+        func.count(SentimentSegment.id).label("total_segments")
+    ).group_by(
+        SentimentSegment.call_id,
+        SentimentSegment.domain
+    ).all()
+
+    evaluations = db.query(Evaluation).all()
+    eval_map = {str(e.call_id): e for e in evaluations if e.call_id}
+
+    calls_list = []
+    total = len(sentiment_data)
+    escalated = 0
+    coaching = 0
+    clean = 0
+    grade_counts = {"A": 0, "B": 0, "C": 0, "D": 0, "F": 0}
+    domain_counts = {}
+
+    for row in sentiment_data:
+        call_id = row.call_id
+        max_esc = round(float(row.max_escalation), 4) if row.max_escalation else None
+        avg_esc = round(float(row.avg_escalation), 4) if row.avg_escalation else None
+
+        successful = db.query(SentimentSegment).filter(
+            SentimentSegment.call_id == call_id,
+            SentimentSegment.processing_status == "success"
+        ).all()
+
+        sentiments = [s.sentiment for s in successful if s.sentiment]
+        dominant_sentiment = max(set(sentiments), key=sentiments.count) if sentiments else None
+
+        emotions = [s.dominant_emotion for s in successful if s.dominant_emotion]
+        dominant_emotion = max(set(emotions), key=emotions.count) if emotions else None
+
+        eval_obj = eval_map.get(call_id)
+        grade = eval_obj.overall_grade if eval_obj else None
+        escalation_flag = eval_obj.escalation_flag if eval_obj else False
+        coaching_flag = eval_obj.coaching_required if eval_obj else False
+        manual_review = eval_obj.manual_review_required if eval_obj else False
+
+        if escalation_flag:
+            action = "Escalate"
+            escalated += 1
+        elif coaching_flag:
+            action = "Coaching"
+            coaching += 1
+        else:
+            action = "No action"
+            clean += 1
+
+        if grade and grade in grade_counts:
+            grade_counts[grade] += 1
+
+        domain = row.domain or "unknown"
+        domain_counts[domain] = domain_counts.get(domain, 0) + 1
+
+        calls_list.append({
+            "call_id": call_id,
+            "domain": domain,
+            "grade": grade,
+            "dominant_sentiment": dominant_sentiment,
+            "dominant_emotion": dominant_emotion,
+            "max_escalation_score": max_esc,
+            "avg_escalation_score": avg_esc,
+            "total_segments": row.total_segments,
+            "escalation_flag": escalation_flag,
+            "coaching_required": coaching_flag,
+            "manual_review_required": manual_review,
+            "action": action
+        })
+
+    return {
+        "total_calls": total,
+        "escalated": escalated,
+        "coaching_required": coaching,
+        "clean": clean,
+        "grade_distribution": grade_counts,
+        "domain_distribution": domain_counts,
+        "calls": calls_list
     }
 
 @router.get("/{call_id}/status")
@@ -129,13 +210,9 @@ async def ingest_evaluation(
     payload: dict,
     db: Session = Depends(get_db)
 ):
-    """
-    Receives Llama/Aniket evaluation output and applies action routing logic.
-    """
     call_id_str = payload.get("call_id")
     agent_id_str = payload.get("agent_id")
 
-    # Get max escalation score from sentiment table
     sentiment_segments = db.query(SentimentSegment).filter(
         SentimentSegment.call_id == call_id_str
     ).all()
@@ -143,7 +220,6 @@ async def ingest_evaluation(
     scores = [s.escalation_score for s in sentiment_segments if s.escalation_score is not None]
     max_escalation = max(scores) if scores else None
 
-    # Create evaluation record
     evaluation = Evaluation(
         call_id=uuid.UUID(call_id_str) if len(call_id_str) == 36 else None,
         agent_id=uuid.UUID(agent_id_str) if agent_id_str else None,
@@ -155,7 +231,6 @@ async def ingest_evaluation(
         llm_scored=payload.get("llm_scored", True)
     )
 
-    # Apply action routing
     evaluation = apply_action_routing(evaluation, max_escalation)
 
     db.add(evaluation)
@@ -174,9 +249,6 @@ async def ingest_evaluation(
 
 @router.get("/{call_id}/flags")
 def get_call_flags(call_id: str, db: Session = Depends(get_db)):
-    """
-    Returns the action flags for a call — useful for dashboard alerts.
-    """
     try:
         evaluation = db.query(Evaluation).filter(
             Evaluation.call_id == uuid.UUID(call_id)
