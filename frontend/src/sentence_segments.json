@@ -1,0 +1,1395 @@
+{
+  "call": "call_1",
+  "model": "faster-whisper small.en/int8 + stereo channel attribution",
+  "total": 154,
+  "agent_sentences": 92,
+  "customer_sentences": 62,
+  "sentences": [
+    {
+      "speaker": "AGENT",
+      "start": 13.49,
+      "end": 14.67,
+      "duration": 1.18,
+      "text": "Oh, good afternoon.",
+      "id": "AGENT_001",
+      "seq_id": 1
+    },
+    {
+      "speaker": "AGENT",
+      "start": 15.07,
+      "end": 17.81,
+      "duration": 2.74,
+      "text": "Thank you for calling North Star Bank customer care.",
+      "id": "AGENT_002",
+      "seq_id": 2
+    },
+    {
+      "speaker": "AGENT",
+      "start": 18.59,
+      "end": 19.23,
+      "duration": 0.64,
+      "text": "My name is Emily.",
+      "id": "AGENT_003",
+      "seq_id": 3
+    },
+    {
+      "speaker": "AGENT",
+      "start": 19.47,
+      "end": 20.43,
+      "duration": 0.96,
+      "text": "How can I help you today?",
+      "id": "AGENT_004",
+      "seq_id": 4
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 21.89,
+      "end": 22.47,
+      "duration": 0.58,
+      "text": "Hi, Emily.",
+      "id": "CUSTOMER_001",
+      "seq_id": 5
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 23.51,
+      "end": 24.09,
+      "duration": 0.58,
+      "text": "Good afternoon.",
+      "id": "CUSTOMER_002",
+      "seq_id": 6
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 24.85,
+      "end": 26.27,
+      "duration": 1.42,
+      "text": "My name is James Carter.",
+      "id": "CUSTOMER_003",
+      "seq_id": 7
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 27.09,
+      "end": 32.73,
+      "duration": 5.64,
+      "text": "I have a checking account with your bank and I just opened a new saving account last week.",
+      "id": "CUSTOMER_004",
+      "seq_id": 8
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 34.06,
+      "end": 38.38,
+      "duration": 4.32,
+      "text": "I want to set up an automatic monthly transfer between the two.",
+      "id": "CUSTOMER_005",
+      "seq_id": 9
+    },
+    {
+      "speaker": "AGENT",
+      "start": 40.31,
+      "end": 42.79,
+      "duration": 2.48,
+      "text": "Absolutely, Mr. Carter, I can help you with that.",
+      "id": "AGENT_005",
+      "seq_id": 10
+    },
+    {
+      "speaker": "AGENT",
+      "start": 43.83,
+      "end": 48.05,
+      "duration": 4.22,
+      "text": "Before we start, can I verify your identity for security purposes?",
+      "id": "AGENT_006",
+      "seq_id": 11
+    },
+    {
+      "speaker": "AGENT",
+      "start": 49.46,
+      "end": 54.26,
+      "duration": 4.8,
+      "text": "Could you confirm your date of birth and the last four digits of your checking account number?",
+      "id": "AGENT_007",
+      "seq_id": 12
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 55.52,
+      "end": 55.7,
+      "duration": 0.18,
+      "text": "Sure.",
+      "id": "CUSTOMER_006",
+      "seq_id": 13
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 56.6,
+      "end": 60.72,
+      "duration": 4.12,
+      "text": "My date of birth is October 12, 1983.",
+      "id": "CUSTOMER_007",
+      "seq_id": 14
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 62.49,
+      "end": 65.75,
+      "duration": 3.26,
+      "text": "And the last four digits are 2046.",
+      "id": "CUSTOMER_008",
+      "seq_id": 15
+    },
+    {
+      "speaker": "AGENT",
+      "start": 67.49,
+      "end": 68.47,
+      "duration": 0.98,
+      "text": "Okay, perfect.",
+      "id": "AGENT_008",
+      "seq_id": 16
+    },
+    {
+      "speaker": "AGENT",
+      "start": 68.95,
+      "end": 70.53,
+      "duration": 1.58,
+      "text": "Thank you for confirming that.",
+      "id": "AGENT_009",
+      "seq_id": 17
+    },
+    {
+      "speaker": "AGENT",
+      "start": 72.06,
+      "end": 74.14,
+      "duration": 2.08,
+      "text": "So I've got your account pulled up now.",
+      "id": "AGENT_010",
+      "seq_id": 18
+    },
+    {
+      "speaker": "AGENT",
+      "start": 74.86,
+      "end": 80.36,
+      "duration": 5.5,
+      "text": "So you'd like to set up an automatic transfer from your checking to your new savings account, correct?",
+      "id": "AGENT_011",
+      "seq_id": 19
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 81.66,
+      "end": 82.12,
+      "duration": 0.46,
+      "text": "That's right.",
+      "id": "CUSTOMER_009",
+      "seq_id": 20
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 83.29,
+      "end": 91.09,
+      "duration": 7.8,
+      "text": "I'm planning a home renovation later next year, so I want to start putting some money aside every month automatically.",
+      "id": "CUSTOMER_010",
+      "seq_id": 21
+    },
+    {
+      "speaker": "AGENT",
+      "start": 92.63,
+      "end": 94.93,
+      "duration": 2.3,
+      "text": "Okay, that's a smart move.",
+      "id": "AGENT_012",
+      "seq_id": 22
+    },
+    {
+      "speaker": "AGENT",
+      "start": 96.35,
+      "end": 100.29,
+      "duration": 3.94,
+      "text": "Consistent savings make projects like that a lot easier to handle.",
+      "id": "AGENT_013",
+      "seq_id": 23
+    },
+    {
+      "speaker": "AGENT",
+      "start": 101.34,
+      "end": 103.44,
+      "duration": 2.1,
+      "text": "So how much would you like to transfer each month?",
+      "id": "AGENT_014",
+      "seq_id": 24
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 105.5,
+      "end": 108.88,
+      "duration": 3.38,
+      "text": "I was thinking about $400 a month to start.",
+      "id": "CUSTOMER_011",
+      "seq_id": 25
+    },
+    {
+      "speaker": "AGENT",
+      "start": 110.49,
+      "end": 110.65,
+      "duration": 0.16,
+      "text": "Great.",
+      "id": "AGENT_015",
+      "seq_id": 26
+    },
+    {
+      "speaker": "AGENT",
+      "start": 110.99,
+      "end": 114.63,
+      "duration": 3.64,
+      "text": "And would you like that transfer to occur on a specific date each month?",
+      "id": "AGENT_016",
+      "seq_id": 27
+    },
+    {
+      "speaker": "AGENT",
+      "start": 114.89,
+      "end": 117.53,
+      "duration": 2.64,
+      "text": "Like, for example, right after you get your paycheck?",
+      "id": "AGENT_017",
+      "seq_id": 28
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 119.56,
+      "end": 120.92,
+      "duration": 1.36,
+      "text": "Yeah, that's a good idea.",
+      "id": "CUSTOMER_012",
+      "seq_id": 29
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 121.0,
+      "end": 121.42,
+      "duration": 0.42,
+      "text": "Exactly.",
+      "id": "CUSTOMER_013",
+      "seq_id": 30
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 121.86,
+      "end": 123.06,
+      "duration": 1.2,
+      "text": "That's exactly what I want.",
+      "id": "CUSTOMER_014",
+      "seq_id": 31
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 123.74,
+      "end": 130.22,
+      "duration": 6.48,
+      "text": "So I get paid on the first, so let's set it for the second on every month, just to be safe.",
+      "id": "CUSTOMER_015",
+      "seq_id": 32
+    },
+    {
+      "speaker": "AGENT",
+      "start": 131.96,
+      "end": 146.32,
+      "duration": 14.36,
+      "text": "Okay, so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November?",
+      "id": "AGENT_018",
+      "seq_id": 33
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 147.38,
+      "end": 148.04,
+      "duration": 0.66,
+      "text": "That's right.",
+      "id": "CUSTOMER_016",
+      "seq_id": 34
+    },
+    {
+      "speaker": "AGENT",
+      "start": 148.82,
+      "end": 151.6,
+      "duration": 2.78,
+      "text": "Okay, so just let me set that up for you.",
+      "id": "AGENT_019",
+      "seq_id": 35
+    },
+    {
+      "speaker": "AGENT",
+      "start": 153.94,
+      "end": 155.0,
+      "duration": 1.06,
+      "text": "Okay, that's been entered.",
+      "id": "AGENT_020",
+      "seq_id": 36
+    },
+    {
+      "speaker": "AGENT",
+      "start": 155.86,
+      "end": 162.74,
+      "duration": 6.88,
+      "text": "Before I finalize it, do you want this transfer to continue indefinitely or would you like to stop it after a certain number of months?",
+      "id": "AGENT_021",
+      "seq_id": 37
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 164.44,
+      "end": 167.4,
+      "duration": 2.96,
+      "text": "Let's just keep it going until I say otherwise.",
+      "id": "CUSTOMER_017",
+      "seq_id": 38
+    },
+    {
+      "speaker": "AGENT",
+      "start": 168.78,
+      "end": 169.8,
+      "duration": 1.02,
+      "text": "Okay, sounds good.",
+      "id": "AGENT_022",
+      "seq_id": 39
+    },
+    {
+      "speaker": "AGENT",
+      "start": 172.19,
+      "end": 174.07,
+      "duration": 1.88,
+      "text": "I'll keep it open -ended.",
+      "id": "AGENT_023",
+      "seq_id": 40
+    },
+    {
+      "speaker": "AGENT",
+      "start": 175.24,
+      "end": 176.22,
+      "duration": 0.98,
+      "text": "Okay, all set.",
+      "id": "AGENT_024",
+      "seq_id": 41
+    },
+    {
+      "speaker": "AGENT",
+      "start": 176.74,
+      "end": 185.08,
+      "duration": 8.34,
+      "text": "So the first transfer will be scheduled for November 2nd, 2025, in the amount of $400 Canadian dollars.",
+      "id": "AGENT_025",
+      "seq_id": 42
+    },
+    {
+      "speaker": "AGENT",
+      "start": 185.96,
+      "end": 190.02,
+      "duration": 4.06,
+      "text": "So you'll see it reflected in your savings account within one business day after that.",
+      "id": "AGENT_026",
+      "seq_id": 43
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 191.77,
+      "end": 191.77,
+      "duration": 0.0,
+      "text": "Excellent.",
+      "id": "CUSTOMER_018",
+      "seq_id": 44
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 192.92,
+      "end": 200.78,
+      "duration": 7.86,
+      "text": "And out of curiosity, is there a limit on how much I can transfer automatically each month?",
+      "id": "CUSTOMER_019",
+      "seq_id": 45
+    },
+    {
+      "speaker": "AGENT",
+      "start": 201.79,
+      "end": 202.87,
+      "duration": 1.08,
+      "text": "Oh, good question.",
+      "id": "AGENT_027",
+      "seq_id": 46
+    },
+    {
+      "speaker": "AGENT",
+      "start": 203.21,
+      "end": 206.51,
+      "duration": 3.3,
+      "text": "Yes, there's a few limits in place, depending on the type of account.",
+      "id": "AGENT_028",
+      "seq_id": 47
+    },
+    {
+      "speaker": "AGENT",
+      "start": 207.63,
+      "end": 217.17,
+      "duration": 9.54,
+      "text": "So for the regular checking and savings account, like yours, so the maximum automated transfer is $10 ,000 per month.",
+      "id": "AGENT_029",
+      "seq_id": 48
+    },
+    {
+      "speaker": "AGENT",
+      "start": 218.18,
+      "end": 221.8,
+      "duration": 3.62,
+      "text": "So since you're transferring $400, you're well within the limit.",
+      "id": "AGENT_030",
+      "seq_id": 49
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 223.56,
+      "end": 224.6,
+      "duration": 1.04,
+      "text": "Nice, got it.",
+      "id": "CUSTOMER_020",
+      "seq_id": 50
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 225.02,
+      "end": 225.72,
+      "duration": 0.7,
+      "text": "That's plenty.",
+      "id": "CUSTOMER_021",
+      "seq_id": 51
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 226.58,
+      "end": 231.22,
+      "duration": 4.64,
+      "text": "And if I ever wanted to change that amount later, can I do it online?",
+      "id": "CUSTOMER_022",
+      "seq_id": 52
+    },
+    {
+      "speaker": "AGENT",
+      "start": 232.49,
+      "end": 233.71,
+      "duration": 1.22,
+      "text": "Yeah, for sure.",
+      "id": "AGENT_031",
+      "seq_id": 53
+    },
+    {
+      "speaker": "AGENT",
+      "start": 234.13,
+      "end": 239.19,
+      "duration": 5.06,
+      "text": "So you can just adjust or cancel the transfer at any time through the mobile app or online banking.",
+      "id": "AGENT_032",
+      "seq_id": 54
+    },
+    {
+      "speaker": "AGENT",
+      "start": 240.64,
+      "end": 243.1,
+      "duration": 2.46,
+      "text": "So it's at the top in the transfer section.",
+      "id": "AGENT_033",
+      "seq_id": 55
+    },
+    {
+      "speaker": "AGENT",
+      "start": 244.04,
+      "end": 249.22,
+      "duration": 5.18,
+      "text": "So you tap on scheduled transfers and then you'll be able to edit the details.",
+      "id": "AGENT_034",
+      "seq_id": 56
+    },
+    {
+      "speaker": "AGENT",
+      "start": 249.94,
+      "end": 255.98,
+      "duration": 6.04,
+      "text": "But also, you can also call us if you need it so that we can and we can change it for you.",
+      "id": "AGENT_035",
+      "seq_id": 57
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 256.53,
+      "end": 257.51,
+      "duration": 0.98,
+      "text": "Excellent.",
+      "id": "CUSTOMER_023",
+      "seq_id": 58
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 259.01,
+      "end": 264.99,
+      "duration": 5.98,
+      "text": "Could you confirm again that the first one's definitely scheduled for the second?",
+      "id": "CUSTOMER_024",
+      "seq_id": 59
+    },
+    {
+      "speaker": "AGENT",
+      "start": 266.81,
+      "end": 268.43,
+      "duration": 1.62,
+      "text": "Yeah, let me double check.",
+      "id": "AGENT_036",
+      "seq_id": 60
+    },
+    {
+      "speaker": "AGENT",
+      "start": 270.93,
+      "end": 271.83,
+      "duration": 0.9,
+      "text": "Yeah, so it's confirmed.",
+      "id": "AGENT_037",
+      "seq_id": 61
+    },
+    {
+      "speaker": "AGENT",
+      "start": 272.01,
+      "end": 279.03,
+      "duration": 7.02,
+      "text": "The first transfer is scheduled for November 2nd, and afterwards it will continue monthly.",
+      "id": "AGENT_038",
+      "seq_id": 62
+    },
+    {
+      "speaker": "AGENT",
+      "start": 280.16,
+      "end": 287.4,
+      "duration": 7.24,
+      "text": "So soon you're going to get a confirmation email and a text notification one day before each scheduled transfer.",
+      "id": "AGENT_039",
+      "seq_id": 63
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 288.6,
+      "end": 289.12,
+      "duration": 0.52,
+      "text": "Nice.",
+      "id": "CUSTOMER_025",
+      "seq_id": 64
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 290.56,
+      "end": 291.94,
+      "duration": 1.38,
+      "text": "That gives me peace of mind.",
+      "id": "CUSTOMER_026",
+      "seq_id": 65
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 292.84,
+      "end": 292.84,
+      "duration": 0.0,
+      "text": "Nice.",
+      "id": "CUSTOMER_027",
+      "seq_id": 66
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 295.47,
+      "end": 303.51,
+      "duration": 8.04,
+      "text": "Now, just in case, say I run into a month where I need to pause the transfers temporarily, is that possible?",
+      "id": "CUSTOMER_028",
+      "seq_id": 67
+    },
+    {
+      "speaker": "AGENT",
+      "start": 305.18,
+      "end": 305.92,
+      "duration": 0.74,
+      "text": "Yeah, absolutely.",
+      "id": "AGENT_040",
+      "seq_id": 68
+    },
+    {
+      "speaker": "AGENT",
+      "start": 306.36,
+      "end": 310.62,
+      "duration": 4.26,
+      "text": "So you can pause or skip one or more of the scheduled transfers any time.",
+      "id": "AGENT_041",
+      "seq_id": 69
+    },
+    {
+      "speaker": "AGENT",
+      "start": 310.88,
+      "end": 315.92,
+      "duration": 5.04,
+      "text": "So you can do that on your online account or by giving us a quick call, pardon.",
+      "id": "AGENT_042",
+      "seq_id": 70
+    },
+    {
+      "speaker": "AGENT",
+      "start": 317.23,
+      "end": 320.61,
+      "duration": 3.38,
+      "text": "So when you pause, the schedule remains saved.",
+      "id": "AGENT_043",
+      "seq_id": 71
+    },
+    {
+      "speaker": "AGENT",
+      "start": 320.81,
+      "end": 325.19,
+      "duration": 4.38,
+      "text": "It just skips the select month and then you can resume whenever you're ready.",
+      "id": "AGENT_044",
+      "seq_id": 72
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 326.9,
+      "end": 326.9,
+      "duration": 0.0,
+      "text": "Perfect.",
+      "id": "CUSTOMER_029",
+      "seq_id": 73
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 327.89,
+      "end": 332.09,
+      "duration": 4.2,
+      "text": "So I wouldn't have to delete it completely and start over, right?",
+      "id": "CUSTOMER_030",
+      "seq_id": 74
+    },
+    {
+      "speaker": "AGENT",
+      "start": 333.16,
+      "end": 333.74,
+      "duration": 0.58,
+      "text": "Exactly.",
+      "id": "AGENT_045",
+      "seq_id": 75
+    },
+    {
+      "speaker": "AGENT",
+      "start": 334.1,
+      "end": 342.94,
+      "duration": 8.84,
+      "text": "So the pause option, it keeps things flexible, especially if there's like an adjustment like traveling or unexpected expense.",
+      "id": "AGENT_046",
+      "seq_id": 76
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 347.68,
+      "end": 348.46,
+      "duration": 0.78,
+      "text": "Good to know.",
+      "id": "CUSTOMER_031",
+      "seq_id": 77
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 349.52,
+      "end": 350.02,
+      "duration": 0.5,
+      "text": "I like that.",
+      "id": "CUSTOMER_032",
+      "seq_id": 78
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 351.18,
+      "end": 357.16,
+      "duration": 5.98,
+      "text": "I'm trying to build up my savings gradually, but sometimes renovation costs can pop up earlier than planned.",
+      "id": "CUSTOMER_033",
+      "seq_id": 79
+    },
+    {
+      "speaker": "AGENT",
+      "start": 358.08,
+      "end": 359.98,
+      "duration": 1.9,
+      "text": "Yeah, I can imagine that.",
+      "id": "AGENT_047",
+      "seq_id": 80
+    },
+    {
+      "speaker": "AGENT",
+      "start": 360.84,
+      "end": 363.96,
+      "duration": 3.12,
+      "text": "Renovations have a way of growing as they go.",
+      "id": "AGENT_048",
+      "seq_id": 81
+    },
+    {
+      "speaker": "AGENT",
+      "start": 365.13,
+      "end": 369.13,
+      "duration": 4.0,
+      "text": "What kind of renovation are you planning if you don't mind me asking?",
+      "id": "AGENT_049",
+      "seq_id": 82
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 369.13,
+      "end": 371.34,
+      "duration": 2.21,
+      "text": "No problem.",
+      "id": "CUSTOMER_034",
+      "seq_id": 83
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 372.44,
+      "end": 381.39,
+      "duration": 8.95,
+      "text": "The kitchen, new cabinets, flooring, maybe new appliances if the budget allows.",
+      "id": "CUSTOMER_035",
+      "seq_id": 84
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 382.93,
+      "end": 388.07,
+      "duration": 5.14,
+      "text": "My wife and I figured it's better to start saving now than to rely on credit line later.",
+      "id": "CUSTOMER_036",
+      "seq_id": 85
+    },
+    {
+      "speaker": "AGENT",
+      "start": 389.57,
+      "end": 397.43,
+      "duration": 7.86,
+      "text": "Oh, that's a really smart approach, setting up to avoid unnecessary debt and then having a dedicated savings account for that goal.",
+      "id": "AGENT_050",
+      "seq_id": 86
+    },
+    {
+      "speaker": "AGENT",
+      "start": 397.67,
+      "end": 398.09,
+      "duration": 0.42,
+      "text": "It's good.",
+      "id": "AGENT_051",
+      "seq_id": 87
+    },
+    {
+      "speaker": "AGENT",
+      "start": 398.21,
+      "end": 400.19,
+      "duration": 1.98,
+      "text": "It keeps you motivated, keeps you organized.",
+      "id": "AGENT_052",
+      "seq_id": 88
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 401.84,
+      "end": 402.4,
+      "duration": 0.56,
+      "text": "Exactly.",
+      "id": "CUSTOMER_037",
+      "seq_id": 89
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 403.76,
+      "end": 404.94,
+      "duration": 1.18,
+      "text": "That's what we're going for.",
+      "id": "CUSTOMER_038",
+      "seq_id": 90
+    },
+    {
+      "speaker": "AGENT",
+      "start": 406.71,
+      "end": 407.57,
+      "duration": 0.86,
+      "text": "Yeah, I love that.",
+      "id": "AGENT_053",
+      "seq_id": 91
+    },
+    {
+      "speaker": "AGENT",
+      "start": 408.53,
+      "end": 413.37,
+      "duration": 4.84,
+      "text": "Also, North Star Bank offers a home project savings bonus.",
+      "id": "AGENT_054",
+      "seq_id": 92
+    },
+    {
+      "speaker": "AGENT",
+      "start": 414.46,
+      "end": 423.6,
+      "duration": 9.14,
+      "text": "So if you maintain automatic transfers for six months or more, you can get an extra 0 .5 % for the following three months.",
+      "id": "AGENT_055",
+      "seq_id": 93
+    },
+    {
+      "speaker": "AGENT",
+      "start": 423.88,
+      "end": 425.4,
+      "duration": 1.52,
+      "text": "Would you like me to enroll you in that?",
+      "id": "AGENT_056",
+      "seq_id": 94
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 428.0,
+      "end": 429.96,
+      "duration": 1.96,
+      "text": "Oh, I didn't know about that.",
+      "id": "CUSTOMER_039",
+      "seq_id": 95
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 430.7,
+      "end": 432.1,
+      "duration": 1.4,
+      "text": "Yeah, please.",
+      "id": "CUSTOMER_040",
+      "seq_id": 96
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 432.72,
+      "end": 433.4,
+      "duration": 0.68,
+      "text": "That sounds great.",
+      "id": "CUSTOMER_041",
+      "seq_id": 97
+    },
+    {
+      "speaker": "AGENT",
+      "start": 434.84,
+      "end": 436.64,
+      "duration": 1.8,
+      "text": "So, okay, done.",
+      "id": "AGENT_057",
+      "seq_id": 98
+    },
+    {
+      "speaker": "AGENT",
+      "start": 436.92,
+      "end": 437.62,
+      "duration": 0.7,
+      "text": "You're now enrolled.",
+      "id": "AGENT_058",
+      "seq_id": 99
+    },
+    {
+      "speaker": "AGENT",
+      "start": 437.98,
+      "end": 445.64,
+      "duration": 7.66,
+      "text": "So the system will automatically track your transfer history and apply the bonus rate once you've made six consecutive transfers.",
+      "id": "AGENT_059",
+      "seq_id": 100
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 447.55,
+      "end": 447.55,
+      "duration": 0.0,
+      "text": "Nice.",
+      "id": "CUSTOMER_042",
+      "seq_id": 101
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 448.78,
+      "end": 450.0,
+      "duration": 1.22,
+      "text": "Thanks for letting me know.",
+      "id": "CUSTOMER_043",
+      "seq_id": 102
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 450.3,
+      "end": 451.3,
+      "duration": 1.0,
+      "text": "That's a great incentive.",
+      "id": "CUSTOMER_044",
+      "seq_id": 103
+    },
+    {
+      "speaker": "AGENT",
+      "start": 452.88,
+      "end": 454.32,
+      "duration": 1.44,
+      "text": "Yeah, you're very welcome, Mr. Carter.",
+      "id": "AGENT_060",
+      "seq_id": 104
+    },
+    {
+      "speaker": "AGENT",
+      "start": 454.56,
+      "end": 457.82,
+      "duration": 3.26,
+      "text": "So I can summarize what we've done today.",
+      "id": "AGENT_061",
+      "seq_id": 105
+    },
+    {
+      "speaker": "AGENT",
+      "start": 459.54,
+      "end": 466.1,
+      "duration": 6.56,
+      "text": "So we set up an automatic transfer of $400 from your checking to your savings account.",
+      "id": "AGENT_062",
+      "seq_id": 106
+    },
+    {
+      "speaker": "AGENT",
+      "start": 466.96,
+      "end": 472.42,
+      "duration": 5.46,
+      "text": "It's going to start on November 2nd, 2025 and repeat monthly until further notice.",
+      "id": "AGENT_063",
+      "seq_id": 107
+    },
+    {
+      "speaker": "AGENT",
+      "start": 473.88,
+      "end": 483.14,
+      "duration": 9.26,
+      "text": "You're enrolled in the home project savings bonus program, and you can pause, change, or cancel your transfers any time online or by phone.",
+      "id": "AGENT_064",
+      "seq_id": 108
+    },
+    {
+      "speaker": "AGENT",
+      "start": 484.26,
+      "end": 488.5,
+      "duration": 4.24,
+      "text": "And a confirmation text and email will be sent to you shortly.",
+      "id": "AGENT_065",
+      "seq_id": 109
+    },
+    {
+      "speaker": "AGENT",
+      "start": 489.64,
+      "end": 492.18,
+      "duration": 2.54,
+      "text": "Does everything sound correct so far?",
+      "id": "AGENT_066",
+      "seq_id": 110
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 493.88,
+      "end": 494.8,
+      "duration": 0.92,
+      "text": "Everything sounds perfect.",
+      "id": "CUSTOMER_045",
+      "seq_id": 111
+    },
+    {
+      "speaker": "AGENT",
+      "start": 496.34,
+      "end": 496.94,
+      "duration": 0.6,
+      "text": "Okay, great.",
+      "id": "AGENT_067",
+      "seq_id": 112
+    },
+    {
+      "speaker": "AGENT",
+      "start": 497.22,
+      "end": 499.4,
+      "duration": 2.18,
+      "text": "So is there anything else I can help you with today?",
+      "id": "AGENT_068",
+      "seq_id": 113
+    },
+    {
+      "speaker": "AGENT",
+      "start": 500.87,
+      "end": 503.61,
+      "duration": 2.74,
+      "text": "Like maybe checking your balance or setting up any alerts?",
+      "id": "AGENT_069",
+      "seq_id": 114
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 505.36,
+      "end": 505.94,
+      "duration": 0.58,
+      "text": "Yes, please.",
+      "id": "CUSTOMER_046",
+      "seq_id": 115
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 506.76,
+      "end": 511.38,
+      "duration": 4.62,
+      "text": "Could you check that my savings account is linked properly in the app?",
+      "id": "CUSTOMER_047",
+      "seq_id": 116
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 512.02,
+      "end": 515.02,
+      "duration": 3.0,
+      "text": "I had a bit of trouble seeing it earlier this week.",
+      "id": "CUSTOMER_048",
+      "seq_id": 117
+    },
+    {
+      "speaker": "AGENT",
+      "start": 516.22,
+      "end": 516.92,
+      "duration": 0.7,
+      "text": "Yeah, of course.",
+      "id": "AGENT_070",
+      "seq_id": 118
+    },
+    {
+      "speaker": "AGENT",
+      "start": 517.18,
+      "end": 518.3,
+      "duration": 1.12,
+      "text": "Let me take a quick look.",
+      "id": "AGENT_071",
+      "seq_id": 119
+    },
+    {
+      "speaker": "AGENT",
+      "start": 522.02,
+      "end": 522.58,
+      "duration": 0.56,
+      "text": "Pardon.",
+      "id": "AGENT_072",
+      "seq_id": 120
+    },
+    {
+      "speaker": "AGENT",
+      "start": 522.86,
+      "end": 523.58,
+      "duration": 0.72,
+      "text": "Okay, I see.",
+      "id": "AGENT_073",
+      "seq_id": 121
+    },
+    {
+      "speaker": "AGENT",
+      "start": 524.36,
+      "end": 528.54,
+      "duration": 4.18,
+      "text": "Your savings account, it says here it's fully linked to your online profile.",
+      "id": "AGENT_074",
+      "seq_id": 122
+    },
+    {
+      "speaker": "AGENT",
+      "start": 529.75,
+      "end": 537.13,
+      "duration": 7.38,
+      "text": "But sometimes new accounts take 24 to 48 hours to appear in the mobile app, but it's active.",
+      "id": "AGENT_075",
+      "seq_id": 123
+    },
+    {
+      "speaker": "AGENT",
+      "start": 537.53,
+      "end": 541.91,
+      "duration": 4.38,
+      "text": "So you should be able to view both accounts under the My Accounts tab.",
+      "id": "AGENT_076",
+      "seq_id": 124
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 544.77,
+      "end": 544.77,
+      "duration": 0.0,
+      "text": "Perfect.",
+      "id": "CUSTOMER_049",
+      "seq_id": 125
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 546.11,
+      "end": 547.79,
+      "duration": 1.68,
+      "text": "I'll check again after this call.",
+      "id": "CUSTOMER_050",
+      "seq_id": 126
+    },
+    {
+      "speaker": "AGENT",
+      "start": 548.43,
+      "end": 550.27,
+      "duration": 1.84,
+      "text": "Okay, sounds good.",
+      "id": "AGENT_077",
+      "seq_id": 127
+    },
+    {
+      "speaker": "AGENT",
+      "start": 551.46,
+      "end": 558.22,
+      "duration": 6.76,
+      "text": "So once your first transfer goes through, you'll also see the automatic transfer summary appear at the bottom of the dashboard.",
+      "id": "AGENT_078",
+      "seq_id": 128
+    },
+    {
+      "speaker": "AGENT",
+      "start": 558.96,
+      "end": 567.5,
+      "duration": 8.54,
+      "text": "But if you have any questions or want to change anything, you can always call us 24 -7 or use the in -app chat feature.",
+      "id": "AGENT_079",
+      "seq_id": 129
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 569.0,
+      "end": 569.18,
+      "duration": 0.18,
+      "text": "Nice.",
+      "id": "CUSTOMER_051",
+      "seq_id": 130
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 569.74,
+      "end": 570.32,
+      "duration": 0.58,
+      "text": "That's great.",
+      "id": "CUSTOMER_052",
+      "seq_id": 131
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 571.73,
+      "end": 574.37,
+      "duration": 2.64,
+      "text": "You've been really, really helpful, Emily.",
+      "id": "CUSTOMER_053",
+      "seq_id": 132
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 575.07,
+      "end": 577.25,
+      "duration": 2.18,
+      "text": "Thank you for walking through everything.",
+      "id": "CUSTOMER_054",
+      "seq_id": 133
+    },
+    {
+      "speaker": "AGENT",
+      "start": 577.25,
+      "end": 579.98,
+      "duration": 2.73,
+      "text": "Oh, it's my pleasure, Mr. Carter.",
+      "id": "AGENT_080",
+      "seq_id": 134
+    },
+    {
+      "speaker": "AGENT",
+      "start": 580.66,
+      "end": 582.68,
+      "duration": 2.02,
+      "text": "I'm glad we could get that set up for you.",
+      "id": "AGENT_081",
+      "seq_id": 135
+    },
+    {
+      "speaker": "AGENT",
+      "start": 584.05,
+      "end": 590.67,
+      "duration": 6.62,
+      "text": "So before we wrap up, would you like me to send you a monthly reminder summary of your savings progress?",
+      "id": "AGENT_082",
+      "seq_id": 136
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 591.55,
+      "end": 592.27,
+      "duration": 0.72,
+      "text": "Yes, please.",
+      "id": "CUSTOMER_055",
+      "seq_id": 137
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 592.65,
+      "end": 593.45,
+      "duration": 0.8,
+      "text": "That sounds good.",
+      "id": "CUSTOMER_056",
+      "seq_id": 138
+    },
+    {
+      "speaker": "AGENT",
+      "start": 594.83,
+      "end": 595.29,
+      "duration": 0.46,
+      "text": "Okay, great.",
+      "id": "AGENT_083",
+      "seq_id": 139
+    },
+    {
+      "speaker": "AGENT",
+      "start": 595.63,
+      "end": 596.65,
+      "duration": 1.02,
+      "text": "So I've enabled that.",
+      "id": "AGENT_084",
+      "seq_id": 140
+    },
+    {
+      "speaker": "AGENT",
+      "start": 596.89,
+      "end": 604.31,
+      "duration": 7.42,
+      "text": "You'll get a brief update email at the end of each month showing how much you've saved so far towards your renovation goal.",
+      "id": "AGENT_085",
+      "seq_id": 141
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 605.18,
+      "end": 605.66,
+      "duration": 0.48,
+      "text": "Awesome.",
+      "id": "CUSTOMER_057",
+      "seq_id": 142
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 606.73,
+      "end": 609.21,
+      "duration": 2.48,
+      "text": "I appreciate that little extra motivation.",
+      "id": "CUSTOMER_058",
+      "seq_id": 143
+    },
+    {
+      "speaker": "AGENT",
+      "start": 611.14,
+      "end": 611.6,
+      "duration": 0.46,
+      "text": "Happy to help.",
+      "id": "AGENT_086",
+      "seq_id": 144
+    },
+    {
+      "speaker": "AGENT",
+      "start": 612.52,
+      "end": 614.9,
+      "duration": 2.38,
+      "text": "Thank you for banking with North Star, Mr. Carter.",
+      "id": "AGENT_087",
+      "seq_id": 145
+    },
+    {
+      "speaker": "AGENT",
+      "start": 615.1,
+      "end": 616.42,
+      "duration": 1.32,
+      "text": "We appreciate your loyalty.",
+      "id": "AGENT_088",
+      "seq_id": 146
+    },
+    {
+      "speaker": "AGENT",
+      "start": 617.6,
+      "end": 620.5,
+      "duration": 2.9,
+      "text": "Is there anything else I can help you with before I let you go?",
+      "id": "AGENT_089",
+      "seq_id": 147
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 621.24,
+      "end": 621.72,
+      "duration": 0.48,
+      "text": "Nope.",
+      "id": "CUSTOMER_059",
+      "seq_id": 148
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 622.22,
+      "end": 623.32,
+      "duration": 1.1,
+      "text": "That's all for now.",
+      "id": "CUSTOMER_060",
+      "seq_id": 149
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 623.96,
+      "end": 624.86,
+      "duration": 0.9,
+      "text": "Thanks again, Emily.",
+      "id": "CUSTOMER_061",
+      "seq_id": 150
+    },
+    {
+      "speaker": "CUSTOMER",
+      "start": 625.68,
+      "end": 626.82,
+      "duration": 1.14,
+      "text": "Have a great afternoon.",
+      "id": "CUSTOMER_062",
+      "seq_id": 151
+    },
+    {
+      "speaker": "AGENT",
+      "start": 627.74,
+      "end": 631.48,
+      "duration": 3.74,
+      "text": "Oh, you too, Mr. Carter, and good luck with your kitchen renovation.",
+      "id": "AGENT_090",
+      "seq_id": 152
+    },
+    {
+      "speaker": "AGENT",
+      "start": 632.2,
+      "end": 634.36,
+      "duration": 2.16,
+      "text": "So thanks for calling North Star Bank.",
+      "id": "AGENT_091",
+      "seq_id": 153
+    },
+    {
+      "speaker": "AGENT",
+      "start": 634.48,
+      "end": 636.22,
+      "duration": 1.74,
+      "text": "We look forward to serving you again soon.",
+      "id": "AGENT_092",
+      "seq_id": 154
+    }
+  ]
+}
