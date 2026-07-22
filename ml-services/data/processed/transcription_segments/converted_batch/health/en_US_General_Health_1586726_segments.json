@@ -1,0 +1,947 @@
+{
+  "call_id": "APPTEK_HEALTHCARE_0055_0056",
+  "source_apptek_id": "en_US_General_Health_1586726",
+  "source_call_id": null,
+  "source_model": "faster-whisper small.en/int8 + per-channel",
+  "analysis_input_type": "speaker_timestamped_stereo_channels",
+  "audio_paths": {
+    "agent": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/data/processed/apptek_selected_domains/audio/APPTEK_HEALTHCARE_0055.wav",
+    "customer": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/data/processed/apptek_selected_domains/audio/APPTEK_HEALTHCARE_0056.wav"
+  },
+  "channel_mapping": {
+    "agent": "channel1",
+    "customer": "channel2"
+  },
+  "total_source_sentences": 103,
+  "total_converted_segments": 103,
+  "skipped_short_segments": 0,
+  "segments": [
+    {
+      "segment_id": "CUSTOMER_001",
+      "seq_id": 1,
+      "speaker": "customer",
+      "start_time_seconds": 2.35,
+      "end_time_seconds": 5.49,
+      "duration_seconds": 3.14,
+      "text": "Can we do like, you be the customer?"
+    },
+    {
+      "segment_id": "AGENT_001",
+      "seq_id": 2,
+      "speaker": "agent",
+      "start_time_seconds": 6.91,
+      "end_time_seconds": 8.05,
+      "duration_seconds": 1.14,
+      "text": "Yeah, after this one."
+    },
+    {
+      "segment_id": "AGENT_002",
+      "seq_id": 3,
+      "speaker": "agent",
+      "start_time_seconds": 8.47,
+      "end_time_seconds": 9.19,
+      "duration_seconds": 0.72,
+      "text": "Oh, you want to just do it now?"
+    },
+    {
+      "segment_id": "AGENT_003",
+      "seq_id": 4,
+      "speaker": "agent",
+      "start_time_seconds": 9.33,
+      "end_time_seconds": 9.67,
+      "duration_seconds": 0.34,
+      "text": "Just go."
+    },
+    {
+      "segment_id": "AGENT_004",
+      "seq_id": 5,
+      "speaker": "agent",
+      "start_time_seconds": 10.98,
+      "end_time_seconds": 11.96,
+      "duration_seconds": 0.98,
+      "text": "You're Dr. Sampson."
+    },
+    {
+      "segment_id": "CUSTOMER_002",
+      "seq_id": 6,
+      "speaker": "customer",
+      "start_time_seconds": 14.15,
+      "end_time_seconds": 14.25,
+      "duration_seconds": 0.1,
+      "text": "No."
+    },
+    {
+      "segment_id": "AGENT_005",
+      "seq_id": 7,
+      "speaker": "agent",
+      "start_time_seconds": 15.3,
+      "end_time_seconds": 15.78,
+      "duration_seconds": 0.48,
+      "text": "Ring ring."
+    },
+    {
+      "segment_id": "AGENT_006",
+      "seq_id": 8,
+      "speaker": "agent",
+      "start_time_seconds": 16.48,
+      "end_time_seconds": 19.14,
+      "duration_seconds": 2.66,
+      "text": "Hi, this is Dr. Sampson from Quick Care Telehealth."
+    },
+    {
+      "segment_id": "AGENT_007",
+      "seq_id": 9,
+      "speaker": "agent",
+      "start_time_seconds": 19.52,
+      "end_time_seconds": 20.42,
+      "duration_seconds": 0.9,
+      "text": "Am I speaking with Ashley?"
+    },
+    {
+      "segment_id": "CUSTOMER_003",
+      "seq_id": 10,
+      "speaker": "customer",
+      "start_time_seconds": 21.54,
+      "end_time_seconds": 21.92,
+      "duration_seconds": 0.38,
+      "text": "Yes."
+    },
+    {
+      "segment_id": "CUSTOMER_004",
+      "seq_id": 11,
+      "speaker": "customer",
+      "start_time_seconds": 22.14,
+      "end_time_seconds": 23.34,
+      "duration_seconds": 1.2,
+      "text": "Hi, Dr. Sampson."
+    },
+    {
+      "segment_id": "CUSTOMER_005",
+      "seq_id": 12,
+      "speaker": "customer",
+      "start_time_seconds": 23.72,
+      "end_time_seconds": 24.52,
+      "duration_seconds": 0.8,
+      "text": "This is Ashley."
+    },
+    {
+      "segment_id": "CUSTOMER_006",
+      "seq_id": 13,
+      "speaker": "customer",
+      "start_time_seconds": 25.5,
+      "end_time_seconds": 30.44,
+      "duration_seconds": 4.94,
+      "text": "I was calling and hoping to schedule a telemedicine consultation for my chronic condition."
+    },
+    {
+      "segment_id": "AGENT_008",
+      "seq_id": 14,
+      "speaker": "agent",
+      "start_time_seconds": 32.48,
+      "end_time_seconds": 32.48,
+      "duration_seconds": 0.0,
+      "text": "Absolutely."
+    },
+    {
+      "segment_id": "AGENT_009",
+      "seq_id": 15,
+      "speaker": "agent",
+      "start_time_seconds": 32.78,
+      "end_time_seconds": 33.9,
+      "duration_seconds": 1.12,
+      "text": "We can help you with that."
+    },
+    {
+      "segment_id": "AGENT_010",
+      "seq_id": 16,
+      "speaker": "agent",
+      "start_time_seconds": 34.5,
+      "end_time_seconds": 40.06,
+      "duration_seconds": 5.56,
+      "text": "Are you able to tell me a little bit about your condition so I make sure we schedule you with the right provider?"
+    },
+    {
+      "segment_id": "CUSTOMER_007",
+      "seq_id": 17,
+      "speaker": "customer",
+      "start_time_seconds": 41.5,
+      "end_time_seconds": 50.8,
+      "duration_seconds": 9.3,
+      "text": "It's a chronic thyroid condition and I've been managing it with my regular doctor, but I like to follow up virtually this week."
+    },
+    {
+      "segment_id": "AGENT_011",
+      "seq_id": 18,
+      "speaker": "agent",
+      "start_time_seconds": 52.18,
+      "end_time_seconds": 52.66,
+      "duration_seconds": 0.48,
+      "text": "Got it."
+    },
+    {
+      "segment_id": "AGENT_012",
+      "seq_id": 19,
+      "speaker": "agent",
+      "start_time_seconds": 52.9,
+      "end_time_seconds": 57.02,
+      "duration_seconds": 4.12,
+      "text": "We have same week availability for telemedicine visits."
+    },
+    {
+      "segment_id": "AGENT_013",
+      "seq_id": 20,
+      "speaker": "agent",
+      "start_time_seconds": 57.22,
+      "end_time_seconds": 60.1,
+      "duration_seconds": 2.88,
+      "text": "Are you looking for a specific day or time?"
+    },
+    {
+      "segment_id": "CUSTOMER_008",
+      "seq_id": 21,
+      "speaker": "customer",
+      "start_time_seconds": 61.47,
+      "end_time_seconds": 67.35,
+      "duration_seconds": 5.88,
+      "text": "As soon as possible, honestly, do you have openings for later this week?"
+    },
+    {
+      "segment_id": "AGENT_014",
+      "seq_id": 22,
+      "speaker": "agent",
+      "start_time_seconds": 67.99,
+      "end_time_seconds": 73.55,
+      "duration_seconds": 5.56,
+      "text": "Yeah, we have slots on Wednesday afternoon and Thursday morning."
+    },
+    {
+      "segment_id": "AGENT_015",
+      "seq_id": 23,
+      "speaker": "agent",
+      "start_time_seconds": 74.27,
+      "end_time_seconds": 75.25,
+      "duration_seconds": 0.98,
+      "text": "Do either of those work?"
+    },
+    {
+      "segment_id": "CUSTOMER_009",
+      "seq_id": 24,
+      "speaker": "customer",
+      "start_time_seconds": 77.66,
+      "end_time_seconds": 79.4,
+      "duration_seconds": 1.74,
+      "text": "Yeah, Thursday morning would be perfect."
+    },
+    {
+      "segment_id": "CUSTOMER_010",
+      "seq_id": 25,
+      "speaker": "customer",
+      "start_time_seconds": 79.76,
+      "end_time_seconds": 82.58,
+      "duration_seconds": 2.82,
+      "text": "Also, is Dr. Miller available?"
+    },
+    {
+      "segment_id": "CUSTOMER_011",
+      "seq_id": 26,
+      "speaker": "customer",
+      "start_time_seconds": 82.92,
+      "end_time_seconds": 88.0,
+      "duration_seconds": 5.08,
+      "text": "She's been the one that has been managing my treatment for the past few years."
+    },
+    {
+      "segment_id": "CUSTOMER_012",
+      "seq_id": 27,
+      "speaker": "customer",
+      "start_time_seconds": 88.22,
+      "end_time_seconds": 90.96,
+      "duration_seconds": 2.74,
+      "text": "Just wanted to know as well if she's still in the clinic and everything."
+    },
+    {
+      "segment_id": "CUSTOMER_013",
+      "seq_id": 28,
+      "speaker": "customer",
+      "start_time_seconds": 91.62,
+      "end_time_seconds": 96.12,
+      "duration_seconds": 4.5,
+      "text": "I just want everything to be smooth sailing, no complications or anything."
+    },
+    {
+      "segment_id": "AGENT_016",
+      "seq_id": 29,
+      "speaker": "agent",
+      "start_time_seconds": 97.54,
+      "end_time_seconds": 98.56,
+      "duration_seconds": 1.02,
+      "text": "Yeah, let me check."
+    },
+    {
+      "segment_id": "AGENT_017",
+      "seq_id": 30,
+      "speaker": "agent",
+      "start_time_seconds": 100.28,
+      "end_time_seconds": 101.48,
+      "duration_seconds": 1.2,
+      "text": "You said Dr. Miller."
+    },
+    {
+      "segment_id": "AGENT_018",
+      "seq_id": 31,
+      "speaker": "agent",
+      "start_time_seconds": 103.02,
+      "end_time_seconds": 109.36,
+      "duration_seconds": 6.34,
+      "text": "Yeah, Dr. Miller has a 1030 Thursday telehealth slot."
+    },
+    {
+      "segment_id": "AGENT_019",
+      "seq_id": 32,
+      "speaker": "agent",
+      "start_time_seconds": 109.7,
+      "end_time_seconds": 111.38,
+      "duration_seconds": 1.68,
+      "text": "I can reserve that for you if you're ready."
+    },
+    {
+      "segment_id": "CUSTOMER_014",
+      "seq_id": 33,
+      "speaker": "customer",
+      "start_time_seconds": 111.76,
+      "end_time_seconds": 112.74,
+      "duration_seconds": 0.98,
+      "text": "10 .30."
+    },
+    {
+      "segment_id": "CUSTOMER_015",
+      "seq_id": 34,
+      "speaker": "customer",
+      "start_time_seconds": 113.6,
+      "end_time_seconds": 117.16,
+      "duration_seconds": 3.56,
+      "text": "Let me check my schedule here."
+    },
+    {
+      "segment_id": "CUSTOMER_016",
+      "seq_id": 35,
+      "speaker": "customer",
+      "start_time_seconds": 118.44,
+      "end_time_seconds": 119.64,
+      "duration_seconds": 1.2,
+      "text": "10 .30 is fine."
+    },
+    {
+      "segment_id": "CUSTOMER_017",
+      "seq_id": 36,
+      "speaker": "customer",
+      "start_time_seconds": 119.78,
+      "end_time_seconds": 121.14,
+      "duration_seconds": 1.36,
+      "text": "I do have other appointments."
+    },
+    {
+      "segment_id": "CUSTOMER_018",
+      "seq_id": 37,
+      "speaker": "customer",
+      "start_time_seconds": 121.36,
+      "end_time_seconds": 127.44,
+      "duration_seconds": 6.08,
+      "text": "That's why, but I know that I always have the mornings available."
+    },
+    {
+      "segment_id": "CUSTOMER_019",
+      "seq_id": 38,
+      "speaker": "customer",
+      "start_time_seconds": 128.06,
+      "end_time_seconds": 129.7,
+      "duration_seconds": 1.64,
+      "text": "Can I just give me a second?"
+    },
+    {
+      "segment_id": "CUSTOMER_020",
+      "seq_id": 39,
+      "speaker": "customer",
+      "start_time_seconds": 130.36,
+      "end_time_seconds": 131.6,
+      "duration_seconds": 1.24,
+      "text": "Let me check my schedule."
+    },
+    {
+      "segment_id": "AGENT_020",
+      "seq_id": 40,
+      "speaker": "agent",
+      "start_time_seconds": 133.37,
+      "end_time_seconds": 133.83,
+      "duration_seconds": 0.46,
+      "text": "Yeah, of course."
+    },
+    {
+      "segment_id": "AGENT_021",
+      "seq_id": 41,
+      "speaker": "agent",
+      "start_time_seconds": 134.09,
+      "end_time_seconds": 136.61,
+      "duration_seconds": 2.52,
+      "text": "I'm ultimately here to help, so just let me know."
+    },
+    {
+      "segment_id": "CUSTOMER_021",
+      "seq_id": 42,
+      "speaker": "customer",
+      "start_time_seconds": 141.94,
+      "end_time_seconds": 142.14,
+      "duration_seconds": 0.2,
+      "text": "All right."
+    },
+    {
+      "segment_id": "CUSTOMER_022",
+      "seq_id": 43,
+      "speaker": "customer",
+      "start_time_seconds": 142.44,
+      "end_time_seconds": 142.48,
+      "duration_seconds": 0.04,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "CUSTOMER_023",
+      "seq_id": 44,
+      "speaker": "customer",
+      "start_time_seconds": 143.56,
+      "end_time_seconds": 144.56,
+      "duration_seconds": 1.0,
+      "text": "Yeah, please."
+    },
+    {
+      "segment_id": "CUSTOMER_024",
+      "seq_id": 45,
+      "speaker": "customer",
+      "start_time_seconds": 145.16,
+      "end_time_seconds": 147.18,
+      "duration_seconds": 2.02,
+      "text": "Can you get me that slot?"
+    },
+    {
+      "segment_id": "CUSTOMER_025",
+      "seq_id": 46,
+      "speaker": "customer",
+      "start_time_seconds": 147.86,
+      "end_time_seconds": 151.08,
+      "duration_seconds": 3.22,
+      "text": "I also, I don't know if it's okay with you."
+    },
+    {
+      "segment_id": "CUSTOMER_026",
+      "seq_id": 47,
+      "speaker": "customer",
+      "start_time_seconds": 151.24,
+      "end_time_seconds": 158.32,
+      "duration_seconds": 7.08,
+      "text": "Can I also ask for a refill for my ongoing prescription for my thyroid medication?"
+    },
+    {
+      "segment_id": "AGENT_022",
+      "seq_id": 48,
+      "speaker": "agent",
+      "start_time_seconds": 161.82,
+      "end_time_seconds": 165.86,
+      "duration_seconds": 4.04,
+      "text": "Yes, no problem."
+    },
+    {
+      "segment_id": "AGENT_023",
+      "seq_id": 49,
+      "speaker": "agent",
+      "start_time_seconds": 166.32,
+      "end_time_seconds": 175.3,
+      "duration_seconds": 8.98,
+      "text": "I can note that in your chart, so Dr. Miller can review and authorize the refill during your appointment."
+    },
+    {
+      "segment_id": "AGENT_024",
+      "seq_id": 50,
+      "speaker": "agent",
+      "start_time_seconds": 175.5,
+      "end_time_seconds": 177.72,
+      "duration_seconds": 2.22,
+      "text": "Is there anything else you want me to get on your chart?"
+    },
+    {
+      "segment_id": "CUSTOMER_027",
+      "seq_id": 51,
+      "speaker": "customer",
+      "start_time_seconds": 178.68,
+      "end_time_seconds": 179.2,
+      "duration_seconds": 0.52,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "CUSTOMER_028",
+      "seq_id": 52,
+      "speaker": "customer",
+      "start_time_seconds": 179.38,
+      "end_time_seconds": 182.6,
+      "duration_seconds": 3.22,
+      "text": "I wanted to know, is there any lab tests?"
+    },
+    {
+      "segment_id": "CUSTOMER_029",
+      "seq_id": 53,
+      "speaker": "customer",
+      "start_time_seconds": 183.28,
+      "end_time_seconds": 186.24,
+      "duration_seconds": 2.96,
+      "text": "Will I need to take any lab tests before the consultation?"
+    },
+    {
+      "segment_id": "CUSTOMER_030",
+      "seq_id": 54,
+      "speaker": "customer",
+      "start_time_seconds": 186.74,
+      "end_time_seconds": 187.9,
+      "duration_seconds": 1.16,
+      "text": "I know that that's the thing."
+    },
+    {
+      "segment_id": "CUSTOMER_031",
+      "seq_id": 55,
+      "speaker": "customer",
+      "start_time_seconds": 188.08,
+      "end_time_seconds": 189.0,
+      "duration_seconds": 0.92,
+      "text": "I just want to know."
+    },
+    {
+      "segment_id": "CUSTOMER_032",
+      "seq_id": 56,
+      "speaker": "customer",
+      "start_time_seconds": 189.7,
+      "end_time_seconds": 195.98,
+      "duration_seconds": 6.28,
+      "text": "Also, if there's forms that I should fill out ahead of time just in case before my appointment."
+    },
+    {
+      "segment_id": "AGENT_025",
+      "seq_id": 57,
+      "speaker": "agent",
+      "start_time_seconds": 197.07,
+      "end_time_seconds": 198.43,
+      "duration_seconds": 1.36,
+      "text": "Yeah, great question."
+    },
+    {
+      "segment_id": "AGENT_026",
+      "seq_id": 58,
+      "speaker": "agent",
+      "start_time_seconds": 198.83,
+      "end_time_seconds": 203.55,
+      "duration_seconds": 4.72,
+      "text": "So for the thyroid follow ups, Dr. Miller usually orders a blood panel."
+    },
+    {
+      "segment_id": "AGENT_027",
+      "seq_id": 59,
+      "speaker": "agent",
+      "start_time_seconds": 203.55,
+      "end_time_seconds": 215.91,
+      "duration_seconds": 12.36,
+      "text": "This needs to be done fasted in the morning, so I can send you the lab requisition electronically so you can get it scheduled before your visit."
+    },
+    {
+      "segment_id": "AGENT_028",
+      "seq_id": 60,
+      "speaker": "agent",
+      "start_time_seconds": 216.87,
+      "end_time_seconds": 220.75,
+      "duration_seconds": 3.88,
+      "text": "That way, the results will be ready for your 1030."
+    },
+    {
+      "segment_id": "AGENT_029",
+      "seq_id": 61,
+      "speaker": "agent",
+      "start_time_seconds": 220.95,
+      "end_time_seconds": 227.61,
+      "duration_seconds": 6.66,
+      "text": "We can probably get you on the schedule for like 945, so that way you don't have to wait too long to eat."
+    },
+    {
+      "segment_id": "CUSTOMER_033",
+      "seq_id": 62,
+      "speaker": "customer",
+      "start_time_seconds": 228.35,
+      "end_time_seconds": 229.01,
+      "duration_seconds": 0.66,
+      "text": "All right."
+    },
+    {
+      "segment_id": "CUSTOMER_034",
+      "seq_id": 63,
+      "speaker": "customer",
+      "start_time_seconds": 229.11,
+      "end_time_seconds": 229.33,
+      "duration_seconds": 0.22,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "CUSTOMER_035",
+      "seq_id": 64,
+      "speaker": "customer",
+      "start_time_seconds": 229.61,
+      "end_time_seconds": 230.63,
+      "duration_seconds": 1.02,
+      "text": "That's super helpful."
+    },
+    {
+      "segment_id": "CUSTOMER_036",
+      "seq_id": 65,
+      "speaker": "customer",
+      "start_time_seconds": 231.59,
+      "end_time_seconds": 232.93,
+      "duration_seconds": 1.34,
+      "text": "How can I get these forms?"
+    },
+    {
+      "segment_id": "AGENT_030",
+      "seq_id": 66,
+      "speaker": "agent",
+      "start_time_seconds": 234.73,
+      "end_time_seconds": 239.1,
+      "duration_seconds": 4.37,
+      "text": "Yeah, so I can email those forms to you right after this call."
+    },
+    {
+      "segment_id": "AGENT_031",
+      "seq_id": 67,
+      "speaker": "agent",
+      "start_time_seconds": 240.32,
+      "end_time_seconds": 247.26,
+      "duration_seconds": 6.94,
+      "text": "Typically, you can fill them out electronically, but Miss Ashley, I'm not sure how familiar you are with technology."
+    },
+    {
+      "segment_id": "AGENT_032",
+      "seq_id": 68,
+      "speaker": "agent",
+      "start_time_seconds": 247.26,
+      "end_time_seconds": 253.04,
+      "duration_seconds": 5.78,
+      "text": "So if you need, I can help you with the technology or you can just print them out if you prefer."
+    },
+    {
+      "segment_id": "AGENT_033",
+      "seq_id": 69,
+      "speaker": "agent",
+      "start_time_seconds": 255.2,
+      "end_time_seconds": 255.68,
+      "duration_seconds": 0.48,
+      "text": "So"
+    },
+    {
+      "segment_id": "CUSTOMER_037",
+      "seq_id": 70,
+      "speaker": "customer",
+      "start_time_seconds": 258.08,
+      "end_time_seconds": 260.6,
+      "duration_seconds": 2.52,
+      "text": "I mean, I can try with the technology."
+    },
+    {
+      "segment_id": "CUSTOMER_038",
+      "seq_id": 71,
+      "speaker": "customer",
+      "start_time_seconds": 261.0,
+      "end_time_seconds": 264.1,
+      "duration_seconds": 3.1,
+      "text": "I'm a little bit old on the old side."
+    },
+    {
+      "segment_id": "CUSTOMER_039",
+      "seq_id": 72,
+      "speaker": "customer",
+      "start_time_seconds": 265.54,
+      "end_time_seconds": 274.08,
+      "duration_seconds": 8.54,
+      "text": "I mean, I can give you the email that I got made a long time ago, and maybe I could just try to figure it out."
+    },
+    {
+      "segment_id": "AGENT_034",
+      "seq_id": 73,
+      "speaker": "agent",
+      "start_time_seconds": 274.62,
+      "end_time_seconds": 275.1,
+      "duration_seconds": 0.48,
+      "text": "yeah,"
+    },
+    {
+      "segment_id": "CUSTOMER_040",
+      "seq_id": 74,
+      "speaker": "customer",
+      "start_time_seconds": 274.68,
+      "end_time_seconds": 280.34,
+      "duration_seconds": 5.66,
+      "text": "I can give it to you, and if anything, I'll see if I can print them out."
+    },
+    {
+      "segment_id": "AGENT_035",
+      "seq_id": 75,
+      "speaker": "agent",
+      "start_time_seconds": 283.46,
+      "end_time_seconds": 285.56,
+      "duration_seconds": 2.1,
+      "text": "yeah, get me the link."
+    },
+    {
+      "segment_id": "AGENT_036",
+      "seq_id": 76,
+      "speaker": "agent",
+      "start_time_seconds": 287.04,
+      "end_time_seconds": 291.92,
+      "duration_seconds": 4.88,
+      "text": "I mean, give me your email so I can email you over those documents."
+    },
+    {
+      "segment_id": "AGENT_037",
+      "seq_id": 77,
+      "speaker": "agent",
+      "start_time_seconds": 291.92,
+      "end_time_seconds": 294.24,
+      "duration_seconds": 2.32,
+      "text": "We can try and get them electronically signed."
+    },
+    {
+      "segment_id": "AGENT_038",
+      "seq_id": 78,
+      "speaker": "agent",
+      "start_time_seconds": 294.24,
+      "end_time_seconds": 308.29,
+      "duration_seconds": 14.05,
+      "text": "Also, I can make sure you get the link to the actual appointment sent to that email at like 1030 on Thursday."
+    },
+    {
+      "segment_id": "AGENT_039",
+      "seq_id": 79,
+      "speaker": "agent",
+      "start_time_seconds": 308.65,
+      "end_time_seconds": 312.07,
+      "duration_seconds": 3.42,
+      "text": "We'll probably get it out like 1029, so to show up in your email inbox."
+    },
+    {
+      "segment_id": "CUSTOMER_041",
+      "seq_id": 80,
+      "speaker": "customer",
+      "start_time_seconds": 312.42,
+      "end_time_seconds": 312.86,
+      "duration_seconds": 0.44,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "CUSTOMER_042",
+      "seq_id": 81,
+      "speaker": "customer",
+      "start_time_seconds": 313.18,
+      "end_time_seconds": 315.14,
+      "duration_seconds": 1.96,
+      "text": "I can provide you the email right now."
+    },
+    {
+      "segment_id": "AGENT_040",
+      "seq_id": 82,
+      "speaker": "agent",
+      "start_time_seconds": 316.57,
+      "end_time_seconds": 318.55,
+      "duration_seconds": 1.98,
+      "text": "Okay, I'm ready. Okay,"
+    },
+    {
+      "segment_id": "CUSTOMER_043",
+      "seq_id": 83,
+      "speaker": "customer",
+      "start_time_seconds": 317.27,
+      "end_time_seconds": 317.33,
+      "duration_seconds": 0.06,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "CUSTOMER_044",
+      "seq_id": 84,
+      "speaker": "customer",
+      "start_time_seconds": 317.85,
+      "end_time_seconds": 318.11,
+      "duration_seconds": 0.26,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "CUSTOMER_045",
+      "seq_id": 85,
+      "speaker": "customer",
+      "start_time_seconds": 318.21,
+      "end_time_seconds": 328.74,
+      "duration_seconds": 10.53,
+      "text": "So the email is AshleyLovesBunnies79 at hotmail .com."
+    },
+    {
+      "segment_id": "AGENT_041",
+      "seq_id": 86,
+      "speaker": "agent",
+      "start_time_seconds": 330.06,
+      "end_time_seconds": 333.22,
+      "duration_seconds": 3.16,
+      "text": "Ashley loves bunny79 at hotmail .com."
+    },
+    {
+      "segment_id": "AGENT_042",
+      "seq_id": 87,
+      "speaker": "agent",
+      "start_time_seconds": 333.62,
+      "end_time_seconds": 338.3,
+      "duration_seconds": 4.68,
+      "text": "Again, you'll get a secure link right before your appointment."
+    },
+    {
+      "segment_id": "CUSTOMER_046",
+      "seq_id": 88,
+      "speaker": "customer",
+      "start_time_seconds": 339.11,
+      "end_time_seconds": 339.31,
+      "duration_seconds": 0.2,
+      "text": "All right."
+    },
+    {
+      "segment_id": "CUSTOMER_047",
+      "seq_id": 89,
+      "speaker": "customer",
+      "start_time_seconds": 339.45,
+      "end_time_seconds": 339.79,
+      "duration_seconds": 0.34,
+      "text": "Cool."
+    },
+    {
+      "segment_id": "CUSTOMER_048",
+      "seq_id": 90,
+      "speaker": "customer",
+      "start_time_seconds": 341.51,
+      "end_time_seconds": 352.75,
+      "duration_seconds": 11.24,
+      "text": "So just to confirm everything with you, Thursday at 10 .30 AM, Dr. Miller refill noted, lab requisition set, and telehealth link is coming to my email."
+    },
+    {
+      "segment_id": "CUSTOMER_049",
+      "seq_id": 91,
+      "speaker": "customer",
+      "start_time_seconds": 352.75,
+      "end_time_seconds": 352.75,
+      "duration_seconds": 0.0,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "AGENT_043",
+      "seq_id": 92,
+      "speaker": "agent",
+      "start_time_seconds": 354.38,
+      "end_time_seconds": 354.82,
+      "duration_seconds": 0.44,
+      "text": "Yep."
+    },
+    {
+      "segment_id": "AGENT_044",
+      "seq_id": 93,
+      "speaker": "agent",
+      "start_time_seconds": 355.7,
+      "end_time_seconds": 357.86,
+      "duration_seconds": 2.16,
+      "text": "Well, that's exactly right."
+    },
+    {
+      "segment_id": "AGENT_045",
+      "seq_id": 94,
+      "speaker": "agent",
+      "start_time_seconds": 358.84,
+      "end_time_seconds": 359.72,
+      "duration_seconds": 0.88,
+      "text": "You're all set."
+    },
+    {
+      "segment_id": "AGENT_046",
+      "seq_id": 95,
+      "speaker": "agent",
+      "start_time_seconds": 359.82,
+      "end_time_seconds": 362.04,
+      "duration_seconds": 2.22,
+      "text": "Is there anything else you'd like me to note before the appointment?"
+    },
+    {
+      "segment_id": "CUSTOMER_050",
+      "seq_id": 96,
+      "speaker": "customer",
+      "start_time_seconds": 362.28,
+      "end_time_seconds": 363.94,
+      "duration_seconds": 1.66,
+      "text": "No, I think that covers everything."
+    },
+    {
+      "segment_id": "CUSTOMER_051",
+      "seq_id": 97,
+      "speaker": "customer",
+      "start_time_seconds": 364.06,
+      "end_time_seconds": 365.14,
+      "duration_seconds": 1.08,
+      "text": "Thank you so much, doctor."
+    },
+    {
+      "segment_id": "CUSTOMER_052",
+      "seq_id": 98,
+      "speaker": "customer",
+      "start_time_seconds": 366.16,
+      "end_time_seconds": 368.02,
+      "duration_seconds": 1.86,
+      "text": "It just makes everything a lot less stressful."
+    },
+    {
+      "segment_id": "AGENT_047",
+      "seq_id": 99,
+      "speaker": "agent",
+      "start_time_seconds": 368.78,
+      "end_time_seconds": 370.42,
+      "duration_seconds": 1.64,
+      "text": "My pleasure, Ashley."
+    },
+    {
+      "segment_id": "AGENT_048",
+      "seq_id": 100,
+      "speaker": "agent",
+      "start_time_seconds": 370.76,
+      "end_time_seconds": 372.84,
+      "duration_seconds": 2.08,
+      "text": "I'll get everything over to the doctor."
+    },
+    {
+      "segment_id": "AGENT_049",
+      "seq_id": 101,
+      "speaker": "agent",
+      "start_time_seconds": 373.67,
+      "end_time_seconds": 374.83,
+      "duration_seconds": 1.16,
+      "text": "We'll talk soon."
+    },
+    {
+      "segment_id": "CUSTOMER_053",
+      "seq_id": 102,
+      "speaker": "customer",
+      "start_time_seconds": 375.2,
+      "end_time_seconds": 375.8,
+      "duration_seconds": 0.6,
+      "text": "Thank you."
+    },
+    {
+      "segment_id": "CUSTOMER_054",
+      "seq_id": 103,
+      "speaker": "customer",
+      "start_time_seconds": 375.98,
+      "end_time_seconds": 376.24,
+      "duration_seconds": 0.26,
+      "text": "Bye."
+    }
+  ]
+}

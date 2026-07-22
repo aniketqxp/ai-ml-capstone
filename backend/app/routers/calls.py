@@ -1,6 +1,8 @@
 import uuid
 import os
 import shutil
+import json
+from pathlib import Path
 from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
 from pydantic import BaseModel, Field
@@ -11,6 +13,29 @@ from app import worker, storage
 from app.routing import apply_action_routing
 
 router = APIRouter(prefix="/calls", tags=["calls"])
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+SENTIMENT_OUTPUT_DIR = (
+    REPO_ROOT
+    / "ml-services"
+    / "outputs"
+    / "backend"
+    / "sentiment_calls_with_features"
+)
+
+
+def find_sentiment_file(call_id: str):
+    """Locate the generated backend sentiment payload for a public call ID."""
+    if not SENTIMENT_OUTPUT_DIR.exists():
+        return None
+
+    matches = list(
+        SENTIMENT_OUTPUT_DIR.rglob(
+            f"{call_id}_backend_sentiment_with_features.json"
+        )
+    )
+    return matches[0] if matches else None
+
 
 
 class AnalyzeRequest(BaseModel):
@@ -323,3 +348,113 @@ def get_call_flags(call_id: str, db: Session = Depends(get_db)):
         "escalation_risk": evaluation.escalation_risk,
         "weighted_score": float(evaluation.weighted_score) if evaluation.weighted_score else None
     }
+
+@router.get("/sentiment/available")
+def list_available_sentiment_calls():
+    """
+    Return a dashboard-friendly summary of all generated sentiment payloads.
+    """
+    if not SENTIMENT_OUTPUT_DIR.exists():
+        return {
+            "total_calls": 0,
+            "calls": [],
+            "output_directory": str(SENTIMENT_OUTPUT_DIR),
+        }
+
+    calls = []
+
+    for file_path in sorted(
+        SENTIMENT_OUTPUT_DIR.rglob(
+            "*_backend_sentiment_with_features.json"
+        )
+    ):
+        try:
+            with file_path.open("r", encoding="utf-8") as file:
+                payload = json.load(file)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"[sentiment] Skipping invalid file {file_path}: {exc}")
+            continue
+
+        call_summary = payload.get("call_summary") or {}
+        audio_summary = payload.get("audio_feature_summary") or {}
+        customer_trend = payload.get("customer_escalation_trend") or {}
+        speaker_summary = payload.get("speaker_audio_feature_summary") or {}
+
+        calls.append(
+            {
+                "call_id": payload.get("call_id"),
+                "domain": payload.get("domain"),
+                "model_version": payload.get("model_version"),
+                "risk_level": call_summary.get("risk_level"),
+                "dominant_sentiment": call_summary.get(
+                    "dominant_sentiment"
+                ),
+                "dominant_emotion": call_summary.get(
+                    "dominant_emotion"
+                ),
+                "total_segments": call_summary.get("total_segments"),
+                "successful_segments": call_summary.get(
+                    "successful_segments"
+                ),
+                "skipped_segments": call_summary.get(
+                    "skipped_segments"
+                ),
+                "has_audio_features": payload.get(
+                    "has_audio_features"
+                ),
+                "average_pitch_hz": audio_summary.get(
+                    "average_pitch_hz"
+                ),
+                "average_volume_db": audio_summary.get(
+                    "average_volume_db"
+                ),
+                "average_speech_rate_wpm": audio_summary.get(
+                    "average_speech_rate_wpm"
+                ),
+                "average_pause_ratio": audio_summary.get(
+                    "average_pause_ratio"
+                ),
+                "customer_escalation_trend": customer_trend.get(
+                    "trend"
+                ),
+                "customer_trend_delta": customer_trend.get(
+                    "trend_delta"
+                ),
+                "has_speaker_summary": bool(speaker_summary),
+                "dashboard_series_count": len(
+                    payload.get("dashboard_audio_feature_series") or []
+                ),
+            }
+        )
+
+    return {
+        "total_calls": len(calls),
+        "calls": calls,
+    }
+
+
+@router.get("/{call_id}/sentiment")
+def get_call_sentiment(call_id: str):
+    """
+    Return the full sentiment and acoustic-feature payload for one call.
+    """
+    sentiment_file = find_sentiment_file(call_id)
+
+    if sentiment_file is None:
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                "No backend sentiment file found for call_id: "
+                f"{call_id}"
+            ),
+        )
+
+    try:
+        with sentiment_file.open("r", encoding="utf-8") as file:
+            return json.load(file)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Invalid sentiment JSON for call {call_id}: {exc}",
+        ) from exc
+

@@ -5,6 +5,9 @@
 .claude/
 CLAUDE.md
 
+# Allow processed metadata files needed for reproducible experiments
+!
+
 # Environments
 .env
 .env.local
@@ -26,8 +29,13 @@ frontend/dist/
 ml-services/data/
 ml-services/models/
 
+# Allow selected processed metadata files
+!ml-services/data/processed/
+!ml-services/data/processed/*.csv
+!ml-services/data/processed/*.json
+
 # Prevent gigabytes of binary sound layers from being committed
-# data/* (not data/) so subdirectory exceptions can be applied
+# data/* not data/ so subdirectory exceptions can be applied
 data/*
 !data/sentence_segments/
 !data/wer_results.json
@@ -37,6 +45,7 @@ data/na_testset/*
 !data/na_testset/results/**
 *.wav
 *.mp3
+data/audio/
 
 # Generated per-call dashboard data (regenerate via
 # ml-services/evaluation/export_frontend.py) -- destined for Supabase later
@@ -49,5 +58,24 @@ frontend/public/sentiment/
 .DS_Store
 Thumbs.db
 
+# Deployment and local frontend files
 .vercel/
 .env.local
+
+# Raw data should not be committed
+ml-services/data/raw/
+
+# Sentiment analysis baseline and large generated model files
+ml-services/data/processed/cremad_baseline_features.csv
+ml-services/outputs/models/
+ml-services/outputs/wav2vec2/
+ml-services/outputs/reports/wav2vec2_emotion_report.json
+ml-services/outputs/reports/wav2vec2_emotion_confusion_matrix.csv
+ml-services/outputs/sentiment/
+
+# Local MLflow tracking files
+ml-services/mlflow.db
+ml-services/mlflow.db-journal
+ml-services/mlruns/
+ml-services/mlartifacts/
+

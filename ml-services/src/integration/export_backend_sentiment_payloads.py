@@ -114,6 +114,14 @@ def build_backend_payload(simple_payload, source_file, domain):
             "dominant_emotion": seg.get("dominant_emotion"),
             "escalation_score": seg.get("escalation_score"),
             "processing_status": seg.get("processing_status"),
+
+            # Confidence fields used for calibration.
+            "confidence_level": seg.get("confidence_level"),
+            "prediction_confidence": seg.get("prediction_confidence"),
+            "emotion_confidence": seg.get("emotion_confidence"),
+            "sentiment_confidence": seg.get("sentiment_confidence"),
+            "negative_emotion_probability": seg.get("negative_emotion_probability"),
+            
         })
 
     return {

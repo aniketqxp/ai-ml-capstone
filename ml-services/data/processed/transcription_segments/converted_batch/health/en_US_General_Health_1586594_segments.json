@@ -1,0 +1,749 @@
+{
+  "call_id": "APPTEK_HEALTHCARE_0053_0054",
+  "source_apptek_id": "en_US_General_Health_1586594",
+  "source_call_id": null,
+  "source_model": "faster-whisper small.en/int8 + per-channel",
+  "analysis_input_type": "speaker_timestamped_stereo_channels",
+  "audio_paths": {
+    "agent": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/data/processed/apptek_selected_domains/audio/APPTEK_HEALTHCARE_0053.wav",
+    "customer": "/Users/clarayousif/Sheridan/Third/ai-ml-capstone/ml-services/data/processed/apptek_selected_domains/audio/APPTEK_HEALTHCARE_0054.wav"
+  },
+  "channel_mapping": {
+    "agent": "channel1",
+    "customer": "channel2"
+  },
+  "total_source_sentences": 81,
+  "total_converted_segments": 81,
+  "skipped_short_segments": 0,
+  "segments": [
+    {
+      "segment_id": "AGENT_001",
+      "seq_id": 1,
+      "speaker": "agent",
+      "start_time_seconds": 18.1,
+      "end_time_seconds": 19.62,
+      "duration_seconds": 1.52,
+      "text": "Ring, ring, ring, ring."
+    },
+    {
+      "segment_id": "CUSTOMER_001",
+      "seq_id": 2,
+      "speaker": "customer",
+      "start_time_seconds": 23.73,
+      "end_time_seconds": 24.39,
+      "duration_seconds": 0.66,
+      "text": "Hello."
+    },
+    {
+      "segment_id": "CUSTOMER_002",
+      "seq_id": 3,
+      "speaker": "customer",
+      "start_time_seconds": 25.76,
+      "end_time_seconds": 30.6,
+      "duration_seconds": 4.84,
+      "text": "I'd like us to schedule a telemedicine consultation for my chronic condition."
+    },
+    {
+      "segment_id": "CUSTOMER_003",
+      "seq_id": 4,
+      "speaker": "customer",
+      "start_time_seconds": 31.36,
+      "end_time_seconds": 32.86,
+      "duration_seconds": 1.5,
+      "text": "It's for diabetes management."
+    },
+    {
+      "segment_id": "AGENT_002",
+      "seq_id": 5,
+      "speaker": "agent",
+      "start_time_seconds": 35.26,
+      "end_time_seconds": 36.02,
+      "duration_seconds": 0.76,
+      "text": "Well, hello."
+    },
+    {
+      "segment_id": "AGENT_003",
+      "seq_id": 6,
+      "speaker": "agent",
+      "start_time_seconds": 36.24,
+      "end_time_seconds": 36.9,
+      "duration_seconds": 0.66,
+      "text": "Good afternoon."
+    },
+    {
+      "segment_id": "AGENT_004",
+      "seq_id": 7,
+      "speaker": "agent",
+      "start_time_seconds": 37.42,
+      "end_time_seconds": 37.78,
+      "duration_seconds": 0.36,
+      "text": "Absolutely."
+    },
+    {
+      "segment_id": "AGENT_005",
+      "seq_id": 8,
+      "speaker": "agent",
+      "start_time_seconds": 38.08,
+      "end_time_seconds": 39.24,
+      "duration_seconds": 1.16,
+      "text": "I can help you with that."
+    },
+    {
+      "segment_id": "AGENT_006",
+      "seq_id": 9,
+      "speaker": "agent",
+      "start_time_seconds": 40.28,
+      "end_time_seconds": 43.65,
+      "duration_seconds": 3.37,
+      "text": "May I ask for your name, please, before we begin?"
+    },
+    {
+      "segment_id": "CUSTOMER_004",
+      "seq_id": 10,
+      "speaker": "customer",
+      "start_time_seconds": 44.09,
+      "end_time_seconds": 44.09,
+      "duration_seconds": 0.0,
+      "text": "Sure."
+    },
+    {
+      "segment_id": "CUSTOMER_005",
+      "seq_id": 11,
+      "speaker": "customer",
+      "start_time_seconds": 44.81,
+      "end_time_seconds": 45.01,
+      "duration_seconds": 0.2,
+      "text": "Sure."
+    },
+    {
+      "segment_id": "CUSTOMER_006",
+      "seq_id": 12,
+      "speaker": "customer",
+      "start_time_seconds": 45.25,
+      "end_time_seconds": 46.97,
+      "duration_seconds": 1.72,
+      "text": "It's Alex Johnson."
+    },
+    {
+      "segment_id": "CUSTOMER_007",
+      "seq_id": 13,
+      "speaker": "customer",
+      "start_time_seconds": 47.79,
+      "end_time_seconds": 48.85,
+      "duration_seconds": 1.06,
+      "text": "I have an ID number."
+    },
+    {
+      "segment_id": "AGENT_007",
+      "seq_id": 14,
+      "speaker": "agent",
+      "start_time_seconds": 49.49,
+      "end_time_seconds": 50.27,
+      "duration_seconds": 0.78,
+      "text": "Okay, Alex."
+    },
+    {
+      "segment_id": "CUSTOMER_008",
+      "seq_id": 15,
+      "speaker": "customer",
+      "start_time_seconds": 49.57,
+      "end_time_seconds": 51.79,
+      "duration_seconds": 2.22,
+      "text": "One, two, three, four, five, six."
+    },
+    {
+      "segment_id": "AGENT_008",
+      "seq_id": 16,
+      "speaker": "agent",
+      "start_time_seconds": 51.31,
+      "end_time_seconds": 52.71,
+      "duration_seconds": 1.4,
+      "text": "Oh, no, that's not necessary."
+    },
+    {
+      "segment_id": "CUSTOMER_009",
+      "seq_id": 17,
+      "speaker": "customer",
+      "start_time_seconds": 53.64,
+      "end_time_seconds": 54.0,
+      "duration_seconds": 0.36,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "AGENT_009",
+      "seq_id": 18,
+      "speaker": "agent",
+      "start_time_seconds": 54.07,
+      "end_time_seconds": 55.61,
+      "duration_seconds": 1.54,
+      "text": "That's not necessary right now."
+    },
+    {
+      "segment_id": "AGENT_010",
+      "seq_id": 19,
+      "speaker": "agent",
+      "start_time_seconds": 56.13,
+      "end_time_seconds": 57.83,
+      "duration_seconds": 1.7,
+      "text": "I will ask from you right after."
+    },
+    {
+      "segment_id": "AGENT_011",
+      "seq_id": 20,
+      "speaker": "agent",
+      "start_time_seconds": 58.93,
+      "end_time_seconds": 60.13,
+      "duration_seconds": 1.2,
+      "text": "Good afternoon, Alex Johnson."
+    },
+    {
+      "segment_id": "AGENT_012",
+      "seq_id": 21,
+      "speaker": "agent",
+      "start_time_seconds": 60.73,
+      "end_time_seconds": 61.39,
+      "duration_seconds": 0.66,
+      "text": "Thanks for your call."
+    },
+    {
+      "segment_id": "AGENT_013",
+      "seq_id": 22,
+      "speaker": "agent",
+      "start_time_seconds": 61.73,
+      "end_time_seconds": 64.99,
+      "duration_seconds": 3.26,
+      "text": "So yes, we do offer virtual consultations for ongoing care."
+    },
+    {
+      "segment_id": "AGENT_014",
+      "seq_id": 23,
+      "speaker": "agent",
+      "start_time_seconds": 65.83,
+      "end_time_seconds": 67.93,
+      "duration_seconds": 2.1,
+      "text": "Can I have your patient ID now, please?"
+    },
+    {
+      "segment_id": "CUSTOMER_010",
+      "seq_id": 24,
+      "speaker": "customer",
+      "start_time_seconds": 68.88,
+      "end_time_seconds": 69.18,
+      "duration_seconds": 0.3,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "CUSTOMER_011",
+      "seq_id": 25,
+      "speaker": "customer",
+      "start_time_seconds": 69.52,
+      "end_time_seconds": 70.26,
+      "duration_seconds": 0.74,
+      "text": "I have that."
+    },
+    {
+      "segment_id": "CUSTOMER_012",
+      "seq_id": 26,
+      "speaker": "customer",
+      "start_time_seconds": 70.72,
+      "end_time_seconds": 74.58,
+      "duration_seconds": 3.86,
+      "text": "One, two, three, four, five, six."
+    },
+    {
+      "segment_id": "CUSTOMER_013",
+      "seq_id": 27,
+      "speaker": "customer",
+      "start_time_seconds": 74.58,
+      "end_time_seconds": 76.98,
+      "duration_seconds": 2.4,
+      "text": "I need something this week if possible."
+    },
+    {
+      "segment_id": "CUSTOMER_014",
+      "seq_id": 28,
+      "speaker": "customer",
+      "start_time_seconds": 77.66,
+      "end_time_seconds": 79.92,
+      "duration_seconds": 2.26,
+      "text": "Anything before the end of the week?"
+    },
+    {
+      "segment_id": "AGENT_015",
+      "seq_id": 29,
+      "speaker": "agent",
+      "start_time_seconds": 82.44,
+      "end_time_seconds": 82.88,
+      "duration_seconds": 0.44,
+      "text": "Absolutely."
+    },
+    {
+      "segment_id": "AGENT_016",
+      "seq_id": 30,
+      "speaker": "agent",
+      "start_time_seconds": 83.18,
+      "end_time_seconds": 84.12,
+      "duration_seconds": 0.94,
+      "text": "Let me check for you."
+    },
+    {
+      "segment_id": "AGENT_017",
+      "seq_id": 31,
+      "speaker": "agent",
+      "start_time_seconds": 84.68,
+      "end_time_seconds": 91.03,
+      "duration_seconds": 6.35,
+      "text": "We have appointments available, excuse me, on Thursday, October 23rd at 10 a .m."
+    },
+    {
+      "segment_id": "AGENT_018",
+      "seq_id": 32,
+      "speaker": "agent",
+      "start_time_seconds": 91.05,
+      "end_time_seconds": 91.93,
+      "duration_seconds": 0.88,
+      "text": "or 2 p .m."
+    },
+    {
+      "segment_id": "AGENT_019",
+      "seq_id": 33,
+      "speaker": "agent",
+      "start_time_seconds": 91.99,
+      "end_time_seconds": 95.21,
+      "duration_seconds": 3.22,
+      "text": "and Friday, October 24th at 11 a .m."
+    },
+    {
+      "segment_id": "AGENT_020",
+      "seq_id": 34,
+      "speaker": "agent",
+      "start_time_seconds": 95.61,
+      "end_time_seconds": 95.63,
+      "duration_seconds": 0.02,
+      "text": "Eastern."
+    },
+    {
+      "segment_id": "AGENT_021",
+      "seq_id": 35,
+      "speaker": "agent",
+      "start_time_seconds": 96.29,
+      "end_time_seconds": 98.41,
+      "duration_seconds": 2.12,
+      "text": "Would any of those times work for you?"
+    },
+    {
+      "segment_id": "CUSTOMER_015",
+      "seq_id": 36,
+      "speaker": "customer",
+      "start_time_seconds": 102.31,
+      "end_time_seconds": 104.35,
+      "duration_seconds": 2.04,
+      "text": "Thursday at 2 p .m."
+    },
+    {
+      "segment_id": "CUSTOMER_016",
+      "seq_id": 37,
+      "speaker": "customer",
+      "start_time_seconds": 104.39,
+      "end_time_seconds": 105.47,
+      "duration_seconds": 1.08,
+      "text": "Sounds good."
+    },
+    {
+      "segment_id": "CUSTOMER_017",
+      "seq_id": 38,
+      "speaker": "customer",
+      "start_time_seconds": 106.46,
+      "end_time_seconds": 109.08,
+      "duration_seconds": 2.62,
+      "text": "Is Dr. Emily Carter available?"
+    },
+    {
+      "segment_id": "CUSTOMER_018",
+      "seq_id": 39,
+      "speaker": "customer",
+      "start_time_seconds": 109.82,
+      "end_time_seconds": 112.86,
+      "duration_seconds": 3.04,
+      "text": "She's been handling my case so far."
+    },
+    {
+      "segment_id": "AGENT_022",
+      "seq_id": 40,
+      "speaker": "agent",
+      "start_time_seconds": 117.04,
+      "end_time_seconds": 117.54,
+      "duration_seconds": 0.5,
+      "text": "Sure, sure, sure."
+    },
+    {
+      "segment_id": "AGENT_023",
+      "seq_id": 41,
+      "speaker": "agent",
+      "start_time_seconds": 117.78,
+      "end_time_seconds": 119.8,
+      "duration_seconds": 2.02,
+      "text": "Yes, Dr. Carter has that 2 p .m."
+    },
+    {
+      "segment_id": "AGENT_024",
+      "seq_id": 42,
+      "speaker": "agent",
+      "start_time_seconds": 120.14,
+      "end_time_seconds": 121.42,
+      "duration_seconds": 1.28,
+      "text": "slot open."
+    },
+    {
+      "segment_id": "AGENT_025",
+      "seq_id": 43,
+      "speaker": "agent",
+      "start_time_seconds": 121.82,
+      "end_time_seconds": 125.1,
+      "duration_seconds": 3.28,
+      "text": "I'll book you in for Thursday, October 23rd at 2 p .m."
+    },
+    {
+      "segment_id": "AGENT_026",
+      "seq_id": 44,
+      "speaker": "agent",
+      "start_time_seconds": 125.1,
+      "end_time_seconds": 125.54,
+      "duration_seconds": 0.44,
+      "text": "with her."
+    },
+    {
+      "segment_id": "AGENT_027",
+      "seq_id": 45,
+      "speaker": "agent",
+      "start_time_seconds": 125.68,
+      "end_time_seconds": 129.58,
+      "duration_seconds": 3.9,
+      "text": "You'll receive a confirmation email with the video link shortly."
+    },
+    {
+      "segment_id": "AGENT_028",
+      "seq_id": 46,
+      "speaker": "agent",
+      "start_time_seconds": 130.6,
+      "end_time_seconds": 131.28,
+      "duration_seconds": 0.68,
+      "text": "Is there anything?"
+    },
+    {
+      "segment_id": "AGENT_029",
+      "seq_id": 47,
+      "speaker": "agent",
+      "start_time_seconds": 131.78,
+      "end_time_seconds": 134.34,
+      "duration_seconds": 2.56,
+      "text": "Oh, let's wait for that confirmation to go through."
+    },
+    {
+      "segment_id": "CUSTOMER_019",
+      "seq_id": 48,
+      "speaker": "customer",
+      "start_time_seconds": 139.18,
+      "end_time_seconds": 139.18,
+      "duration_seconds": 0.0,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "CUSTOMER_020",
+      "seq_id": 49,
+      "speaker": "customer",
+      "start_time_seconds": 139.38,
+      "end_time_seconds": 139.5,
+      "duration_seconds": 0.12,
+      "text": "Perfect."
+    },
+    {
+      "segment_id": "CUSTOMER_021",
+      "seq_id": 50,
+      "speaker": "customer",
+      "start_time_seconds": 139.8,
+      "end_time_seconds": 140.3,
+      "duration_seconds": 0.5,
+      "text": "Thank you."
+    },
+    {
+      "segment_id": "CUSTOMER_022",
+      "seq_id": 51,
+      "speaker": "customer",
+      "start_time_seconds": 141.08,
+      "end_time_seconds": 146.56,
+      "duration_seconds": 5.48,
+      "text": "While I have you on the line, actually, can I also request a refill on my prescription?"
+    },
+    {
+      "segment_id": "CUSTOMER_023",
+      "seq_id": 52,
+      "speaker": "customer",
+      "start_time_seconds": 148.78,
+      "end_time_seconds": 151.46,
+      "duration_seconds": 2.68,
+      "text": "It's a Metformin 500 milligrams."
+    },
+    {
+      "segment_id": "AGENT_030",
+      "seq_id": 53,
+      "speaker": "agent",
+      "start_time_seconds": 158.56,
+      "end_time_seconds": 166.58,
+      "duration_seconds": 8.02,
+      "text": "Of course, I'll add that note for Dr. Carter to review during your consultation, and if she approves it, we'll send it electronically to your pharmacy."
+    },
+    {
+      "segment_id": "AGENT_031",
+      "seq_id": 54,
+      "speaker": "agent",
+      "start_time_seconds": 167.18,
+      "end_time_seconds": 174.3,
+      "duration_seconds": 7.12,
+      "text": "Is your preferred pharmacy still in CVS on Main Street, or do you have a new preferred pharmacy?"
+    },
+    {
+      "segment_id": "CUSTOMER_024",
+      "seq_id": 55,
+      "speaker": "customer",
+      "start_time_seconds": 175.89,
+      "end_time_seconds": 176.75,
+      "duration_seconds": 0.86,
+      "text": "Yes, that's the one."
+    },
+    {
+      "segment_id": "CUSTOMER_025",
+      "seq_id": 56,
+      "speaker": "customer",
+      "start_time_seconds": 177.21,
+      "end_time_seconds": 180.05,
+      "duration_seconds": 2.84,
+      "text": "Do I need any lab tests done before the appointment?"
+    },
+    {
+      "segment_id": "CUSTOMER_026",
+      "seq_id": 57,
+      "speaker": "customer",
+      "start_time_seconds": 181.6,
+      "end_time_seconds": 183.32,
+      "duration_seconds": 1.72,
+      "text": "And are there any forms on any fill out?"
+    },
+    {
+      "segment_id": "AGENT_032",
+      "seq_id": 58,
+      "speaker": "agent",
+      "start_time_seconds": 187.16,
+      "end_time_seconds": 201.68,
+      "duration_seconds": 14.52,
+      "text": "Well, for diabetes management, as you know, we can ask Dr. Carter for recent blood work, things like the A1C or the glucose levels."
+    },
+    {
+      "segment_id": "CUSTOMER_027",
+      "seq_id": 59,
+      "speaker": "customer",
+      "start_time_seconds": 195.24,
+      "end_time_seconds": 195.24,
+      "duration_seconds": 0.0,
+      "text": "Yeah."
+    },
+    {
+      "segment_id": "AGENT_033",
+      "seq_id": 60,
+      "speaker": "agent",
+      "start_time_seconds": 202.0,
+      "end_time_seconds": 206.12,
+      "duration_seconds": 4.12,
+      "text": "If you have not done those in the past three months, we can arrange them for you."
+    },
+    {
+      "segment_id": "AGENT_034",
+      "seq_id": 61,
+      "speaker": "agent",
+      "start_time_seconds": 206.7,
+      "end_time_seconds": 209.18,
+      "duration_seconds": 2.48,
+      "text": "We may need to do a redo on some diagnostics."
+    },
+    {
+      "segment_id": "AGENT_035",
+      "seq_id": 62,
+      "speaker": "agent",
+      "start_time_seconds": 209.78,
+      "end_time_seconds": 215.1,
+      "duration_seconds": 5.32,
+      "text": "You'll also need to complete an updated health history and consent form online before the call."
+    },
+    {
+      "segment_id": "AGENT_036",
+      "seq_id": 63,
+      "speaker": "agent",
+      "start_time_seconds": 215.72,
+      "end_time_seconds": 219.62,
+      "duration_seconds": 3.9,
+      "text": "I will definitely include those links in your confirmation email, so no worries there."
+    },
+    {
+      "segment_id": "AGENT_037",
+      "seq_id": 64,
+      "speaker": "agent",
+      "start_time_seconds": 220.96,
+      "end_time_seconds": 221.56,
+      "duration_seconds": 0.6,
+      "text": "Were"
+    },
+    {
+      "segment_id": "CUSTOMER_028",
+      "seq_id": 65,
+      "speaker": "customer",
+      "start_time_seconds": 223.42,
+      "end_time_seconds": 223.94,
+      "duration_seconds": 0.52,
+      "text": "Okay."
+    },
+    {
+      "segment_id": "CUSTOMER_029",
+      "seq_id": 66,
+      "speaker": "customer",
+      "start_time_seconds": 224.18,
+      "end_time_seconds": 227.9,
+      "duration_seconds": 3.72,
+      "text": "That seems like I think I have all that stuff sorted out."
+    },
+    {
+      "segment_id": "CUSTOMER_030",
+      "seq_id": 67,
+      "speaker": "customer",
+      "start_time_seconds": 228.44,
+      "end_time_seconds": 229.94,
+      "duration_seconds": 1.5,
+      "text": "That covers everything that I need."
+    },
+    {
+      "segment_id": "CUSTOMER_031",
+      "seq_id": 68,
+      "speaker": "customer",
+      "start_time_seconds": 230.18,
+      "end_time_seconds": 230.68,
+      "duration_seconds": 0.5,
+      "text": "Thanks for your help."
+    },
+    {
+      "segment_id": "AGENT_038",
+      "seq_id": 69,
+      "speaker": "agent",
+      "start_time_seconds": 232.24,
+      "end_time_seconds": 238.68,
+      "duration_seconds": 6.44,
+      "text": "there any further questions at all on our policies or on insurance?"
+    },
+    {
+      "segment_id": "CUSTOMER_032",
+      "seq_id": 70,
+      "speaker": "customer",
+      "start_time_seconds": 239.64,
+      "end_time_seconds": 240.64,
+      "duration_seconds": 1.0,
+      "text": "Nope."
+    },
+    {
+      "segment_id": "CUSTOMER_033",
+      "seq_id": 71,
+      "speaker": "customer",
+      "start_time_seconds": 240.82,
+      "end_time_seconds": 241.48,
+      "duration_seconds": 0.66,
+      "text": "I'll see you."
+    },
+    {
+      "segment_id": "CUSTOMER_034",
+      "seq_id": 72,
+      "speaker": "customer",
+      "start_time_seconds": 241.74,
+      "end_time_seconds": 242.82,
+      "duration_seconds": 1.08,
+      "text": "I don't know."
+    },
+    {
+      "segment_id": "CUSTOMER_035",
+      "seq_id": 73,
+      "speaker": "customer",
+      "start_time_seconds": 242.94,
+      "end_time_seconds": 244.52,
+      "duration_seconds": 1.58,
+      "text": "I'll be there at 2 p .m."
+    },
+    {
+      "segment_id": "CUSTOMER_036",
+      "seq_id": 74,
+      "speaker": "customer",
+      "start_time_seconds": 244.52,
+      "end_time_seconds": 246.46,
+      "duration_seconds": 1.94,
+      "text": "and I'll be seeing Dr. Emily Carter."
+    },
+    {
+      "segment_id": "CUSTOMER_037",
+      "seq_id": 75,
+      "speaker": "customer",
+      "start_time_seconds": 246.84,
+      "end_time_seconds": 250.34,
+      "duration_seconds": 3.5,
+      "text": "So I'll just talk to Dr. Dunn."
+    },
+    {
+      "segment_id": "CUSTOMER_038",
+      "seq_id": 76,
+      "speaker": "customer",
+      "start_time_seconds": 250.78,
+      "end_time_seconds": 251.3,
+      "duration_seconds": 0.52,
+      "text": "Thanks for everything."
+    },
+    {
+      "segment_id": "AGENT_039",
+      "seq_id": 77,
+      "speaker": "agent",
+      "start_time_seconds": 255.38,
+      "end_time_seconds": 256.76,
+      "duration_seconds": 1.38,
+      "text": "Well, you're very welcome, Alex."
+    },
+    {
+      "segment_id": "AGENT_040",
+      "seq_id": 78,
+      "speaker": "agent",
+      "start_time_seconds": 257.06,
+      "end_time_seconds": 259.48,
+      "duration_seconds": 2.42,
+      "text": "We'll see you virtually on Thursday at 2 p .m."
+    },
+    {
+      "segment_id": "AGENT_041",
+      "seq_id": 79,
+      "speaker": "agent",
+      "start_time_seconds": 259.82,
+      "end_time_seconds": 261.68,
+      "duration_seconds": 1.86,
+      "text": "Take care and have a blessed day."
+    },
+    {
+      "segment_id": "CUSTOMER_039",
+      "seq_id": 80,
+      "speaker": "customer",
+      "start_time_seconds": 263.24,
+      "end_time_seconds": 263.96,
+      "duration_seconds": 0.72,
+      "text": "Thank you so much."
+    },
+    {
+      "segment_id": "AGENT_042",
+      "seq_id": 81,
+      "speaker": "agent",
+      "start_time_seconds": 280.76,
+      "end_time_seconds": 281.46,
+      "duration_seconds": 0.7,
+      "text": "Damn, that's short."
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "call_id": "APPTEK_BANKING_0101",
+  "overall_audio_sentiment": "Positive",
+  "dominant_emotion": "happy",
+  "negative_emotion_probability": 0.3349829651415348,
+  "anger_probability": 0.008037492632865906,
+  "stress_probability": 0.0695066124200821,
+  "sadness_probability": 0.0238012857735157,
+  "anxiety_probability": 0.16171029210090637,
+  "calm_probability": 0.0045707193203270435,
+  "audio_features": {
+    "vocal_intensity": "Medium",
+    "pitch_level": "Low",
+    "pitch_variability": "Medium",
+    "speech_rate": "Medium",
+    "pause_frequency": "High",
+    "long_silence_detected": true,
+    "total_silence_duration_seconds": 23.536,
+    "overlap_rate": null
+  },
+  "emotional_volatility": "High",
+  "audio_sentiment_shift": "Unchanged",
+  "audio_escalation_score": 0.3295273006158641,
+  "risk_level": "Medium",
+  "escalation_score_breakdown": {
+    "emotion_risk": 0.12819206062704325,
+    "voice_risk": 0.625,
+    "timeline_risk": 0.4367250812093698,
+    "uncertainty_adjustment": 1.0,
+    "final_score": 0.3295273006158641
+  },
+  "prediction_confidence": 0.660446286201477,
+  "confidence_level": "Medium",
+  "uncertain_prediction": false,
+  "top_emotion_margin": 0.4987359941005707,
+  "peak_emotion": {
+    "time_seconds": 32.5,
+    "timestamp": "00:00:32",
+    "emotion": "fear",
+    "score": 0.3977479722816497
+  },
+  "sentiment_timeline": [
+    {
+      "segment_id": 0,
+      "start_time_seconds": 0.0,
+      "end_time_seconds": 5.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.004958329722285271,
+        "sadness": 0.43274497985839844,
+        "fear": 0.06015884503722191,
+        "disgust": 0.4915401339530945,
+        "happy": 0.004799379967153072,
+        "neutral": 0.0057983072474598885
+      },
+      "risk_score": 0.26486944826319814
+    },
+    {
+      "segment_id": 1,
+      "start_time_seconds": 5.0,
+      "end_time_seconds": 10.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0024510137736797333,
+        "sadness": 0.9018625617027283,
+        "fear": 0.06741230189800262,
+        "disgust": 0.011758259497582912,
+        "happy": 0.001789150875993073,
+        "neutral": 0.014726608991622925
+      },
+      "risk_score": 0.2639496165793389
+    },
+    {
+      "segment_id": 2,
+      "start_time_seconds": 10.0,
+      "end_time_seconds": 15.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.00855178665369749,
+        "sadness": 0.0010370383970439434,
+        "fear": 0.005973705556243658,
+        "disgust": 0.007429385557770729,
+        "happy": 0.9741405844688416,
+        "neutral": 0.0028674497734755278
+      },
+      "risk_score": 0.011517298757098615
+    },
+    {
+      "segment_id": 3,
+      "start_time_seconds": 15.0,
+      "end_time_seconds": 20.0,
+      "dominant_emotion": "disgust",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.009767286479473114,
+        "sadness": 0.12027790397405624,
+        "fear": 0.1474861055612564,
+        "disgust": 0.38831818103790283,
+        "happy": 0.30920764803886414,
+        "neutral": 0.02494288794696331
+      },
+      "risk_score": 0.2082175388932228
+    },
+    {
+      "segment_id": 4,
+      "start_time_seconds": 20.0,
+      "end_time_seconds": 25.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.004563190508633852,
+        "sadness": 0.0018332503968849778,
+        "fear": 0.00794040784239769,
+        "disgust": 0.008087718859314919,
+        "happy": 0.9731042385101318,
+        "neutral": 0.004471287596970797
+      },
+      "risk_score": 0.009872839116724208
+    },
+    {
+      "segment_id": 5,
+      "start_time_seconds": 25.0,
+      "end_time_seconds": 30.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0026383863296359777,
+        "sadness": 0.9122946858406067,
+        "fear": 0.05530421808362007,
+        "disgust": 0.01589878834784031,
+        "happy": 0.0017094304785132408,
+        "neutral": 0.012154622934758663
+      },
+      "risk_score": 0.26167926733614877
+    },
+    {
+      "segment_id": 6,
+      "start_time_seconds": 30.0,
+      "end_time_seconds": 35.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.0038983365520834923,
+        "sadness": 0.27775758504867554,
+        "fear": 0.5949834585189819,
+        "disgust": 0.11157237738370895,
+        "happy": 0.00865954253822565,
+        "neutral": 0.0031287383753806353
+      },
+      "risk_score": 0.3977479722816497
+    },
+    {
+      "segment_id": 7,
+      "start_time_seconds": 35.0,
+      "end_time_seconds": 40.0,
+      "dominant_emotion": "fear",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.012590707279741764,
+        "sadness": 0.0987687036395073,
+        "fear": 0.467413991689682,
+        "disgust": 0.3636032044887543,
+        "happy": 0.05381790176033974,
+        "neutral": 0.003805454121902585
+      },
+      "risk_score": 0.3587430033367127
+    },
+    {
+      "segment_id": 8,
+      "start_time_seconds": 40.0,
+      "end_time_seconds": 45.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.0045904372818768024,
+        "sadness": 0.1609543263912201,
+        "fear": 0.14950110018253326,
+        "disgust": 0.035486988723278046,
+        "happy": 0.5266316533088684,
+        "neutral": 0.12283552438020706
+      },
+      "risk_score": 0.12730370683129877
+    },
+    {
+      "segment_id": 9,
+      "start_time_seconds": 45.0,
+      "end_time_seconds": 50.0,
+      "dominant_emotion": "sadness",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.006065795198082924,
+        "sadness": 0.5036637783050537,
+        "fear": 0.06458643823862076,
+        "disgust": 0.02105114236474037,
+        "happy": 0.032195936888456345,
+        "neutral": 0.3724370002746582
+      },
+      "risk_score": 0.1680212956853211
+    },
+    {
+      "segment_id": 10,
+      "start_time_seconds": 50.0,
+      "end_time_seconds": 55.0,
+      "dominant_emotion": "happy",
+      "overall_audio_sentiment": "Positive",
+      "emotion_probabilities": {
+        "anger": 0.003993414808064699,
+        "sadness": 0.010500757955014706,
+        "fear": 0.019339479506015778,
+        "disgust": 0.007777975872159004,
+        "happy": 0.9074904918670654,
+        "neutral": 0.05089789628982544
+      },
+      "risk_score": 0.01723448431584984
+    },
+    {
+      "segment_id": 11,
+      "start_time_seconds": 55.0,
+      "end_time_seconds": 60.0,
+      "dominant_emotion": "anger",
+      "overall_audio_sentiment": "Negative",
+      "emotion_probabilities": {
+        "anger": 0.4815465211868286,
+        "sadness": 0.023978345096111298,
+        "fear": 0.0061734514310956,
+        "disgust": 0.0916467234492302,
+        "happy": 0.025772562250494957,
+        "neutral": 0.37088239192962646
+      },
+      "risk_score": 0.39315288374200463
+    }
+  ],
+  "model_name": "Wav2Vec2 emotion classifier - selected V5",
+  "model_version": "model_v5_cremad_ravdess_freeze6_epochs5_lr1e5",
+  "processing_status": "success",
+  "warnings": [
+    "For short audio clips, the timeline may contain only one segment. For long call-center audio, the same model is applied across multiple segments to track emotion changes over time.",
+    "If uncertain_prediction is true, the top emotion probabilities are close or the prediction confidence is low."
+  ],
+  "apptek_metadata": {
+    "domain": "banking",
+    "raw_domain": "banking",
+    "gender": "male",
+    "accent": "en-MX",
+    "duration_seconds": 486.98,
+    "text_preview": "This call may be recorded for quality purposes. Good afternoon! Thank you for calling Horizon Bank Customer Support. This is Alejandro speaking. How can I help you today? Of course, Daniela! I'll be happy to help you with that. (um) May I have your checking account number please? Thank you very much, Daniela! Let me just confirm that. That's gonna to be one two eight nine five five six four seven three. Correct? Okay! And the savings account. (uh) You already have the account number handy? Okay!"
+  }
+}

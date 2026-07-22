@@ -1,16 +1,18 @@
 """
-Export AppTek selected-domain metadata while preserving original source identifiers.
+export apptek selected-domain metadata while preserving original source identifiers.
 
-This creates a mapping between:
+this creates a mapping between:
 - our exported call_id, for example APPTEK_BANKING_0048
-- AppTek/source audio id, for example en_CA_Banking_1586889
+- apptek/source audio id, for example en_CA_Banking_1586889
 
-No audio is downloaded or copied here.
+no audio is downloaded or copied here.
 """
 
 from pathlib import Path
+
 import pandas as pd
-from datasets import load_dataset, Audio
+from datasets import Audio, load_dataset
+
 
 DATASET_NAME = "apptek-com/apptek_callcenter_dialogues"
 
@@ -32,6 +34,7 @@ OUTPUT_PATH = (
     / "apptek_selected_domain_metadata_with_source_ids.csv"
 )
 
+# apptek uses shorter/raw domain names, so we map them to our project domain names
 DOMAIN_MAPPING = {
     "banking": "banking",
     "health": "healthcare",
@@ -40,6 +43,7 @@ DOMAIN_MAPPING = {
 
 
 def get_source_id_from_audio(audio_obj):
+    # with decode=false, the audio object should contain the original cached audio path
     if not isinstance(audio_obj, dict):
         return None, None
 
@@ -48,20 +52,26 @@ def get_source_id_from_audio(audio_obj):
         return None, None
 
     audio_path = str(audio_path)
+
+    # example: en_CA_Banking_1586889.wav -> en_CA_Banking_1586889
     source_id = Path(audio_path).stem
 
     return source_id, audio_path
 
 
 def main():
+    # this is the metadata created by the first apptek preparation script
     existing_df = pd.read_csv(EXISTING_METADATA_PATH)
 
     print("Loading AppTek dataset...")
+
+    # decode=false avoids audio decoding and lets us read the original audio path only
     ds = load_dataset(DATASET_NAME, split="test")
     ds = ds.cast_column("audio", Audio(decode=False))
 
     selected_rows = []
 
+    # these counters recreate the same call_id numbering used in the first script
     counters = {
         "banking": 0,
         "healthcare": 0,
@@ -71,6 +81,7 @@ def main():
     for row in ds:
         raw_domain = row.get("domain")
 
+        # skip domains we are not using in our capstone demo
         if raw_domain not in DOMAIN_MAPPING:
             continue
 
@@ -78,6 +89,7 @@ def main():
         counters[selected_domain] += 1
 
         call_id = f"APPTEK_{selected_domain.upper()}_{counters[selected_domain]:04d}"
+
         source_apptek_id, source_audio_path = get_source_id_from_audio(row.get("audio"))
 
         selected_rows.append(
@@ -94,6 +106,7 @@ def main():
 
     source_df = pd.DataFrame(selected_rows)
 
+    # add the original apptek source id to our existing metadata
     merged = existing_df.merge(
         source_df,
         on=["call_id", "selected_domain", "raw_domain", "gender", "accent"],
@@ -107,6 +120,7 @@ def main():
     print()
     print("Missing source IDs:", merged["source_apptek_id"].isna().sum())
     print()
+
     print("Sample:")
     print(
         merged[
@@ -120,14 +134,19 @@ def main():
                 "duration_seconds",
                 "audio_path",
             ]
-        ].head(20).to_string(index=False)
+        ]
+        .head(20)
+        .to_string(index=False)
     )
 
     print()
+
+    # this is just a quick check for a specific original apptek id
     print("Rows containing 1586889:")
     mask = merged.astype(str).apply(
         lambda col: col.str.contains("1586889", case=False, na=False)
     ).any(axis=1)
+
     print(merged[mask].to_string(index=False))
 
 

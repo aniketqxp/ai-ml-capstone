@@ -1,0 +1,96 @@
+{
+  "dataset": "CREMA-D + RAVDESS",
+  "total_records": 8690,
+  "datasets": {
+    "CREMA-D": 7442,
+    "RAVDESS": 1248
+  },
+  "splits": {
+    "train": 5979,
+    "test": 1489,
+    "validation": 1222
+  },
+  "split_by_dataset": {
+    "test": {
+      "CREMA-D": 1229,
+      "RAVDESS": 260
+    },
+    "train": {
+      "CREMA-D": 5147,
+      "RAVDESS": 832
+    },
+    "validation": {
+      "CREMA-D": 1066,
+      "RAVDESS": 156
+    }
+  },
+  "emotion_labels": {
+    "anger": 1463,
+    "disgust": 1463,
+    "fear": 1463,
+    "happy": 1463,
+    "sadness": 1463,
+    "neutral": 1375
+  },
+  "emotion_by_dataset": {
+    "anger": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    },
+    "disgust": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    },
+    "fear": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    },
+    "happy": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    },
+    "neutral": {
+      "CREMA-D": 1087,
+      "RAVDESS": 288
+    },
+    "sadness": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    }
+  },
+  "sentiment_labels": {
+    "Negative": 5852,
+    "Positive": 1463,
+    "Neutral": 1375
+  },
+  "sentiment_by_dataset": {
+    "Negative": {
+      "CREMA-D": 5084,
+      "RAVDESS": 768
+    },
+    "Neutral": {
+      "CREMA-D": 1087,
+      "RAVDESS": 288
+    },
+    "Positive": {
+      "CREMA-D": 1271,
+      "RAVDESS": 192
+    }
+  },
+  "global_actors_per_split": {
+    "test": 20,
+    "train": 79,
+    "validation": 16
+  },
+  "actors_by_dataset": {
+    "CREMA-D": 91,
+    "RAVDESS": 24
+  },
+  "notes": [
+    "Combined metadata uses the existing speaker-aware split from each dataset.",
+    "global_actor_id prevents actor ID collisions between CREMA-D and RAVDESS.",
+    "RAVDESS calm is mapped to neutral.",
+    "RAVDESS surprised samples are excluded.",
+    "This metadata is prepared for Model V2 training."
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "model_v1": {
+    "name": "Model V1",
+    "dataset_source": "CREMA-D",
+    "run_name": "model_v1_wav2vec2_cremad",
+    "raw_emotion_accuracy": 0.8079739625711961,
+    "raw_emotion_macro_f1": 0.808581464200436,
+    "business_sentiment_accuracy": 0.9170056956875509,
+    "business_sentiment_macro_f1": 0.8826240745206825
+  },
+  "model_v2": {
+    "name": "Model V2",
+    "dataset_source": "CREMA-D + RAVDESS",
+    "run_name": "model_v2_cremad_ravdess",
+    "raw_emotion_accuracy": 0.8112827400940228,
+    "raw_emotion_macro_f1": 0.8112716179642304,
+    "business_sentiment_accuracy": 0.9153794492948287,
+    "business_sentiment_macro_f1": 0.8832966959810399
+  },
+  "improvements": {
+    "raw_emotion_accuracy_delta": 0.003308777522826656,
+    "raw_emotion_macro_f1_delta": 0.002690153763794445,
+    "business_sentiment_accuracy_delta": -0.0016262463927221305,
+    "business_sentiment_macro_f1_delta": 0.0006726214603574032
+  },
+  "interpretation": {
+    "summary": "Model V2 was trained on CREMA-D + RAVDESS to improve generalization beyond the CREMA-D-only baseline. The comparison evaluates both raw 6-class emotion accuracy and business-level sentiment accuracy.",
+    "business_relevance": "Business sentiment accuracy is important because the capstone use case is call-center risk and escalation detection, where identifying Negative/Escalated, Neutral, and Positive/Calm states is more directly useful than exact emotion labels alone."
+  }
+}
