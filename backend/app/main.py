@@ -4,6 +4,7 @@ from app.database import engine
 from app.models import Base
 from app.routers import calls
 from app.routers import sentiment
+from app.routers import agents
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,6 +24,7 @@ app.add_middleware(
 
 app.include_router(calls.router)
 app.include_router(sentiment.router)
+app.include_router(agents.router)
 
 @app.get("/")
 def read_root():
