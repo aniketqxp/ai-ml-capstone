@@ -5,11 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/capstone
-    depends_on:
-      db:
-        condition: service_healthy
+    env_file:
+      - .env
     volumes:
       - ./backend:/app
       - ./data/audio:/data/audio
@@ -35,8 +32,13 @@ services:
     environment:
       - WANDB_API_KEY=${WANDB_API_KEY}
 
+  # Optional local Postgres for offline backend dev/testing.
+  # Not started by default — run `docker compose --profile local-db up`
+  # and point DATABASE_URL in .env to postgresql://postgres:postgres@db:5432/capstone
+  # if you don't want to develop against the shared Supabase Postgres directly.
   db:
     image: postgres:15-alpine
+    profiles: ["local-db"]
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
