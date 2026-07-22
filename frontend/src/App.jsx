@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import callData from './call_data.json';
 import sentenceData from './sentence_segments.json';
+import AISupervisorPanel from './components/AISupervisorPanel';
 const API_BASE_URL = 'http://127.0.0.1:8000';
 const DEFAULT_SENTIMENT_CALL_ID = 'en_CA_Banking_1586889';
 
@@ -132,7 +133,20 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
     <section className="lg:col-span-2 bg-slate-950 rounded-xl border border-slate-800 shadow-xl flex flex-col min-h-0">
       <div className="px-5 py-3 border-b border-slate-800 flex items-center justify-between">
         <h2 className="text-sm font-semibold text-slate-300">Compliance &amp; QA</h2>
-        <span className="text-xs font-mono text-slate-500">{cleared}/{applicable} cleared</span>
+        <div className="text-right">
+  <div className="text-xs font-mono text-slate-400">
+    {
+      COMPLIANCE_ITEMS.filter(
+        ([k]) => c[k]?.passed === true
+      ).length
+    }
+    /{applicable} passed
+  </div>
+
+  <div className="text-[9px] text-slate-600">
+    {cleared} detected by current playback time
+  </div>
+</div>
       </div>
       <div className="overflow-y-auto p-4 space-y-4" style={{ maxHeight: '46vh' }}>
         {/* compliance checklist */}
@@ -168,7 +182,9 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
 
         {/* quality */}
         <div className="border-t border-slate-800 pt-3 space-y-2">
-          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Quality · text-derived</div>
+          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">
+  Quality · hybrid text + acoustic
+</div>
           {QUALITY_DIMS.map(([key, name]) => {
             const d = q[key];
             if (!d) return null;
@@ -176,7 +192,11 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
               <div key={key} className="flex items-center gap-2">
                 <span className="flex-grow text-xs text-slate-300">
                   {name}
-                  {d.requires_audio && <span className="ml-1.5 text-[9px] text-amber-500/90 border border-amber-800/60 rounded px-1">audio</span>}
+                  {d.hybrid?.method === 'weighted_mean' && (
+  <span className="ml-1.5 text-[9px] text-cyan-400 border border-cyan-800/60 rounded px-1">
+    text + audio
+  </span>
+)}
                 </span>
                 <ScoreDots score={d.score} />
                 <span className="text-xs font-mono text-slate-400 w-4 text-right">{d.score}</span>
@@ -195,17 +215,31 @@ function CompliancePanel({ evaluation, time, seek, fmt }) {
         </div>
 
         {/* summary */}
-        {evaluation.overall_summary && (
-          <div className="border-t border-slate-800 pt-3">
-            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1">Summary</div>
-            <p className="text-xs text-slate-400 leading-relaxed">{evaluation.overall_summary}</p>
-          </div>
-        )}
+        {(
+  evaluation.overall_summary ||
+  evaluation.ai_insights?.executive_summary?.summary
+) && (
+  <div className="border-t border-slate-800 pt-3">
+    <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1">
+      Summary
+    </div>
+
+    <p className="text-xs text-slate-400 leading-relaxed">
+      {
+        evaluation.overall_summary ||
+        evaluation.ai_insights?.executive_summary?.summary
+      }
+    </p>
+  </div>
+)}
         <div className="text-[9px] text-slate-600 text-right pt-1">rubric {evaluation.rubric_version}{evaluation.served_by ? ` · ${evaluation.served_by}` : ''}</div>
       </div>
     </section>
   );
 }
+
+
+
 
 function AudioFeatureTimeline({ series, duration, currentTime, seek, formatNumber }) {
   const [selectedMetric, setSelectedMetric] = useState('escalation_score');
@@ -458,7 +492,225 @@ function AudioFeatureTimeline({ series, duration, currentTime, seek, formatNumbe
   );
 }
 
+function AutomationDecisionsPanel({ decisions = [] }) {
+  if (!Array.isArray(decisions) || decisions.length === 0) {
+    return null;
+  }
+
+  const priorityStyles = {
+    low: 'border-slate-700 bg-slate-900/70 text-slate-300',
+    medium: 'border-amber-800 bg-amber-950/30 text-amber-300',
+    high: 'border-orange-800 bg-orange-950/30 text-orange-300',
+    critical: 'border-red-700 bg-red-950/40 text-red-300',
+  };
+
+  const decisionStyles = {
+    approved: {
+      label: 'Approved Automatically',
+      cls: 'border-emerald-800 bg-emerald-950/40 text-emerald-300',
+    },
+    requires_approval: {
+      label: 'Requires Approval',
+      cls: 'border-amber-800 bg-amber-950/40 text-amber-300',
+    },
+    blocked: {
+      label: 'Blocked',
+      cls: 'border-red-800 bg-red-950/40 text-red-300',
+    },
+  };
+
+  const actionIcons = {
+    agent_coaching: '🎓',
+    manager_review: '👤',
+    compliance_alert: '⚠️',
+    customer_follow_up: '📞',
+    case_creation: '📁',
+    no_action: '✓',
+  };
+
+  const approvedCount = decisions.filter(
+    (item) => item.decision === 'approved'
+  ).length;
+
+  const approvalCount = decisions.filter(
+    (item) => item.decision === 'requires_approval'
+  ).length;
+
+  const blockedCount = decisions.filter(
+    (item) => item.decision === 'blocked'
+  ).length;
+
+  return (
+    <section className="rounded-xl border border-slate-800 bg-slate-950 p-5 shadow-xl">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] text-orange-400">
+            Deterministic Decision Engine
+          </p>
+
+          <h2 className="mt-1 text-lg font-semibold text-slate-100">
+            Automation Decisions
+          </h2>
+
+          <p className="mt-1 max-w-2xl text-xs leading-relaxed text-slate-500">
+            Rule-based operational actions generated from compliance,
+            escalation, customer satisfaction, and contradiction findings.
+            These decisions continue to work even when the AI Supervisor is
+            unavailable.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2">
+          <div className="rounded-lg border border-emerald-900 bg-emerald-950/20 px-3 py-2 text-center">
+            <p className="text-lg font-semibold text-emerald-300">
+              {approvedCount}
+            </p>
+            <p className="text-[9px] uppercase text-slate-500">
+              Approved
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-amber-900 bg-amber-950/20 px-3 py-2 text-center">
+            <p className="text-lg font-semibold text-amber-300">
+              {approvalCount}
+            </p>
+            <p className="text-[9px] uppercase text-slate-500">
+              Approval
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-red-900 bg-red-950/20 px-3 py-2 text-center">
+            <p className="text-lg font-semibold text-red-300">
+              {blockedCount}
+            </p>
+            <p className="text-[9px] uppercase text-slate-500">
+              Blocked
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {decisions.map((item) => {
+          const decisionStyle =
+            decisionStyles[item.decision] ||
+            decisionStyles.requires_approval;
+
+          const priorityStyle =
+            priorityStyles[item.priority] ||
+            priorityStyles.low;
+
+          return (
+            <article
+              key={item.action_id}
+              className="rounded-xl border border-slate-800 bg-slate-900/70 p-4"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-700 bg-slate-950 text-lg">
+                    {actionIcons[item.action_type] || '⚙️'}
+                  </div>
+
+                  <div>
+                    <p className="font-mono text-[10px] text-slate-500">
+                      {item.action_id}
+                    </p>
+
+                    <h3 className="mt-0.5 text-sm font-semibold text-slate-100">
+                      {formatActionLabel(item.action_type)}
+                    </h3>
+                  </div>
+                </div>
+
+                <span
+                  className={`rounded-full border px-2 py-1 text-[10px] font-semibold ${
+                    priorityStyle
+                  }`}
+                >
+                  {formatActionLabel(item.priority)}
+                </span>
+              </div>
+
+              <p className="mt-4 text-sm leading-relaxed text-slate-300">
+                {item.reason}
+              </p>
+
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <span
+                  className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold ${
+                    decisionStyle.cls
+                  }`}
+                >
+                  {decisionStyle.label}
+                </span>
+
+                <span className="rounded-full border border-slate-700 bg-slate-950 px-2.5 py-1 text-[10px] text-slate-400">
+                  Confidence{' '}
+                  {Math.round(Number(item.confidence || 0) * 100)}%
+                </span>
+
+                <span
+                  className={`rounded-full border px-2.5 py-1 text-[10px] ${
+                    item.automation_allowed
+                      ? 'border-emerald-900 bg-emerald-950/20 text-emerald-300'
+                      : 'border-slate-700 bg-slate-950 text-slate-400'
+                  }`}
+                >
+                  {item.automation_allowed
+                    ? 'Automation allowed'
+                    : 'Automation not allowed'}
+                </span>
+              </div>
+
+              {item.rules_triggered?.length > 0 && (
+                <div className="mt-4 border-t border-slate-800 pt-3">
+                  <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                    Rules Triggered
+                  </p>
+
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {item.rules_triggered.map((rule) => (
+                      <span
+                        key={rule}
+                        className="rounded-md border border-cyan-900/60 bg-cyan-950/20 px-2 py-1 font-mono text-[9px] text-cyan-300"
+                      >
+                        {rule}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {item.blocked_reasons?.length > 0 && (
+                <div className="mt-4 rounded-lg border border-red-900/70 bg-red-950/20 p-3">
+                  <p className="text-[10px] uppercase tracking-wide text-red-400">
+                    Why Automation Was Blocked
+                  </p>
+
+                  <ul className="mt-2 space-y-1">
+                    {item.blocked_reasons.map((reason, index) => (
+                      <li
+                        key={`${reason}-${index}`}
+                        className="text-xs leading-relaxed text-slate-300"
+                      >
+                        • {reason}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+   
+
 export default function App() {
+  const [supervisorEvaluation, setSupervisorEvaluation] = useState(null);
+  const [supervisorError, setSupervisorError] = useState('');
   const audioRef = useRef(null);
   const scrollRef = useRef(null);
   const activeTurnRef = useRef(null);
@@ -474,7 +726,20 @@ export default function App() {
   const [sentimentLoading, setSentimentLoading] = useState(true);
   const [sentimentError, setSentimentError] = useState(null);
 
-  const { turns, chapters, evaluation } = callData;
+  const {
+    turns,
+    chapters,
+    evaluation: originalEvaluation,
+  } = callData;
+
+  const evaluation =
+    supervisorEvaluation || originalEvaluation;
+  const contradictions =
+    supervisorEvaluation?.contradictions || [];
+  const automationDecisions =
+    supervisorEvaluation?.automation_decisions ||
+    supervisorEvaluation?.evaluation?.automation_decisions ||
+    [];
   const sentences = sentenceData.sentences;
   const callSummary = sentimentPayload?.call_summary || {};
   const audioSummary = sentimentPayload?.audio_feature_summary || {};
@@ -507,6 +772,31 @@ export default function App() {
   const maxVolume = featureSeries.length > 0
     ? Math.max(...featureSeries.map((s) => Number(s.volume_db_mean ?? -999)))
     : null;
+
+
+  useEffect(() => {
+      async function loadSupervisorEvaluation() {
+        try {
+          const response = await fetch(
+            '/data/evaluations/en_CA_Banking_1586889_graph.json'
+          );
+
+          if (!response.ok) {
+            throw new Error(
+              `Could not load AI Supervisor evaluation: ${response.status}`
+            );
+          }
+
+          const data = await response.json();
+          setSupervisorEvaluation(data);
+        } catch (error) {
+          console.error('AI Supervisor loading error:', error);
+          setSupervisorError(error.message);
+        }
+      }
+
+      loadSupervisorEvaluation();
+    }, []);
 
   useEffect(() => {
     async function loadSentiment() {
@@ -1680,8 +1970,201 @@ export default function App() {
           </div>
         </section>
 
-        <CompliancePanel evaluation={evaluation} time={displayTime} seek={seek} fmt={fmt} />
+                <CompliancePanel
+          evaluation={evaluation}
+          time={displayTime}
+          seek={seek}
+          fmt={fmt}
+        />
         </div>
+
+        {/* ── Deterministic Automation Decisions ───────────────────── */}
+        <AutomationDecisionsPanel
+          decisions={automationDecisions}
+        />
+
+        {/* ── AI Contact Center Supervisor ───────────────────────────── */}
+        {supervisorEvaluation?.ai_insights && (
+  <AISupervisorPanel
+    insights={supervisorEvaluation.ai_insights}
+  />
+)}
+
+{/* ── Signal Consistency ─────────────────────────────────────── */}
+{supervisorEvaluation && (
+  <section className="rounded-xl border border-slate-800 bg-slate-950 p-5 shadow-xl">
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
+          Cross-Signal Validation
+        </p>
+
+        <h2 className="mt-1 text-lg font-semibold text-slate-100">
+          Signal Consistency
+        </h2>
+
+        <p className="mt-1 text-xs text-slate-500">
+          Compares transcript, acoustic emotion, calibrated sentiment,
+          escalation, quality, and final decisions.
+        </p>
+      </div>
+
+      <div className="rounded-lg border border-slate-800 bg-slate-900 px-4 py-2 text-center">
+        <p className="text-[10px] uppercase text-slate-500">
+          Findings
+        </p>
+
+        <p className="text-xl font-semibold text-slate-100">
+          {contradictions.length}
+        </p>
+      </div>
+    </div>
+
+    {contradictions.length === 0 ? (
+      <div className="mt-4 rounded-lg border border-emerald-900 bg-emerald-950/20 p-4">
+        <p className="text-sm font-semibold text-emerald-300">
+          No meaningful inconsistencies detected
+        </p>
+
+        <p className="mt-1 text-xs text-slate-400">
+          The evaluated signals support the same operational conclusion.
+        </p>
+      </div>
+    ) : (
+      <div className="mt-4 space-y-3">
+        {contradictions.map((item) => (
+          <div
+            key={item.contradiction_id}
+            className="rounded-xl border border-slate-800 bg-slate-900/70 p-4"
+          >
+            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-[10px] text-slate-500">
+                    {item.contradiction_id}
+                  </span>
+
+                  <span
+                    className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                      item.severity === 'High'
+                        ? 'border-red-800 bg-red-950/40 text-red-300'
+                        : item.severity === 'Medium'
+                          ? 'border-amber-800 bg-amber-950/40 text-amber-300'
+                          : 'border-slate-700 bg-slate-800 text-slate-300'
+                    }`}
+                  >
+                    {item.severity}
+                  </span>
+
+                  <span
+                    className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                      item.status === 'resolved_by_fusion'
+                        ? 'border-emerald-800 bg-emerald-950/40 text-emerald-300'
+                        : item.status === 'confirmed'
+                          ? 'border-red-800 bg-red-950/40 text-red-300'
+                          : 'border-amber-800 bg-amber-950/40 text-amber-300'
+                    }`}
+                  >
+                    {formatActionLabel(item.status)}
+                  </span>
+                </div>
+
+                <h3 className="mt-2 text-sm font-semibold text-slate-100">
+                  {item.title}
+                </h3>
+
+                <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  {item.description}
+                </p>
+              </div>
+
+              {item.confidence !== null &&
+                item.confidence !== undefined && (
+                  <div className="shrink-0 rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-2">
+                    <p className="text-[10px] uppercase text-slate-500">
+                      Confidence
+                    </p>
+
+                    <p className="mt-1 text-sm font-semibold text-slate-200">
+                      {Math.round(Number(item.confidence) * 100)}%
+                    </p>
+                  </div>
+                )}
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+              <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3">
+                <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                  Signal A
+                </p>
+
+                <p className="mt-1 text-xs font-semibold text-slate-300">
+                  {formatActionLabel(item.source_a?.source)}
+                </p>
+
+                <p className="mt-1 text-xs text-slate-400">
+                  {formatLabel(
+                    item.source_a?.value ??
+                    item.source_a?.finding ??
+                    item.source_a?.summary
+                  )}
+                </p>
+              </div>
+
+              <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3">
+                <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                  Signal B
+                </p>
+
+                <p className="mt-1 text-xs font-semibold text-slate-300">
+                  {formatActionLabel(item.source_b?.source)}
+                </p>
+
+                <p className="mt-1 text-xs text-slate-400">
+                  {formatLabel(
+                    item.source_b?.value ??
+                    item.source_b?.finding ??
+                    item.source_b?.summary
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {item.likely_explanation && (
+              <div className="mt-3 rounded-lg border border-cyan-900/50 bg-cyan-950/10 p-3">
+                <p className="text-[10px] uppercase tracking-wide text-cyan-400">
+                  Fusion Explanation
+                </p>
+
+                <p className="mt-1 text-xs leading-relaxed text-slate-300">
+                  {item.likely_explanation}
+                </p>
+              </div>
+            )}
+
+            {item.recommended_action && (
+              <div className="mt-3">
+                <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                  Recommended Action
+                </p>
+
+                <p className="mt-1 text-xs leading-relaxed text-slate-300">
+                  {item.recommended_action}
+                </p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+)}
+
+{supervisorError && (
+          <div className="rounded-xl border border-red-800 bg-red-950/40 p-4 text-sm text-red-300">
+            AI Supervisor could not be loaded: {supervisorError}
+          </div>
+        )}
       </main>
 
       <audio ref={audioRef} src="/call_1.mp3" preload="auto" />

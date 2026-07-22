@@ -19,12 +19,219 @@ supports the "Verbatim Evidence Extractor" track later.
 
 RUBRIC_VERSION is bumped whenever criteria change so labelled data stays traceable.
 """
-from __future__ import annotations
 from typing import Optional, List, Literal
 from pydantic import BaseModel, Field
 
+
+
+class ExecutiveSummary(BaseModel):
+    call_outcome: Literal[
+        "Successful",
+        "Partially successful",
+        "Unsuccessful",
+        "Unknown"
+    ]
+    resolution_status: Literal[
+        "Resolved",
+        "Partially resolved",
+        "Unresolved",
+        "Not applicable",
+        "Unknown"
+    ]
+    overall_call_health: Literal[
+        "Excellent",
+        "Good",
+        "Needs attention",
+        "Critical",
+        "Unknown"
+    ]
+    summary: str
+
+
+class AutomationDecision(BaseModel):
+    action_id: str
+    action_type: Literal[
+        "agent_coaching",
+        "manager_review",
+        "compliance_alert",
+        "customer_follow_up",
+        "case_creation",
+        "no_action",
+    ]
+
+    decision: Literal[
+        "approved",
+        "requires_approval",
+        "blocked",
+    ]
+
+    priority: Literal[
+        "low",
+        "medium",
+        "high",
+        "critical",
+    ] = "low"
+
+    reason: str
+    confidence: float = Field(ge=0.0, le=1.0)
+
+    automation_allowed: bool = False
+    requires_human_approval: bool = False
+
+    rules_triggered: list[str] = Field(default_factory=list)
+    blocked_reasons: list[str] = Field(default_factory=list)
+
+
+class CustomerIntent(BaseModel):
+    primary_intent: str
+    secondary_intents: list[str] = Field(default_factory=list)
+    customer_goal: Optional[str] = None
+    confidence: float = Field(ge=0.0, le=1.0)
+
+
+class RootCause(BaseModel):
+    main_reason: str
+    contributing_factors: list[str] = Field(default_factory=list)
+
+
+class PredictedCSAT(BaseModel):
+    score: int = Field(ge=1, le=5)
+    confidence: float = Field(ge=0.0, le=1.0)
+    reason: str
+
+
+class BusinessRisk(BaseModel):
+    level: Literal["Low", "Medium", "High", "Critical"]
+    reasons: list[str] = Field(default_factory=list)
+
+
+class NextBestAction(BaseModel):
+    action: str
+    priority: Literal["None", "Low", "Medium", "High", "Critical"]
+    reason: str
+
+
+class CoachingRecommendation(BaseModel):
+    category: Literal[
+        "Compliance",
+        "Empathy",
+        "Communication",
+        "Efficiency",
+        "Resolution",
+        "Professionalism",
+        "De-escalation",
+        "Product knowledge",
+        "Other"
+    ]
+    priority: Literal["Low", "Medium", "High", "Critical"]
+    timestamp: Optional[str] = None
+    observation: str
+    recommendation: str
+    suggested_phrase: Optional[str] = None
+
+
+class AudioTextCorrelation(BaseModel):
+    timestamp: Optional[str] = None
+    speaker: Literal["agent", "customer", "unknown"]
+    text_signal: str
+    audio_signal: str
+    interpretation: str
+    recommended_response: Optional[str] = None
+
+
+class ContradictionEvidence(BaseModel):
+    source: Literal[
+        "transcript",
+        "acoustic_sentiment",
+        "calibrated_sentiment",
+        "compliance",
+        "quality",
+        "workflow",
+        "escalation",
+        "investigation",
+        "automation",
+        "ai_supervisor",
+    ]
+
+    statement: str
+
+    quote: Optional[str] = None
+    speaker: Optional[Literal["AGENT", "CUSTOMER"]] = None
+    timestamp: Optional[str] = None
+    sec: Optional[float] = None
+
+
+class ContradictionFinding(BaseModel):
+    contradiction_id: Optional[str] = None
+
+    category: Literal[
+        "text_audio",
+        "sentiment",
+        "compliance",
+        "quality",
+        "workflow",
+        "resolution",
+        "escalation",
+        "decision",
+        "evidence",
+    ]
+
+    title: str
+    description: str
+
+    severity: Literal["Low", "Medium", "High", "Critical"]
+
+    status: Literal[
+        "confirmed",
+        "possible",
+        "resolved_by_fusion",
+    ]
+
+    source_a: ContradictionEvidence
+    source_b: ContradictionEvidence
+
+    likely_explanation: Optional[str] = None
+    recommended_action: Optional[str] = None
+
+    affects_final_decision: bool = False
+    requires_confirmation: bool = False
+
+    confidence: float = Field(
+        ge=0.0,
+        le=1.0,
+    )
+
+
+class SupervisorDecisionFlags(BaseModel):
+    manager_review_required: bool
+    customer_follow_up_required: bool
+    compliance_alert_required: bool
+    coaching_required: bool
+    priority: Literal["None", "Low", "Medium", "High", "Critical"]
+    reasons: list[str] = Field(default_factory=list)
+
+
+class AIInsights(BaseModel):
+    executive_summary: ExecutiveSummary
+    customer_intent: CustomerIntent
+    root_cause: RootCause
+    predicted_csat: PredictedCSAT
+    business_risk: BusinessRisk
+    next_best_action: NextBestAction
+    coaching_recommendations: list[CoachingRecommendation] = Field(
+        default_factory=list
+    )
+    audio_text_correlations: list[AudioTextCorrelation] = Field(
+        default_factory=list
+    )
+    contradictions: list[ContradictionFinding] = Field(default_factory=list)
+    automation_decisions: list[AutomationDecision] = Field(
+        default_factory=list
+    )
+    automation: SupervisorDecisionFlags
+
 RUBRIC_VERSION = "0.1.0"          # legacy monolithic path (extract.py)
-RUBRIC_VERSION_GRAPH = "0.4.1"    # graph path: 0.2.0 added customer_satisfaction,
+RUBRIC_VERSION_GRAPH = "0.5.0"    # graph path: 0.2.0 added customer_satisfaction,
                                   # 0.3.0 added evidence re-anchor loop +
                                   # escalation investigation node,
                                   # 0.4.0 added acoustic-text fusion (hybrid
@@ -228,15 +435,35 @@ class CallEvaluation(BaseModel):
     compliance: ComplianceChecklist
     quality: QualityDimensions
     escalation: EscalationRisk
+
     investigation: Optional[InvestigationReport] = Field(
         default=None,
-        description="Deep-dive incident report. Only populated when risk_level != 'none' (v0.3.0+).")
+        description=(
+            "Deep-dive incident report. Only populated when "
+            "risk_level != 'none' (v0.3.0+)."
+        ),
+    )
+
     workflow: Optional[CallWorkflow] = Field(
         default=None,
-        description="Subject-derived expected workflow + audit results (v0.4.0+).")
-    overall_summary: Optional[str] = Field(
-        default=None, description="2-3 sentence plain-language summary for the dashboard.")
+        description=(
+            "Subject-derived expected workflow and audit results "
+            "(v0.4.0+)."
+        ),
+    )
 
+    overall_summary: Optional[str] = Field(
+        default=None,
+        description="2-3 sentence plain-language summary for the dashboard.",
+    )
+
+    ai_insights: Optional[AIInsights] = Field(
+        default=None,
+        description=(
+            "Integrated AI supervisor insights generated from the transcript, "
+            "QA results, workflow audit, and available acoustic sentiment."
+        ),
+    )
 
 # Documentation map: which rubric areas are text vs audio vs metadata.
 # Used by the prompt builder (Phase 1) and the report.
