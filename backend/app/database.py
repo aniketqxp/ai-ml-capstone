@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -29,6 +29,30 @@ def init_db():
     this at startup and may tolerate failure in dev.
     """
     Base.metadata.create_all(bind=engine)
+    # create_all intentionally does not alter existing tables. Keep this small,
+    # additive compatibility migration here so long-lived Docker/Supabase
+    # databases created by an older branch gain the runtime-ingest lookup key.
+    with engine.begin() as connection:
+        connection.execute(text(
+            "ALTER TABLE transcripts "
+            "ADD COLUMN IF NOT EXISTS source_call_id VARCHAR(100)"
+        ))
+        connection.execute(text(
+            "CREATE INDEX IF NOT EXISTS ix_transcripts_source_call_id "
+            "ON transcripts (source_call_id)"
+        ))
+        for definition in (
+            "progress_percent INTEGER DEFAULT 0",
+            "progress_current INTEGER",
+            "progress_total INTEGER",
+            "progress_message VARCHAR(200)",
+            "estimated_seconds_remaining INTEGER",
+            "cancel_requested BOOLEAN DEFAULT FALSE",
+            "started_at TIMESTAMP WITHOUT TIME ZONE",
+        ):
+            connection.execute(text(
+                f"ALTER TABLE jobs ADD COLUMN IF NOT EXISTS {definition}"
+            ))
 
 
 def get_db():

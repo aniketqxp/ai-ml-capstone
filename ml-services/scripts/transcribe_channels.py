@@ -47,7 +47,7 @@ def _load_mono(path):
     return a, sr
 
 
-def transcribe_channel(model, audio, speaker, decode=None):
+def transcribe_channel(model, audio, speaker, decode=None, progress=None):
     """
     Transcribe one isolated channel. Returns (words, segments_meta).
     words:   list of {word, start, end, prob, ns, alp}
@@ -106,10 +106,13 @@ def transcribe_channel(model, audio, speaker, decode=None):
             "compression_ratio": round(float(seg.compression_ratio), 4),
             "n_words": n_seg_words,
         })
+        if progress:
+            progress(min(float(seg.end), len(audio) / SR), len(audio) / SR)
     return words, segments_meta
 
 
-def transcribe_call(model, agent_path, customer_path, preprocess_fn=None, decode=None):
+def transcribe_call(model, agent_path, customer_path, preprocess_fn=None,
+                    decode=None, progress=None, skip_customer=False):
     """
     Per-channel transcription of one call.
     preprocess_fn: optional callable(audio)->audio applied to each channel before
@@ -124,8 +127,17 @@ def transcribe_call(model, agent_path, customer_path, preprocess_fn=None, decode
         a_audio = preprocess_fn(a_audio)
         c_audio = preprocess_fn(c_audio)
 
-    agent_words,    agent_segs    = transcribe_channel(model, a_audio, "agent", decode)
-    customer_words, customer_segs = transcribe_channel(model, c_audio, "customer", decode)
+    agent_words, agent_segs = transcribe_channel(
+        model, a_audio, "agent", decode,
+        progress=(lambda current, total: progress(current, total * (1 if skip_customer else 2)))
+        if progress else None)
+    if skip_customer:
+        customer_words, customer_segs = [], []
+    else:
+        customer_words, customer_segs = transcribe_channel(
+            model, c_audio, "customer", decode,
+            progress=(lambda current, total: progress(total + current, total * 2))
+            if progress else None)
 
     duration = max(len(a_audio) / SR, len(c_audio) / SR)
     segments = {"agent": agent_segs, "customer": customer_segs}

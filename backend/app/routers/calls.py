@@ -2,13 +2,14 @@ import uuid
 import os
 import shutil
 import json
+import wave
 from pathlib import Path
 from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import Call, Job, Transcript, Evaluation, SentimentSegment
+from app.models import Agent, Call, Job, Transcript, Evaluation, SentimentSegment
 from app import worker, storage
 from app.routing import apply_action_routing
 
@@ -51,6 +52,77 @@ def _latest_job(db, call_id):
     )
 
 
+def _artifact_dashboard_summary(public_id):
+    """Build missing catalog fields from the published analysis artifacts.
+
+    Older seeded rows only stored identity fields in ``index_summary``. The
+    detail artifacts are authoritative, so use them to keep the dashboard
+    useful without requiring a database reseed.
+    """
+    result = {}
+
+    try:
+        evaluation = storage.stream_json(f"evaluation/{public_id}.json")
+    except (FileNotFoundError, storage.StorageError, ValueError):
+        evaluation = {}
+
+    compliance = evaluation.get("compliance") or {}
+    compliance_results = [
+        value.get("passed")
+        for value in compliance.values()
+        if isinstance(value, dict) and "passed" in value
+    ]
+    if compliance_results:
+        result["compliance_passed"] = sum(
+            value is True for value in compliance_results
+        )
+        result["compliance_applicable"] = sum(
+            value is not None for value in compliance_results
+        )
+
+    workflow = evaluation.get("workflow") or {}
+    steps = workflow.get("expected_steps") or []
+    if steps:
+        result["workflow_met"] = sum(
+            step.get("met") is True for step in steps
+        )
+        result["workflow_total"] = len(steps)
+    if workflow.get("subject"):
+        result["subject"] = workflow["subject"]
+
+    escalation = evaluation.get("escalation") or {}
+    if escalation.get("risk_level"):
+        result["risk_level"] = escalation["risk_level"]
+
+    metadata = evaluation.get("metadata") or {}
+    if metadata.get("duration_seconds") is not None:
+        result["duration"] = metadata["duration_seconds"]
+
+    try:
+        sentiment = storage.stream_json(f"sentiment/{public_id}.json")
+    except (FileNotFoundError, storage.StorageError, ValueError):
+        sentiment = {}
+
+    sentiment_summary = sentiment.get("call_summary") or {}
+    audio_summary = sentiment.get("audio_feature_summary") or {}
+    review = sentiment.get("manager_review_recommendation") or {}
+    if sentiment:
+        result.update({
+            "dominant_sentiment": sentiment_summary.get("dominant_sentiment"),
+            "dominant_emotion": sentiment_summary.get("dominant_emotion"),
+            "average_escalation_score": sentiment_summary.get(
+                "average_escalation_score"
+            ),
+            "has_audio_features": bool(
+                sentiment.get("dashboard_audio_feature_series")
+                or audio_summary.get("total_segments_with_audio_features")
+            ),
+            "manager_review_required": review.get("review_required"),
+        })
+
+    return {key: value for key, value in result.items() if value is not None}
+
+
 def _incoming_dir(public_id):
     """Local scratch dir for this call's channel wavs (under CAPSTONE_DATA_ROOT)."""
     from app.pipeline_bridge import install
@@ -60,9 +132,39 @@ def _incoming_dir(public_id):
     d.mkdir(parents=True, exist_ok=True)
     return d
 
+
+def _upload_agent(db, agent_id=None):
+    if agent_id:
+        try:
+            parsed_id = uuid.UUID(agent_id)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="invalid agent_id") from exc
+        agent = db.query(Agent).filter(Agent.agent_id == parsed_id).first()
+        if not agent:
+            raise HTTPException(status_code=404, detail="agent not found")
+        return agent
+
+    agent = db.query(Agent).filter(Agent.name == "Dashboard Upload").first()
+    if not agent:
+        agent = Agent(name="Dashboard Upload", team="self-service")
+        db.add(agent)
+        db.flush()
+    return agent
+
+
+def _staged_duration(public_id):
+    audio_path = storage.local_path(f"uploads/{public_id}/agent.wav")
+    if not audio_path:
+        return None
+    try:
+        with wave.open(str(audio_path), "rb") as audio:
+            return round(audio.getnframes() / audio.getframerate(), 2)
+    except (OSError, wave.Error, ZeroDivisionError):
+        return None
+
 @router.post("/ingest", status_code=201)
 async def ingest_call(
-    agent_id: str = Form(...),
+    agent_id: str = Form(None),
     domain: str = Form(...),
     accent: str = Form("en-US_General"),
     call_date: str = Form(None),
@@ -72,16 +174,19 @@ async def ingest_call(
     db: Session = Depends(get_db)
 ):
     """
-    Ingest one fresh call. Accepts either a single stereo file (ch0=agent,
-    ch1=customer) or two per-channel mono files. Splits/normalizes to two mono
-    16 kHz WAVs, stores the originals for restart recovery, and enqueues the
-    worker. A single mono file with no second channel is rejected (400).
+    Stage one fresh call for later analysis. Stereo and paired-channel files
+    preserve speaker attribution; ordinary mono recordings are accepted with
+    limited speaker attribution.
     """
     from app.pipeline_bridge import install
     install()
     from audio_io import prepare_channels, AudioError
 
-    public_id = f"{domain.lower()}_{datetime.utcnow():%Y%m%d}_{uuid.uuid4().hex[:8]}"
+    normalized_domain = "".join(
+        character if character.isalnum() else "_"
+        for character in domain.strip().lower()
+    ).strip("_") or "general"
+    public_id = f"{normalized_domain}_{datetime.utcnow():%Y%m%d}_{uuid.uuid4().hex[:8]}"
     inc = _incoming_dir(public_id)
 
     raw1 = inc / ("upload1_" + os.path.basename(file.filename or "a.wav"))
@@ -105,30 +210,29 @@ async def ingest_call(
     storage.upload_file(f"uploads/{public_id}/agent.wav", str(agent_wav), "audio/wav")
     storage.upload_file(f"uploads/{public_id}/customer.wav", str(customer_wav), "audio/wav")
 
+    detected_duration = duration_seconds or _staged_duration(public_id)
+
+    upload_agent = _upload_agent(db, agent_id)
     call = Call(
-        agent_id=uuid.UUID(agent_id),
+        agent_id=upload_agent.agent_id,
         audio_path=f"uploads/{public_id}/",
         call_date=datetime.fromisoformat(call_date) if call_date else datetime.utcnow(),
-        duration_seconds=duration_seconds,
+        duration_seconds=int(detected_duration) if detected_duration else None,
         call_metadata={"public_call_id": public_id,
-                       "domain": domain.lower(), "accent": accent},
+                       "domain": normalized_domain, "accent": accent,
+                       "source_filename": file.filename},
     )
     db.add(call)
     db.flush()
 
-    job = Job(call_id=call.call_id, status="queued", stage="uploaded")
-    db.add(job)
     db.commit()
-    db.refresh(job)
-
-    worker.enqueue(job.job_id)
 
     return {
-        "job_id": str(job.job_id),
+        "job_id": None,
         "call_id": str(call.call_id),
         "public_call_id": public_id,
-        "status": "queued",
-        "created_at": job.created_at.isoformat()
+        "status": "available",
+        "created_at": call.created_at.isoformat() if call.created_at else None,
     }
 
 
@@ -143,7 +247,10 @@ def get_catalog(db: Session = Depends(get_db)):
         if not public_id:
             continue
 
-        summary = dict(meta.get("index_summary") or {})
+        summary = {
+            **dict(meta.get("index_summary") or {}),
+            **_artifact_dashboard_summary(public_id),
+        }
         job = _latest_job(db, call.call_id)
         analyzed = bool(summary)
         item = {
@@ -152,12 +259,22 @@ def get_catalog(db: Session = Depends(get_db)):
             "db_call_id": str(call.call_id),
             "domain": summary.get("domain") or meta.get("domain"),
             "accent": summary.get("accent") or meta.get("accent"),
-            "duration": summary.get("duration") or call.duration_seconds,
+            "duration": (
+                summary.get("duration")
+                or call.duration_seconds
+                or _staged_duration(public_id)
+            ),
             "analyzed": analyzed,
             "status": job.status if job else ("analyzed" if analyzed else "available"),
             "stage": job.stage if job else ("done" if analyzed else "uploaded"),
             "error": job.error if job else None,
             "job_id": str(job.job_id) if job else None,
+            "progress_percent": job.progress_percent if job else (100 if analyzed else 0),
+            "progress_current": job.progress_current if job else None,
+            "progress_total": job.progress_total if job else None,
+            "progress_message": job.progress_message if job else None,
+            "estimated_seconds_remaining": job.estimated_seconds_remaining if job else None,
+            "cancel_requested": bool(job.cancel_requested) if job else False,
         }
         catalog.append(item)
     return catalog
@@ -206,7 +323,8 @@ def analyze_calls(payload: AnalyzeRequest, db: Session = Depends(get_db)):
             })
             continue
 
-        job = Job(call_id=call_id, status="queued", stage="uploaded")
+        job = Job(call_id=call_id, status="queued", stage="uploaded",
+                  progress_percent=0, progress_message="Waiting in queue")
         db.add(job)
         db.flush()
         jobs.append({
@@ -241,8 +359,37 @@ def get_call_status(call_id: str, db: Session = Depends(get_db)):
         "status": job.status,
         "stage": job.stage,
         "error": job.error,
+        "progress_percent": job.progress_percent,
+        "progress_current": job.progress_current,
+        "progress_total": job.progress_total,
+        "progress_message": job.progress_message,
+        "estimated_seconds_remaining": job.estimated_seconds_remaining,
+        "cancel_requested": bool(job.cancel_requested),
         "updated_at": job.updated_at.isoformat() if job.updated_at else None
     }
+
+
+@router.post("/{call_id}/cancel", status_code=status.HTTP_202_ACCEPTED)
+def cancel_call(call_id: str, db: Session = Depends(get_db)):
+    try:
+        db_call_id = uuid.UUID(call_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="invalid call id") from exc
+    job = _latest_job(db, db_call_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="call not found")
+    if job.status not in ("queued", "processing"):
+        raise HTTPException(status_code=409, detail=f"job is already {job.status}")
+    job.cancel_requested = True
+    job.progress_message = "Cancellation requested"
+    job.updated_at = datetime.utcnow()
+    if job.status == "queued":
+        job.status = "cancelled"
+        job.stage = "cancelled"
+        job.estimated_seconds_remaining = 0
+    db.commit()
+    return {"call_id": call_id, "job_id": str(job.job_id),
+            "status": job.status, "cancel_requested": True}
 
 @router.post("/transcripts/ingest", status_code=201)
 async def ingest_transcript(
@@ -457,4 +604,3 @@ def get_call_sentiment(call_id: str):
             status_code=500,
             detail=f"Invalid sentiment JSON for call {call_id}: {exc}",
         ) from exc
-

@@ -110,6 +110,26 @@ def load_acoustic(call_id, domain):
     return rows
 
 
+def load_full_sentiment(call_id, domain):
+    """Load the complete sentiment payload used by the multimodal graph.
+
+    New runtime calls currently produce the compact acoustic schema while
+    older/offline calls may contain additional derived summaries.  Both are
+    valid inputs: callers feature-detect the optional summary fields.
+    Missing or malformed artifacts degrade to an empty payload so evaluation
+    can continue text-only instead of failing after acoustic analysis.
+    """
+    sent_path = os.path.join(SENTIMENT_ROOT, str(domain).lower(), f"{call_id}.json")
+    if not os.path.exists(sent_path):
+        return {}
+    try:
+        with open(sent_path, encoding="utf-8") as f:
+            payload = json.load(f)
+        return payload if isinstance(payload, dict) else {}
+    except (OSError, json.JSONDecodeError, TypeError):
+        return {}
+
+
 def _channel_valence(rows, channel, late_weighted):
     """(weighted mean valence, coverage) for one speaker channel."""
     chan = [r for r in rows if r["speaker"] == channel]

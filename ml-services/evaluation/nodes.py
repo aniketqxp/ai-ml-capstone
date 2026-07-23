@@ -947,6 +947,9 @@ def ai_supervisor_node(state):
             skeleton=AI_SUPERVISOR_SKELETON,
             packet=supervisor_packet,
             validator=lambda d: AIInsights.model_validate(d),
+            # GitHub's fallback enforces an 8k total request budget. Keeping
+            # output at 2200 tokens leaves room for the compacted context.
+            max_tokens=2200,
         )
 
     except Exception as exc:
@@ -1267,7 +1270,7 @@ _TIER_SEQUENCE = ("qa-primary", "qa-safety", "qa-safety")
 
 
 def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=3,
-                         feedback=None):
+                         feedback=None, max_tokens=4000):
     """
     Call the LLM router, parse JSON, validate with `validator`, retry on
     failure with error feedback AND provider escalation. Returns
@@ -1284,7 +1287,8 @@ def _llm_eval_with_retry(system, skeleton, packet, validator, max_attempts=3,
     for attempt in range(1, max_attempts + 1):
         tier = _TIER_SEQUENCE[min(attempt - 1, len(_TIER_SEQUENCE) - 1)]
         t0 = time.time()
-        raw, served = chat_json_routed(system, user, return_meta=True, tier=tier)
+        raw, served = chat_json_routed(
+            system, user, return_meta=True, tier=tier, max_tokens=max_tokens)
         dt = time.time() - t0
         try:
             data = json.loads(_strip_fences(raw))

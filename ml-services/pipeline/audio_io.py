@@ -77,6 +77,10 @@ def prepare_channels(primary, out_agent, out_customer, secondary=None):
     ch = probe_channels(primary)
     if ch >= 2:
         return split_stereo(primary, out_agent, out_customer)
-    raise AudioError(
-        "single mono file has no separable speaker channels; upload a stereo "
-        "file or two per-channel files")
+    # Mixed mono calls need the same waveform available for both inferred
+    # speaker roles. Runtime role reconstruction assigns timestamp ranges after
+    # transcription; acoustic analysis then slices the matching ranges from
+    # these two identical source tracks.
+    to_mono_16k(primary, out_agent)
+    to_mono_16k(primary, out_customer)
+    return str(out_agent), str(out_customer)

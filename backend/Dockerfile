@@ -17,6 +17,7 @@ FROM python:3.10-slim AS runner
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
     libpq5 \
     && rm -rf /var/lib/apt/lists/*
 

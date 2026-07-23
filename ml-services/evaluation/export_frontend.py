@@ -132,6 +132,7 @@ def export_call_artifacts(call_id, meta, out_calls_dir, out_audio_dir):
 
     out = {
         "call": call_id,
+        "audio_path": f"audio/{call_id}.mp3",
         "model": result.get("model", ""),
         "duration": round(duration, 2),
         "turns": turns,

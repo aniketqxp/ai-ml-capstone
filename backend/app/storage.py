@@ -61,6 +61,14 @@ def public_url(key):
 # ── writes ──────────────────────────────────────────────────────────────────
 
 def upload_bytes(key, data, content_type="application/octet-stream"):
+    # Docker/local development uses the mounted CAPSTONE_DATA_ROOT as a
+    # durable artifact store when Supabase is not configured.
+    if not is_configured():
+        local_path = _DATA_ROOT / key
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+        local_path.write_bytes(data)
+        return key
+
     # `apikey` header (not just Authorization: Bearer) is required for the new
     # sb_secret_ key format -- the object endpoint parses Bearer tokens as JWTs
     # and rejects the non-JWT key with "Invalid Compact JWS". Sending both is
@@ -91,11 +99,18 @@ def upload_json(key, obj):
 
 # ── reads (public bucket; small local cache since artifacts are immutable) ──
 
-_CACHE_DIR = Path(os.environ.get("CAPSTONE_DATA_ROOT", "/tmp")) / "_storage_cache"
+_DATA_ROOT = Path(os.environ.get("CAPSTONE_DATA_ROOT", "/data"))
+_CACHE_DIR = _DATA_ROOT / "_storage_cache"
 
 
 def _cache_path(key):
     return _CACHE_DIR / key
+
+
+def local_path(key):
+    """Return a local artifact path when the mounted data store has the key."""
+    path = _DATA_ROOT / key
+    return path if path.exists() and path.is_file() else None
 
 
 def exists(key):
@@ -107,27 +122,53 @@ def exists(key):
 
 
 def download_bytes(key, use_cache=True):
+    # 1. Read directly from the local artifact directory during development.
+    # Example: /data/calls/en_CA_Banking_1586889.json
+    local_path = _DATA_ROOT / key
+
+    if local_path.exists() and local_path.is_file():
+        return local_path.read_bytes()
+
+    # 2. Check the local Supabase download cache.
     cp = _cache_path(key)
+
     if use_cache and cp.exists():
         return cp.read_bytes()
-    r = requests.get(public_url(key), timeout=_TIMEOUT)
+
+    # 3. Fall back to Supabase Storage when configured.
+    if not is_configured():
+        raise FileNotFoundError(key)
+
+    try:
+        r = requests.get(public_url(key), timeout=_TIMEOUT)
+    except requests.RequestException as exc:
+        raise StorageError(f"download {key} failed: {exc}") from exc
+
     missing = r.status_code == 404
+
     if r.status_code == 400:
         try:
             payload = r.json()
-            missing = (str(payload.get("statusCode")) == "404"
-                       or payload.get("error") == "not_found")
+            missing = (
+                str(payload.get("statusCode")) == "404"
+                or payload.get("error") == "not_found"
+            )
         except ValueError:
             pass
+
     if missing:
         raise FileNotFoundError(key)
+
     if r.status_code != 200:
-        raise StorageError(f"download {key} failed: {r.status_code}")
+        raise StorageError(
+            f"download {key} failed: {r.status_code} {r.text[:200]}"
+        )
+
     if use_cache:
         cp.parent.mkdir(parents=True, exist_ok=True)
         cp.write_bytes(r.content)
-    return r.content
 
+    return r.content
 
 def stream_json(key, use_cache=True):
     return json.loads(download_bytes(key, use_cache=use_cache).decode("utf-8"))

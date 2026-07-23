@@ -193,6 +193,7 @@ def build_sentiment_timeline(
     audio_path: Path,
     probability_predictor: Callable[[Path], Dict[str, float]],
     config: Optional[TimelineConfig] = None,
+    single_window_probabilities: Optional[Dict[str, float]] = None,
 ) -> List[SentimentSegment]:
     """
     Build a segment-level sentiment timeline for an audio file.
@@ -215,6 +216,25 @@ def build_sentiment_timeline(
     timeline: List[SentimentSegment] = []
 
     for segment in audio_segments:
+        # A clip that fits in one timeline window is the same waveform already
+        # classified by EmotionPredictor. Reusing that result avoids a second
+        # neural inference without changing the timeline or its scores.
+        if len(audio_segments) == 1 and single_window_probabilities is not None:
+            raw_probabilities = single_window_probabilities
+            probabilities = build_emotion_probabilities_schema(raw_probabilities)
+            dominant_emotion = probabilities.dominant_emotion()
+            overall_sentiment = infer_overall_sentiment(probabilities)
+            risk_score = calculate_segment_risk_score(probabilities)
+            timeline.append(SentimentSegment(
+                segment_id=segment.segment_id,
+                start_time_seconds=round(segment.start_time_seconds, 3),
+                end_time_seconds=round(segment.end_time_seconds, 3),
+                dominant_emotion=dominant_emotion,
+                overall_audio_sentiment=overall_sentiment,
+                emotion_probabilities=probabilities,
+                risk_score=risk_score,
+            ))
+            continue
         temp_path = save_segment_to_temp_wav(
             segment=segment,
             sample_rate=config.sample_rate,

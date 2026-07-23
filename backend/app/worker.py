@@ -1,11 +1,8 @@
 """
-Single background worker: one daemon thread draining a job queue.
+Configurable background worker pool draining a shared job queue.
 
-Why one thread (not a pool): the evaluation graph fires many rate-limited LLM
-calls per call and CPU whisper/torch already saturate the 2-vCPU Space.
-Sequential processing keeps us under provider limits and off the CPU cliff.
-Jobs are cheap to enqueue, slow to run (~5-15 min), so queue + one worker is
-the right shape.
+The worker count is controlled by PIPELINE_WORKERS. Keep it conservative: each
+call runs CPU-heavy Whisper/acoustic inference and rate-limited LLM requests.
 
 Restart recovery: the Space's disk is ephemeral and it sleeps/restarts freely.
 On startup we re-enqueue every job still marked queued/processing and
@@ -17,6 +14,7 @@ import uuid
 import queue
 import threading
 import traceback
+import time
 from datetime import datetime
 
 from app.database import SessionLocal
@@ -26,11 +24,24 @@ from app.models import (Call, Job, Transcript, Evaluation,
 from app.routing import apply_action_routing
 
 _q = queue.Queue()
-_thread = None
+_threads = []
 _started = False
+WORKER_COUNT = max(1, int(os.environ.get("PIPELINE_WORKERS", "1")))
 
 # text escalation tier -> Asma's 0-10 escalation_risk scale
 ESCALATION_MAP = {"none": 0, "review": 5, "escalate": 8}
+
+STAGE_PROGRESS = {
+    "uploaded": 0, "starting": 2, "transcribing": 5,
+    "registering": 28, "segmenting": 32, "acoustic": 35,
+    "evaluating": 75, "exporting": 90, "notifying": 92, "uploading": 94,
+    "persisting": 97, "done": 100,
+}
+STAGE_RANGES = {"transcribing": (5, 27), "acoustic": (35, 73)}
+
+
+class JobCancelled(Exception):
+    cancelled = True
 
 
 def _uuid(v):
@@ -42,13 +53,17 @@ def enqueue(job_id):
 
 
 def start():
-    """Launch the worker thread and recover interrupted jobs (idempotent)."""
-    global _thread, _started
+    """Launch the worker pool and recover interrupted jobs (idempotent)."""
+    global _started
     if _started:
         return
     _started = True
-    _thread = threading.Thread(target=_loop, name="pipeline-worker", daemon=True)
-    _thread.start()
+    for number in range(WORKER_COUNT):
+        thread = threading.Thread(
+            target=_loop, name=f"pipeline-worker-{number + 1}", daemon=True)
+        thread.start()
+        _threads.append(thread)
+    print(f"[worker] started {WORKER_COUNT} pipeline worker(s)")
     _recover()
 
 
@@ -59,15 +74,22 @@ def _recover():
     db = SessionLocal()
     try:
         stuck = db.query(Job).filter(Job.status.in_(["queued", "processing"])).all()
-        recovered = 0
+        recovered_job_ids = []
         for j in stuck:
             call = db.query(Call).filter(Call.call_id == j.call_id).first()
             meta = (call.call_metadata or {}) if call else {}
             if meta.get("public_call_id"):
-                enqueue(j.job_id)
-                recovered += 1
-        if recovered:
-            print(f"[worker] recovered {recovered} interrupted job(s)")
+                # A recovered job is waiting until the single worker actually
+                # picks it up. Leaving it as "processing" makes every recovered
+                # job appear active even though they run sequentially.
+                j.status = "queued"
+                j.updated_at = datetime.utcnow()
+                recovered_job_ids.append(j.job_id)
+        db.commit()
+        for job_id in recovered_job_ids:
+            enqueue(job_id)
+        if recovered_job_ids:
+            print(f"[worker] recovered {len(recovered_job_ids)} interrupted job(s)")
     except Exception as e:
         print(f"[worker] recovery skipped (db unreachable?): {e}")
     finally:
@@ -85,13 +107,21 @@ def _loop():
             _q.task_done()
 
 
-def _set(db, job, status=None, stage=None, error=None):
+def _set(db, job, status=None, stage=None, error=None, percent=None,
+         current=None, total=None, message=None, eta=None):
     if status is not None:
         job.status = status
     if stage is not None:
         job.stage = stage
     if error is not None:
         job.error = error[:2000]
+    if percent is not None:
+        job.progress_percent = max(0, min(100, int(percent)))
+    job.progress_current = current
+    job.progress_total = total
+    if message is not None:
+        job.progress_message = message[:200]
+    job.estimated_seconds_remaining = eta
     job.updated_at = datetime.utcnow()
     db.commit()
 
@@ -122,6 +152,7 @@ def _upload_artifacts(public_id, artifacts):
     plan = [
         ("call_json", f"calls/{public_id}.json", "application/json"),
         ("audio", f"audio/{public_id}.mp3", "audio/mpeg"),
+        ("evaluation", f"evaluation/{public_id}.json", "application/json"),
         ("sentence_segments", f"sentence_segments/{public_id}.json", "application/json"),
         ("transcript", f"transcripts/{public_id}.json", "application/json"),
     ]
@@ -195,6 +226,10 @@ def _run_job(job_id):
         job = db.query(Job).filter(Job.job_id == _uuid(job_id)).first()
         if not job:
             return
+        if job.cancel_requested:
+            _set(db, job, status="cancelled", stage="cancelled", percent=0,
+                 message="Cancelled before processing", eta=0)
+            return
         call = db.query(Call).filter(Call.call_id == job.call_id).first()
         meta = dict(call.call_metadata or {}) if call else {}
         public_id = meta.get("public_call_id")
@@ -204,24 +239,45 @@ def _run_job(job_id):
                  error="call has no public_call_id; not an ingest-pipeline call")
             return
 
-        _set(db, job, status="processing", stage="starting", error="")
+        started = time.monotonic()
+        job.started_at = datetime.utcnow()
+        _set(db, job, status="processing", stage="starting", error="",
+             percent=2, message="Preparing audio", eta=None)
 
         agent_wav, customer_wav = _ensure_local_wavs(public_id, meta)
         spec = {"call_id": public_id, "domain": meta["domain"],
                 "accent": meta["accent"], "agent_wav": agent_wav,
                 "customer_wav": customer_wav}
 
-        def progress(stage):
-            _set(db, job, stage=stage)
+        def progress(stage, current=None, total=None, message=None):
+            db.refresh(job)
+            if job.cancel_requested:
+                raise JobCancelled("Analysis cancelled by user")
+            percent = STAGE_PROGRESS.get(stage, job.progress_percent or 0)
+            if stage in STAGE_RANGES and total:
+                lower, upper = STAGE_RANGES[stage]
+                percent = lower + (upper - lower) * min(1, current / total)
+            elapsed = time.monotonic() - started
+            eta = None
+            if percent >= 3:
+                eta = max(0, round(elapsed * (100 - percent) / percent))
+            _set(db, job, stage=stage, percent=percent, current=current,
+                 total=total, message=message or stage.replace("_", " ").title(),
+                 eta=eta)
 
         from app.pipeline_bridge import get_process_call
         process_call = get_process_call()
         artifacts = process_call(spec, progress=progress)
 
-        _set(db, job, stage="uploading")
+        progress("notifying", message="Preparing automation notifications")
+        from app.email_notifications import process_email_notifications
+        artifacts["email_notifications"] = process_email_notifications(
+            db, call, public_id, artifacts)
+
+        progress("uploading", message="Publishing analysis artifacts")
         keys = _upload_artifacts(public_id, artifacts)
 
-        _set(db, job, stage="persisting")
+        progress("persisting", message="Saving dashboard results")
         _write_db_rows(db, call, public_id, artifacts)
 
         summary = artifacts.get("index_summary") or {}
@@ -232,8 +288,17 @@ def _run_job(job_id):
             call.duration_seconds = int(summary["duration"])
         db.commit()
 
-        _set(db, job, status="succeeded", stage="done", error="")
+        _set(db, job, status="succeeded", stage="done", error="", percent=100,
+             message="Analysis complete", eta=0)
         print(f"[worker] job {job_id} succeeded ({public_id})")
+    except JobCancelled:
+        try:
+            job = db.query(Job).filter(Job.job_id == _uuid(job_id)).first()
+            if job:
+                _set(db, job, status="cancelled", stage="cancelled", error="",
+                     percent=job.progress_percent or 0, message="Analysis cancelled", eta=0)
+        except Exception:
+            pass
     except Exception as e:
         traceback.print_exc()
         try:

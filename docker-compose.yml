@@ -5,10 +5,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     volumes:
       - ./backend:/app
-      - ./data/audio:/data/audio
+      - ./data:/data
       - ./ml-services:/ml-services
+    environment:
+      - CAPSTONE_DATA_ROOT=/data
+      - PIPELINE_WORKERS=2
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:

@@ -475,3 +475,60 @@ Return EXACTLY this JSON shape:
   "risk_level": "review",
   "rationale": "..."
 }"""
+
+
+# ── AI supervisor synthesis ──────────────────────────────────────────────────
+AI_SUPERVISOR_SYSTEM_PROMPT = """\
+You are a contact-center QA supervisor. Synthesize the supplied transcript,
+compliance, workflow, quality, escalation, acoustic and contradiction results
+into concise manager-ready insights. Do not invent evidence. Return only JSON
+matching the requested schema."""
+
+AI_SUPERVISOR_SKELETON = """\
+Return EXACTLY one JSON object with this shape. Every listed field is required.
+Use only the enum values shown; arrays may be empty:
+{
+  "executive_summary": {
+    "call_outcome": "Successful|Partially successful|Unsuccessful|Unknown",
+    "resolution_status": "Resolved|Partially resolved|Unresolved|Not applicable|Unknown",
+    "overall_call_health": "Excellent|Good|Needs attention|Critical|Unknown",
+    "summary": "concise manager-ready summary"
+  },
+  "customer_intent": {
+    "primary_intent": "string", "secondary_intents": [],
+    "customer_goal": "string or null", "confidence": 0.0
+  },
+  "root_cause": {"main_reason": "string", "contributing_factors": []},
+  "predicted_csat": {"score": 1, "confidence": 0.0, "reason": "string"},
+  "business_risk": {
+    "level": "Low|Medium|High|Critical", "reasons": []
+  },
+  "next_best_action": {
+    "action": "string", "priority": "None|Low|Medium|High|Critical",
+    "reason": "string"
+  },
+  "coaching_recommendations": [{
+    "category": "Compliance|Empathy|Communication|Efficiency|Resolution|Professionalism|De-escalation|Product knowledge|Other",
+    "priority": "Low|Medium|High|Critical", "timestamp": "string or null",
+    "observation": "string", "recommendation": "string",
+    "suggested_phrase": "string or null"
+  }],
+  "audio_text_correlations": [{
+    "timestamp": "string or null", "speaker": "agent|customer|unknown",
+    "text_signal": "string", "audio_signal": "string",
+    "interpretation": "string", "recommended_response": "string or null"
+  }],
+  "contradictions": [],
+  "automation_decisions": [],
+  "automation": {
+    "manager_review_required": false, "customer_follow_up_required": false,
+    "compliance_alert_required": false, "coaching_required": false,
+    "priority": "None|Low|Medium|High|Critical", "reasons": []
+  }
+}"""
+
+
+def build_ai_supervisor_prompt(context):
+    """Serialize the already-curated supervisor context for the LLM node."""
+    import json
+    return json.dumps(context, ensure_ascii=False, default=str)

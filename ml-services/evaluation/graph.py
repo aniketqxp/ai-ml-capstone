@@ -45,6 +45,8 @@ from nodes import (
     arbitrate_node,
     anchor_node,
     investigate_node,
+    contradiction_check_node,
+    ai_supervisor_node,
 )
 from rubric import RUBRIC_VERSION_GRAPH
 
@@ -134,7 +136,7 @@ def route_after_anchor(state):
     if risk != "none":
         print(f"  [router] risk_level={risk} -> investigation")
         return "investigate"
-    return END
+    return "finalize"
 
 
 def build_graph():
@@ -151,6 +153,8 @@ def build_graph():
     g.add_node("arbitrate", arbitrate_node)
     g.add_node("anchor", anchor_node)
     g.add_node("investigate", investigate_node)
+    g.add_node("contradiction_check", contradiction_check_node)
+    g.add_node("ai_supervisor", ai_supervisor_node)
 
     # assemble fans out to 5 parallel nodes
     g.add_edge(START, "assemble")
@@ -181,8 +185,16 @@ def build_graph():
     g.add_edge("arbitrate", "anchor")
     g.add_conditional_edges(
         "anchor", route_after_anchor,
-        ["compliance", "quality", "escalation", "investigate", END])
-    g.add_edge("investigate", END)
+        ["compliance", "quality", "escalation", "investigate", "finalize"])
+    g.add_edge("investigate", "contradiction_check")
+    g.add_edge("contradiction_check", "ai_supervisor")
+    g.add_edge("ai_supervisor", END)
+
+    # Conditional-edge labels must name real nodes. "finalize" is the calm
+    # path's semantic label and maps to the same deterministic finalization
+    # chain used after an investigation.
+    g.add_node("finalize", lambda _state: {})
+    g.add_edge("finalize", "contradiction_check")
 
     return g.compile()
 

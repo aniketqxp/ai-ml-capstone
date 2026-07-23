@@ -4,7 +4,7 @@ import json
 from typing import Any
 
 
-MAX_TRANSCRIPT_CHARS = 7500
+MAX_TRANSCRIPT_CHARS = 5000
 MAX_EVIDENCE_SEGMENTS = 5
 MAX_FIELD_CHARS = 1800
 
@@ -446,7 +446,9 @@ def build_multimodal_llm_context(
             ),
         },
     }
-    MAX_CONTEXT_CHARACTERS = 22000
+    # Combined with the supervisor's 2200-token output allowance, this remains
+    # below the strictest configured provider's 8k total request limit.
+    MAX_CONTEXT_CHARACTERS = 16000
 
     if _context_size(context) > MAX_CONTEXT_CHARACTERS:
         context["important_emotional_evidence"] = (

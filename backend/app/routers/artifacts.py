@@ -10,8 +10,8 @@ JSON artifacts are proxied (small; keeps the API's CORS headers in front of the
 Vercel origin); audio 307-redirects to the Supabase CDN, which owns Range +
 bandwidth. calls_index is built live from the Call rows' index_summary.
 """
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, StreamingResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -54,8 +54,50 @@ def sentiment(call_id: str):
     except FileNotFoundError:
         return JSONResponse({"segments": []})
 
+@router.get("/evaluation/{call_id}.json")
+def evaluation(call_id: str):
+    return _json_or_404(f"evaluation/{call_id}.json")
+
+
+def _range_file(path, range_header):
+    size = path.stat().st_size
+    try:
+        value = range_header.removeprefix("bytes=").split(",", 1)[0]
+        start_text, end_text = value.split("-", 1)
+        start = int(start_text) if start_text else 0
+        end = min(int(end_text), size - 1) if end_text else size - 1
+        if start < 0 or start > end or start >= size:
+            raise ValueError
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=416, detail="invalid audio range")
+
+    def chunks():
+        remaining = end - start + 1
+        with path.open("rb") as source:
+            source.seek(start)
+            while remaining:
+                chunk = source.read(min(64 * 1024, remaining))
+                if not chunk:
+                    break
+                remaining -= len(chunk)
+                yield chunk
+
+    return StreamingResponse(chunks(), status_code=206, media_type="audio/mpeg", headers={
+        "Accept-Ranges": "bytes",
+        "Content-Range": f"bytes {start}-{end}/{size}",
+        "Content-Length": str(end - start + 1),
+    })
+
 
 @router.get("/audio/{call_id}.mp3")
-def audio(call_id: str):
+def audio(call_id: str, request: Request):
+    local_audio = storage.local_path(f"audio/{call_id}.mp3")
+    if local_audio:
+        range_header = request.headers.get("range")
+        if range_header:
+            return _range_file(local_audio, range_header)
+        return FileResponse(local_audio, media_type="audio/mpeg")
+    if not storage.is_configured():
+        raise HTTPException(status_code=404, detail="audio artifact not found")
     return RedirectResponse(
         storage.public_url(f"audio/{call_id}.mp3"), status_code=307)
