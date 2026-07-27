@@ -75,6 +75,10 @@ async def ingest_call(
 
 @router.get("/summary")
 def get_calls_summary(db: Session = Depends(get_db)):
+    # Read from calls table as the source of truth
+    all_calls = db.query(Call).all()
+
+    # Get all sentiment data grouped by call
     sentiment_data = db.query(
         SentimentSegment.call_id,
         SentimentSegment.domain,
@@ -85,25 +89,57 @@ def get_calls_summary(db: Session = Depends(get_db)):
         SentimentSegment.call_id,
         SentimentSegment.domain
     ).all()
+    sentiment_map = {row.call_id: row for row in sentiment_data}
 
+    # Get all jobs
+    jobs = db.query(Job).all()
+    job_map = {str(j.call_id): j for j in jobs}
+
+    # Get all evaluations
     evaluations = db.query(Evaluation).all()
     eval_map = {str(e.call_id): e for e in evaluations if e.call_id}
 
     calls_list = []
-    total = len(sentiment_data)
+    total = len(all_calls)
     escalated = 0
     coaching = 0
     clean = 0
+    processing = 0
     grade_counts = {"A": 0, "B": 0, "C": 0, "D": 0, "F": 0}
     domain_counts = {}
 
-    for row in sentiment_data:
-        call_id = row.call_id
-        max_esc = round(float(row.max_escalation), 4) if row.max_escalation else None
-        avg_esc = round(float(row.avg_escalation), 4) if row.avg_escalation else None
+    for call in all_calls:
+        call_id_str = str(call.call_id)
+        sentiment_row = sentiment_map.get(call_id_str)
+        job = job_map.get(call_id_str)
+        eval_obj = eval_map.get(call_id_str)
+
+        # If no sentiment yet show as processing
+        if not sentiment_row:
+            pipeline_status = job.status if job else "unknown"
+            processing += 1
+            calls_list.append({
+                "call_id": call_id_str,
+                "domain": None,
+                "grade": None,
+                "dominant_sentiment": None,
+                "dominant_emotion": None,
+                "max_escalation_score": None,
+                "avg_escalation_score": None,
+                "total_segments": None,
+                "escalation_flag": False,
+                "coaching_required": False,
+                "manual_review_required": False,
+                "action": "Processing",
+                "pipeline_status": pipeline_status
+            })
+            continue
+
+        max_esc = round(float(sentiment_row.max_escalation), 4) if sentiment_row.max_escalation else None
+        avg_esc = round(float(sentiment_row.avg_escalation), 4) if sentiment_row.avg_escalation else None
 
         successful = db.query(SentimentSegment).filter(
-            SentimentSegment.call_id == call_id,
+            SentimentSegment.call_id == call_id_str,
             SentimentSegment.processing_status == "success"
         ).all()
 
@@ -113,7 +149,6 @@ def get_calls_summary(db: Session = Depends(get_db)):
         emotions = [s.dominant_emotion for s in successful if s.dominant_emotion]
         dominant_emotion = max(set(emotions), key=emotions.count) if emotions else None
 
-        eval_obj = eval_map.get(call_id)
         grade = eval_obj.overall_grade if eval_obj else None
         escalation_flag = eval_obj.escalation_flag if eval_obj else False
         coaching_flag = eval_obj.coaching_required if eval_obj else False
@@ -132,22 +167,23 @@ def get_calls_summary(db: Session = Depends(get_db)):
         if grade and grade in grade_counts:
             grade_counts[grade] += 1
 
-        domain = row.domain or "unknown"
+        domain = sentiment_row.domain or "unknown"
         domain_counts[domain] = domain_counts.get(domain, 0) + 1
 
         calls_list.append({
-            "call_id": call_id,
+            "call_id": call_id_str,
             "domain": domain,
             "grade": grade,
             "dominant_sentiment": dominant_sentiment,
             "dominant_emotion": dominant_emotion,
             "max_escalation_score": max_esc,
             "avg_escalation_score": avg_esc,
-            "total_segments": row.total_segments,
+            "total_segments": sentiment_row.total_segments,
             "escalation_flag": escalation_flag,
             "coaching_required": coaching_flag,
             "manual_review_required": manual_review,
-            "action": action
+            "action": action,
+            "pipeline_status": "complete"
         })
 
     return {
@@ -155,6 +191,7 @@ def get_calls_summary(db: Session = Depends(get_db)):
         "escalated": escalated,
         "coaching_required": coaching,
         "clean": clean,
+        "processing": processing,
         "grade_distribution": grade_counts,
         "domain_distribution": domain_counts,
         "calls": calls_list
