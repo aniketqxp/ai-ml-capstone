@@ -29,7 +29,7 @@ def apply_action_routing(evaluation: Evaluation, max_escalation_score: float = N
         if max_escalation_score >= 0.7:
             evaluation.escalation_flag = True
             evaluation.coaching_required = True
-        elif max_escalation_score >= 0.4:
+        elif max_escalation_score >= 0.5:
             evaluation.coaching_required = True
 
     return evaluation
