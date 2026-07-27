@@ -1,14 +1,25 @@
 import uuid
 import os
 import shutil
+import json
+from pathlib import Path
 from datetime import datetime
-from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks
+from fastapi import APIRouter, Depends, UploadFile, File, Form, BackgroundTasks, HTTPException
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Call, Job, Transcript, Evaluation, SentimentSegment
 
 router = APIRouter(prefix="/calls", tags=["calls"])
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+SENTIMENT_OUTPUT_DIR = REPO_ROOT / "ml-services" / "outputs" / "backend" / "sentiment_calls_with_features"
+
+def find_sentiment_file(call_id: str) -> Path | None:
+    matches = list(SENTIMENT_OUTPUT_DIR.rglob(f"{call_id}_backend_sentiment_with_features.json"))
+    if matches:
+        return matches[0]
+    return None
 
 def process_job(job_id: str, call_id: str):
     print(f"[worker] Job {job_id} queued for call {call_id}")
@@ -75,10 +86,8 @@ async def ingest_call(
 
 @router.get("/summary")
 def get_calls_summary(db: Session = Depends(get_db)):
-    # Read from calls table as the source of truth
     all_calls = db.query(Call).all()
 
-    # Get all sentiment data grouped by call
     sentiment_data = db.query(
         SentimentSegment.call_id,
         SentimentSegment.domain,
@@ -91,11 +100,9 @@ def get_calls_summary(db: Session = Depends(get_db)):
     ).all()
     sentiment_map = {row.call_id: row for row in sentiment_data}
 
-    # Get all jobs
     jobs = db.query(Job).all()
     job_map = {str(j.call_id): j for j in jobs}
 
-    # Get all evaluations
     evaluations = db.query(Evaluation).all()
     eval_map = {str(e.call_id): e for e in evaluations if e.call_id}
 
@@ -114,7 +121,6 @@ def get_calls_summary(db: Session = Depends(get_db)):
         job = job_map.get(call_id_str)
         eval_obj = eval_map.get(call_id_str)
 
-        # If no sentiment yet show as processing
         if not sentiment_row:
             pipeline_status = job.status if job else "unknown"
             processing += 1
@@ -196,6 +202,57 @@ def get_calls_summary(db: Session = Depends(get_db)):
         "domain_distribution": domain_counts,
         "calls": calls_list
     }
+
+@router.get("/sentiment/available")
+def list_available_sentiment_calls():
+    if not SENTIMENT_OUTPUT_DIR.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"Sentiment output directory not found: {SENTIMENT_OUTPUT_DIR}"
+        )
+    calls = []
+    for file_path in sorted(SENTIMENT_OUTPUT_DIR.rglob("*_backend_sentiment_with_features.json")):
+        with open(file_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        call_summary = payload.get("call_summary", {})
+        audio_summary = payload.get("audio_feature_summary", {})
+        customer_trend = payload.get("customer_escalation_trend", {})
+        speaker_summary = payload.get("speaker_audio_feature_summary", {})
+        calls.append({
+            "call_id": payload.get("call_id"),
+            "domain": payload.get("domain"),
+            "model_version": payload.get("model_version"),
+            "risk_level": call_summary.get("risk_level"),
+            "dominant_sentiment": call_summary.get("dominant_sentiment"),
+            "dominant_emotion": call_summary.get("dominant_emotion"),
+            "total_segments": call_summary.get("total_segments"),
+            "successful_segments": call_summary.get("successful_segments"),
+            "skipped_segments": call_summary.get("skipped_segments"),
+            "has_audio_features": payload.get("has_audio_features"),
+            "average_pitch_hz": audio_summary.get("average_pitch_hz"),
+            "average_volume_db": audio_summary.get("average_volume_db"),
+            "average_speech_rate_wpm": audio_summary.get("average_speech_rate_wpm"),
+            "average_pause_ratio": audio_summary.get("average_pause_ratio"),
+            "customer_escalation_trend": customer_trend.get("trend"),
+            "customer_trend_delta": customer_trend.get("trend_delta"),
+            "has_speaker_summary": bool(speaker_summary),
+            "dashboard_series_count": len(payload.get("dashboard_audio_feature_series", [])),
+        })
+    return {
+        "total_calls": len(calls),
+        "calls": calls
+    }
+
+@router.get("/{call_id}/sentiment")
+def get_call_sentiment(call_id: str):
+    sentiment_file = find_sentiment_file(call_id)
+    if not sentiment_file:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No backend sentiment file found for call_id: {call_id}"
+        )
+    with open(sentiment_file, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 @router.get("/{call_id}/status")
 def get_call_status(call_id: str, db: Session = Depends(get_db)):
