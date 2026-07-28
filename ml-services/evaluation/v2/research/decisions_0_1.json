@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "decision_policy_id": "evaluator-v2-attention",
+  "decision_policy_version": "0.1.0",
+  "profile_ref": "HEAD",
+  "profile_commit": "e6924500ad42390fdee2186e933a54cb4cdf45bb",
+  "transcript_ref": "HEAD",
+  "transcript_commit": "e6924500ad42390fdee2186e933a54cb4cdf45bb",
+  "sentiment_ref": "origin/integration/full-pipeline-test",
+  "sentiment_commit": "a63045fee0a1b98082f951cca584267a6705c50a",
+  "assessment_directory": null,
+  "aggregate": {
+    "call_count": 10,
+    "attention_required_count": 0,
+    "decision_status_counts": {
+      "insufficient_evidence": 10
+    },
+    "triggered_finding_count": 0,
+    "positive_finding_count": 0,
+    "uncertainty_count": 103,
+    "action_type_counts": {
+      "none": 10
+    },
+    "action_execution_counts": {
+      "no_action": 10
+    }
+  },
+  "calls": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 11,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "3ae98fbdf56a3a548b5297865555f294cddecfe11951fe13e995bcb2eddbf835",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 11,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "c7159e77222fe17731a77ff0883e4730a925c22a31f6310eb55af2b4ea811159",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 10,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "14dbc695672826d425c254a405890f598ce6bf1ce34901957ad34e156571a52b",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 8,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "1bc0cb8380679b67ef25eade2b3e39e6cd9029678518be975c17e582a3f4a132",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 8,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "5074f7cc5d934e2c37b8a9a74a3ab308fa666b51165bc868c9d9881ba06956f2",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 11,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "4cf1bad43fe6c7e5006cdd80262c002bda25da4cef795677fd97aac1fa2607c3",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 11,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "71ea5f31167e6c661172272d4f1fb9bddce9bc8e5a34d64484475406b2825aca",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 11,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "d392c75b2c06960346b45c02d1b29a2ad0c8f8e9178badb9e86d234eca9d4cc5",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 12,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "67e8b9487f11d340acef3b625a17927558f3f33a513a51279da1c5891947ebb8",
+      "supplied_assessment_count": 0
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "attention_required": false,
+      "decision_status": "insufficient_evidence",
+      "triggered_finding_count": 0,
+      "positive_finding_count": 0,
+      "uncertainty_count": 10,
+      "controlling_finding_ids": [],
+      "recovery_effect": "none",
+      "action_type": "none",
+      "action_execution": "no_action",
+      "signal_bundle_sha256": "8caf25a9bf6e3925cfa7911cdd4f64c86c0f01518c952d6fde085f4aecf46567",
+      "supplied_assessment_count": 0
+    }
+  ]
+}
