@@ -22,6 +22,15 @@ from .domain_profiles import (
     ResolvedDomainPlan,
     resolve_domain_plan,
 )
+from .evaluation_data import (
+    EVALUATION_DATASET_ID,
+    EVALUATION_DATASET_VERSION,
+    CallAnnotation,
+    CounterfactualPair,
+    EvaluationDataset,
+    load_evaluation_dataset,
+    validate_evaluation_dataset,
+)
 from .findings import (
     FINDINGS_VERSION,
     FindingDerivation,
@@ -38,10 +47,15 @@ __all__ = [
     "DECISION_POLICY_VERSION",
     "DEFAULT_CONFIG",
     "DYNAMICS_VERSION",
+    "EVALUATION_DATASET_ID",
+    "EVALUATION_DATASET_VERSION",
     "FINDINGS_VERSION",
+    "CallAnnotation",
     "CallDecision",
+    "CounterfactualPair",
     "DomainProfile",
     "DynamicsConfig",
+    "EvaluationDataset",
     "FindingDerivation",
     "ProfileSelection",
     "RequirementAssessment",
@@ -52,7 +66,9 @@ __all__ = [
     "build_call_decision",
     "derive_acoustic_dynamics",
     "derive_findings",
+    "load_evaluation_dataset",
     "resolve_domain_plan",
     "signal_bundle_sha256",
     "validate_decision_references",
+    "validate_evaluation_dataset",
 ]

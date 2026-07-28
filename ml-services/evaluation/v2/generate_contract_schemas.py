@@ -7,6 +7,11 @@ from v2.domain_profiles import (
     ProfileSelection,
     ResolvedDomainPlan,
 )
+from v2.evaluation_data import (
+    CallAnnotation,
+    CounterfactualPair,
+    EvaluationDataset,
+)
 from v2.findings import (
     FindingDerivation,
     RequirementAssessmentBatch,
@@ -29,6 +34,9 @@ def main():
             RequirementAssessmentBatch
         ),
         "finding_derivation.schema.json": FindingDerivation,
+        "call_annotation.schema.json": CallAnnotation,
+        "counterfactual_pair.schema.json": CounterfactualPair,
+        "evaluation_dataset.schema.json": EvaluationDataset,
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
