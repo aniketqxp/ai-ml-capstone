@@ -39,6 +39,13 @@ from .findings import (
     RequirementVerdict,
     derive_findings,
 )
+from .presentation import (
+    OUTPUT_INVENTORY,
+    PRESENTATION_VERSION,
+    CallEvaluationView,
+    PresentationValidationReport,
+    project_call_evaluation,
+)
 from .schemas import CallDecision, SignalBundle
 from .signal_validation import (
     SIGNAL_VALIDATION_VERSION,
@@ -65,16 +72,20 @@ __all__ = [
     "EVALUATION_DATASET_ID",
     "EVALUATION_DATASET_VERSION",
     "FINDINGS_VERSION",
+    "OUTPUT_INVENTORY",
+    "PRESENTATION_VERSION",
     "SIGNAL_VALIDATION_VERSION",
     "SUPERVISOR_VERSION",
     "AblationVariant",
     "CallAnnotation",
     "CallDecision",
+    "CallEvaluationView",
     "CounterfactualPair",
     "DomainProfile",
     "DynamicsConfig",
     "EvaluationDataset",
     "FindingDerivation",
+    "PresentationValidationReport",
     "ProfileSelection",
     "RequirementAssessment",
     "RequirementAssessmentBatch",
@@ -92,6 +103,7 @@ __all__ = [
     "derive_acoustic_dynamics",
     "derive_findings",
     "load_evaluation_dataset",
+    "project_call_evaluation",
     "resolve_domain_plan",
     "resolve_supervisor_response",
     "signal_bundle_sha256",

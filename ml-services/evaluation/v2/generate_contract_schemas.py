@@ -16,6 +16,10 @@ from v2.findings import (
     FindingDerivation,
     RequirementAssessmentBatch,
 )
+from v2.presentation import (
+    CallEvaluationView,
+    PresentationValidationReport,
+)
 from v2.schemas import CallDecision, SignalBundle
 from v2.signal_validation import SignalValidationReport
 from v2.supervisor import (
@@ -49,6 +53,10 @@ def main():
         "supervisor_context.schema.json": SupervisorContext,
         "supervisor_draft.schema.json": SupervisorDraft,
         "supervisor_result.schema.json": SupervisorResult,
+        "call_evaluation_view.schema.json": CallEvaluationView,
+        "presentation_validation_report.schema.json": (
+            PresentationValidationReport
+        ),
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
