@@ -61,10 +61,12 @@ The primary result remains:
 
 ```json
 {
+  "decision_status": "complete",
   "attention_required": true,
   "triggered_findings": [],
   "positive_findings": [],
-  "recommended_action": {}
+  "recommended_action": {},
+  "decision_trace": {}
 }
 ```
 
@@ -80,11 +82,14 @@ Each finding must include:
 
 Contract rules prevent:
 
+- incomplete requirement coverage from being presented as `complete`
+- attention from disagreeing with the per-finding policy trace
 - attention without a negative finding
 - a visible finding without evidence
 - a positive finding in `triggered_findings`
 - a negative finding in `positive_findings`
 - actions that reference unknown findings
+- actions that reference non-controlling findings
 - a non-empty action when attention is false
 - raw signals being promoted directly to the primary page
 
@@ -125,6 +130,10 @@ policy review require human approval.
   explicit-text rules, acoustic corroboration, and deterministic findings.
 - `ml-services/evaluation/v2/run_findings_batch.py`: pinned banking-batch
   finding derivation and assessment-gap reporting.
+- `ml-services/evaluation/v2/decisions.py`: deterministic attention,
+  precedence, recovery, action policy, and signal-bundle hashing.
+- `ml-services/evaluation/v2/run_decisions_batch.py`: pinned banking-batch
+  decision-policy execution.
 - `ml-services/evaluation/v2/profiles/`: versioned domain rules and selection
   fixtures.
 - `ml-services/evaluation/v2/generate_contract_schemas.py`: JSON Schema export.
