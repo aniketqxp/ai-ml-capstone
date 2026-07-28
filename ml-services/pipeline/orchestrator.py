@@ -32,7 +32,7 @@ for _p in (_HERE, _ML / "evaluation", _ML / "scripts", _ML):
 import paths                                               # noqa: E402
 from assemble import load_manifest                         # noqa: E402
 from batch_sentence_segments import segment_transcript     # noqa: E402
-from graph import evaluate_call                            # noqa: E402
+from evaluator_runtime import evaluate_call               # noqa: E402
 from export_frontend import export_call_artifacts, summarize  # noqa: E402
 from prompts_domain import prompt_for                      # noqa: E402
 
