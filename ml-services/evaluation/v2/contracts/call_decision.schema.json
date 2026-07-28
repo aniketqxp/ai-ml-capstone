@@ -64,6 +64,68 @@
       "title": "Applicability",
       "type": "object"
     },
+    "DecisionPolicyTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "policy_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.-]+$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "policy_version": {
+          "minLength": 1,
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "aggregation": {
+          "const": "any_qualifying_finding",
+          "title": "Aggregation",
+          "type": "string"
+        },
+        "qualifications": {
+          "items": {
+            "$ref": "#/$defs/FindingQualification"
+          },
+          "title": "Qualifications",
+          "type": "array"
+        },
+        "controlling_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Controlling Finding Ids",
+          "type": "array"
+        },
+        "recovery_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Recovery Finding Ids",
+          "type": "array"
+        },
+        "recovery_effect": {
+          "$ref": "#/$defs/RecoveryEffect",
+          "default": "none"
+        }
+      },
+      "required": [
+        "policy_id",
+        "policy_version",
+        "aggregation"
+      ],
+      "title": "DecisionPolicyTrace",
+      "type": "object"
+    },
+    "DecisionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient_evidence"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    },
     "DecisionUncertainty": {
       "additionalProperties": false,
       "properties": {
@@ -367,6 +429,43 @@
       "title": "FindingPolarity",
       "type": "string"
     },
+    "FindingQualification": {
+      "additionalProperties": false,
+      "properties": {
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "qualifies_for_attention": {
+          "title": "Qualifies For Attention",
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/QualificationReason"
+        },
+        "precedence_group": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9_.]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precedence Group"
+        }
+      },
+      "required": [
+        "finding_id",
+        "qualifies_for_attention",
+        "reason"
+      ],
+      "title": "FindingQualification",
+      "type": "object"
+    },
     "FindingSeverity": {
       "enum": [
         "info",
@@ -416,6 +515,18 @@
       "title": "PresentationSelection",
       "type": "object"
     },
+    "QualificationReason": {
+      "enum": [
+        "qualifies_critical",
+        "qualifies_review",
+        "qualifies_limited_review",
+        "excluded_informational",
+        "excluded_internal",
+        "excluded_unreliable"
+      ],
+      "title": "QualificationReason",
+      "type": "string"
+    },
     "RecommendedAction": {
       "additionalProperties": false,
       "properties": {
@@ -461,6 +572,14 @@
       ],
       "title": "RecommendedAction",
       "type": "object"
+    },
+    "RecoveryEffect": {
+      "enum": [
+        "none",
+        "context_only"
+      ],
+      "title": "RecoveryEffect",
+      "type": "string"
     },
     "ReliabilityAssessment": {
       "additionalProperties": false,
@@ -721,6 +840,9 @@
       "default": null,
       "title": "Signal Bundle Sha256"
     },
+    "decision_status": {
+      "$ref": "#/$defs/DecisionStatus"
+    },
     "attention_required": {
       "title": "Attention Required",
       "type": "boolean"
@@ -749,6 +871,9 @@
       "title": "Uncertainties",
       "type": "array"
     },
+    "decision_trace": {
+      "$ref": "#/$defs/DecisionPolicyTrace"
+    },
     "presentation": {
       "$ref": "#/$defs/PresentationSelection"
     },
@@ -760,8 +885,10 @@
     "call_id",
     "evaluator_version",
     "domain_profile_id",
+    "decision_status",
     "attention_required",
     "recommended_action",
+    "decision_trace",
     "presentation",
     "provenance"
   ],
