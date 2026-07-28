@@ -74,7 +74,7 @@ Each finding must include:
 - domain-profile applicability
 - versioned detection rule
 - evidence
-- counter-evidence when present
+- counter-evidence
 - reliability and coverage limitations
 - severity and visibility
 
@@ -121,6 +121,10 @@ policy review require human approval.
 - `ml-services/evaluation/v2/validation.py`: decision-to-signal reference checks.
 - `ml-services/evaluation/v2/domain_profiles.py`: profile validation and
   deterministic applicability resolution.
+- `ml-services/evaluation/v2/findings.py`: grounded requirement assessments,
+  explicit-text rules, acoustic corroboration, and deterministic findings.
+- `ml-services/evaluation/v2/run_findings_batch.py`: pinned banking-batch
+  finding derivation and assessment-gap reporting.
 - `ml-services/evaluation/v2/profiles/`: versioned domain rules and selection
   fixtures.
 - `ml-services/evaluation/v2/generate_contract_schemas.py`: JSON Schema export.
