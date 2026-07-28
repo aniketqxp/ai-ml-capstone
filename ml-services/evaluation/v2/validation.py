@@ -1,4 +1,5 @@
 """Cross-artifact validation for SignalBundle and CallDecision."""
+from .decisions import signal_bundle_sha256
 from .schemas import CallDecision, SignalBundle
 
 
@@ -11,6 +12,12 @@ def validate_decision_references(
         raise ValueError("decision and signal bundle call_id values do not match")
     if decision.signal_bundle_schema_version != bundle.schema_version:
         raise ValueError("decision references an incompatible signal bundle schema")
+    if (
+        decision.signal_bundle_sha256
+        and decision.signal_bundle_sha256
+        != signal_bundle_sha256(bundle)
+    ):
+        raise ValueError("decision signal bundle hash does not match")
 
     segment_ids = {segment.segment_id for segment in bundle.segments}
     signal_ids = {signal.signal_id for signal in bundle.signals}
@@ -41,5 +48,13 @@ def validate_decision_references(
         if unknown_signals:
             raise ValueError(
                 f"uncertainty {uncertainty.code!r} references unknown signals"
+            )
+        unknown_findings = (
+            set(uncertainty.affected_finding_ids)
+            - {finding.finding_id for finding in findings}
+        )
+        if unknown_findings:
+            raise ValueError(
+                f"uncertainty {uncertainty.code!r} references unknown findings"
             )
     return decision

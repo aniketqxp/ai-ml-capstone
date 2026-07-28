@@ -358,9 +358,13 @@ class RecommendedAction(ContractModel):
 
     @model_validator(mode="after")
     def validate_execution(self):
+        if len(self.finding_ids) != len(set(self.finding_ids)):
+            raise ValueError("recommended action has duplicate finding ids")
         if self.action_type == ActionType.NONE:
             if self.execution != ActionExecution.NO_ACTION:
                 raise ValueError("none action_type requires no_action execution")
+            if self.finding_ids:
+                raise ValueError("none action_type cannot cite findings")
             if self.automation_allowed or self.requires_human_approval:
                 raise ValueError("none action_type cannot require execution")
             return self
@@ -395,6 +399,114 @@ class PresentationSelection(ContractModel):
     detail_finding_ids: list[str] = Field(default_factory=list)
 
 
+class QualificationReason(str, Enum):
+    QUALIFIES_CRITICAL = "qualifies_critical"
+    QUALIFIES_REVIEW = "qualifies_review"
+    QUALIFIES_LIMITED_REVIEW = "qualifies_limited_review"
+    EXCLUDED_INFORMATIONAL = "excluded_informational"
+    EXCLUDED_INTERNAL = "excluded_internal"
+    EXCLUDED_UNRELIABLE = "excluded_unreliable"
+
+
+class RecoveryEffect(str, Enum):
+    NONE = "none"
+    CONTEXT_ONLY = "context_only"
+
+
+class DecisionStatus(str, Enum):
+    COMPLETE = "complete"
+    PARTIAL = "partial"
+    INSUFFICIENT_EVIDENCE = "insufficient_evidence"
+
+
+class FindingQualification(ContractModel):
+    finding_id: str = Field(min_length=1)
+    qualifies_for_attention: bool
+    reason: QualificationReason
+    precedence_group: str | None = Field(
+        default=None,
+        pattern=r"^[a-z0-9_.]+$",
+    )
+
+    @model_validator(mode="after")
+    def validate_precedence(self):
+        if self.qualifies_for_attention and not self.precedence_group:
+            raise ValueError(
+                "qualifying findings require a precedence group"
+            )
+        if not self.qualifies_for_attention and self.precedence_group:
+            raise ValueError(
+                "excluded findings cannot have a precedence group"
+            )
+        return self
+
+
+class DecisionPolicyTrace(ContractModel):
+    policy_id: str = Field(min_length=1, pattern=r"^[a-z0-9_.-]+$")
+    policy_version: str = Field(min_length=1)
+    aggregation: Literal["any_qualifying_finding"]
+    qualifications: list[FindingQualification] = Field(
+        default_factory=list
+    )
+    controlling_finding_ids: list[str] = Field(default_factory=list)
+    recovery_finding_ids: list[str] = Field(default_factory=list)
+    recovery_effect: RecoveryEffect = RecoveryEffect.NONE
+
+    @model_validator(mode="after")
+    def validate_trace(self):
+        qualification_ids = [
+            item.finding_id for item in self.qualifications
+        ]
+        if len(qualification_ids) != len(set(qualification_ids)):
+            raise ValueError("decision trace has duplicate finding ids")
+        if len(self.controlling_finding_ids) != len(
+            set(self.controlling_finding_ids)
+        ):
+            raise ValueError(
+                "decision trace has duplicate controlling findings"
+            )
+        if len(self.recovery_finding_ids) != len(
+            set(self.recovery_finding_ids)
+        ):
+            raise ValueError(
+                "decision trace has duplicate recovery findings"
+            )
+        qualifying_ids = {
+            item.finding_id
+            for item in self.qualifications
+            if item.qualifies_for_attention
+        }
+        if not set(self.controlling_finding_ids).issubset(
+            qualifying_ids
+        ):
+            raise ValueError(
+                "controlling findings must qualify for attention"
+            )
+        if qualifying_ids and not self.controlling_finding_ids:
+            raise ValueError(
+                "attention trace requires a controlling finding"
+            )
+        if not qualifying_ids and self.controlling_finding_ids:
+            raise ValueError(
+                "no-attention trace cannot have controlling findings"
+            )
+        if (
+            self.recovery_finding_ids
+            and self.recovery_effect == RecoveryEffect.NONE
+        ):
+            raise ValueError(
+                "recovery findings require an explicit recovery effect"
+            )
+        if (
+            not self.recovery_finding_ids
+            and self.recovery_effect != RecoveryEffect.NONE
+        ):
+            raise ValueError(
+                "recovery effect requires a recovery finding"
+            )
+        return self
+
+
 class CallDecision(ContractModel):
     schema_version: Literal["2.0"] = "2.0"
     call_id: str = Field(min_length=1)
@@ -405,11 +517,13 @@ class CallDecision(ContractModel):
         default=None,
         pattern=r"^[0-9a-f]{64}$",
     )
+    decision_status: DecisionStatus
     attention_required: bool
     triggered_findings: list[Finding] = Field(default_factory=list)
     positive_findings: list[Finding] = Field(default_factory=list)
     recommended_action: RecommendedAction
     uncertainties: list[DecisionUncertainty] = Field(default_factory=list)
+    decision_trace: DecisionPolicyTrace
     presentation: PresentationSelection
     provenance: SourceProvenance
 
@@ -433,6 +547,42 @@ class CallDecision(ContractModel):
 
         if self.attention_required and not self.triggered_findings:
             raise ValueError("attention requires at least one triggered finding")
+        qualification_ids = {
+            item.finding_id
+            for item in self.decision_trace.qualifications
+        }
+        triggered_ids = {
+            finding.finding_id
+            for finding in self.triggered_findings
+        }
+        if qualification_ids != triggered_ids:
+            raise ValueError(
+                "decision trace must classify every triggered finding"
+            )
+        trace_attention = any(
+            item.qualifies_for_attention
+            for item in self.decision_trace.qualifications
+        )
+        if self.attention_required != trace_attention:
+            raise ValueError(
+                "attention must equal any qualifying finding"
+            )
+        has_requirement_uncertainty = any(
+            uncertainty.code.startswith("requirement.")
+            for uncertainty in self.uncertainties
+        )
+        expected_status = (
+            DecisionStatus.PARTIAL
+            if has_requirement_uncertainty and all_findings
+            else DecisionStatus.INSUFFICIENT_EVIDENCE
+            if has_requirement_uncertainty
+            else DecisionStatus.COMPLETE
+        )
+        if self.decision_status != expected_status:
+            raise ValueError(
+                "decision status does not match finding and "
+                "requirement-assessment coverage"
+            )
         if self.attention_required:
             if self.recommended_action.action_type == ActionType.NONE:
                 raise ValueError("attention requires a recommended action")
@@ -444,6 +594,22 @@ class CallDecision(ContractModel):
         known_ids = set(ids)
         if not set(self.recommended_action.finding_ids).issubset(known_ids):
             raise ValueError("recommended action references unknown finding")
+        if not set(self.recommended_action.finding_ids).issubset(
+            self.decision_trace.controlling_finding_ids
+        ):
+            raise ValueError(
+                "recommended action must cite controlling findings"
+            )
+        positive_ids = {
+            finding.finding_id
+            for finding in self.positive_findings
+        }
+        if not set(
+            self.decision_trace.recovery_finding_ids
+        ).issubset(positive_ids):
+            raise ValueError(
+                "decision trace references unknown recovery findings"
+            )
 
         for finding_id in self.presentation.primary_finding_ids:
             matching = [

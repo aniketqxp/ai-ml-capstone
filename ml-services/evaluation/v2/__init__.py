@@ -10,6 +10,12 @@ from .acoustic_dynamics import (
     DynamicsConfig,
     derive_acoustic_dynamics,
 )
+from .decisions import (
+    DECISION_POLICY_ID,
+    DECISION_POLICY_VERSION,
+    build_call_decision,
+    signal_bundle_sha256,
+)
 from .domain_profiles import (
     DomainProfile,
     ProfileSelection,
@@ -28,6 +34,8 @@ from .schemas import CallDecision, SignalBundle
 from .validation import validate_decision_references
 
 __all__ = [
+    "DECISION_POLICY_ID",
+    "DECISION_POLICY_VERSION",
     "DEFAULT_CONFIG",
     "DYNAMICS_VERSION",
     "FINDINGS_VERSION",
@@ -41,8 +49,10 @@ __all__ = [
     "RequirementVerdict",
     "ResolvedDomainPlan",
     "SignalBundle",
+    "build_call_decision",
     "derive_acoustic_dynamics",
     "derive_findings",
     "resolve_domain_plan",
+    "signal_bundle_sha256",
     "validate_decision_references",
 ]

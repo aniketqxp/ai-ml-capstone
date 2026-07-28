@@ -6,6 +6,7 @@ import hashlib
 import json
 import subprocess
 from collections import Counter
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -17,10 +18,11 @@ from .domain_profiles import (
     resolve_domain_plan,
 )
 from .findings import (
+    FindingDerivation,
     RequirementAssessmentBatch,
     derive_findings,
 )
-from .schemas import Modality
+from .schemas import Modality, SignalBundle
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 PROFILE_PATH = "ml-services/evaluation/v2/profiles/banking_v1.json"
@@ -33,6 +35,16 @@ SENTIMENT_PREFIX = (
     "ml-services/outputs/backend/"
     "sentiment_calls_with_features/banking"
 )
+
+
+@dataclass(frozen=True)
+class FindingBatchArtifacts:
+    call_id: str
+    applicable_requirement_count: int
+    supplied_assessment_count: int
+    assessment_sha256: str | None
+    bundle: SignalBundle
+    derivation: FindingDerivation
 
 
 def _git(*args: str) -> str:
@@ -71,18 +83,45 @@ def _has_acoustic_support(finding) -> bool:
     )
 
 
-def build_batch_summary(
+def batch_source_metadata(
     *,
     profile_ref: str,
     transcript_ref: str,
     sentiment_ref: str,
     assessment_dir: Path | None,
 ) -> dict[str, Any]:
+    return {
+        "profile_ref": profile_ref,
+        "profile_commit": _git("rev-parse", profile_ref).strip(),
+        "transcript_ref": transcript_ref,
+        "transcript_commit": _git(
+            "rev-parse",
+            transcript_ref,
+        ).strip(),
+        "sentiment_ref": sentiment_ref,
+        "sentiment_commit": _git(
+            "rev-parse",
+            sentiment_ref,
+        ).strip(),
+        "assessment_directory": (
+            str(assessment_dir)
+            if assessment_dir
+            else None
+        ),
+    }
+
+
+def iter_batch_artifacts(
+    *,
+    profile_ref: str,
+    transcript_ref: str,
+    sentiment_ref: str,
+    assessment_dir: Path | None,
+):
     profile = DomainProfile.model_validate(
         _git_json(profile_ref, PROFILE_PATH)
     )
     selection_payload = _git_json(profile_ref, SELECTIONS_PATH)
-    calls = []
     for raw_selection in selection_payload["calls"]:
         selection = ProfileSelection.model_validate(raw_selection)
         call_id = selection.call_id
@@ -115,16 +154,43 @@ def build_batch_summary(
             plan,
             assessments,
         )
+        yield FindingBatchArtifacts(
+            call_id=call_id,
+            applicable_requirement_count=len(plan.requirements),
+            supplied_assessment_count=(
+                len(assessments.assessments)
+                if assessments
+                else 0
+            ),
+            assessment_sha256=assessment_sha256,
+            bundle=bundle,
+            derivation=derivation,
+        )
+
+
+def build_batch_summary(
+    *,
+    profile_ref: str,
+    transcript_ref: str,
+    sentiment_ref: str,
+    assessment_dir: Path | None,
+) -> dict[str, Any]:
+    calls = []
+    for artifacts in iter_batch_artifacts(
+        profile_ref=profile_ref,
+        transcript_ref=transcript_ref,
+        sentiment_ref=sentiment_ref,
+        assessment_dir=assessment_dir,
+    ):
+        derivation = artifacts.derivation
         calls.append(
             {
-                "call_id": call_id,
-                "applicable_requirement_count": len(
-                    plan.requirements
+                "call_id": artifacts.call_id,
+                "applicable_requirement_count": (
+                    artifacts.applicable_requirement_count
                 ),
                 "supplied_assessment_count": (
-                    len(assessments.assessments)
-                    if assessments
-                    else 0
+                    artifacts.supplied_assessment_count
                 ),
                 "requirement_uncertainty_count": len(
                     derivation.uncertainties
@@ -147,7 +213,7 @@ def build_batch_summary(
                 "suppressed_duplicates": (
                     derivation.suppressed_duplicates
                 ),
-                "assessment_sha256": assessment_sha256,
+                "assessment_sha256": artifacts.assessment_sha256,
             }
         )
 
@@ -163,22 +229,11 @@ def build_batch_summary(
     )
     return {
         "schema_version": "1.0",
-        "profile_ref": profile_ref,
-        "profile_commit": _git("rev-parse", profile_ref).strip(),
-        "transcript_ref": transcript_ref,
-        "transcript_commit": _git(
-            "rev-parse",
-            transcript_ref,
-        ).strip(),
-        "sentiment_ref": sentiment_ref,
-        "sentiment_commit": _git(
-            "rev-parse",
-            sentiment_ref,
-        ).strip(),
-        "assessment_directory": (
-            str(assessment_dir)
-            if assessment_dir
-            else None
+        **batch_source_metadata(
+            profile_ref=profile_ref,
+            transcript_ref=transcript_ref,
+            sentiment_ref=sentiment_ref,
+            assessment_dir=assessment_dir,
         ),
         "aggregate": {
             "call_count": len(calls),

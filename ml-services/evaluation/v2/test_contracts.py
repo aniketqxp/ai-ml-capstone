@@ -10,14 +10,18 @@ from v2.schemas import (
     ActionType,
     Applicability,
     CallDecision,
+    DecisionPolicyTrace,
+    DecisionStatus,
     DetectionRule,
     EvidenceRef,
     Finding,
     FindingCategory,
     FindingPolarity,
+    FindingQualification,
     FindingSeverity,
     Modality,
     PresentationSelection,
+    QualificationReason,
     RecommendedAction,
     ReliabilityAssessment,
     ReliabilityStatus,
@@ -182,6 +186,23 @@ def _finding(polarity=FindingPolarity.NEGATIVE):
     )
 
 
+def _decision_trace(finding):
+    return DecisionPolicyTrace(
+        policy_id="test-policy",
+        policy_version="1",
+        aggregation="any_qualifying_finding",
+        qualifications=[
+            FindingQualification(
+                finding_id=finding.finding_id,
+                qualifies_for_attention=True,
+                reason=QualificationReason.QUALIFIES_REVIEW,
+                precedence_group="review.outcome",
+            )
+        ],
+        controlling_finding_ids=[finding.finding_id],
+    )
+
+
 class SignalBundleTests(unittest.TestCase):
     def test_current_sentence_segments_map_without_sentiment(self):
         path = (
@@ -249,6 +270,7 @@ class DecisionContractTests(unittest.TestCase):
             call_id="banking-call-1",
             evaluator_version="v2",
             domain_profile_id="banking-v1",
+            decision_status=DecisionStatus.COMPLETE,
             attention_required=True,
             triggered_findings=[finding],
             recommended_action=RecommendedAction(
@@ -260,6 +282,7 @@ class DecisionContractTests(unittest.TestCase):
                 automation_allowed=True,
                 requires_human_approval=False,
             ),
+            decision_trace=_decision_trace(finding),
             presentation=PresentationSelection(
                 primary_finding_ids=[finding.finding_id],
             ),
@@ -281,6 +304,7 @@ class DecisionContractTests(unittest.TestCase):
                 call_id="banking-call-1",
                 evaluator_version="v2",
                 domain_profile_id="banking-v1",
+                decision_status=DecisionStatus.COMPLETE,
                 attention_required=True,
                 recommended_action=RecommendedAction(
                     action_type=ActionType.CREATE_REVIEW_CASE,
@@ -288,6 +312,11 @@ class DecisionContractTests(unittest.TestCase):
                     label="Create review case",
                     reason="Review required.",
                     automation_allowed=True,
+                ),
+                decision_trace=DecisionPolicyTrace(
+                    policy_id="test-policy",
+                    policy_version="1",
+                    aggregation="any_qualifying_finding",
                 ),
                 presentation=PresentationSelection(),
                 provenance=SourceProvenance(
@@ -306,6 +335,16 @@ class DecisionContractTests(unittest.TestCase):
                 automation_allowed=True,
             )
 
+    def test_none_action_cannot_cite_a_finding(self):
+        with self.assertRaises(ValidationError):
+            RecommendedAction(
+                action_type=ActionType.NONE,
+                execution=ActionExecution.NO_ACTION,
+                label="No action",
+                reason="No action is required.",
+                finding_ids=["finding-unresolved"],
+            )
+
     def test_schema_generation_succeeds(self):
         schema = CallDecision.model_json_schema()
         self.assertIn("$defs", schema)
@@ -321,6 +360,7 @@ class DecisionContractTests(unittest.TestCase):
             call_id="banking-call-1",
             evaluator_version="v2",
             domain_profile_id="banking-v1",
+            decision_status=DecisionStatus.COMPLETE,
             attention_required=True,
             triggered_findings=[finding],
             recommended_action=RecommendedAction(
@@ -331,6 +371,7 @@ class DecisionContractTests(unittest.TestCase):
                 finding_ids=[finding.finding_id],
                 automation_allowed=True,
             ),
+            decision_trace=_decision_trace(finding),
             presentation=PresentationSelection(
                 primary_finding_ids=[finding.finding_id],
             ),
