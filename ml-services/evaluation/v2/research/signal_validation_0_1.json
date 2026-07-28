@@ -1,0 +1,3101 @@
+{
+  "schema_version": "1.0",
+  "validation_version": "0.1.0",
+  "dataset_id": "banking-evaluator-v2",
+  "dataset_version": "0.1.0",
+  "profile_id": "banking-demo-v1",
+  "source_revisions": {
+    "profile_ref": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "profile_commit": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "transcript_ref": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "transcript_commit": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "sentiment_ref": "origin/integration/full-pipeline-test",
+    "sentiment_commit": "a63045fee0a1b98082f951cca584267a6705c50a"
+  },
+  "call_results": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.account_opening_consent_obtained",
+        "control.identity_verification_completed",
+        "outcome.account_opening_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.account_opening_consent_obtained",
+        "control.identity_verification_completed",
+        "outcome.account_opening_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.account_opening_consent_obtained",
+        "control.identity_verification_completed",
+        "outcome.account_opening_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "outcome.loan_next_step_confirmed",
+        "process.loan_eligibility_explained",
+        "process.loan_request_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "outcome.loan_next_step_confirmed",
+        "process.loan_eligibility_explained",
+        "process.loan_request_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "outcome.loan_next_step_confirmed",
+        "process.loan_eligibility_explained",
+        "process.loan_request_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "process.recurring_change_path_unclear"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "process.recurring_change_path_unclear"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "process.recurring_change_path_unclear"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.recurring_schedule_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing",
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "process.recurring_change_path_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 2,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing",
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "process.recurring_change_path_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 2,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing",
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "process.recurring_change_path_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 2,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed",
+        "process.transfer_terms_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed",
+        "process.transfer_terms_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed",
+        "process.transfer_terms_explained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.transfer_accounts_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.transfer_accounts_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments",
+        "transcript_semantics_removed"
+      ]
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.transfer_accounts_confirmed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "researcher_seed_label_not_human_adjudicated",
+        "no_grounded_requirement_assessments"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-context",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-context",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-context",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.manager_requested"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.manager_requested"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.manager_requested"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.manager_requested"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.manager_requested"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "recovery_observed": false,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "outcome.transfer_confirmation_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "outcome.transfer_confirmation_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "outcome.transfer_confirmation_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "outcome.transfer_confirmation_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "outcome.transfer_confirmation_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "control.identity_verification_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "control.identity_verification_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "control.identity_verification_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "predicted_negative_finding_types": [
+        "control.transfer_authorization_missing"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "escalation.recovery_observed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "escalation.recovery_observed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "escalation.recovery_observed",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "escalation.recovery_observed",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [
+        "escalation.explicit_dissatisfaction",
+        "escalation.recovery_observed"
+      ],
+      "recovery_observed": true,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": false,
+      "false_positive": false,
+      "false_negative": true,
+      "matched_reason_count": 0,
+      "expected_reason_count": 1,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "required",
+      "predicted_attention": true,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "predicted_negative_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 1,
+      "expected_reason_count": 1,
+      "localized_reason_count": 1,
+      "acoustically_supported_finding_types": [
+        "escalation.explicit_dissatisfaction"
+      ],
+      "recovery_observed": false,
+      "candidate_episode_count": 1,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "insufficient_evidence",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "transcript_semantics_removed",
+        "no_semantic_requirement_assessments",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "expected_attention": "not_required",
+      "predicted_attention": false,
+      "decision_status": "complete",
+      "expected_negative_finding_types": [],
+      "predicted_negative_finding_types": [],
+      "expected_positive_finding_types": [
+        "control.identity_verification_completed",
+        "control.transfer_authorization_obtained",
+        "outcome.transfer_confirmed"
+      ],
+      "predicted_positive_finding_types": [
+        "agent.identification_clear",
+        "control.identity_verification_completed",
+        "control.transfer_accounts_confirmed",
+        "control.transfer_amount_confirmed",
+        "control.transfer_authorization_obtained",
+        "outcome.next_steps_confirmed",
+        "outcome.transfer_confirmed",
+        "process.intent_confirmed",
+        "process.transfer_terms_explained",
+        "process.transfer_timing_confirmed"
+      ],
+      "attention_match": true,
+      "false_positive": false,
+      "false_negative": false,
+      "matched_reason_count": 0,
+      "expected_reason_count": 0,
+      "localized_reason_count": 0,
+      "acoustically_supported_finding_types": [],
+      "recovery_observed": false,
+      "candidate_episode_count": 0,
+      "limitations": [
+        "semantic_assessments_are_controlled_known_answers",
+        "acoustic_condition_is_authored_not_raw_audio"
+      ]
+    }
+  ],
+  "variant_metrics": [
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.42857142857142855,
+      "true_positive_count": 0,
+      "false_negative_count": 8,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 3
+    },
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 8,
+      "attention_match_count": 14,
+      "attention_accuracy": 1.0,
+      "true_positive_count": 8,
+      "false_negative_count": 0,
+      "sensitivity": 1.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 8,
+      "reason_recall": 1.0,
+      "localized_reason_count": 8,
+      "evidence_localization_rate": 1.0,
+      "acoustically_supported_finding_count": 4,
+      "recovery_observed_count": 1,
+      "candidate_episode_count": 3
+    },
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 8,
+      "attention_match_count": 14,
+      "attention_accuracy": 1.0,
+      "true_positive_count": 8,
+      "false_negative_count": 0,
+      "sensitivity": 1.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 8,
+      "reason_recall": 1.0,
+      "localized_reason_count": 8,
+      "evidence_localization_rate": 1.0,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    }
+  ],
+  "pair_results": [
+    {
+      "pair_id": "pair:transcript:manager-attribution",
+      "axis": "transcript",
+      "variant": "text_only",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:transcript:manager-attribution",
+      "axis": "transcript",
+      "variant": "audio_only",
+      "expected_effect": "attention_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:transcript:manager-attribution",
+      "axis": "transcript",
+      "variant": "multimodal",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:delivery:acoustic-support",
+      "axis": "delivery",
+      "variant": "text_only",
+      "expected_effect": "support_changes",
+      "passed": false,
+      "baseline_attention": true,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:delivery:acoustic-support",
+      "axis": "delivery",
+      "variant": "audio_only",
+      "expected_effect": "support_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:delivery:acoustic-support",
+      "axis": "delivery",
+      "variant": "multimodal",
+      "expected_effect": "support_changes",
+      "passed": true,
+      "baseline_attention": true,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 1,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:outcome:completion-confirmation",
+      "axis": "outcome",
+      "variant": "text_only",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:outcome:completion-confirmation",
+      "axis": "outcome",
+      "variant": "audio_only",
+      "expected_effect": "attention_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:outcome:completion-confirmation",
+      "axis": "outcome",
+      "variant": "multimodal",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:identity-verification",
+      "axis": "control",
+      "variant": "text_only",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:identity-verification",
+      "axis": "control",
+      "variant": "audio_only",
+      "expected_effect": "attention_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:identity-verification",
+      "axis": "control",
+      "variant": "multimodal",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:transfer-authorization",
+      "axis": "control",
+      "variant": "text_only",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:transfer-authorization",
+      "axis": "control",
+      "variant": "audio_only",
+      "expected_effect": "attention_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:control:transfer-authorization",
+      "axis": "control",
+      "variant": "multimodal",
+      "expected_effect": "attention_changes",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:recovery:settled-versus-unresolved",
+      "axis": "recovery",
+      "variant": "text_only",
+      "expected_effect": "recovery_changes",
+      "passed": false,
+      "baseline_attention": true,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:recovery:settled-versus-unresolved",
+      "axis": "recovery",
+      "variant": "audio_only",
+      "expected_effect": "recovery_changes",
+      "passed": false,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:recovery:settled-versus-unresolved",
+      "axis": "recovery",
+      "variant": "multimodal",
+      "expected_effect": "recovery_changes",
+      "passed": true,
+      "baseline_attention": true,
+      "variant_attention": true,
+      "baseline_acoustic_support_count": 2,
+      "variant_acoustic_support_count": 1,
+      "baseline_recovery_observed": true,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:duration:spacing-invariance",
+      "axis": "duration",
+      "variant": "text_only",
+      "expected_effect": "no_decision_change",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:duration:spacing-invariance",
+      "axis": "duration",
+      "variant": "audio_only",
+      "expected_effect": "no_decision_change",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    },
+    {
+      "pair_id": "pair:duration:spacing-invariance",
+      "axis": "duration",
+      "variant": "multimodal",
+      "expected_effect": "no_decision_change",
+      "passed": true,
+      "baseline_attention": false,
+      "variant_attention": false,
+      "baseline_acoustic_support_count": 0,
+      "variant_acoustic_support_count": 0,
+      "baseline_recovery_observed": false,
+      "variant_recovery_observed": false
+    }
+  ],
+  "pair_metrics": [
+    {
+      "variant": "text_only",
+      "pair_count": 7,
+      "passed_count": 5,
+      "pass_rate": 0.7142857142857143,
+      "passed_by_axis": {
+        "control": 2,
+        "duration": 1,
+        "outcome": 1,
+        "transcript": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    },
+    {
+      "variant": "audio_only",
+      "pair_count": 7,
+      "passed_count": 1,
+      "pass_rate": 0.14285714285714285,
+      "passed_by_axis": {
+        "duration": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    },
+    {
+      "variant": "multimodal",
+      "pair_count": 7,
+      "passed_count": 7,
+      "pass_rate": 1.0,
+      "passed_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    }
+  ],
+  "human_agreement": {
+    "status": "unavailable",
+    "human_adjudicated_call_count": 0,
+    "human_attention_agreement": null,
+    "researcher_seed_call_count": 10,
+    "researcher_seed_attention_agreement": {
+      "text_only": 0.6,
+      "audio_only": 0.6,
+      "multimodal": 0.6
+    },
+    "limitation": "No existing-call annotation has human-adjudicated provenance, so human agreement cannot be calculated. Researcher-seed agreement is reported separately and is not an accuracy claim."
+  },
+  "threshold_assessment": {
+    "status": "not_attempted",
+    "fitted_threshold_count": 0,
+    "reason": "The existing calls have no human-adjudicated labels and the controlled cases are authored, so fitting thresholds would overstate the available evidence."
+  },
+  "acoustic_value": {
+    "selected_policy": "support_only",
+    "attention_changes_from_text_only": 0,
+    "challenge_support_pair_passed": true,
+    "challenge_recovery_pair_passed": true,
+    "real_call_supported_finding_count": 0,
+    "real_call_recovery_count": 0,
+    "rationale": [
+      "Audio-only has no grounded route to an attention finding under the current policy.",
+      "Controlled multimodal cases verify acoustic corroboration and recovery context without allowing either to erase or create the deterministic decision.",
+      "The real-call batch has no human-adjudicated labels showing that acoustic candidates improve attention accuracy."
+    ]
+  },
+  "conclusions": [
+    "Controlled text-only decisions test deterministic policy behavior, not semantic-model accuracy.",
+    "Existing-call detector runs remain incomplete until grounded requirement assessments are available.",
+    "Acoustic output remains supporting evidence and recovery context, not an independent attention trigger.",
+    "Human agreement and threshold fitting remain blocked by the absence of adjudicated real-call labels."
+  ]
+}

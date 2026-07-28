@@ -1,0 +1,258 @@
+{
+  "schema_version": "1.0",
+  "validation_version": "0.1.0",
+  "dataset_id": "banking-evaluator-v2",
+  "dataset_version": "0.1.0",
+  "profile_id": "banking-demo-v1",
+  "source_revisions": {
+    "profile_ref": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "profile_commit": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "transcript_ref": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "transcript_commit": "03097cb56eeb4234d6aaa3932b3a2e3e3c51cdeb",
+    "sentiment_ref": "origin/integration/full-pipeline-test",
+    "sentiment_commit": "a63045fee0a1b98082f951cca584267a6705c50a"
+  },
+  "variant_metrics": [
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "audio_only",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.42857142857142855,
+      "true_positive_count": 0,
+      "false_negative_count": 8,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 3
+    },
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "multimodal",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 8,
+      "attention_match_count": 14,
+      "attention_accuracy": 1.0,
+      "true_positive_count": 8,
+      "false_negative_count": 0,
+      "sensitivity": 1.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 8,
+      "reason_recall": 1.0,
+      "localized_reason_count": 8,
+      "evidence_localization_rate": 1.0,
+      "acoustically_supported_finding_count": 4,
+      "recovery_observed_count": 1,
+      "candidate_episode_count": 3
+    },
+    {
+      "population": "controlled_challenges",
+      "claim_level": "known_answer_policy_validation",
+      "variant": "text_only",
+      "call_count": 14,
+      "expected_attention_count": 8,
+      "predicted_attention_count": 8,
+      "attention_match_count": 14,
+      "attention_accuracy": 1.0,
+      "true_positive_count": 8,
+      "false_negative_count": 0,
+      "sensitivity": 1.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 8,
+      "matched_reason_count": 8,
+      "reason_recall": 1.0,
+      "localized_reason_count": 8,
+      "evidence_localization_rate": 1.0,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "audio_only",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "multimodal",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    },
+    {
+      "population": "existing_calls",
+      "claim_level": "detector_only",
+      "variant": "text_only",
+      "call_count": 10,
+      "expected_attention_count": 4,
+      "predicted_attention_count": 0,
+      "attention_match_count": 6,
+      "attention_accuracy": 0.6,
+      "true_positive_count": 0,
+      "false_negative_count": 4,
+      "sensitivity": 0.0,
+      "true_negative_count": 6,
+      "false_positive_count": 0,
+      "false_positive_rate": 0.0,
+      "expected_reason_count": 5,
+      "matched_reason_count": 0,
+      "reason_recall": 0.0,
+      "localized_reason_count": 0,
+      "evidence_localization_rate": null,
+      "acoustically_supported_finding_count": 0,
+      "recovery_observed_count": 0,
+      "candidate_episode_count": 0
+    }
+  ],
+  "pair_metrics": [
+    {
+      "variant": "text_only",
+      "pair_count": 7,
+      "passed_count": 5,
+      "pass_rate": 0.7142857142857143,
+      "passed_by_axis": {
+        "control": 2,
+        "duration": 1,
+        "outcome": 1,
+        "transcript": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    },
+    {
+      "variant": "audio_only",
+      "pair_count": 7,
+      "passed_count": 1,
+      "pass_rate": 0.14285714285714285,
+      "passed_by_axis": {
+        "duration": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    },
+    {
+      "variant": "multimodal",
+      "pair_count": 7,
+      "passed_count": 7,
+      "pass_rate": 1.0,
+      "passed_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      },
+      "total_by_axis": {
+        "control": 2,
+        "delivery": 1,
+        "duration": 1,
+        "outcome": 1,
+        "recovery": 1,
+        "transcript": 1
+      }
+    }
+  ],
+  "human_agreement": {
+    "status": "unavailable",
+    "human_adjudicated_call_count": 0,
+    "human_attention_agreement": null,
+    "researcher_seed_call_count": 10,
+    "researcher_seed_attention_agreement": {
+      "text_only": 0.6,
+      "audio_only": 0.6,
+      "multimodal": 0.6
+    },
+    "limitation": "No existing-call annotation has human-adjudicated provenance, so human agreement cannot be calculated. Researcher-seed agreement is reported separately and is not an accuracy claim."
+  },
+  "threshold_assessment": {
+    "status": "not_attempted",
+    "fitted_threshold_count": 0,
+    "reason": "The existing calls have no human-adjudicated labels and the controlled cases are authored, so fitting thresholds would overstate the available evidence."
+  },
+  "acoustic_value": {
+    "selected_policy": "support_only",
+    "attention_changes_from_text_only": 0,
+    "challenge_support_pair_passed": true,
+    "challenge_recovery_pair_passed": true,
+    "real_call_supported_finding_count": 0,
+    "real_call_recovery_count": 0,
+    "rationale": [
+      "Audio-only has no grounded route to an attention finding under the current policy.",
+      "Controlled multimodal cases verify acoustic corroboration and recovery context without allowing either to erase or create the deterministic decision.",
+      "The real-call batch has no human-adjudicated labels showing that acoustic candidates improve attention accuracy."
+    ]
+  },
+  "conclusions": [
+    "Controlled text-only decisions test deterministic policy behavior, not semantic-model accuracy.",
+    "Existing-call detector runs remain incomplete until grounded requirement assessments are available.",
+    "Acoustic output remains supporting evidence and recovery context, not an independent attention trigger.",
+    "Human agreement and threshold fitting remain blocked by the absence of adjudicated real-call labels."
+  ]
+}
