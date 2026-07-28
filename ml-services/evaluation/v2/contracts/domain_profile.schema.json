@@ -1,0 +1,474 @@
+{
+  "$defs": {
+    "ApplicabilityCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Fact Id",
+          "type": "string"
+        },
+        "operator": {
+          "$ref": "#/$defs/ConditionOperator"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "fact_id",
+        "operator"
+      ],
+      "title": "ApplicabilityCondition",
+      "type": "object"
+    },
+    "ConditionOperator": {
+      "enum": [
+        "equals",
+        "not_equals",
+        "in",
+        "is_true",
+        "is_false"
+      ],
+      "title": "ConditionOperator",
+      "type": "string"
+    },
+    "FactDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Fact Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "value_type": {
+          "$ref": "#/$defs/FactValueType"
+        },
+        "allowed_values": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "fact_id",
+        "description",
+        "value_type"
+      ],
+      "title": "FactDefinition",
+      "type": "object"
+    },
+    "FactValueType": {
+      "enum": [
+        "boolean",
+        "enum"
+      ],
+      "title": "FactValueType",
+      "type": "string"
+    },
+    "IntentDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "intent_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Intent Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "selection_guidance": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Selection Guidance",
+          "type": "array"
+        }
+      },
+      "required": [
+        "intent_id",
+        "title",
+        "description",
+        "selection_guidance"
+      ],
+      "title": "IntentDefinition",
+      "type": "object"
+    },
+    "PolicyAuthority": {
+      "enum": [
+        "project_policy",
+        "research_evidence",
+        "organization_policy",
+        "regulation"
+      ],
+      "title": "PolicyAuthority",
+      "type": "string"
+    },
+    "PolicySource": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.-]+$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "authority": {
+          "$ref": "#/$defs/PolicyAuthority"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference"
+        },
+        "notes": {
+          "minLength": 1,
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "authority",
+        "title",
+        "notes"
+      ],
+      "title": "PolicySource",
+      "type": "object"
+    },
+    "ProfileStatus": {
+      "enum": [
+        "research",
+        "validated"
+      ],
+      "title": "ProfileStatus",
+      "type": "string"
+    },
+    "RequirementDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "requirement_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "business_definition": {
+          "minLength": 1,
+          "title": "Business Definition",
+          "type": "string"
+        },
+        "level": {
+          "$ref": "#/$defs/RequirementLevel"
+        },
+        "evidence_expectations": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Expectations",
+          "type": "array"
+        },
+        "policy_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Policy Source Ids",
+          "type": "array"
+        },
+        "failure_finding_type": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9_.]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Finding Type"
+        },
+        "positive_finding_type": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9_.]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Positive Finding Type"
+        },
+        "category": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Category",
+          "type": "string"
+        },
+        "applies_to_intents": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Applies To Intents",
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/ApplicabilityCondition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "title",
+        "business_definition",
+        "level",
+        "evidence_expectations",
+        "policy_source_ids",
+        "category",
+        "applies_to_intents"
+      ],
+      "title": "RequirementDefinition",
+      "type": "object"
+    },
+    "RequirementLevel": {
+      "enum": [
+        "critical",
+        "required",
+        "supportive"
+      ],
+      "title": "RequirementLevel",
+      "type": "string"
+    },
+    "WorkflowBranch": {
+      "additionalProperties": false,
+      "properties": {
+        "branch_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Branch Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "applies_to_intents": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Applies To Intents",
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/ApplicabilityCondition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/WorkflowStepDefinition"
+          },
+          "minItems": 1,
+          "title": "Steps",
+          "type": "array"
+        }
+      },
+      "required": [
+        "branch_id",
+        "title",
+        "applies_to_intents",
+        "steps"
+      ],
+      "title": "WorkflowBranch",
+      "type": "object"
+    },
+    "WorkflowStepDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "requirement_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "step_id",
+        "requirement_id",
+        "sequence"
+      ],
+      "title": "WorkflowStepDefinition",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "pattern": "^\\d+\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "pattern": "^[a-z0-9_.-]+$",
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    },
+    "domain": {
+      "minLength": 1,
+      "title": "Domain",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ProfileStatus"
+    },
+    "jurisdiction_scope": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Jurisdiction Scope",
+      "type": "array"
+    },
+    "disclaimer": {
+      "minLength": 1,
+      "title": "Disclaimer",
+      "type": "string"
+    },
+    "policy_sources": {
+      "items": {
+        "$ref": "#/$defs/PolicySource"
+      },
+      "minItems": 1,
+      "title": "Policy Sources",
+      "type": "array"
+    },
+    "intents": {
+      "items": {
+        "$ref": "#/$defs/IntentDefinition"
+      },
+      "minItems": 1,
+      "title": "Intents",
+      "type": "array"
+    },
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/FactDefinition"
+      },
+      "title": "Facts",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/RequirementDefinition"
+      },
+      "minItems": 1,
+      "title": "Requirements",
+      "type": "array"
+    },
+    "workflow_branches": {
+      "items": {
+        "$ref": "#/$defs/WorkflowBranch"
+      },
+      "minItems": 1,
+      "title": "Workflow Branches",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile_id",
+    "version",
+    "domain",
+    "status",
+    "jurisdiction_scope",
+    "disclaimer",
+    "policy_sources",
+    "intents",
+    "requirements",
+    "workflow_branches"
+  ],
+  "title": "DomainProfile",
+  "type": "object"
+}

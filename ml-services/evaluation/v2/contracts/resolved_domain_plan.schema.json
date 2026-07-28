@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "RequirementLevel": {
+      "enum": [
+        "critical",
+        "required",
+        "supportive"
+      ],
+      "title": "RequirementLevel",
+      "type": "string"
+    },
+    "ResolvedRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "business_definition": {
+          "title": "Business Definition",
+          "type": "string"
+        },
+        "level": {
+          "$ref": "#/$defs/RequirementLevel"
+        },
+        "applicability_reason": {
+          "title": "Applicability Reason",
+          "type": "string"
+        },
+        "evidence_expectations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Expectations",
+          "type": "array"
+        },
+        "policy_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Policy Source Ids",
+          "type": "array"
+        },
+        "failure_finding_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Finding Type"
+        },
+        "positive_finding_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Positive Finding Type"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "title",
+        "business_definition",
+        "level",
+        "applicability_reason",
+        "evidence_expectations",
+        "policy_source_ids"
+      ],
+      "title": "ResolvedRequirement",
+      "type": "object"
+    },
+    "ResolvedWorkflowStep": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "title": "Step Id",
+          "type": "string"
+        },
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "branch_id": {
+          "title": "Branch Id",
+          "type": "string"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "step_id",
+        "requirement_id",
+        "branch_id",
+        "sequence"
+      ],
+      "title": "ResolvedWorkflowStep",
+      "type": "object"
+    },
+    "UnresolvedApplicability": {
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": {
+          "title": "Subject Id",
+          "type": "string"
+        },
+        "missing_fact_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Fact Ids",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_id",
+        "missing_fact_ids",
+        "reason"
+      ],
+      "title": "UnresolvedApplicability",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "profile_version": {
+      "title": "Profile Version",
+      "type": "string"
+    },
+    "call_id": {
+      "title": "Call Id",
+      "type": "string"
+    },
+    "selected_intent_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Selected Intent Ids",
+      "type": "array"
+    },
+    "selected_branch_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Selected Branch Ids",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/ResolvedRequirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "workflow_steps": {
+      "items": {
+        "$ref": "#/$defs/ResolvedWorkflowStep"
+      },
+      "title": "Workflow Steps",
+      "type": "array"
+    },
+    "unresolved_applicability": {
+      "items": {
+        "$ref": "#/$defs/UnresolvedApplicability"
+      },
+      "title": "Unresolved Applicability",
+      "type": "array"
+    }
+  },
+  "required": [
+    "profile_id",
+    "profile_version",
+    "call_id",
+    "selected_intent_ids",
+    "selected_branch_ids",
+    "requirements",
+    "workflow_steps",
+    "unresolved_applicability"
+  ],
+  "title": "ResolvedDomainPlan",
+  "type": "object"
+}

@@ -1,0 +1,44 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "intent_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Intent Ids",
+      "type": "array"
+    },
+    "facts": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "title": "Facts",
+      "type": "object"
+    },
+    "selection_method": {
+      "minLength": 1,
+      "title": "Selection Method",
+      "type": "string"
+    }
+  },
+  "required": [
+    "call_id",
+    "intent_ids",
+    "selection_method"
+  ],
+  "title": "ProfileSelection",
+  "type": "object"
+}
