@@ -119,6 +119,10 @@ policy review require human approval.
 - `ml-services/evaluation/v2/schemas.py`: strict Pydantic models and invariants.
 - `ml-services/evaluation/v2/adapters.py`: current and enriched payload mapping.
 - `ml-services/evaluation/v2/validation.py`: decision-to-signal reference checks.
+- `ml-services/evaluation/v2/domain_profiles.py`: profile validation and
+  deterministic applicability resolution.
+- `ml-services/evaluation/v2/profiles/`: versioned domain rules and selection
+  fixtures.
 - `ml-services/evaluation/v2/generate_contract_schemas.py`: JSON Schema export.
 - `ml-services/evaluation/v2/test_contracts.py`: contract and mapping tests.
 
