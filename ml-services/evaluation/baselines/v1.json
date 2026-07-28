@@ -1,0 +1,2252 @@
+{
+  "schema_version": 1,
+  "evaluator_version": "v1",
+  "rubric_version": "0.4.1",
+  "source_commit": "2b83283b79f68108038693caa75578510ac7df8e",
+  "source_summary": "results\\batch_summary.json",
+  "decision_contract": {
+    "attention_required": "not_defined_in_v1",
+    "comparison_signal": "escalation.risk_level"
+  },
+  "aggregate": {
+    "expected_calls": 22,
+    "captured_calls": 22,
+    "failed_calls": 0,
+    "risk_counts": {
+      "none": 21,
+      "review": 1
+    },
+    "domain_counts": {
+      "banking": 10,
+      "health": 7,
+      "telecom": 5
+    },
+    "evidence": {
+      "anchored": 391,
+      "total": 412,
+      "anchor_rate": 0.949
+    },
+    "wall_clock_seconds": {
+      "count": 22,
+      "min": 6.7,
+      "median": 29.65,
+      "max": 53.7
+    },
+    "node_seconds": {
+      "arbitrate": {
+        "count": 3,
+        "min": 0.8,
+        "median": 0.9,
+        "max": 1.0
+      },
+      "assemble": {
+        "count": 22,
+        "min": 0.01,
+        "median": 0.03,
+        "max": 0.04
+      },
+      "chapters": {
+        "count": 22,
+        "min": 1.7,
+        "median": 2.5,
+        "max": 26.1
+      },
+      "compliance": {
+        "count": 22,
+        "min": 1.6,
+        "median": 1.9,
+        "max": 32.3
+      },
+      "escalation": {
+        "count": 22,
+        "min": 0.6,
+        "median": 0.8,
+        "max": 25.7
+      },
+      "fuse": {
+        "count": 22,
+        "min": 0.0,
+        "median": 0.01,
+        "max": 0.69
+      },
+      "investigate": {
+        "count": 1,
+        "min": 2.9,
+        "median": 2.9,
+        "max": 2.9
+      },
+      "quality": {
+        "count": 22,
+        "min": 3.3,
+        "median": 4.35,
+        "max": 38.6
+      },
+      "workflow": {
+        "count": 22,
+        "min": 6.0,
+        "median": 7.7,
+        "max": 53.6
+      }
+    }
+  },
+  "calls": {
+    "en_CA_Banking_1586889": {
+      "domain": "banking",
+      "accent": "en-CA",
+      "duration_seconds": 636.2,
+      "result_sha256": "327f2975e07f4a85a338f72ea988438ea4fb78075cd74dbebea9cc71a69e3715",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.211,
+        "peak": 0.385,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "set up an automatic monthly transfer between checking and savings accounts",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 19,
+        "anchored": 19
+      },
+      "pipeline": {
+        "wall_clock_seconds": 28.9,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 18.8,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.6,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 1.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 6.8,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 1.0,
+              "expected": 2.1,
+              "check": 3.7
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Banking_1588683": {
+      "domain": "banking",
+      "accent": "en-CA",
+      "duration_seconds": 559.6,
+      "result_sha256": "094fc989a356d6355839429ca56ebffa1d5137e565000364547ddcc80430ed3e",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.217,
+        "peak": 0.66,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Set up recurring biweekly automatic transfers from checking to a new savings account",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 16,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 17.6,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.01
+          },
+          "chapters": {
+            "duration": 8.0,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.9,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.9,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 3.5,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 6.5,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.8,
+              "expected": 2.3,
+              "check": 3.4
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.0,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Banking_1590992": {
+      "domain": "banking",
+      "accent": "en-CA",
+      "duration_seconds": 547.4,
+      "result_sha256": "1169bb1628f067ac0fc384ab992f6542c02c2346b86a194721c1322693bdf49f",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.227,
+        "peak": 0.587,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 4,
+        "clarity": 3,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "request a one-time transfer of funds from savings to checking account",
+        "total": 8,
+        "met": 6,
+        "missed": 2,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 16,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 45.7,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.4,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 32.3,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 2
+          },
+          "escalation": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 38.6,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 7.0,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.6,
+              "check": 3.7
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Banking_1592237": {
+      "domain": "banking",
+      "accent": "en-CA",
+      "duration_seconds": 632.8,
+      "result_sha256": "48815bfa85644f64dca0029f683d6d677722f06d43f5d26770855a91752bd6a9",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.221,
+        "peak": 0.371,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer requested to open a new checking account linked to their existing credit card",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 18,
+        "anchored": 17
+      },
+      "pipeline": {
+        "wall_clock_seconds": 9.0,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.01
+          },
+          "chapters": {
+            "duration": 2.2,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.9,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.6,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 9.0,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 3.0,
+              "expected": 2.3,
+              "check": 3.7
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Health_1587315": {
+      "domain": "health",
+      "accent": "en-CA",
+      "duration_seconds": 575.7,
+      "result_sha256": "5e64f6c7fa4fb77c3c7ebd962d78ed01432c4e1a95116cdd03a7fbaadf9598dc",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.257,
+        "peak": 0.438,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Schedule a telemedicine appointment for a chronic condition follow-up and request a prescription renewal",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 19,
+        "anchored": 19
+      },
+      "pipeline": {
+        "wall_clock_seconds": 49.7,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.02
+          },
+          "chapters": {
+            "duration": 2.8,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 5.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 3.9,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 45.6,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.5,
+              "check": 42.4
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.0,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Health_1588706": {
+      "domain": "health",
+      "accent": "en-CA",
+      "duration_seconds": 549.6,
+      "result_sha256": "2a6d8e0c58a43ded4db2518b22c95bbbd064a9772ffcbc1e32664349c876b290",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.227,
+        "peak": 0.592,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer requested scheduling a dermatology consultation and a prescription refill",
+        "total": 8,
+        "met": 5,
+        "missed": 3,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 15,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 6.7,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.5,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 5.5,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 6.5,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.6,
+              "check": 3.2
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Health_1590851": {
+      "domain": "health",
+      "accent": "en-CA",
+      "duration_seconds": 842.4,
+      "result_sha256": "741ae906e692224052f0863eb6f41f0242a0ec04b86b6403daa5485baf1852fb",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.254,
+        "peak": 0.72,
+        "red_flags": [
+          "repeat_attempts"
+        ]
+      },
+      "quality_scores": {
+        "efficiency": 4,
+        "problem_resolution": 4,
+        "clarity": 3,
+        "professionalism": 5,
+        "empathy": 2,
+        "customer_satisfaction": 3
+      },
+      "compliance": {
+        "name_announced": false,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Requested a doctor appointment and prescription refills for existing medications",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 18,
+        "anchored": 18
+      },
+      "pipeline": {
+        "wall_clock_seconds": 46.0,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 1.9,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.1,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "escalation": {
+            "duration": 1.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 43.7,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.5,
+              "check": 40.5
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Telecom_1590675": {
+      "domain": "telecom",
+      "accent": "en-CA",
+      "duration_seconds": 598.6,
+      "result_sha256": "c99f1080a50e9399590ea8f2a93448967749a94ca4ad72010207ea5374ac3c77",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.173,
+        "peak": 0.611,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 4,
+        "problem_resolution": 4,
+        "clarity": 3,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer inquired about adding a second mobile line to an existing family plan and scheduling home Wi-Fi installation.",
+        "total": 8,
+        "met": 5,
+        "missed": 3,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 15,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 30.4,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.02
+          },
+          "chapters": {
+            "duration": 19.1,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 1.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.4,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 9.1,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 1.1,
+              "expected": 2.3,
+              "check": 4.1
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.08,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_CA_Telecom_1590992": {
+      "domain": "telecom",
+      "accent": "en-CA",
+      "duration_seconds": 854.7,
+      "result_sha256": "422794400706d506821f27e614373599edacce227942a2a5599a94a8e4a3393d",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "review",
+        "acoustic_risk": "none",
+        "method": "llm_arbitration",
+        "late_mean": 0.201,
+        "peak": 0.476,
+        "red_flags": [
+          "repeat_attempts"
+        ]
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 4,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 4,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": false,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Reported slow internet causing work disruptions and requested troubleshooting assistance",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 26,
+        "anchored": 24
+      },
+      "pipeline": {
+        "wall_clock_seconds": 14.1,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.02
+          },
+          "chapters": {
+            "duration": 2.8,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.6,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "escalation": {
+            "duration": 1.0,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "quality": {
+            "duration": 5.6,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 6.9,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.4,
+              "check": 3.7
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.0,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": true
+          },
+          "arbitrate": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "verdict": "none"
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1584540": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 608.4,
+      "result_sha256": "8ac65b33964f594d056edf30586af9604671d550523b454c2bb4e700a546251c",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "review"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "review",
+        "method": "llm_arbitration",
+        "late_mean": 0.406,
+        "peak": 0.696,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 4,
+        "problem_resolution": 3,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": false,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer inquired about applying for an agricultural loan to purchase farm equipment.",
+        "total": 8,
+        "met": 3,
+        "missed": 5,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 12,
+        "anchored": 12
+      },
+      "pipeline": {
+        "wall_clock_seconds": 12.8,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.04
+          },
+          "chapters": {
+            "duration": 1.7,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.3,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 6.0,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.6,
+              "expected": 2.5,
+              "check": 2.8
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "review",
+            "disputed": true
+          },
+          "arbitrate": {
+            "duration": 0.9,
+            "served_by": "mistral-small-latest",
+            "verdict": "review"
+          },
+          "investigate": {
+            "duration": 2.9,
+            "served_by": "mistral-small-latest",
+            "priority": "medium"
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1586157": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 537.8,
+      "result_sha256": "496ccc081d3a45c05a2a81af96f96ecc7afc8aca036e34a7317221afe272db7e",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.166,
+        "peak": 0.352,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 4,
+        "problem_resolution": 4,
+        "clarity": 3,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "set up an automatic monthly transfer from savings to a different checking account",
+        "total": 8,
+        "met": 6,
+        "missed": 2,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 22,
+        "anchored": 17
+      },
+      "pipeline": {
+        "wall_clock_seconds": 38.2,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 26.1,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "escalation": {
+            "duration": 25.0,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.6,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 29.3,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 24.5,
+              "expected": 2.0,
+              "check": 2.8
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1586678": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 398.5,
+      "result_sha256": "f23318fa98052fba5577567e036b730654e8d18d149bab96de9be0de24a86eef",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.219,
+        "peak": 0.45,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer requested setting up an automatic monthly transfer from checking to a new savings account",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 16,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 31.1,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 18.7,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 1.2,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 7.4,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 1.2,
+              "expected": 2.3,
+              "check": 3.3
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.69,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1586893": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 695.7,
+      "result_sha256": "432d8cf8dedc0451c7a49ebd88ca0a725b73db10606bb8411e9912023738f060",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.227,
+        "peak": 0.558,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Set up a recurring monthly transfer from checking to savings for home renovation savings",
+        "total": 9,
+        "met": 9,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 19,
+        "anchored": 19
+      },
+      "pipeline": {
+        "wall_clock_seconds": 45.6,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.4,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 3.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 45.5,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "phases": {
+              "subject": 0.6,
+              "expected": 2.5,
+              "check": 42.3
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1587139": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 770.1,
+      "result_sha256": "c252807d71a34bdda8a0e78bc19141c2b68fc7e5e4dcb8a8f65a24b6701608cc",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "review",
+        "acoustic_risk": "none",
+        "method": "llm_arbitration",
+        "late_mean": 0.252,
+        "peak": 0.535,
+        "red_flags": [
+          "explicit_dissatisfaction",
+          "repeat_attempts"
+        ]
+      },
+      "quality_scores": {
+        "efficiency": 3,
+        "problem_resolution": 4,
+        "clarity": 3,
+        "professionalism": 4,
+        "empathy": 2,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "requested an immediate transfer from savings to checking and set up a recurring monthly transfer between accounts",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 21,
+        "anchored": 17
+      },
+      "pipeline": {
+        "wall_clock_seconds": 12.5,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.2,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 1.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 3.6,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 6.6,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.8,
+              "expected": 2.4,
+              "check": 3.5
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": true
+          },
+          "arbitrate": {
+            "duration": 1.0,
+            "served_by": "mistral-small-latest",
+            "verdict": "none"
+          }
+        }
+      }
+    },
+    "en_US_General_Banking_1587700": {
+      "domain": "banking",
+      "accent": "en-US_General",
+      "duration_seconds": 836.3,
+      "result_sha256": "29366acc6d652a07d48090ab81500298ec19b0e65b75e262dadd499bca98c27c",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.224,
+        "peak": 0.479,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "requested an immediate one-time transfer from savings to checking account",
+        "total": 7,
+        "met": 7,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 19,
+        "anchored": 19
+      },
+      "pipeline": {
+        "wall_clock_seconds": 31.6,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.04
+          },
+          "chapters": {
+            "duration": 1.9,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.2,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 31.5,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.7,
+              "expected": 27.4,
+              "check": 3.5
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Health_1586594": {
+      "domain": "health",
+      "accent": "en-US_General",
+      "duration_seconds": 281.5,
+      "result_sha256": "1bca4158d48b52ca4ce7190b0a7400e9cb6d487312423fe68062e7880e7a5d54",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.281,
+        "peak": 0.66,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": false,
+        "company_announced": false,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Schedule a telemedicine consultation for diabetes management and request a prescription refill",
+        "total": 8,
+        "met": 6,
+        "missed": 2,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 24,
+        "anchored": 24
+      },
+      "pipeline": {
+        "wall_clock_seconds": 36.0,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.02
+          },
+          "chapters": {
+            "duration": 20.9,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 1.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 7.1,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 8.2,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 1.0,
+              "expected": 2.4,
+              "check": 3.2
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.08,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Health_1586726": {
+      "domain": "health",
+      "accent": "en-US_General",
+      "duration_seconds": 376.2,
+      "result_sha256": "05e15288baa1b0054e309bd2304b29d6c9dbf0fc38401ab8f2eba1f0805451cb",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.261,
+        "peak": 0.586,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Request to schedule a telemedicine consultation for a chronic thyroid condition and a prescription refill",
+        "total": 8,
+        "met": 6,
+        "missed": 2,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 25,
+        "anchored": 24
+      },
+      "pipeline": {
+        "wall_clock_seconds": 12.7,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.01
+          },
+          "chapters": {
+            "duration": 1.8,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.6,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 6.0,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 6.6,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.6,
+              "expected": 2.4,
+              "check": 3.6
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.01,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Health_1587175": {
+      "domain": "health",
+      "accent": "en-US_General",
+      "duration_seconds": 643.6,
+      "result_sha256": "e90ef2be36b1ef12ff16620a6fa2562c30177bcf1305efeec37fa9a77f0d8b3e",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": null,
+        "method": "text_only",
+        "late_mean": null,
+        "peak": null,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 4,
+        "problem_resolution": 4,
+        "clarity": 4,
+        "professionalism": 5,
+        "empathy": 3,
+        "customer_satisfaction": 5
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Requested a follow-up appointment and prescription refill for an ongoing medical issue",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 19,
+        "anchored": 17
+      },
+      "pipeline": {
+        "wall_clock_seconds": 50.6,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.5,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.9,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.3,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 46.2,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.4,
+              "check": 43.0
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.0,
+            "acoustic_available": false,
+            "fused_dims": [],
+            "acoustic_risk": null,
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Health_1587922": {
+      "domain": "health",
+      "accent": "en-US_General",
+      "duration_seconds": 693.7,
+      "result_sha256": "3844b33eb679e9fe811078f620e0ea139ea911b0953105768429b41de1f8d8e6",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.223,
+        "peak": 0.543,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": false,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Request to schedule an urgent prescription refill and follow-up appointment with a doctor",
+        "total": 8,
+        "met": 6,
+        "missed": 2,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 15,
+        "anchored": 14
+      },
+      "pipeline": {
+        "wall_clock_seconds": 11.7,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.01
+          },
+          "chapters": {
+            "duration": 2.2,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "escalation": {
+            "duration": 0.6,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 4.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 7.2,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.6,
+              "expected": 2.5,
+              "check": 4.1
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.0,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Telecom_1584567": {
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "duration_seconds": 899.9,
+      "result_sha256": "51fc9baf46e8263fcae16f8b6adff0cba43d56f07f07216bac21f0b978060b0c",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.224,
+        "peak": 0.713,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 3,
+        "problem_resolution": 4,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 3,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Inquire about internet service issues and upgrade to a higher-tier package",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 17,
+        "anchored": 15
+      },
+      "pipeline": {
+        "wall_clock_seconds": 10.2,
+        "anchor_passes": 2,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 3.0,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 2.0,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 3.3,
+            "served_by": "mistral-small-latest",
+            "runs": 2
+          },
+          "workflow": {
+            "duration": 6.8,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.7,
+              "expected": 2.5,
+              "check": 3.5
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Telecom_1586751": {
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "duration_seconds": 367.5,
+      "result_sha256": "d1a0ae3d88c1852672ed19662816753a54a6cf585cbab256213a1dc6fa9d751f",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.266,
+        "peak": 0.617,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": false,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "upgrade to a higher speed internet plan and request a new modem",
+        "total": 8,
+        "met": 7,
+        "missed": 1,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 17,
+        "anchored": 17
+      },
+      "pipeline": {
+        "wall_clock_seconds": 53.7,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.02
+          },
+          "chapters": {
+            "duration": 9.9,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 26.5,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 25.7,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 34.8,
+            "served_by": "github/gpt-4o-mini-2024-07-18",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 53.6,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 23.2,
+              "expected": 27.2,
+              "check": 3.1
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    },
+    "en_US_General_Telecom_1586891": {
+      "domain": "telecom",
+      "accent": "en-US_General",
+      "duration_seconds": 633.7,
+      "result_sha256": "3c79e373592310b45e7445b284e9a234702fbce34dba7e79e11b5ebf1a6f12a7",
+      "rubric_version": "0.4.1",
+      "decision": {
+        "attention_required": null,
+        "status": "not_defined_in_v1",
+        "exposed_risk_level": "none"
+      },
+      "escalation": {
+        "text_risk": "none",
+        "acoustic_risk": "none",
+        "method": "agreement",
+        "late_mean": 0.291,
+        "peak": 0.451,
+        "red_flags": []
+      },
+      "quality_scores": {
+        "efficiency": 5,
+        "problem_resolution": 5,
+        "clarity": 4,
+        "professionalism": 4,
+        "empathy": 4,
+        "customer_satisfaction": 4
+      },
+      "compliance": {
+        "name_announced": true,
+        "company_announced": true,
+        "recording_disclosure": false,
+        "identity_verified": true,
+        "resolution_provided": true,
+        "transfer_next_steps": null
+      },
+      "workflow": {
+        "subject": "Customer requested an upgrade to a faster internet plan due to remote work needs.",
+        "total": 8,
+        "met": 8,
+        "missed": 0,
+        "not_applicable": 0
+      },
+      "evidence": {
+        "total": 24,
+        "anchored": 24
+      },
+      "pipeline": {
+        "wall_clock_seconds": 9.6,
+        "anchor_passes": 1,
+        "nodes": {
+          "assemble": {
+            "duration": 0.03
+          },
+          "chapters": {
+            "duration": 2.0,
+            "served_by": "router",
+            "runs": 1
+          },
+          "compliance": {
+            "duration": 1.8,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "escalation": {
+            "duration": 0.7,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "quality": {
+            "duration": 9.4,
+            "served_by": "mistral-small-latest",
+            "runs": 1
+          },
+          "workflow": {
+            "duration": 8.0,
+            "served_by": "mistral-small-latest",
+            "phases": {
+              "subject": 0.6,
+              "expected": 2.2,
+              "check": 5.2
+            },
+            "runs": 1
+          },
+          "fuse": {
+            "duration": 0.02,
+            "acoustic_available": true,
+            "fused_dims": [
+              "professionalism",
+              "empathy",
+              "customer_satisfaction"
+            ],
+            "acoustic_risk": "none",
+            "disputed": false
+          }
+        }
+      }
+    }
+  },
+  "failures": {}
+}
