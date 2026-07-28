@@ -1,0 +1,354 @@
+{
+  "$defs": {
+    "EvidenceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "segment_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "signal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Signal Ids",
+          "type": "array"
+        },
+        "episode_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Episode Ids",
+          "type": "array"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Speaker"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Seconds"
+        },
+        "end_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Seconds"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "observation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observation"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "modality"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "Modality": {
+      "enum": [
+        "transcript",
+        "text",
+        "acoustic",
+        "multimodal",
+        "policy",
+        "human"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "ReliabilityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ReliabilityStatus"
+        },
+        "coverage_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage Ratio"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "quality_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Quality Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "ReliabilityAssessment",
+      "type": "object"
+    },
+    "ReliabilityStatus": {
+      "enum": [
+        "usable",
+        "limited",
+        "unusable",
+        "unavailable"
+      ],
+      "title": "ReliabilityStatus",
+      "type": "string"
+    },
+    "RequirementAssessment": {
+      "additionalProperties": false,
+      "description": "A grounded semantic verdict supplied to deterministic finding logic.",
+      "properties": {
+        "assessment_id": {
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_.:-]+$",
+          "title": "Assessment Id",
+          "type": "string"
+        },
+        "requirement_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "verdict": {
+          "$ref": "#/$defs/RequirementVerdict"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "counter_evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "minItems": 1,
+          "title": "Counter Evidence",
+          "type": "array"
+        },
+        "reliability": {
+          "$ref": "#/$defs/ReliabilityAssessment"
+        },
+        "provenance": {
+          "$ref": "#/$defs/SourceProvenance"
+        }
+      },
+      "required": [
+        "assessment_id",
+        "requirement_id",
+        "verdict",
+        "rationale",
+        "evidence",
+        "counter_evidence",
+        "reliability",
+        "provenance"
+      ],
+      "title": "RequirementAssessment",
+      "type": "object"
+    },
+    "RequirementVerdict": {
+      "enum": [
+        "met",
+        "missed",
+        "uncertain"
+      ],
+      "title": "RequirementVerdict",
+      "type": "string"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "Speaker": {
+      "enum": [
+        "agent",
+        "customer",
+        "system",
+        "unknown"
+      ],
+      "title": "Speaker",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "assessments": {
+      "items": {
+        "$ref": "#/$defs/RequirementAssessment"
+      },
+      "title": "Assessments",
+      "type": "array"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SourceProvenance"
+    }
+  },
+  "required": [
+    "call_id",
+    "profile_id",
+    "provenance"
+  ],
+  "title": "RequirementAssessmentBatch",
+  "type": "object"
+}

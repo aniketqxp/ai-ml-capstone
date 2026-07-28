@@ -27,6 +27,12 @@
         "level": {
           "$ref": "#/$defs/RequirementLevel"
         },
+        "category": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Category",
+          "type": "string"
+        },
         "applicability_reason": {
           "title": "Applicability Reason",
           "type": "string"
@@ -75,6 +81,7 @@
         "title",
         "business_definition",
         "level",
+        "category",
         "applicability_reason",
         "evidence_expectations",
         "policy_source_ids"

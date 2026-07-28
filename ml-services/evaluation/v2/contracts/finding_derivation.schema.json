@@ -1,0 +1,651 @@
+{
+  "$defs": {
+    "Applicability": {
+      "additionalProperties": false,
+      "properties": {
+        "applies": {
+          "title": "Applies",
+          "type": "boolean"
+        },
+        "profile_id": {
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "rule_id": {
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "selected_branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Branch"
+        }
+      },
+      "required": [
+        "applies",
+        "profile_id",
+        "rule_id",
+        "reason"
+      ],
+      "title": "Applicability",
+      "type": "object"
+    },
+    "DecisionUncertainty": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "modality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Modality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "affected_signal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Signal Ids",
+          "type": "array"
+        },
+        "affected_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Finding Ids",
+          "type": "array"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility",
+          "default": "details"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "DecisionUncertainty",
+      "type": "object"
+    },
+    "DetectionRule": {
+      "additionalProperties": false,
+      "properties": {
+        "rule_id": {
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "rule_version": {
+          "minLength": 1,
+          "title": "Rule Version",
+          "type": "string"
+        },
+        "detector": {
+          "minLength": 1,
+          "title": "Detector",
+          "type": "string"
+        },
+        "signal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Signal Ids",
+          "type": "array"
+        },
+        "thresholds": {
+          "items": {
+            "$ref": "#/$defs/ThresholdSpec"
+          },
+          "title": "Thresholds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rule_id",
+        "rule_version",
+        "detector"
+      ],
+      "title": "DetectionRule",
+      "type": "object"
+    },
+    "EvidenceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "segment_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "signal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Signal Ids",
+          "type": "array"
+        },
+        "episode_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Episode Ids",
+          "type": "array"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Speaker"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Seconds"
+        },
+        "end_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Seconds"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "observation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observation"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "modality"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "finding_type": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Finding Type",
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/FindingCategory"
+        },
+        "polarity": {
+          "$ref": "#/$defs/FindingPolarity"
+        },
+        "severity": {
+          "$ref": "#/$defs/FindingSeverity"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "summary": {
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "business_definition": {
+          "minLength": 1,
+          "title": "Business Definition",
+          "type": "string"
+        },
+        "applicability": {
+          "$ref": "#/$defs/Applicability"
+        },
+        "detection_rule": {
+          "$ref": "#/$defs/DetectionRule"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "counter_evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "title": "Counter Evidence",
+          "type": "array"
+        },
+        "reliability": {
+          "$ref": "#/$defs/ReliabilityAssessment"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "display_priority": {
+          "default": 100,
+          "minimum": 0,
+          "title": "Display Priority",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "finding_id",
+        "finding_type",
+        "category",
+        "polarity",
+        "severity",
+        "title",
+        "summary",
+        "business_definition",
+        "applicability",
+        "detection_rule",
+        "evidence",
+        "reliability",
+        "visibility"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "FindingCategory": {
+      "enum": [
+        "required_control",
+        "process",
+        "escalation",
+        "outcome",
+        "agent_behavior",
+        "data_quality"
+      ],
+      "title": "FindingCategory",
+      "type": "string"
+    },
+    "FindingPolarity": {
+      "enum": [
+        "negative",
+        "positive"
+      ],
+      "title": "FindingPolarity",
+      "type": "string"
+    },
+    "FindingSeverity": {
+      "enum": [
+        "info",
+        "review",
+        "critical"
+      ],
+      "title": "FindingSeverity",
+      "type": "string"
+    },
+    "Modality": {
+      "enum": [
+        "transcript",
+        "text",
+        "acoustic",
+        "multimodal",
+        "policy",
+        "human"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "ReliabilityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ReliabilityStatus"
+        },
+        "coverage_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage Ratio"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "quality_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Quality Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "ReliabilityAssessment",
+      "type": "object"
+    },
+    "ReliabilityStatus": {
+      "enum": [
+        "usable",
+        "limited",
+        "unusable",
+        "unavailable"
+      ],
+      "title": "ReliabilityStatus",
+      "type": "string"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "Speaker": {
+      "enum": [
+        "agent",
+        "customer",
+        "system",
+        "unknown"
+      ],
+      "title": "Speaker",
+      "type": "string"
+    },
+    "ThresholdSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "signal_name": {
+          "minLength": 1,
+          "title": "Signal Name",
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "eq",
+            "contains",
+            "present"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "window": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Window"
+        }
+      },
+      "required": [
+        "signal_name",
+        "operator"
+      ],
+      "title": "ThresholdSpec",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "primary",
+        "evidence",
+        "details",
+        "internal"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "findings_version": {
+      "minLength": 1,
+      "title": "Findings Version",
+      "type": "string"
+    },
+    "triggered_findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Triggered Findings",
+      "type": "array"
+    },
+    "positive_findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Positive Findings",
+      "type": "array"
+    },
+    "uncertainties": {
+      "items": {
+        "$ref": "#/$defs/DecisionUncertainty"
+      },
+      "title": "Uncertainties",
+      "type": "array"
+    },
+    "suppressed_duplicates": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Suppressed Duplicates",
+      "type": "array"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SourceProvenance"
+    }
+  },
+  "required": [
+    "call_id",
+    "profile_id",
+    "findings_version",
+    "provenance"
+  ],
+  "title": "FindingDerivation",
+  "type": "object"
+}
