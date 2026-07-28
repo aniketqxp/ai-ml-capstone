@@ -1,0 +1,116 @@
+{
+  "profile_id": "banking-demo-v1",
+  "purpose": "Applicability fixtures for the ten banking calls. These are intent and branch selections, not performance labels.",
+  "calls": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "intent_ids": [
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "intent_ids": [
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "intent_ids": [
+        "account.open_checking"
+      ],
+      "facts": {
+        "request.opens_account": true,
+        "account.link_existing_product": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "intent_ids": [
+        "loan.agricultural_equipment"
+      ],
+      "facts": {
+        "request.starts_application": false
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "intent_ids": [
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "intent_ids": [
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "intent_ids": [
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "intent_ids": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "selection_method": "human_fixture_from_transcript"
+    }
+  ]
+}

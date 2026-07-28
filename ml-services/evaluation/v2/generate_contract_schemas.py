@@ -2,6 +2,11 @@
 import json
 from pathlib import Path
 
+from v2.domain_profiles import (
+    DomainProfile,
+    ProfileSelection,
+    ResolvedDomainPlan,
+)
 from v2.schemas import CallDecision, SignalBundle
 
 HERE = Path(__file__).resolve().parent
@@ -13,6 +18,9 @@ def main():
     models = {
         "signal_bundle.schema.json": SignalBundle,
         "call_decision.schema.json": CallDecision,
+        "domain_profile.schema.json": DomainProfile,
+        "profile_selection.schema.json": ProfileSelection,
+        "resolved_domain_plan.schema.json": ResolvedDomainPlan,
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename

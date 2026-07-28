@@ -1,0 +1,848 @@
+{
+  "schema_version": "1.0",
+  "profile_id": "banking-demo-v1",
+  "version": "0.1.0",
+  "domain": "banking",
+  "status": "research",
+  "jurisdiction_scope": [
+    "capstone_demo_unspecified_jurisdiction"
+  ],
+  "disclaimer": "This profile contains project business rules for evaluator research. It is not a representation of any bank's policy and must not be described as legal or regulatory compliance.",
+  "policy_sources": [
+    {
+      "source_id": "capstone.banking_service_rules",
+      "authority": "project_policy",
+      "title": "Capstone banking service rules",
+      "reference": "banking-demo-v1",
+      "notes": "Requirements selected for transaction accuracy, authorization, outcome clarity, and manager-facing evidence in the capstone evaluator."
+    },
+    {
+      "source_id": "apptek.observed_call_patterns",
+      "authority": "research_evidence",
+      "title": "Observed banking call patterns",
+      "reference": "ten banking calls in the North American test batch",
+      "notes": "Used to define supported intents and workflow branches, not to establish external policy requirements."
+    }
+  ],
+  "intents": [
+    {
+      "intent_id": "transfer.one_time",
+      "title": "One-time account transfer",
+      "description": "The customer requests one immediate or scheduled transfer between accounts.",
+      "selection_guidance": [
+        "Select when the requested transfer occurs once.",
+        "May be selected together with transfer.recurring when both are requested."
+      ]
+    },
+    {
+      "intent_id": "transfer.recurring",
+      "title": "Recurring account transfer",
+      "description": "The customer requests an automatic transfer on a repeating schedule.",
+      "selection_guidance": [
+        "Select when frequency, start date, or automatic recurrence must be configured.",
+        "May be selected together with transfer.one_time when both are requested."
+      ]
+    },
+    {
+      "intent_id": "account.open_checking",
+      "title": "Open a checking account",
+      "description": "The customer requests a new checking account, optionally linked to an existing product.",
+      "selection_guidance": [
+        "Select only when account opening is requested during the call.",
+        "Do not select merely because a newly opened account is used in another request."
+      ]
+    },
+    {
+      "intent_id": "loan.agricultural_equipment",
+      "title": "Agricultural-equipment loan inquiry",
+      "description": "The customer asks about financing farm equipment or beginning that application process.",
+      "selection_guidance": [
+        "Distinguish a general product inquiry from an application started during the call.",
+        "Do not require account authentication for a general information-only inquiry."
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "request.executes_transaction",
+      "description": "The customer asks the agent to perform or schedule a transfer.",
+      "value_type": "boolean",
+      "allowed_values": []
+    },
+    {
+      "fact_id": "transfer.executed_during_call",
+      "description": "The transfer or recurring instruction is completed during the call.",
+      "value_type": "boolean",
+      "allowed_values": []
+    },
+    {
+      "fact_id": "request.opens_account",
+      "description": "The customer asks the agent to open an account during the call.",
+      "value_type": "boolean",
+      "allowed_values": []
+    },
+    {
+      "fact_id": "account.link_existing_product",
+      "description": "The customer requests linkage between the new account and an existing product.",
+      "value_type": "boolean",
+      "allowed_values": []
+    },
+    {
+      "fact_id": "request.starts_application",
+      "description": "The customer moves from a loan inquiry into an application during the call.",
+      "value_type": "boolean",
+      "allowed_values": []
+    }
+  ],
+  "workflow_branches": [
+    {
+      "branch_id": "service.common",
+      "title": "Common call structure",
+      "applies_to_intents": [
+        "*"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "workflow.agent_identification",
+          "requirement_id": "interaction.agent_identification",
+          "sequence": 1
+        },
+        {
+          "step_id": "workflow.request_understood",
+          "requirement_id": "request.intent_confirmed",
+          "sequence": 10
+        },
+        {
+          "step_id": "workflow.close_with_outcome",
+          "requirement_id": "outcome.summary_and_next_steps",
+          "sequence": 900
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.core",
+      "title": "Shared transfer workflow",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.verify_identity",
+          "requirement_id": "security.transaction_identity_verified",
+          "sequence": 100
+        },
+        {
+          "step_id": "workflow.transfer.confirm_accounts",
+          "requirement_id": "transfer.accounts_confirmed",
+          "sequence": 110
+        },
+        {
+          "step_id": "workflow.transfer.confirm_amount",
+          "requirement_id": "transfer.amount_confirmed",
+          "sequence": 120
+        },
+        {
+          "step_id": "workflow.transfer.explain_terms",
+          "requirement_id": "transfer.terms_explained",
+          "sequence": 150
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.one_time.details",
+      "title": "One-time transfer details",
+      "applies_to_intents": [
+        "transfer.one_time"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.one_time.confirm_timing",
+          "requirement_id": "transfer.one_time_timing_confirmed",
+          "sequence": 130
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.recurring.details",
+      "title": "Recurring transfer details",
+      "applies_to_intents": [
+        "transfer.recurring"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.recurring.confirm_schedule",
+          "requirement_id": "transfer.recurring_schedule_confirmed",
+          "sequence": 130
+        },
+        {
+          "step_id": "workflow.transfer.recurring.explain_changes",
+          "requirement_id": "transfer.recurring_change_path_explained",
+          "sequence": 140
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.execution",
+      "title": "Transfer authorization and execution",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.executes_transaction",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.obtain_authorization",
+          "requirement_id": "transfer.authorization_obtained",
+          "sequence": 180
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.confirmation",
+      "title": "Completed transfer confirmation",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "transfer.executed_during_call",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.confirm_completion",
+          "requirement_id": "transfer.completion_confirmed",
+          "sequence": 190
+        }
+      ]
+    },
+    {
+      "branch_id": "account.open_checking",
+      "title": "Checking-account opening workflow",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.opens_account",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.account.verify_identity",
+          "requirement_id": "security.account_opening_identity_verified",
+          "sequence": 100
+        },
+        {
+          "step_id": "workflow.account.explain_product",
+          "requirement_id": "account.product_terms_explained",
+          "sequence": 120
+        },
+        {
+          "step_id": "workflow.account.obtain_consent",
+          "requirement_id": "account.opening_consent",
+          "sequence": 180
+        },
+        {
+          "step_id": "workflow.account.confirm_outcome",
+          "requirement_id": "account.opening_confirmation",
+          "sequence": 190
+        }
+      ]
+    },
+    {
+      "branch_id": "account.product_linkage",
+      "title": "Existing-product linkage",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "account.link_existing_product",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.account.confirm_linkage",
+          "requirement_id": "account.linkage_confirmed",
+          "sequence": 140
+        }
+      ]
+    },
+    {
+      "branch_id": "loan.agricultural_equipment.inquiry",
+      "title": "Agricultural-equipment loan inquiry",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "workflow.loan.confirm_purpose",
+          "requirement_id": "loan.purpose_and_stage_confirmed",
+          "sequence": 100
+        },
+        {
+          "step_id": "workflow.loan.explain_eligibility",
+          "requirement_id": "loan.eligibility_explained",
+          "sequence": 120
+        },
+        {
+          "step_id": "workflow.loan.explain_documents",
+          "requirement_id": "loan.documents_explained",
+          "sequence": 130
+        },
+        {
+          "step_id": "workflow.loan.explain_terms_path",
+          "requirement_id": "loan.terms_path_explained",
+          "sequence": 140
+        },
+        {
+          "step_id": "workflow.loan.provide_next_step",
+          "requirement_id": "loan.next_step_confirmed",
+          "sequence": 180
+        }
+      ]
+    },
+    {
+      "branch_id": "loan.agricultural_equipment.application",
+      "title": "Loan application started",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.starts_application",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.loan.verify_applicant",
+          "requirement_id": "security.loan_application_identity_verified",
+          "sequence": 110
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "interaction.agent_identification",
+      "title": "Agent and organization identified",
+      "business_definition": "The customer can identify the representative and organization handling the call.",
+      "level": "supportive",
+      "evidence_expectations": [
+        "Agent states their name and the organization near the beginning of the call."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": null,
+      "positive_finding_type": "agent.identification_clear",
+      "category": "service",
+      "applies_to_intents": [
+        "*"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "request.intent_confirmed",
+      "title": "Customer request confirmed",
+      "business_definition": "The agent establishes what the customer wants before taking account or application action.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent restates or explicitly acknowledges the requested action and important qualifiers."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.intent_not_confirmed",
+      "positive_finding_type": "process.intent_confirmed",
+      "category": "process",
+      "applies_to_intents": [
+        "*"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "outcome.summary_and_next_steps",
+      "title": "Outcome and next steps summarized",
+      "business_definition": "The customer leaves knowing what occurred and what must happen next.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent summarizes completed actions or clearly explains pending next steps before closing."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "outcome.next_steps_unclear",
+      "positive_finding_type": "outcome.next_steps_confirmed",
+      "category": "outcome",
+      "applies_to_intents": [
+        "*"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "security.transaction_identity_verified",
+      "title": "Customer identity verified before transaction access",
+      "business_definition": "Account-specific transaction activity follows a clear customer-verification exchange.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Agent requests verification information before exposing account details or executing the transaction.",
+        "Transcript shows the customer responding to the verification request."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.identity_verification_missing",
+      "positive_finding_type": "control.identity_verification_completed",
+      "category": "security",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.executes_transaction",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "security.account_opening_identity_verified",
+      "title": "Customer identity verified for account opening",
+      "business_definition": "The account-opening process includes a clear identity-verification exchange.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Agent requests identity or existing-customer verification before opening the account."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.identity_verification_missing",
+      "positive_finding_type": "control.identity_verification_completed",
+      "category": "security",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.opens_account",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "security.loan_application_identity_verified",
+      "title": "Applicant identity verified when application begins",
+      "business_definition": "Identity verification becomes applicable only when the call advances beyond general loan information into an application.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Agent performs identity verification before collecting application-specific customer information."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.identity_verification_missing",
+      "positive_finding_type": "control.identity_verification_completed",
+      "category": "security",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.starts_application",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "transfer.accounts_confirmed",
+      "title": "Source and destination accounts confirmed",
+      "business_definition": "The transfer direction and both participating accounts are unambiguous.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Agent and customer confirm source and destination account types or identifiers."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.transfer_accounts_unconfirmed",
+      "positive_finding_type": "control.transfer_accounts_confirmed",
+      "category": "transaction_accuracy",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.amount_confirmed",
+      "title": "Transfer amount confirmed",
+      "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Transcript contains an amount and customer confirmation or an equivalent explicit agreement."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.transfer_amount_unconfirmed",
+      "positive_finding_type": "control.transfer_amount_confirmed",
+      "category": "transaction_accuracy",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.terms_explained",
+      "title": "Relevant transfer terms explained",
+      "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent explains applicable processing timing, limits, fees, or states that a listed term does not apply.",
+        "Recurring transfers include change or cancellation information."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules",
+        "apptek.observed_call_patterns"
+      ],
+      "failure_finding_type": "process.transfer_terms_unclear",
+      "positive_finding_type": "process.transfer_terms_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.authorization_obtained",
+      "title": "Customer authorizes the transfer",
+      "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Customer gives a clear approval after amount, accounts, and timing or frequency are stated."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.transfer_authorization_missing",
+      "positive_finding_type": "control.transfer_authorization_obtained",
+      "category": "authorization",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.executes_transaction",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "transfer.completion_confirmed",
+      "title": "Transfer completion confirmed",
+      "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent confirms successful setup or execution and recaps amount, accounts, and timing.",
+        "A reference number is useful evidence but is not mandatory when another clear confirmation is present."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "outcome.transfer_confirmation_missing",
+      "positive_finding_type": "outcome.transfer_confirmed",
+      "category": "outcome",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "transfer.executed_during_call",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "account.product_terms_explained",
+      "title": "Checking-account terms explained",
+      "business_definition": "The customer receives the material account features, fees, and usage conditions relevant to the request.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent discusses applicable fees, account access, and important product conditions.",
+        "The evaluator must not require a term that the project profile does not define."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.account_terms_unclear",
+      "positive_finding_type": "process.account_terms_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "account.linkage_confirmed",
+      "title": "Requested product linkage confirmed",
+      "business_definition": "The requested relationship between the new checking account and existing product is understood and confirmed.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent explains the linkage and confirms the customer's preference."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.product_linkage_unclear",
+      "positive_finding_type": "process.product_linkage_confirmed",
+      "category": "process",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "account.link_existing_product",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "account.opening_consent",
+      "title": "Customer consents to account opening",
+      "business_definition": "The customer explicitly agrees to open the account after relevant terms are discussed.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Customer gives clear consent before the account is created."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.account_opening_consent_missing",
+      "positive_finding_type": "control.account_opening_consent_obtained",
+      "category": "authorization",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.opens_account",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "account.opening_confirmation",
+      "title": "Account opening confirmed",
+      "business_definition": "The customer receives confirmation of the account outcome and access next steps.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent confirms whether the account was opened and explains access, funding, or remaining setup steps."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "outcome.account_opening_unclear",
+      "positive_finding_type": "outcome.account_opening_confirmed",
+      "category": "outcome",
+      "applies_to_intents": [
+        "account.open_checking"
+      ],
+      "conditions": [
+        {
+          "fact_id": "request.opens_account",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
+    },
+    {
+      "requirement_id": "loan.purpose_and_stage_confirmed",
+      "title": "Loan purpose and inquiry stage confirmed",
+      "business_definition": "The agent establishes the financing purpose and whether the customer wants information or to begin an application.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent confirms the equipment-financing purpose.",
+        "Conversation distinguishes general information from an application."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules",
+        "apptek.observed_call_patterns"
+      ],
+      "failure_finding_type": "process.loan_request_unclear",
+      "positive_finding_type": "process.loan_request_confirmed",
+      "category": "process",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "loan.terms_path_explained",
+      "title": "Loan terms path explained",
+      "business_definition": "The customer learns either the applicable high-level terms or how a personalized rate and repayment quote will be obtained.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent discusses available term categories or explains that rates and repayment depend on application review.",
+        "The evaluator must not require an exact rate during a general inquiry."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.loan_terms_path_unclear",
+      "positive_finding_type": "process.loan_terms_path_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "loan.next_step_confirmed",
+      "title": "Loan inquiry next step confirmed",
+      "business_definition": "The customer receives a concrete route to continue the loan inquiry or application.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent provides an application, referral, document request, appointment, or follow-up path."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "outcome.loan_next_step_missing",
+      "positive_finding_type": "outcome.loan_next_step_confirmed",
+      "category": "outcome",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.one_time_timing_confirmed",
+      "title": "One-time transfer timing confirmed",
+      "business_definition": "The execution date or immediate timing of a one-time transfer is explicit.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent states the execution timing and the customer accepts it."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.transfer_timing_unclear",
+      "positive_finding_type": "process.transfer_timing_confirmed",
+      "category": "transaction_accuracy",
+      "applies_to_intents": [
+        "transfer.one_time"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.recurring_schedule_confirmed",
+      "title": "Recurring transfer schedule confirmed",
+      "business_definition": "Frequency, start timing, and any applicable end condition are explicit.",
+      "level": "critical",
+      "evidence_expectations": [
+        "Frequency and start timing are stated and accepted by the customer."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "control.recurring_schedule_unconfirmed",
+      "positive_finding_type": "control.recurring_schedule_confirmed",
+      "category": "transaction_accuracy",
+      "applies_to_intents": [
+        "transfer.recurring"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "transfer.recurring_change_path_explained",
+      "title": "Recurring transfer change path explained",
+      "business_definition": "The customer is told how recurring instructions can be changed, paused, or stopped.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent explains a change, pause, or cancellation path."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.recurring_change_path_unclear",
+      "positive_finding_type": "process.recurring_change_path_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "transfer.recurring"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "loan.eligibility_explained",
+      "title": "Loan eligibility considerations explained",
+      "business_definition": "The customer receives a qualified explanation of relevant eligibility factors without a promise of approval.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent identifies relevant eligibility considerations using qualified language."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.loan_eligibility_unclear",
+      "positive_finding_type": "process.loan_eligibility_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "loan.documents_explained",
+      "title": "Loan document path explained",
+      "business_definition": "The customer learns which documents or information are needed to continue.",
+      "level": "required",
+      "evidence_expectations": [
+        "Agent identifies concrete documents or information needed for an application."
+      ],
+      "policy_source_ids": [
+        "capstone.banking_service_rules"
+      ],
+      "failure_finding_type": "process.loan_documents_unclear",
+      "positive_finding_type": "process.loan_documents_explained",
+      "category": "process",
+      "applies_to_intents": [
+        "loan.agricultural_equipment"
+      ],
+      "conditions": []
+    }
+  ]
+}
