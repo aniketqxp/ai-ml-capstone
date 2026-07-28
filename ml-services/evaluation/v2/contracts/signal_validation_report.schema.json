@@ -1,0 +1,739 @@
+{
+  "$defs": {
+    "AblationVariant": {
+      "enum": [
+        "text_only",
+        "audio_only",
+        "multimodal"
+      ],
+      "title": "AblationVariant",
+      "type": "string"
+    },
+    "AcousticPolicy": {
+      "enum": [
+        "support_only",
+        "eligible_for_primary_decision"
+      ],
+      "title": "AcousticPolicy",
+      "type": "string"
+    },
+    "AcousticValueAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "selected_policy": {
+          "$ref": "#/$defs/AcousticPolicy"
+        },
+        "attention_changes_from_text_only": {
+          "minimum": 0,
+          "title": "Attention Changes From Text Only",
+          "type": "integer"
+        },
+        "challenge_support_pair_passed": {
+          "title": "Challenge Support Pair Passed",
+          "type": "boolean"
+        },
+        "challenge_recovery_pair_passed": {
+          "title": "Challenge Recovery Pair Passed",
+          "type": "boolean"
+        },
+        "real_call_supported_finding_count": {
+          "minimum": 0,
+          "title": "Real Call Supported Finding Count",
+          "type": "integer"
+        },
+        "real_call_recovery_count": {
+          "minimum": 0,
+          "title": "Real Call Recovery Count",
+          "type": "integer"
+        },
+        "rationale": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Rationale",
+          "type": "array"
+        }
+      },
+      "required": [
+        "selected_policy",
+        "attention_changes_from_text_only",
+        "challenge_support_pair_passed",
+        "challenge_recovery_pair_passed",
+        "real_call_supported_finding_count",
+        "real_call_recovery_count",
+        "rationale"
+      ],
+      "title": "AcousticValueAssessment",
+      "type": "object"
+    },
+    "AgreementAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/AgreementStatus"
+        },
+        "human_adjudicated_call_count": {
+          "minimum": 0,
+          "title": "Human Adjudicated Call Count",
+          "type": "integer"
+        },
+        "human_attention_agreement": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Attention Agreement"
+        },
+        "researcher_seed_call_count": {
+          "minimum": 0,
+          "title": "Researcher Seed Call Count",
+          "type": "integer"
+        },
+        "researcher_seed_attention_agreement": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Researcher Seed Attention Agreement",
+          "type": "object"
+        },
+        "limitation": {
+          "minLength": 1,
+          "title": "Limitation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "human_adjudicated_call_count",
+        "researcher_seed_call_count",
+        "researcher_seed_attention_agreement",
+        "limitation"
+      ],
+      "title": "AgreementAssessment",
+      "type": "object"
+    },
+    "AgreementStatus": {
+      "enum": [
+        "available",
+        "unavailable"
+      ],
+      "title": "AgreementStatus",
+      "type": "string"
+    },
+    "CallValidationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "population": {
+          "$ref": "#/$defs/ValidationPopulation"
+        },
+        "claim_level": {
+          "$ref": "#/$defs/ClaimLevel"
+        },
+        "variant": {
+          "$ref": "#/$defs/AblationVariant"
+        },
+        "expected_attention": {
+          "$ref": "#/$defs/ExpectedAttention"
+        },
+        "predicted_attention": {
+          "title": "Predicted Attention",
+          "type": "boolean"
+        },
+        "decision_status": {
+          "minLength": 1,
+          "title": "Decision Status",
+          "type": "string"
+        },
+        "expected_negative_finding_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Negative Finding Types",
+          "type": "array"
+        },
+        "predicted_negative_finding_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Predicted Negative Finding Types",
+          "type": "array"
+        },
+        "expected_positive_finding_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Positive Finding Types",
+          "type": "array"
+        },
+        "predicted_positive_finding_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Predicted Positive Finding Types",
+          "type": "array"
+        },
+        "attention_match": {
+          "title": "Attention Match",
+          "type": "boolean"
+        },
+        "false_positive": {
+          "title": "False Positive",
+          "type": "boolean"
+        },
+        "false_negative": {
+          "title": "False Negative",
+          "type": "boolean"
+        },
+        "matched_reason_count": {
+          "minimum": 0,
+          "title": "Matched Reason Count",
+          "type": "integer"
+        },
+        "expected_reason_count": {
+          "minimum": 0,
+          "title": "Expected Reason Count",
+          "type": "integer"
+        },
+        "localized_reason_count": {
+          "minimum": 0,
+          "title": "Localized Reason Count",
+          "type": "integer"
+        },
+        "acoustically_supported_finding_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Acoustically Supported Finding Types",
+          "type": "array"
+        },
+        "recovery_observed": {
+          "title": "Recovery Observed",
+          "type": "boolean"
+        },
+        "candidate_episode_count": {
+          "minimum": 0,
+          "title": "Candidate Episode Count",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "call_id",
+        "population",
+        "claim_level",
+        "variant",
+        "expected_attention",
+        "predicted_attention",
+        "decision_status",
+        "attention_match",
+        "false_positive",
+        "false_negative",
+        "matched_reason_count",
+        "expected_reason_count",
+        "localized_reason_count",
+        "recovery_observed",
+        "candidate_episode_count"
+      ],
+      "title": "CallValidationResult",
+      "type": "object"
+    },
+    "ClaimLevel": {
+      "enum": [
+        "detector_only",
+        "known_answer_policy_validation"
+      ],
+      "title": "ClaimLevel",
+      "type": "string"
+    },
+    "CounterfactualAxis": {
+      "enum": [
+        "transcript",
+        "delivery",
+        "outcome",
+        "control",
+        "recovery",
+        "duration"
+      ],
+      "title": "CounterfactualAxis",
+      "type": "string"
+    },
+    "ExpectedAttention": {
+      "enum": [
+        "required",
+        "not_required",
+        "uncertain"
+      ],
+      "title": "ExpectedAttention",
+      "type": "string"
+    },
+    "ExpectedPairEffect": {
+      "enum": [
+        "attention_changes",
+        "reasons_change",
+        "support_changes",
+        "recovery_changes",
+        "no_decision_change"
+      ],
+      "title": "ExpectedPairEffect",
+      "type": "string"
+    },
+    "PairMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "variant": {
+          "$ref": "#/$defs/AblationVariant"
+        },
+        "pair_count": {
+          "minimum": 0,
+          "title": "Pair Count",
+          "type": "integer"
+        },
+        "passed_count": {
+          "minimum": 0,
+          "title": "Passed Count",
+          "type": "integer"
+        },
+        "pass_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pass Rate"
+        },
+        "passed_by_axis": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Passed By Axis",
+          "type": "object"
+        },
+        "total_by_axis": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Total By Axis",
+          "type": "object"
+        }
+      },
+      "required": [
+        "variant",
+        "pair_count",
+        "passed_count",
+        "passed_by_axis",
+        "total_by_axis"
+      ],
+      "title": "PairMetrics",
+      "type": "object"
+    },
+    "PairValidationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "pair_id": {
+          "minLength": 1,
+          "title": "Pair Id",
+          "type": "string"
+        },
+        "axis": {
+          "$ref": "#/$defs/CounterfactualAxis"
+        },
+        "variant": {
+          "$ref": "#/$defs/AblationVariant"
+        },
+        "expected_effect": {
+          "$ref": "#/$defs/ExpectedPairEffect"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "baseline_attention": {
+          "title": "Baseline Attention",
+          "type": "boolean"
+        },
+        "variant_attention": {
+          "title": "Variant Attention",
+          "type": "boolean"
+        },
+        "baseline_acoustic_support_count": {
+          "minimum": 0,
+          "title": "Baseline Acoustic Support Count",
+          "type": "integer"
+        },
+        "variant_acoustic_support_count": {
+          "minimum": 0,
+          "title": "Variant Acoustic Support Count",
+          "type": "integer"
+        },
+        "baseline_recovery_observed": {
+          "title": "Baseline Recovery Observed",
+          "type": "boolean"
+        },
+        "variant_recovery_observed": {
+          "title": "Variant Recovery Observed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "pair_id",
+        "axis",
+        "variant",
+        "expected_effect",
+        "passed",
+        "baseline_attention",
+        "variant_attention",
+        "baseline_acoustic_support_count",
+        "variant_acoustic_support_count",
+        "baseline_recovery_observed",
+        "variant_recovery_observed"
+      ],
+      "title": "PairValidationResult",
+      "type": "object"
+    },
+    "ThresholdAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ThresholdFitStatus"
+        },
+        "fitted_threshold_count": {
+          "const": 0,
+          "default": 0,
+          "title": "Fitted Threshold Count",
+          "type": "integer"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "title": "ThresholdAssessment",
+      "type": "object"
+    },
+    "ThresholdFitStatus": {
+      "enum": [
+        "not_attempted"
+      ],
+      "title": "ThresholdFitStatus",
+      "type": "string"
+    },
+    "ValidationPopulation": {
+      "enum": [
+        "existing_calls",
+        "controlled_challenges"
+      ],
+      "title": "ValidationPopulation",
+      "type": "string"
+    },
+    "VariantMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "population": {
+          "$ref": "#/$defs/ValidationPopulation"
+        },
+        "claim_level": {
+          "$ref": "#/$defs/ClaimLevel"
+        },
+        "variant": {
+          "$ref": "#/$defs/AblationVariant"
+        },
+        "call_count": {
+          "minimum": 0,
+          "title": "Call Count",
+          "type": "integer"
+        },
+        "expected_attention_count": {
+          "minimum": 0,
+          "title": "Expected Attention Count",
+          "type": "integer"
+        },
+        "predicted_attention_count": {
+          "minimum": 0,
+          "title": "Predicted Attention Count",
+          "type": "integer"
+        },
+        "attention_match_count": {
+          "minimum": 0,
+          "title": "Attention Match Count",
+          "type": "integer"
+        },
+        "attention_accuracy": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attention Accuracy"
+        },
+        "true_positive_count": {
+          "minimum": 0,
+          "title": "True Positive Count",
+          "type": "integer"
+        },
+        "false_negative_count": {
+          "minimum": 0,
+          "title": "False Negative Count",
+          "type": "integer"
+        },
+        "sensitivity": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sensitivity"
+        },
+        "true_negative_count": {
+          "minimum": 0,
+          "title": "True Negative Count",
+          "type": "integer"
+        },
+        "false_positive_count": {
+          "minimum": 0,
+          "title": "False Positive Count",
+          "type": "integer"
+        },
+        "false_positive_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "False Positive Rate"
+        },
+        "expected_reason_count": {
+          "minimum": 0,
+          "title": "Expected Reason Count",
+          "type": "integer"
+        },
+        "matched_reason_count": {
+          "minimum": 0,
+          "title": "Matched Reason Count",
+          "type": "integer"
+        },
+        "reason_recall": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason Recall"
+        },
+        "localized_reason_count": {
+          "minimum": 0,
+          "title": "Localized Reason Count",
+          "type": "integer"
+        },
+        "evidence_localization_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Localization Rate"
+        },
+        "acoustically_supported_finding_count": {
+          "minimum": 0,
+          "title": "Acoustically Supported Finding Count",
+          "type": "integer"
+        },
+        "recovery_observed_count": {
+          "minimum": 0,
+          "title": "Recovery Observed Count",
+          "type": "integer"
+        },
+        "candidate_episode_count": {
+          "minimum": 0,
+          "title": "Candidate Episode Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "population",
+        "claim_level",
+        "variant",
+        "call_count",
+        "expected_attention_count",
+        "predicted_attention_count",
+        "attention_match_count",
+        "true_positive_count",
+        "false_negative_count",
+        "true_negative_count",
+        "false_positive_count",
+        "expected_reason_count",
+        "matched_reason_count",
+        "localized_reason_count",
+        "acoustically_supported_finding_count",
+        "recovery_observed_count",
+        "candidate_episode_count"
+      ],
+      "title": "VariantMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "validation_version": {
+      "minLength": 1,
+      "title": "Validation Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "minLength": 1,
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "dataset_version": {
+      "minLength": 1,
+      "title": "Dataset Version",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "source_revisions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Revisions",
+      "type": "object"
+    },
+    "call_results": {
+      "items": {
+        "$ref": "#/$defs/CallValidationResult"
+      },
+      "title": "Call Results",
+      "type": "array"
+    },
+    "variant_metrics": {
+      "items": {
+        "$ref": "#/$defs/VariantMetrics"
+      },
+      "title": "Variant Metrics",
+      "type": "array"
+    },
+    "pair_results": {
+      "items": {
+        "$ref": "#/$defs/PairValidationResult"
+      },
+      "title": "Pair Results",
+      "type": "array"
+    },
+    "pair_metrics": {
+      "items": {
+        "$ref": "#/$defs/PairMetrics"
+      },
+      "title": "Pair Metrics",
+      "type": "array"
+    },
+    "human_agreement": {
+      "$ref": "#/$defs/AgreementAssessment"
+    },
+    "threshold_assessment": {
+      "$ref": "#/$defs/ThresholdAssessment"
+    },
+    "acoustic_value": {
+      "$ref": "#/$defs/AcousticValueAssessment"
+    },
+    "conclusions": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Conclusions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "validation_version",
+    "dataset_id",
+    "dataset_version",
+    "profile_id",
+    "source_revisions",
+    "call_results",
+    "variant_metrics",
+    "pair_results",
+    "pair_metrics",
+    "human_agreement",
+    "threshold_assessment",
+    "acoustic_value",
+    "conclusions"
+  ],
+  "title": "SignalValidationReport",
+  "type": "object"
+}
