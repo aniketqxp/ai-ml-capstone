@@ -1,0 +1,575 @@
+{
+  "schema_version": "1.0",
+  "dynamics_version": "0.1.0",
+  "sentiment_ref": "origin/integration/full-pipeline-test",
+  "sentiment_commit": "a63045fee0a1b98082f951cca584267a6705c50a",
+  "transcript_ref": "HEAD",
+  "transcript_commit": "3d7a31782d87f4ce65efb376ab3dffeb83e32539",
+  "config": {
+    "min_feature_observations": 12,
+    "usable_coverage_ratio": 0.5,
+    "limited_coverage_ratio": 0.35,
+    "corroborating_z": 1.0,
+    "strong_z": 1.5,
+    "max_customer_position_gap": 2,
+    "max_episode_time_gap_seconds": 75.0,
+    "min_episode_segments": 2,
+    "min_episode_span_seconds": 2.0,
+    "trajectory_change_z": 0.5
+  },
+  "aggregate": {
+    "call_count": 22,
+    "episode_count_distribution": {
+      "0": 18,
+      "1": 3,
+      "2": 1
+    },
+    "calls_with_recovery_candidate": 2,
+    "calls_with_unresolved_end_candidate": 1,
+    "trajectory_direction_distribution": {
+      "improved": 10,
+      "stable": 9,
+      "worsened": 3
+    },
+    "customer_feature_availability": {
+      "escalation": {
+        "limited": 1,
+        "usable": 21
+      },
+      "pitch": {
+        "limited": 2,
+        "unavailable": 20
+      },
+      "volume": {
+        "limited": 3,
+        "unavailable": 19
+      },
+      "energy": {
+        "limited": 3,
+        "unavailable": 19
+      },
+      "pause": {
+        "limited": 2,
+        "unavailable": 2,
+        "usable": 18
+      },
+      "speech_rate": {
+        "limited": 2,
+        "usable": 20
+      }
+    }
+  },
+  "calls": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 127.84,
+      "early_elevated_ratio": 0.167832,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -1.000699,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "unavailable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 248.03,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.022011,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -1.003991,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "limited",
+        "volume": "limited",
+        "energy": "limited",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 118.05,
+      "early_elevated_ratio": 0.118986,
+      "late_elevated_ratio": 0.199895,
+      "trajectory_direction": "stable",
+      "trajectory_delta": -0.043026,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 170.28,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.14159,
+      "trajectory_direction": "stable",
+      "trajectory_delta": -0.007817,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 115.2,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -0.901188,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "limited",
+        "energy": "limited",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 104.04,
+      "early_elevated_ratio": 0.083091,
+      "late_elevated_ratio": 0.174702,
+      "trajectory_direction": "stable",
+      "trajectory_delta": 0.130968,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 119.51,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "stable",
+      "trajectory_delta": 0.035838,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 137.07,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "stable",
+      "trajectory_delta": -0.38861,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "limited",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "limited",
+        "speech_rate": "limited"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 118.32,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "stable",
+      "trajectory_delta": 0.109426,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "domain": "banking",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 228.3,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.023572,
+      "trajectory_direction": "stable",
+      "trajectory_delta": 0.009522,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Health_1587315",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 1,
+      "episodes": [
+        {
+          "episode_id": "customer-elevation-01",
+          "start_seconds": 31.54,
+          "end_seconds": 59.3,
+          "segment_ids": [
+            "CUSTOMER_005",
+            "CUSTOMER_007"
+          ]
+        }
+      ],
+      "usable_customer_seconds": 145.68,
+      "early_elevated_ratio": 0.337621,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "worsened",
+      "trajectory_delta": 0.665369,
+      "recovery_candidate": true,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Health_1588706",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "unavailable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 132.01,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -1.144639,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Health_1590851",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "limited",
+        "volume": "limited",
+        "energy": "limited",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 2,
+      "episodes": [
+        {
+          "episode_id": "customer-elevation-01",
+          "start_seconds": 118.17,
+          "end_seconds": 129.14,
+          "segment_ids": [
+            "CUSTOMER_012",
+            "CUSTOMER_013"
+          ]
+        },
+        {
+          "episode_id": "customer-elevation-02",
+          "start_seconds": 243.21,
+          "end_seconds": 294.8,
+          "segment_ids": [
+            "CUSTOMER_027",
+            "CUSTOMER_028"
+          ]
+        }
+      ],
+      "usable_customer_seconds": 244.22,
+      "early_elevated_ratio": 0.18542,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "stable",
+      "trajectory_delta": -0.306291,
+      "recovery_candidate": true,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Health_1586594",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 55.68,
+      "early_elevated_ratio": 0.060227,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -1.801524,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Health_1586726",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 1,
+      "episodes": [
+        {
+          "episode_id": "customer-elevation-01",
+          "start_seconds": 265.54,
+          "end_seconds": 280.34,
+          "segment_ids": [
+            "CUSTOMER_039",
+            "CUSTOMER_040"
+          ]
+        }
+      ],
+      "usable_customer_seconds": 133.87,
+      "early_elevated_ratio": 0.207127,
+      "late_elevated_ratio": 0.811966,
+      "trajectory_direction": "worsened",
+      "trajectory_delta": 2.219085,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": true
+    },
+    {
+      "call_id": "en_US_General_Health_1587175",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "limited",
+        "speech_rate": "limited"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 133.09,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -1.456551,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Health_1587922",
+      "domain": "health",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 240.44,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -0.792372,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Telecom_1590675",
+      "domain": "telecom",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 1,
+      "episodes": [
+        {
+          "episode_id": "customer-elevation-01",
+          "start_seconds": 396.71,
+          "end_seconds": 446.64,
+          "segment_ids": [
+            "CUSTOMER_015",
+            "CUSTOMER_016"
+          ]
+        }
+      ],
+      "usable_customer_seconds": 113.68,
+      "early_elevated_ratio": 0.54937,
+      "late_elevated_ratio": 0.435475,
+      "trajectory_direction": "stable",
+      "trajectory_delta": -0.469484,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_CA_Telecom_1590992",
+      "domain": "telecom",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 179.11,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.052105,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -0.87014,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Telecom_1584567",
+      "domain": "telecom",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 194.59,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -0.714374,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Telecom_1586751",
+      "domain": "telecom",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 80.72,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.0,
+      "trajectory_direction": "improved",
+      "trajectory_delta": -0.970124,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    },
+    {
+      "call_id": "en_US_General_Telecom_1586891",
+      "domain": "telecom",
+      "feature_availability": {
+        "escalation": "usable",
+        "pitch": "unavailable",
+        "volume": "unavailable",
+        "energy": "unavailable",
+        "pause": "usable",
+        "speech_rate": "usable"
+      },
+      "episode_count": 0,
+      "episodes": [],
+      "usable_customer_seconds": 101.66,
+      "early_elevated_ratio": 0.0,
+      "late_elevated_ratio": 0.044676,
+      "trajectory_direction": "worsened",
+      "trajectory_delta": 1.060162,
+      "recovery_candidate": false,
+      "unresolved_end_candidate": false
+    }
+  ]
+}
