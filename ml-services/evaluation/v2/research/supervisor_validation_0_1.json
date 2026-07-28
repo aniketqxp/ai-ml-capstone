@@ -1,0 +1,1009 @@
+{
+  "schema_version": "1.0",
+  "supervisor_version": "0.1.0",
+  "dataset_id": "banking-evaluator-v2",
+  "dataset_version": "0.1.0",
+  "profile_id": "banking-demo-v1",
+  "aggregate": {
+    "call_count": 14,
+    "response_case_count": 98,
+    "expectation_pass_count": 98,
+    "decision_lock_preserved_count": 98,
+    "fallback_reason_counts": {
+      "accepted": 14,
+      "forbidden_decision_language": 14,
+      "invalid_contract": 28,
+      "invalid_json": 14,
+      "missing_response": 14,
+      "unknown_reference": 14
+    },
+    "context_char_count": {
+      "minimum": 6026,
+      "median": 7398.0,
+      "maximum": 7944,
+      "limit": 16000
+    }
+  },
+  "calls": [
+    {
+      "call_id": "challenge-transcript-context",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6060,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7347,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7449,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7879,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6053,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "request_customer_follow_up",
+      "context_char_count": 7481,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 5,
+        "uncertainties": 0,
+        "evidence_items": 5,
+        "contradiction_items": 5
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6102,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7583,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 5,
+        "uncertainties": 0,
+        "evidence_items": 5,
+        "contradiction_items": 5
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6137,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7596,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 5,
+        "uncertainties": 0,
+        "evidence_items": 5,
+        "contradiction_items": 5
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7920,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 7,
+        "uncertainties": 0,
+        "evidence_items": 7,
+        "contradiction_items": 7
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "create_review_case",
+      "context_char_count": 7944,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6032,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "attention_required": false,
+      "decision_status": "complete",
+      "permitted_action": "none",
+      "context_char_count": 6026,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    }
+  ]
+}
