@@ -1,0 +1,309 @@
+{
+  "$defs": {
+    "ActionExecution": {
+      "enum": [
+        "no_action",
+        "automatic",
+        "requires_approval"
+      ],
+      "title": "ActionExecution",
+      "type": "string"
+    },
+    "ActionType": {
+      "enum": [
+        "none",
+        "create_review_case",
+        "recommend_coaching",
+        "request_customer_follow_up",
+        "policy_review"
+      ],
+      "title": "ActionType",
+      "type": "string"
+    },
+    "DecisionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient_evidence"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "SupervisorActionLock": {
+      "additionalProperties": false,
+      "properties": {
+        "action_type": {
+          "$ref": "#/$defs/ActionType"
+        },
+        "execution": {
+          "$ref": "#/$defs/ActionExecution"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Finding Ids",
+          "type": "array"
+        },
+        "automation_allowed": {
+          "title": "Automation Allowed",
+          "type": "boolean"
+        },
+        "requires_human_approval": {
+          "title": "Requires Human Approval",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action_type",
+        "execution",
+        "label",
+        "reason",
+        "automation_allowed",
+        "requires_human_approval"
+      ],
+      "title": "SupervisorActionLock",
+      "type": "object"
+    },
+    "SupervisorDecisionLock": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "decision_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Decision Sha256",
+          "type": "string"
+        },
+        "evaluator_version": {
+          "minLength": 1,
+          "title": "Evaluator Version",
+          "type": "string"
+        },
+        "decision_status": {
+          "$ref": "#/$defs/DecisionStatus"
+        },
+        "attention_required": {
+          "title": "Attention Required",
+          "type": "boolean"
+        },
+        "controlling_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Controlling Finding Ids",
+          "type": "array"
+        },
+        "permitted_action": {
+          "$ref": "#/$defs/SupervisorActionLock"
+        }
+      },
+      "required": [
+        "call_id",
+        "decision_sha256",
+        "evaluator_version",
+        "decision_status",
+        "attention_required",
+        "permitted_action"
+      ],
+      "title": "SupervisorDecisionLock",
+      "type": "object"
+    },
+    "SupervisorFallbackReason": {
+      "enum": [
+        "missing_response",
+        "invalid_json",
+        "invalid_contract",
+        "unknown_reference",
+        "forbidden_decision_language"
+      ],
+      "title": "SupervisorFallbackReason",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "supervisor_version": {
+      "minLength": 1,
+      "title": "Supervisor Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "decision_lock": {
+      "$ref": "#/$defs/SupervisorDecisionLock"
+    },
+    "headline": {
+      "minLength": 1,
+      "title": "Headline",
+      "type": "string"
+    },
+    "summary": {
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "supporting_finding_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supporting Finding Ids",
+      "type": "array"
+    },
+    "positive_finding_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Positive Finding Ids",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "uncertainty_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Uncertainty Codes",
+      "type": "array"
+    },
+    "context_note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Context Note"
+    },
+    "fallback_used": {
+      "title": "Fallback Used",
+      "type": "boolean"
+    },
+    "fallback_reason": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SupervisorFallbackReason"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "provenance": {
+      "$ref": "#/$defs/SourceProvenance"
+    }
+  },
+  "required": [
+    "supervisor_version",
+    "call_id",
+    "decision_lock",
+    "headline",
+    "summary",
+    "fallback_used",
+    "provenance"
+  ],
+  "title": "SupervisorResult",
+  "type": "object"
+}

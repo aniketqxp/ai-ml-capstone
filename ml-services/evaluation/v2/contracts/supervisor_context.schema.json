@@ -1,0 +1,581 @@
+{
+  "$defs": {
+    "ActionExecution": {
+      "enum": [
+        "no_action",
+        "automatic",
+        "requires_approval"
+      ],
+      "title": "ActionExecution",
+      "type": "string"
+    },
+    "ActionType": {
+      "enum": [
+        "none",
+        "create_review_case",
+        "recommend_coaching",
+        "request_customer_follow_up",
+        "policy_review"
+      ],
+      "title": "ActionType",
+      "type": "string"
+    },
+    "DecisionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient_evidence"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    },
+    "FindingCategory": {
+      "enum": [
+        "required_control",
+        "process",
+        "escalation",
+        "outcome",
+        "agent_behavior",
+        "data_quality"
+      ],
+      "title": "FindingCategory",
+      "type": "string"
+    },
+    "FindingSeverity": {
+      "enum": [
+        "info",
+        "review",
+        "critical"
+      ],
+      "title": "FindingSeverity",
+      "type": "string"
+    },
+    "Modality": {
+      "enum": [
+        "transcript",
+        "text",
+        "acoustic",
+        "multimodal",
+        "policy",
+        "human"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "ReliabilityStatus": {
+      "enum": [
+        "usable",
+        "limited",
+        "unusable",
+        "unavailable"
+      ],
+      "title": "ReliabilityStatus",
+      "type": "string"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "SupervisorActionLock": {
+      "additionalProperties": false,
+      "properties": {
+        "action_type": {
+          "$ref": "#/$defs/ActionType"
+        },
+        "execution": {
+          "$ref": "#/$defs/ActionExecution"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Finding Ids",
+          "type": "array"
+        },
+        "automation_allowed": {
+          "title": "Automation Allowed",
+          "type": "boolean"
+        },
+        "requires_human_approval": {
+          "title": "Requires Human Approval",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action_type",
+        "execution",
+        "label",
+        "reason",
+        "automation_allowed",
+        "requires_human_approval"
+      ],
+      "title": "SupervisorActionLock",
+      "type": "object"
+    },
+    "SupervisorDecisionLock": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "decision_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Decision Sha256",
+          "type": "string"
+        },
+        "evaluator_version": {
+          "minLength": 1,
+          "title": "Evaluator Version",
+          "type": "string"
+        },
+        "decision_status": {
+          "$ref": "#/$defs/DecisionStatus"
+        },
+        "attention_required": {
+          "title": "Attention Required",
+          "type": "boolean"
+        },
+        "controlling_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Controlling Finding Ids",
+          "type": "array"
+        },
+        "permitted_action": {
+          "$ref": "#/$defs/SupervisorActionLock"
+        }
+      },
+      "required": [
+        "call_id",
+        "decision_sha256",
+        "evaluator_version",
+        "decision_status",
+        "attention_required",
+        "permitted_action"
+      ],
+      "title": "SupervisorDecisionLock",
+      "type": "object"
+    },
+    "SupervisorEvidenceContext": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "segment_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker"
+        },
+        "start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Seconds"
+        },
+        "end_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Seconds"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "observation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observation"
+        },
+        "role": {
+          "enum": [
+            "evidence",
+            "contradiction"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "modality",
+        "role"
+      ],
+      "title": "SupervisorEvidenceContext",
+      "type": "object"
+    },
+    "SupervisorFindingContext": {
+      "additionalProperties": false,
+      "properties": {
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "finding_type": {
+          "minLength": 1,
+          "title": "Finding Type",
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/FindingCategory"
+        },
+        "severity": {
+          "$ref": "#/$defs/FindingSeverity"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Summary"
+        },
+        "business_definition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Business Definition"
+        },
+        "reliability_status": {
+          "$ref": "#/$defs/ReliabilityStatus"
+        },
+        "reliability_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reliability Reasons",
+          "type": "array"
+        },
+        "controlling": {
+          "title": "Controlling",
+          "type": "boolean"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/SupervisorEvidenceContext"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "contradictions": {
+          "items": {
+            "$ref": "#/$defs/SupervisorEvidenceContext"
+          },
+          "title": "Contradictions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "finding_id",
+        "finding_type",
+        "category",
+        "severity",
+        "title",
+        "reliability_status",
+        "controlling"
+      ],
+      "title": "SupervisorFindingContext",
+      "type": "object"
+    },
+    "SupervisorOmissions": {
+      "additionalProperties": false,
+      "properties": {
+        "triggered_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Triggered Findings",
+          "type": "integer"
+        },
+        "controlling_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Controlling Findings",
+          "type": "integer"
+        },
+        "positive_findings": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Positive Findings",
+          "type": "integer"
+        },
+        "uncertainties": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Uncertainties",
+          "type": "integer"
+        },
+        "evidence_items": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Evidence Items",
+          "type": "integer"
+        },
+        "contradiction_items": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Contradiction Items",
+          "type": "integer"
+        }
+      },
+      "title": "SupervisorOmissions",
+      "type": "object"
+    },
+    "SupervisorUncertaintyContext": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "modality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Modality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "SupervisorUncertaintyContext",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "supervisor_version": {
+      "minLength": 1,
+      "title": "Supervisor Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "decision_lock": {
+      "$ref": "#/$defs/SupervisorDecisionLock"
+    },
+    "triggered_findings": {
+      "items": {
+        "$ref": "#/$defs/SupervisorFindingContext"
+      },
+      "title": "Triggered Findings",
+      "type": "array"
+    },
+    "positive_findings": {
+      "items": {
+        "$ref": "#/$defs/SupervisorFindingContext"
+      },
+      "title": "Positive Findings",
+      "type": "array"
+    },
+    "uncertainties": {
+      "items": {
+        "$ref": "#/$defs/SupervisorUncertaintyContext"
+      },
+      "title": "Uncertainties",
+      "type": "array"
+    },
+    "permitted_actions": {
+      "items": {
+        "$ref": "#/$defs/SupervisorActionLock"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Permitted Actions",
+      "type": "array"
+    },
+    "omissions": {
+      "$ref": "#/$defs/SupervisorOmissions"
+    },
+    "context_char_limit": {
+      "minimum": 1000,
+      "title": "Context Char Limit",
+      "type": "integer"
+    },
+    "context_char_count": {
+      "minimum": 0,
+      "title": "Context Char Count",
+      "type": "integer"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SourceProvenance"
+    }
+  },
+  "required": [
+    "supervisor_version",
+    "call_id",
+    "decision_lock",
+    "permitted_actions",
+    "omissions",
+    "context_char_limit",
+    "context_char_count",
+    "provenance"
+  ],
+  "title": "SupervisorContext",
+  "type": "object"
+}

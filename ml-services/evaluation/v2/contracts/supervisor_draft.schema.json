@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "supporting_finding_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Supporting Finding Ids",
+      "type": "array"
+    },
+    "positive_finding_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Positive Finding Ids",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 8,
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "uncertainty_codes": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Uncertainty Codes",
+      "type": "array"
+    },
+    "context_note": {
+      "anyOf": [
+        {
+          "maxLength": 600,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Context Note"
+    }
+  },
+  "title": "SupervisorDraft",
+  "type": "object"
+}
