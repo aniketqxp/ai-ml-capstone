@@ -1,0 +1,574 @@
+{
+  "$defs": {
+    "Modality": {
+      "enum": [
+        "transcript",
+        "text",
+        "acoustic",
+        "multimodal",
+        "policy",
+        "human"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "ModalityCoverage": {
+      "additionalProperties": false,
+      "properties": {
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "expected_units": {
+          "minimum": 0,
+          "title": "Expected Units",
+          "type": "integer"
+        },
+        "usable_units": {
+          "minimum": 0,
+          "title": "Usable Units",
+          "type": "integer"
+        },
+        "coverage_ratio": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Coverage Ratio",
+          "type": "number"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "modality",
+        "source",
+        "expected_units",
+        "usable_units",
+        "coverage_ratio"
+      ],
+      "title": "ModalityCoverage",
+      "type": "object"
+    },
+    "ReliabilityAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ReliabilityStatus"
+        },
+        "coverage_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage Ratio"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "quality_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Quality Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "ReliabilityAssessment",
+      "type": "object"
+    },
+    "ReliabilityStatus": {
+      "enum": [
+        "usable",
+        "limited",
+        "unusable",
+        "unavailable"
+      ],
+      "title": "ReliabilityStatus",
+      "type": "string"
+    },
+    "SignalEpisode": {
+      "additionalProperties": false,
+      "properties": {
+        "episode_id": {
+          "minLength": 1,
+          "title": "Episode Id",
+          "type": "string"
+        },
+        "episode_type": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Episode Type",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "speaker": {
+          "$ref": "#/$defs/Speaker"
+        },
+        "start_seconds": {
+          "minimum": 0.0,
+          "title": "Start Seconds",
+          "type": "number"
+        },
+        "end_seconds": {
+          "minimum": 0.0,
+          "title": "End Seconds",
+          "type": "number"
+        },
+        "segment_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "signal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Signal Ids",
+          "type": "array"
+        },
+        "observation": {
+          "minLength": 1,
+          "title": "Observation",
+          "type": "string"
+        },
+        "reliability": {
+          "$ref": "#/$defs/ReliabilityAssessment"
+        },
+        "provenance": {
+          "$ref": "#/$defs/SourceProvenance"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility",
+          "default": "internal"
+        }
+      },
+      "required": [
+        "episode_id",
+        "episode_type",
+        "modality",
+        "speaker",
+        "start_seconds",
+        "end_seconds",
+        "segment_ids",
+        "observation",
+        "reliability",
+        "provenance"
+      ],
+      "title": "SignalEpisode",
+      "type": "object"
+    },
+    "SignalRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "signal_id": {
+          "minLength": 1,
+          "title": "Signal Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Name",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "scope": {
+          "$ref": "#/$defs/SignalScope"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "segment_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Segment Id"
+        },
+        "seq_id": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seq Id"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Speaker"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Seconds"
+        },
+        "end_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Seconds"
+        },
+        "reliability": {
+          "$ref": "#/$defs/ReliabilityAssessment"
+        },
+        "provenance": {
+          "$ref": "#/$defs/SourceProvenance"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility",
+          "default": "internal"
+        }
+      },
+      "required": [
+        "signal_id",
+        "name",
+        "modality",
+        "scope",
+        "value",
+        "reliability",
+        "provenance"
+      ],
+      "title": "SignalRecord",
+      "type": "object"
+    },
+    "SignalScope": {
+      "enum": [
+        "segment",
+        "episode",
+        "call"
+      ],
+      "title": "SignalScope",
+      "type": "string"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "Speaker": {
+      "enum": [
+        "agent",
+        "customer",
+        "system",
+        "unknown"
+      ],
+      "title": "Speaker",
+      "type": "string"
+    },
+    "TranscriptSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "segment_id": {
+          "minLength": 1,
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "segment_index": {
+          "minimum": 0,
+          "title": "Segment Index",
+          "type": "integer"
+        },
+        "seq_id": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seq Id"
+        },
+        "speaker": {
+          "$ref": "#/$defs/Speaker"
+        },
+        "start_seconds": {
+          "minimum": 0.0,
+          "title": "Start Seconds",
+          "type": "number"
+        },
+        "end_seconds": {
+          "minimum": 0.0,
+          "title": "End Seconds",
+          "type": "number"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/SourceProvenance"
+        }
+      },
+      "required": [
+        "segment_id",
+        "segment_index",
+        "speaker",
+        "start_seconds",
+        "end_seconds",
+        "text",
+        "provenance"
+      ],
+      "title": "TranscriptSegment",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "primary",
+        "evidence",
+        "details",
+        "internal"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0",
+      "default": "2.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "domain": {
+      "minLength": 1,
+      "title": "Domain",
+      "type": "string"
+    },
+    "accent": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Accent"
+    },
+    "duration_seconds": {
+      "minimum": 0.0,
+      "title": "Duration Seconds",
+      "type": "number"
+    },
+    "transcript_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Transcript Model"
+    },
+    "segments": {
+      "items": {
+        "$ref": "#/$defs/TranscriptSegment"
+      },
+      "title": "Segments",
+      "type": "array"
+    },
+    "signals": {
+      "items": {
+        "$ref": "#/$defs/SignalRecord"
+      },
+      "title": "Signals",
+      "type": "array"
+    },
+    "episodes": {
+      "items": {
+        "$ref": "#/$defs/SignalEpisode"
+      },
+      "title": "Episodes",
+      "type": "array"
+    },
+    "coverage": {
+      "items": {
+        "$ref": "#/$defs/ModalityCoverage"
+      },
+      "title": "Coverage",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceProvenance"
+      },
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "call_id",
+    "domain",
+    "duration_seconds",
+    "segments",
+    "sources"
+  ],
+  "title": "SignalBundle",
+  "type": "object"
+}
