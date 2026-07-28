@@ -1,0 +1,599 @@
+{
+  "$defs": {
+    "ActionExecution": {
+      "enum": [
+        "no_action",
+        "automatic",
+        "requires_approval"
+      ],
+      "title": "ActionExecution",
+      "type": "string"
+    },
+    "ActionType": {
+      "enum": [
+        "none",
+        "create_review_case",
+        "recommend_coaching",
+        "request_customer_follow_up",
+        "policy_review"
+      ],
+      "title": "ActionType",
+      "type": "string"
+    },
+    "CompletenessNotice": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/DecisionStatus"
+        },
+        "title": {
+          "const": "Evaluation incomplete",
+          "default": "Evaluation incomplete",
+          "title": "Title",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "affected_requirements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Requirements",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "message"
+      ],
+      "title": "CompletenessNotice",
+      "type": "object"
+    },
+    "DecisionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient_evidence"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    },
+    "EvidenceKind": {
+      "enum": [
+        "transcript",
+        "audio_support",
+        "business_context"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "EvidencePurpose": {
+      "enum": [
+        "reason",
+        "positive"
+      ],
+      "title": "EvidencePurpose",
+      "type": "string"
+    },
+    "FindingCategory": {
+      "enum": [
+        "required_control",
+        "process",
+        "escalation",
+        "outcome",
+        "agent_behavior",
+        "data_quality"
+      ],
+      "title": "FindingCategory",
+      "type": "string"
+    },
+    "PageState": {
+      "enum": [
+        "needs_attention",
+        "no_attention_finding",
+        "evaluation_incomplete"
+      ],
+      "title": "PageState",
+      "type": "string"
+    },
+    "PresentationDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "additional_findings": {
+          "items": {
+            "$ref": "#/$defs/PresentedFinding"
+          },
+          "title": "Additional Findings",
+          "type": "array"
+        },
+        "additional_positive_findings": {
+          "items": {
+            "$ref": "#/$defs/PresentedFinding"
+          },
+          "title": "Additional Positive Findings",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/PresentedEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "uncertainty_messages": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Uncertainty Messages",
+          "type": "array"
+        },
+        "supervisor_context_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supervisor Context Note"
+        },
+        "evaluator_version": {
+          "minLength": 1,
+          "title": "Evaluator Version",
+          "type": "string"
+        },
+        "domain_profile_id": {
+          "minLength": 1,
+          "title": "Domain Profile Id",
+          "type": "string"
+        },
+        "decision_policy_id": {
+          "minLength": 1,
+          "title": "Decision Policy Id",
+          "type": "string"
+        },
+        "decision_policy_version": {
+          "minLength": 1,
+          "title": "Decision Policy Version",
+          "type": "string"
+        },
+        "supervisor_fallback_used": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supervisor Fallback Used"
+        }
+      },
+      "required": [
+        "evaluator_version",
+        "domain_profile_id",
+        "decision_policy_id",
+        "decision_policy_version"
+      ],
+      "title": "PresentationDetails",
+      "type": "object"
+    },
+    "PresentedAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action_type": {
+          "$ref": "#/$defs/ActionType"
+        },
+        "execution": {
+          "$ref": "#/$defs/ActionExecution"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "execution_label": {
+          "minLength": 1,
+          "title": "Execution Label",
+          "type": "string"
+        },
+        "basis_finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Basis Finding Ids",
+          "type": "array"
+        },
+        "automation_allowed": {
+          "title": "Automation Allowed",
+          "type": "boolean"
+        },
+        "requires_human_approval": {
+          "title": "Requires Human Approval",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action_type",
+        "execution",
+        "label",
+        "execution_label",
+        "basis_finding_ids",
+        "automation_allowed",
+        "requires_human_approval"
+      ],
+      "title": "PresentedAction",
+      "type": "object"
+    },
+    "PresentedEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "finding_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Finding Ids",
+          "type": "array"
+        },
+        "purposes": {
+          "items": {
+            "$ref": "#/$defs/EvidencePurpose"
+          },
+          "minItems": 1,
+          "title": "Purposes",
+          "type": "array"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "speaker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Speaker"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Seconds"
+        },
+        "end_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Seconds"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "seekable": {
+          "title": "Seekable",
+          "type": "boolean"
+        },
+        "supporting_only": {
+          "title": "Supporting Only",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "finding_ids",
+        "purposes",
+        "kind",
+        "seekable",
+        "supporting_only"
+      ],
+      "title": "PresentedEvidence",
+      "type": "object"
+    },
+    "PresentedFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/FindingCategory"
+        },
+        "category_label": {
+          "minLength": 1,
+          "title": "Category Label",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "summary": {
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "counter_evidence_count": {
+          "minimum": 0,
+          "title": "Counter Evidence Count",
+          "type": "integer"
+        },
+        "reliability_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reliability Note"
+        }
+      },
+      "required": [
+        "finding_id",
+        "category",
+        "category_label",
+        "title",
+        "summary",
+        "evidence_ids",
+        "counter_evidence_count"
+      ],
+      "title": "PresentedFinding",
+      "type": "object"
+    },
+    "SourceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "generated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated At"
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        }
+      },
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "title": "SourceProvenance",
+      "type": "object"
+    },
+    "Speaker": {
+      "enum": [
+        "agent",
+        "customer",
+        "system",
+        "unknown"
+      ],
+      "title": "Speaker",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "presentation_version": {
+      "minLength": 1,
+      "title": "Presentation Version",
+      "type": "string"
+    },
+    "call_id": {
+      "minLength": 1,
+      "title": "Call Id",
+      "type": "string"
+    },
+    "decision_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Decision Sha256",
+      "type": "string"
+    },
+    "state": {
+      "$ref": "#/$defs/PageState"
+    },
+    "evaluation_status": {
+      "$ref": "#/$defs/DecisionStatus"
+    },
+    "attention_required": {
+      "title": "Attention Required",
+      "type": "boolean"
+    },
+    "headline": {
+      "minLength": 1,
+      "title": "Headline",
+      "type": "string"
+    },
+    "summary": {
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "primary_reasons": {
+      "items": {
+        "$ref": "#/$defs/PresentedFinding"
+      },
+      "maxItems": 2,
+      "title": "Primary Reasons",
+      "type": "array"
+    },
+    "additional_reason_count": {
+      "minimum": 0,
+      "title": "Additional Reason Count",
+      "type": "integer"
+    },
+    "positive_highlights": {
+      "items": {
+        "$ref": "#/$defs/PresentedFinding"
+      },
+      "maxItems": 2,
+      "title": "Positive Highlights",
+      "type": "array"
+    },
+    "additional_positive_count": {
+      "minimum": 0,
+      "title": "Additional Positive Count",
+      "type": "integer"
+    },
+    "recommended_action": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PresentedAction"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/PresentedEvidence"
+      },
+      "maxItems": 6,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "completeness_notice": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompletenessNotice"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "details": {
+      "$ref": "#/$defs/PresentationDetails"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SourceProvenance"
+    }
+  },
+  "required": [
+    "presentation_version",
+    "call_id",
+    "decision_sha256",
+    "state",
+    "evaluation_status",
+    "attention_required",
+    "headline",
+    "summary",
+    "additional_reason_count",
+    "additional_positive_count",
+    "details",
+    "provenance"
+  ],
+  "title": "CallEvaluationView",
+  "type": "object"
+}

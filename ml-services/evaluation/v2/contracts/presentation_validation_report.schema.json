@@ -1,0 +1,301 @@
+{
+  "$defs": {
+    "DecisionStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient_evidence"
+      ],
+      "title": "DecisionStatus",
+      "type": "string"
+    },
+    "InventoryItem": {
+      "additionalProperties": false,
+      "properties": {
+        "output_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Output Id",
+          "type": "string"
+        },
+        "source_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Fields",
+          "type": "array"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "representation": {
+          "$ref": "#/$defs/Representation"
+        },
+        "visible_when": {
+          "minLength": 1,
+          "title": "Visible When",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "output_id",
+        "source_fields",
+        "visibility",
+        "representation",
+        "visible_when",
+        "rationale"
+      ],
+      "title": "InventoryItem",
+      "type": "object"
+    },
+    "PageState": {
+      "enum": [
+        "needs_attention",
+        "no_attention_finding",
+        "evaluation_incomplete"
+      ],
+      "title": "PageState",
+      "type": "string"
+    },
+    "PresentationCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_is_literal": {
+          "title": "Attention Is Literal",
+          "type": "boolean"
+        },
+        "reasons_are_bounded": {
+          "title": "Reasons Are Bounded",
+          "type": "boolean"
+        },
+        "reasons_have_evidence": {
+          "title": "Reasons Have Evidence",
+          "type": "boolean"
+        },
+        "positives_are_bounded": {
+          "title": "Positives Are Bounded",
+          "type": "boolean"
+        },
+        "action_is_unambiguous": {
+          "title": "Action Is Unambiguous",
+          "type": "boolean"
+        },
+        "completeness_is_explicit": {
+          "title": "Completeness Is Explicit",
+          "type": "boolean"
+        },
+        "content_is_deduplicated": {
+          "title": "Content Is Deduplicated",
+          "type": "boolean"
+        },
+        "no_score_fields": {
+          "title": "No Score Fields",
+          "type": "boolean"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "attention_is_literal",
+        "reasons_are_bounded",
+        "reasons_have_evidence",
+        "positives_are_bounded",
+        "action_is_unambiguous",
+        "completeness_is_explicit",
+        "content_is_deduplicated",
+        "no_score_fields",
+        "passed"
+      ],
+      "title": "PresentationCheck",
+      "type": "object"
+    },
+    "PresentationScenarioResult": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "answer_key": {
+          "$ref": "#/$defs/ScenarioAnswerKey"
+        },
+        "check": {
+          "$ref": "#/$defs/PresentationCheck"
+        }
+      },
+      "required": [
+        "call_id",
+        "answer_key",
+        "check"
+      ],
+      "title": "PresentationScenarioResult",
+      "type": "object"
+    },
+    "Representation": {
+      "enum": [
+        "status_text",
+        "reason_list",
+        "action",
+        "checklist",
+        "evidence_timeline",
+        "notice",
+        "disclosure",
+        "not_rendered"
+      ],
+      "title": "Representation",
+      "type": "string"
+    },
+    "ScenarioAnswerKey": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_state": {
+          "$ref": "#/$defs/PageState"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "evidence_locations_seconds": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Evidence Locations Seconds",
+          "type": "array"
+        },
+        "positive_handling": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Positive Handling",
+          "type": "array"
+        },
+        "action": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Action"
+        },
+        "completeness": {
+          "$ref": "#/$defs/DecisionStatus"
+        }
+      },
+      "required": [
+        "attention_state",
+        "completeness"
+      ],
+      "title": "ScenarioAnswerKey",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "primary",
+        "evidence",
+        "details",
+        "internal"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "presentation_version": {
+      "minLength": 1,
+      "title": "Presentation Version",
+      "type": "string"
+    },
+    "scenario_source": {
+      "minLength": 1,
+      "title": "Scenario Source",
+      "type": "string"
+    },
+    "scenario_count": {
+      "minimum": 0,
+      "title": "Scenario Count",
+      "type": "integer"
+    },
+    "passed_scenario_count": {
+      "minimum": 0,
+      "title": "Passed Scenario Count",
+      "type": "integer"
+    },
+    "structural_checks_passed": {
+      "title": "Structural Checks Passed",
+      "type": "boolean"
+    },
+    "human_comprehension_status": {
+      "const": "not_run",
+      "default": "not_run",
+      "title": "Human Comprehension Status",
+      "type": "string"
+    },
+    "human_test_questions": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Human Test Questions",
+      "type": "array"
+    },
+    "inventory": {
+      "items": {
+        "$ref": "#/$defs/InventoryItem"
+      },
+      "minItems": 1,
+      "title": "Inventory",
+      "type": "array"
+    },
+    "scenarios": {
+      "items": {
+        "$ref": "#/$defs/PresentationScenarioResult"
+      },
+      "title": "Scenarios",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "presentation_version",
+    "scenario_source",
+    "scenario_count",
+    "passed_scenario_count",
+    "structural_checks_passed",
+    "human_test_questions",
+    "inventory",
+    "scenarios",
+    "limitations"
+  ],
+  "title": "PresentationValidationReport",
+  "type": "object"
+}
