@@ -218,6 +218,7 @@ class ResolvedRequirement(ContractModel):
     title: str
     business_definition: str
     level: RequirementLevel
+    category: str = Field(min_length=1, pattern=r"^[a-z0-9_.]+$")
     applicability_reason: str
     evidence_expectations: list[str]
     policy_source_ids: list[str]
@@ -353,6 +354,7 @@ def _resolved(
         title=requirement.title,
         business_definition=requirement.business_definition,
         level=requirement.level,
+        category=requirement.category,
         applicability_reason=reason,
         evidence_expectations=requirement.evidence_expectations,
         policy_source_ids=requirement.policy_source_ids,

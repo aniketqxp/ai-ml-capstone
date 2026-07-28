@@ -16,19 +16,33 @@ from .domain_profiles import (
     ResolvedDomainPlan,
     resolve_domain_plan,
 )
+from .findings import (
+    FINDINGS_VERSION,
+    FindingDerivation,
+    RequirementAssessment,
+    RequirementAssessmentBatch,
+    RequirementVerdict,
+    derive_findings,
+)
 from .schemas import CallDecision, SignalBundle
 from .validation import validate_decision_references
 
 __all__ = [
     "DEFAULT_CONFIG",
     "DYNAMICS_VERSION",
+    "FINDINGS_VERSION",
     "CallDecision",
     "DomainProfile",
     "DynamicsConfig",
+    "FindingDerivation",
     "ProfileSelection",
+    "RequirementAssessment",
+    "RequirementAssessmentBatch",
+    "RequirementVerdict",
     "ResolvedDomainPlan",
     "SignalBundle",
     "derive_acoustic_dynamics",
+    "derive_findings",
     "resolve_domain_plan",
     "validate_decision_references",
 ]

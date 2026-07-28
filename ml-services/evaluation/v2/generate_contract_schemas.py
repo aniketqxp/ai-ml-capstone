@@ -7,6 +7,10 @@ from v2.domain_profiles import (
     ProfileSelection,
     ResolvedDomainPlan,
 )
+from v2.findings import (
+    FindingDerivation,
+    RequirementAssessmentBatch,
+)
 from v2.schemas import CallDecision, SignalBundle
 
 HERE = Path(__file__).resolve().parent
@@ -21,6 +25,10 @@ def main():
         "domain_profile.schema.json": DomainProfile,
         "profile_selection.schema.json": ProfileSelection,
         "resolved_domain_plan.schema.json": ResolvedDomainPlan,
+        "requirement_assessment_batch.schema.json": (
+            RequirementAssessmentBatch
+        ),
+        "finding_derivation.schema.json": FindingDerivation,
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
