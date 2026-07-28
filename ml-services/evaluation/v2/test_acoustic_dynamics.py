@@ -21,7 +21,6 @@ from v2.schemas import (
     Visibility,
 )
 
-
 TEST_CONFIG = DynamicsConfig(
     min_feature_observations=6,
     usable_coverage_ratio=0.5,

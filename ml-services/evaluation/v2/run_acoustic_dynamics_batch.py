@@ -18,7 +18,6 @@ from .acoustic_dynamics import (
 from .adapters import build_signal_bundle
 from .schemas import SignalBundle, SignalScope
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 SENTIMENT_PREFIX = (
     "ml-services/outputs/backend/sentiment_calls_with_features"

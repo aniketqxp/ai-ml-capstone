@@ -367,11 +367,16 @@ class RecommendedAction(ContractModel):
 
         if self.execution == ActionExecution.NO_ACTION:
             raise ValueError("non-none actions require an execution policy")
-        if self.execution == ActionExecution.REQUIRES_APPROVAL:
-            if self.automation_allowed or not self.requires_human_approval:
-                raise ValueError(
-                    "approval actions must disable automation and require approval"
-                )
+        if (
+            self.execution == ActionExecution.REQUIRES_APPROVAL
+            and (
+                self.automation_allowed
+                or not self.requires_human_approval
+            )
+        ):
+            raise ValueError(
+                "approval actions must disable automation and require approval"
+            )
         if self.execution == ActionExecution.AUTOMATIC:
             if self.action_type != ActionType.CREATE_REVIEW_CASE:
                 raise ValueError(

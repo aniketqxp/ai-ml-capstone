@@ -18,7 +18,6 @@ from .schemas import (
     Visibility,
 )
 
-
 _AUDIO_FEATURES = {
     "duration_seconds": ("acoustic.duration", "seconds"),
     "pitch_mean_hz": ("acoustic.pitch.mean", "hz"),

@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import statistics
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 from .schemas import (
     Modality,
@@ -526,7 +526,7 @@ def _phase_metrics(
 def _call_signal(
     *,
     name: str,
-    value: bool | int | float | str,
+    value: bool | float | str,
     unit: str | None,
     reliability: ReliabilityAssessment,
     provenance: SourceProvenance,
