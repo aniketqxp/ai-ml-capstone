@@ -45,6 +45,16 @@ from .signal_validation import (
     AblationVariant,
     SignalValidationReport,
 )
+from .supervisor import (
+    SUPERVISOR_VERSION,
+    SupervisorContext,
+    SupervisorDraft,
+    SupervisorLimits,
+    SupervisorResult,
+    build_supervisor_context,
+    build_supervisor_prompt,
+    resolve_supervisor_response,
+)
 from .validation import validate_decision_references
 
 __all__ = [
@@ -56,6 +66,7 @@ __all__ = [
     "EVALUATION_DATASET_VERSION",
     "FINDINGS_VERSION",
     "SIGNAL_VALIDATION_VERSION",
+    "SUPERVISOR_VERSION",
     "AblationVariant",
     "CallAnnotation",
     "CallDecision",
@@ -71,11 +82,18 @@ __all__ = [
     "ResolvedDomainPlan",
     "SignalBundle",
     "SignalValidationReport",
+    "SupervisorContext",
+    "SupervisorDraft",
+    "SupervisorLimits",
+    "SupervisorResult",
     "build_call_decision",
+    "build_supervisor_context",
+    "build_supervisor_prompt",
     "derive_acoustic_dynamics",
     "derive_findings",
     "load_evaluation_dataset",
     "resolve_domain_plan",
+    "resolve_supervisor_response",
     "signal_bundle_sha256",
     "validate_decision_references",
     "validate_evaluation_dataset",

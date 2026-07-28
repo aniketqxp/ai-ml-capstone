@@ -18,6 +18,11 @@ from v2.findings import (
 )
 from v2.schemas import CallDecision, SignalBundle
 from v2.signal_validation import SignalValidationReport
+from v2.supervisor import (
+    SupervisorContext,
+    SupervisorDraft,
+    SupervisorResult,
+)
 
 HERE = Path(__file__).resolve().parent
 OUTPUT_DIR = HERE / "contracts"
@@ -41,6 +46,9 @@ def main():
         "signal_validation_report.schema.json": (
             SignalValidationReport
         ),
+        "supervisor_context.schema.json": SupervisorContext,
+        "supervisor_draft.schema.json": SupervisorDraft,
+        "supervisor_result.schema.json": SupervisorResult,
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
