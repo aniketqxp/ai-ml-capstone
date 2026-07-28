@@ -1,0 +1,3104 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "banking-evaluator-v2",
+  "dataset_version": "0.1.0",
+  "profile_id": "banking-demo-v1",
+  "existing_calls": [
+    {
+      "call_id": "en_CA_Banking_1586889",
+      "transcript_path": "data/sentence_segments/banking/en_CA_Banking_1586889.json",
+      "transcript_sha256": "415520c8ab9e781fd79cd66345539c484480868b18fe7767c231480b7ca82e53",
+      "annotation": {
+        "annotation_id": "annotation:en_CA_Banking_1586889:seed",
+        "call_id": "en_CA_Banking_1586889",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1586889:11"
+            ],
+            "rationale": "The agent requests verification before account action."
+          },
+          {
+            "finding_type": "control.recurring_schedule_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1586889:28"
+            ],
+            "rationale": "The recurring transfer schedule is explicit."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1586889:104"
+            ],
+            "rationale": "The call contains a clear transaction recap."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_CA_Banking_1586889:11",
+            "segment_id": "AGENT_006",
+            "seq_id": 11,
+            "speaker": "agent",
+            "start_seconds": 43.68,
+            "end_seconds": 48.02,
+            "quote": "Before we start, can I verify your identity for security purposes?",
+            "purpose": "Identity verification is explicitly framed."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1586889:28",
+            "segment_id": "AGENT_016",
+            "seq_id": 28,
+            "speaker": "agent",
+            "start_seconds": 132.03,
+            "end_seconds": 146.35,
+            "quote": "so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.",
+            "purpose": "Amount, accounts, frequency, and start date are recapped."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1586889:104",
+            "segment_id": "AGENT_062",
+            "seq_id": 104,
+            "speaker": "agent",
+            "start_seconds": 459.83,
+            "end_seconds": 466.11,
+            "quote": "So we set up an automatic transfer of $400 from your checking to your savings account.",
+            "purpose": "The completed setup is summarized."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1588683",
+      "transcript_path": "data/sentence_segments/banking/en_CA_Banking_1588683.json",
+      "transcript_sha256": "8a80db8431d4a60c50bfcc227c228349c066510a8e29f4432e1a1222b3b29e7e",
+      "annotation": {
+        "annotation_id": "annotation:en_CA_Banking_1588683:seed",
+        "call_id": "en_CA_Banking_1588683",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1588683:6"
+            ],
+            "rationale": "The exchange occurs before the account is opened."
+          },
+          {
+            "finding_type": "control.recurring_schedule_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1588683:69"
+            ],
+            "rationale": "The recurring schedule is explicit."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1588683:83"
+            ],
+            "rationale": "The customer receives confirmation of the setup."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_CA_Banking_1588683:6",
+            "segment_id": "AGENT_005",
+            "seq_id": 6,
+            "speaker": "agent",
+            "start_seconds": 32.26,
+            "end_seconds": 34.48,
+            "quote": "Can you please provide your full name",
+            "purpose": "The agent begins a multi-item verification exchange."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1588683:69",
+            "segment_id": "AGENT_036",
+            "seq_id": 69,
+            "speaker": "agent",
+            "start_seconds": 331.31,
+            "end_seconds": 340.69,
+            "quote": "Okay, I have set that up for you for the 7th and 21st of every month, and I have sent you an email to confirm this change with you.",
+            "purpose": "The recurring dates and setup are stated."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1588683:83",
+            "segment_id": "AGENT_044",
+            "seq_id": 83,
+            "speaker": "agent",
+            "start_seconds": 399.62,
+            "end_seconds": 407.64,
+            "quote": "and I see that the transfers have been confirmed, and they will occur every month on the 7th and 21st.",
+            "purpose": "The agent verifies acceptance and scheduled dates."
+          }
+        ],
+        "uncertainty_notes": [
+          "The project profile treats the multi-item exchange as verification; it does not assess whether requesting a full card security code is appropriate operational policy."
+        ],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1590992",
+      "transcript_path": "data/sentence_segments/banking/en_CA_Banking_1590992.json",
+      "transcript_sha256": "b4febf9508569d23e0e3b0d7cf176bc3282ed963029fdd8f4708da67d49411f9",
+      "annotation": {
+        "annotation_id": "annotation:en_CA_Banking_1590992:seed",
+        "call_id": "en_CA_Banking_1590992",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1590992:39"
+            ],
+            "rationale": "The agent performs a security-question exchange."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1590992:158"
+            ],
+            "rationale": "Approval follows the transfer discussion."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1590992:177"
+            ],
+            "rationale": "The notification provides transaction confirmation."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_CA_Banking_1590992:39",
+            "segment_id": "AGENT_029",
+            "seq_id": 39,
+            "speaker": "agent",
+            "start_seconds": 82.59,
+            "end_seconds": 89.33,
+            "quote": "I do have a couple questions, security questions, just to make sure that we are going about this process correctly.",
+            "purpose": "Security questions begin before execution."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1590992:158",
+            "segment_id": "CUSTOMER_044",
+            "seq_id": 158,
+            "speaker": "customer",
+            "start_seconds": 454.78,
+            "end_seconds": 456.18,
+            "quote": "Yeah, that would be amazing.",
+            "purpose": "The customer accepts the immediate transfer."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1590992:177",
+            "segment_id": "CUSTOMER_052",
+            "seq_id": 177,
+            "speaker": "customer",
+            "start_seconds": 512.11,
+            "end_seconds": 512.79,
+            "quote": "it is there.",
+            "purpose": "The customer confirms receipt of the notification."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_CA_Banking_1592237",
+      "transcript_path": "data/sentence_segments/banking/en_CA_Banking_1592237.json",
+      "transcript_sha256": "ef8f65bd8571f39928502ee0c0334088785574d99cf791b45836762ae3b0f428",
+      "annotation": {
+        "annotation_id": "annotation:en_CA_Banking_1592237:seed",
+        "call_id": "en_CA_Banking_1592237",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1592237:12"
+            ],
+            "rationale": "Identity is checked before account opening."
+          },
+          {
+            "finding_type": "control.account_opening_consent_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1592237:80"
+            ],
+            "rationale": "The customer gives explicit opening consent."
+          },
+          {
+            "finding_type": "outcome.account_opening_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_CA_Banking_1592237:89"
+            ],
+            "rationale": "The outcome and email follow-up are stated."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_CA_Banking_1592237:12",
+            "segment_id": "AGENT_008",
+            "seq_id": 12,
+            "speaker": "agent",
+            "start_seconds": 69.14,
+            "end_seconds": 72.54,
+            "quote": "I also just need your date of birth to be able to confirm with our security, please.",
+            "purpose": "The agent frames date of birth as security verification."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1592237:80",
+            "segment_id": "CUSTOMER_022",
+            "seq_id": 80,
+            "speaker": "customer",
+            "start_seconds": 559.04,
+            "end_seconds": 565.62,
+            "quote": "Okay, I think I'd like to go ahead with it then and setting up the new checking account.",
+            "purpose": "The customer agrees to open the checking account."
+          },
+          {
+            "evidence_id": "evidence:en_CA_Banking_1592237:89",
+            "segment_id": "AGENT_066",
+            "seq_id": 89,
+            "speaker": "agent",
+            "start_seconds": 606.61,
+            "end_seconds": 616.23,
+            "quote": "Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.",
+            "purpose": "The agent confirms setup and next steps."
+          }
+        ],
+        "uncertainty_notes": [
+          "The transcript also introduces a savings account late in the call; human review should decide whether it is in scope for the selected checking-account intent."
+        ],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1584540",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1584540.json",
+      "transcript_sha256": "72cd3e26525cf66e9811826e47d2c711efa4913447b42568f8730ef1808d41f8",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1584540:seed",
+        "call_id": "en_US_General_Banking_1584540",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "process.loan_request_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1584540:62"
+            ],
+            "rationale": "The equipment-financing purpose is established."
+          },
+          {
+            "finding_type": "process.loan_eligibility_explained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1584540:95"
+            ],
+            "rationale": "The explanation avoids promising approval."
+          },
+          {
+            "finding_type": "outcome.loan_next_step_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1584540:100"
+            ],
+            "rationale": "A route to improve and return is provided."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1584540:62",
+            "segment_id": "AGENT_040",
+            "seq_id": 62,
+            "speaker": "agent",
+            "start_seconds": 358.87,
+            "end_seconds": 376.87,
+            "quote": "So you sit here thinking about borrowing about $10 ,000 for the purpose of purchasing new equipment to help maintain the farm that your grandfather left behind.",
+            "purpose": "The agent summarizes purpose and amount."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1584540:95",
+            "segment_id": "AGENT_061",
+            "seq_id": 95,
+            "speaker": "agent",
+            "start_seconds": 517.57,
+            "end_seconds": 532.76,
+            "quote": "based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.",
+            "purpose": "The agent qualifies the likely eligibility outcome."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1584540:100",
+            "segment_id": "AGENT_065",
+            "seq_id": 100,
+            "speaker": "agent",
+            "start_seconds": 576.22,
+            "end_seconds": 593.06,
+            "quote": "What I can do is send you some information to help you get your credit in order and some budgeting tips that may help you to get on a better path towards financial solvency so you can reply maybe six months or one year down the line. You",
+            "purpose": "The agent offers information and a later reapplication path."
+          }
+        ],
+        "uncertainty_notes": [
+          "The current applicability fixture classifies this as a general inquiry, although the agent collects financial details and gives an eligibility opinion. A human must adjudicate the inquiry-versus-application boundary."
+        ],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586157",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1586157.json",
+      "transcript_sha256": "c257460956b6d0658ab7de3503274aa00d9b73bbc01184aa68a8848b8767d79c",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1586157:seed",
+        "call_id": "en_US_General_Banking_1586157",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "process.recurring_change_path_unclear",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586157:126"
+            ],
+            "rationale": "The call does not explain how to change, pause, or cancel the recurring instruction."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586157:8"
+            ],
+            "rationale": "The agent completes a verification exchange."
+          },
+          {
+            "finding_type": "control.recurring_schedule_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586157:121"
+            ],
+            "rationale": "The recurring schedule is explicit."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586157:126",
+            "segment_id": "AGENT_073",
+            "seq_id": 126,
+            "speaker": "agent",
+            "start_seconds": 511.64,
+            "end_seconds": 520.74,
+            "quote": "So if you want to extend prior to ending, you would have to contact us again so that we can reschedule the automatic transfers.",
+            "purpose": "Only expiration extension is explained after setup."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586157:8",
+            "segment_id": "AGENT_006",
+            "seq_id": 8,
+            "speaker": "agent",
+            "start_seconds": 38.86,
+            "end_seconds": 40.76,
+            "quote": "Ms. Richards, can I have your date of birth, please?",
+            "purpose": "Date of birth is requested before account action."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586157:121",
+            "segment_id": "AGENT_069",
+            "seq_id": 121,
+            "speaker": "agent",
+            "start_seconds": 480.45,
+            "end_seconds": 489.39,
+            "quote": "A total of three hundred and fifty -two dollars and eighty -six cents on a monthly basis, scheduled every 17th of the month.",
+            "purpose": "Amount, source, destination, frequency, and date are recapped."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586678",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1586678.json",
+      "transcript_sha256": "41181f884f556d7ab38441aaa8aabfb11f2ff8cb1381f487e885aa08d2816caf",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1586678:seed",
+        "call_id": "en_US_General_Banking_1586678",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586678:9"
+            ],
+            "rationale": "Account identifiers are collected without a customer-verification exchange."
+          },
+          {
+            "finding_type": "control.transfer_authorization_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586678:46"
+            ],
+            "rationale": "No explicit authorization follows the material transfer details."
+          },
+          {
+            "finding_type": "process.recurring_change_path_explained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586678:51"
+            ],
+            "rationale": "The customer receives a usable modification path."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586678:9",
+            "segment_id": "AGENT_005",
+            "seq_id": 9,
+            "speaker": "agent",
+            "start_seconds": 30.4,
+            "end_seconds": 38.02,
+            "quote": "Can I start by getting your checking account number and the new savings account number so we can get everything set up properly?",
+            "purpose": "The first account request asks for full account numbers."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586678:46",
+            "segment_id": "AGENT_021",
+            "seq_id": 46,
+            "speaker": "agent",
+            "start_seconds": 222.4,
+            "end_seconds": 226.86,
+            "quote": "We can schedule it for let's say the first of every month.",
+            "purpose": "The agent selects a schedule without later obtaining explicit approval."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586678:51",
+            "segment_id": "AGENT_024",
+            "seq_id": 51,
+            "speaker": "agent",
+            "start_seconds": 255.08,
+            "end_seconds": 261.96,
+            "quote": "You can pause, modify, skip or adjust your transfer any way you need.",
+            "purpose": "The agent explains available change and pause operations."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1586893",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1586893.json",
+      "transcript_sha256": "c7dc0ad0d461366b6a39aacd8c6059d27e560863dd72ae5b536d949473437b59",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1586893:seed",
+        "call_id": "en_US_General_Banking_1586893",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586893:10"
+            ],
+            "rationale": "The verification exchange precedes account action."
+          },
+          {
+            "finding_type": "process.transfer_terms_explained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586893:60"
+            ],
+            "rationale": "Material recurring-transfer terms are explained."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1586893:102"
+            ],
+            "rationale": "The transfer setup has a clear completion statement."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586893:10",
+            "segment_id": "AGENT_007",
+            "seq_id": 10,
+            "speaker": "agent",
+            "start_seconds": 41.31,
+            "end_seconds": 44.51,
+            "quote": "Now before we begin, may I please verify your identity?",
+            "purpose": "Identity verification is explicitly requested."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586893:60",
+            "segment_id": "AGENT_042",
+            "seq_id": 60,
+            "speaker": "agent",
+            "start_seconds": 240.66,
+            "end_seconds": 250.1,
+            "quote": "Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.",
+            "purpose": "Fees and modification paths are stated."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1586893:102",
+            "segment_id": "AGENT_070",
+            "seq_id": 102,
+            "speaker": "agent",
+            "start_seconds": 426.13,
+            "end_seconds": 427.17,
+            "quote": "It's officially scheduled.",
+            "purpose": "The agent confirms the schedule is active."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1587139",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1587139.json",
+      "transcript_sha256": "7177203721f47a478f5ae2e4db897ea73b1c107416b758365c081d8b5d815eaa",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1587139:seed",
+        "call_id": "en_US_General_Banking_1587139",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.explicit_dissatisfaction",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587139:60"
+            ],
+            "rationale": "The explicit wording meets the review-level text rule."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587139:9"
+            ],
+            "rationale": "The call contains a verification exchange."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587139:79"
+            ],
+            "rationale": "The customer gives explicit approval after timing is explained."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587139:60",
+            "segment_id": "CUSTOMER_030",
+            "seq_id": 60,
+            "speaker": "customer",
+            "start_seconds": 233.52,
+            "end_seconds": 234.3,
+            "quote": "I mean, this is ridiculous.",
+            "purpose": "The customer directly calls the situation ridiculous."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587139:9",
+            "segment_id": "AGENT_006",
+            "seq_id": 9,
+            "speaker": "agent",
+            "start_seconds": 41.79,
+            "end_seconds": 43.65,
+            "quote": "Can I have your date of birth, Stacey Brown?",
+            "purpose": "Date of birth is requested before the transaction."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587139:79",
+            "segment_id": "CUSTOMER_041",
+            "seq_id": 79,
+            "speaker": "customer",
+            "start_seconds": 289.38,
+            "end_seconds": 292.0,
+            "quote": "Yeah, please go ahead and expedite that then.",
+            "purpose": "The customer accepts the expedited transfer."
+          }
+        ],
+        "uncertainty_notes": [
+          "The existing acoustic result indicates later recovery, but this seed does not treat that model-derived signal as human-validated ground truth."
+        ],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    },
+    {
+      "call_id": "en_US_General_Banking_1587700",
+      "transcript_path": "data/sentence_segments/banking/en_US_General_Banking_1587700.json",
+      "transcript_sha256": "9d201746961f86c5a385b3562f4e8a982b1bba1984202092aaa23cc705a7219b",
+      "annotation": {
+        "annotation_id": "annotation:en_US_General_Banking_1587700:seed",
+        "call_id": "en_US_General_Banking_1587700",
+        "profile_id": "banking-demo-v1",
+        "source_type": "existing_call",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "control.transfer_authorization_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587700:64"
+            ],
+            "rationale": "The transcript lacks explicit authorization after amount, accounts, and timing are established."
+          },
+          {
+            "finding_type": "control.transfer_accounts_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587700:58"
+            ],
+            "rationale": "The source and destination are made unambiguous."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:en_US_General_Banking_1587700:142"
+            ],
+            "rationale": "The customer receives a detailed completion record."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587700:64",
+            "segment_id": "AGENT_042",
+            "seq_id": 64,
+            "speaker": "agent",
+            "start_seconds": 313.63,
+            "end_seconds": 316.29,
+            "quote": "Okay, so I'm going to go ahead and make this transfer.",
+            "purpose": "The agent announces execution without a fresh approval after the details."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587700:58",
+            "segment_id": "AGENT_038",
+            "seq_id": 58,
+            "speaker": "agent",
+            "start_seconds": 292.3,
+            "end_seconds": 296.66,
+            "quote": "Which account would you like for me to transfer that $6 ,500 into?",
+            "purpose": "The destination account is selected explicitly."
+          },
+          {
+            "evidence_id": "evidence:en_US_General_Banking_1587700:142",
+            "segment_id": "AGENT_091",
+            "seq_id": 142,
+            "speaker": "agent",
+            "start_seconds": 763.91,
+            "end_seconds": 777.95,
+            "quote": "You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household.",
+            "purpose": "The confirmation recaps amount and accounts."
+          }
+        ],
+        "uncertainty_notes": [
+          "Human review should decide whether name plus account number constitutes a clear identity-verification exchange under the project profile."
+        ],
+        "provenance": {
+          "annotator_id": "codex-research-seed",
+          "annotator_type": "model_assisted_researcher_seed",
+          "status": "draft",
+          "method": "profile-guided transcript review with exact segment citations; no claim of human ground truth",
+          "requires_human_review": true,
+          "ground_truth_basis": null
+        }
+      }
+    }
+  ],
+  "challenge_calls": [
+    {
+      "call_id": "challenge-transcript-context",
+      "title": "Manager word used as account context",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-transcript-context:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-transcript-context:segment:8",
+          "seq_id": 8,
+          "speaker": "agent",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "A manager reviewed the account settings yesterday."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-transcript-context:known-answer",
+        "call_id": "challenge-transcript-context",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-context:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-context:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-context:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-transcript-context:3",
+            "segment_id": "challenge-transcript-context:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-transcript-context:6",
+            "segment_id": "challenge-transcript-context:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-transcript-context:7",
+            "segment_id": "challenge-transcript-context:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the transcript manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "title": "Customer explicitly requests a manager",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-transcript-request:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-transcript-request:segment:8",
+          "seq_id": 8,
+          "speaker": "customer",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "I want to speak to a manager about this."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-transcript-request:known-answer",
+        "call_id": "challenge-transcript-request",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.manager_requested",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-transcript-request:8"
+            ],
+            "rationale": "The customer explicitly asks for a manager."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-request:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-request:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-transcript-request:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-transcript-request:8",
+            "segment_id": "challenge-transcript-request:segment:8",
+            "seq_id": 8,
+            "speaker": "customer",
+            "start_seconds": 28.0,
+            "end_seconds": 31.0,
+            "quote": "I want to speak to a manager about this.",
+            "purpose": "Known-answer evidence for escalation.manager_requested."
+          },
+          {
+            "evidence_id": "evidence:challenge-transcript-request:3",
+            "segment_id": "challenge-transcript-request:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-transcript-request:6",
+            "segment_id": "challenge-transcript-request:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-transcript-request:7",
+            "segment_id": "challenge-transcript-request:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the transcript manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "title": "Explicit dissatisfaction with calm delivery",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-delivery-calm:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-delivery-calm:segment:8",
+          "seq_id": 8,
+          "speaker": "customer",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "I am very frustrated that this took so long."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-delivery-calm:known-answer",
+        "call_id": "challenge-delivery-calm",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.explicit_dissatisfaction",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-delivery-calm:8"
+            ],
+            "rationale": "The explicit text requires review in both delivery conditions."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-calm:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-calm:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-calm:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-delivery-calm:8",
+            "segment_id": "challenge-delivery-calm:segment:8",
+            "seq_id": 8,
+            "speaker": "customer",
+            "start_seconds": 28.0,
+            "end_seconds": 31.0,
+            "quote": "I am very frustrated that this took so long.",
+            "purpose": "Known-answer evidence for escalation.explicit_dissatisfaction."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-calm:3",
+            "segment_id": "challenge-delivery-calm:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-calm:6",
+            "segment_id": "challenge-delivery-calm:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-calm:7",
+            "segment_id": "challenge-delivery-calm:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the delivery manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "title": "Explicit dissatisfaction with persistent elevation",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "persistent_elevation",
+      "segments": [
+        {
+          "segment_id": "challenge-delivery-elevated:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-delivery-elevated:segment:8",
+          "seq_id": 8,
+          "speaker": "customer",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "I am very frustrated that this took so long."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-delivery-elevated:known-answer",
+        "call_id": "challenge-delivery-elevated",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.explicit_dissatisfaction",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-delivery-elevated:8"
+            ],
+            "rationale": "The explicit text requires review in both delivery conditions."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-elevated:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-elevated:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-delivery-elevated:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-delivery-elevated:8",
+            "segment_id": "challenge-delivery-elevated:segment:8",
+            "seq_id": 8,
+            "speaker": "customer",
+            "start_seconds": 28.0,
+            "end_seconds": 31.0,
+            "quote": "I am very frustrated that this took so long.",
+            "purpose": "Known-answer evidence for escalation.explicit_dissatisfaction."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-elevated:3",
+            "segment_id": "challenge-delivery-elevated:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-elevated:6",
+            "segment_id": "challenge-delivery-elevated:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-delivery-elevated:7",
+            "segment_id": "challenge-delivery-elevated:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the delivery manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "title": "Completed transfer has a clear confirmation",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-outcome-confirmed:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-outcome-confirmed:known-answer",
+        "call_id": "challenge-outcome-confirmed",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-outcome-confirmed:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-outcome-confirmed:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-outcome-confirmed:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-outcome-confirmed:3",
+            "segment_id": "challenge-outcome-confirmed:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-outcome-confirmed:6",
+            "segment_id": "challenge-outcome-confirmed:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-outcome-confirmed:7",
+            "segment_id": "challenge-outcome-confirmed:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the outcome manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "title": "Completed transfer lacks outcome confirmation",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-outcome-unclear:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-outcome-unclear:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "I have noted your transfer request."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-outcome-unclear:known-answer",
+        "call_id": "challenge-outcome-unclear",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "outcome.transfer_confirmation_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-outcome-unclear:7"
+            ],
+            "rationale": "The closing statement does not say whether execution succeeded."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-outcome-unclear:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-outcome-unclear:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-outcome-unclear:7",
+            "segment_id": "challenge-outcome-unclear:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "I have noted your transfer request.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmation_missing."
+          },
+          {
+            "evidence_id": "evidence:challenge-outcome-unclear:3",
+            "segment_id": "challenge-outcome-unclear:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-outcome-unclear:6",
+            "segment_id": "challenge-outcome-unclear:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the outcome manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "title": "Identity verification precedes account action",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-control-identity-present:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-control-identity-present:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-control-identity-present:known-answer",
+        "call_id": "challenge-control-identity-present",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-present:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-present:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-present:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-control-identity-present:3",
+            "segment_id": "challenge-control-identity-present:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-identity-present:6",
+            "segment_id": "challenge-control-identity-present:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-identity-present:7",
+            "segment_id": "challenge-control-identity-present:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the control manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "title": "Account action proceeds without identity verification",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-control-identity-missing:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "I can see the savings and checking accounts on your profile."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "Those are the correct accounts."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-control-identity-missing:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-control-identity-missing:known-answer",
+        "call_id": "challenge-control-identity-missing",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-missing:3"
+            ],
+            "rationale": "The agent accesses account details without a verification exchange."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-missing:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-identity-missing:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-control-identity-missing:3",
+            "segment_id": "challenge-control-identity-missing:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "I can see the savings and checking accounts on your profile.",
+            "purpose": "Known-answer evidence for control.identity_verification_missing."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-identity-missing:6",
+            "segment_id": "challenge-control-identity-missing:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-identity-missing:7",
+            "segment_id": "challenge-control-identity-missing:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the control manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "title": "Explicit approval follows material terms",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-control-authorization-present:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-control-authorization-present:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-control-authorization-present:known-answer",
+        "call_id": "challenge-control-authorization-present",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-present:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-present:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-present:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-control-authorization-present:3",
+            "segment_id": "challenge-control-authorization-present:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-authorization-present:6",
+            "segment_id": "challenge-control-authorization-present:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-authorization-present:7",
+            "segment_id": "challenge-control-authorization-present:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the control manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "title": "Execution proceeds without explicit approval",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:6",
+          "seq_id": 6,
+          "speaker": "agent",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "I am processing that transfer now."
+        },
+        {
+          "segment_id": "challenge-control-authorization-missing:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-control-authorization-missing:known-answer",
+        "call_id": "challenge-control-authorization-missing",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "control.transfer_authorization_missing",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-missing:6"
+            ],
+            "rationale": "The agent executes without customer approval after the recap."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-missing:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-control-authorization-missing:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-control-authorization-missing:6",
+            "segment_id": "challenge-control-authorization-missing:segment:6",
+            "seq_id": 6,
+            "speaker": "agent",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "I am processing that transfer now.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_missing."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-authorization-missing:3",
+            "segment_id": "challenge-control-authorization-missing:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-control-authorization-missing:7",
+            "segment_id": "challenge-control-authorization-missing:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the control manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "title": "Elevated customer delivery settles before close",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "recovered_elevation",
+      "segments": [
+        {
+          "segment_id": "challenge-recovery-observed:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:8",
+          "seq_id": 8,
+          "speaker": "customer",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "I am very frustrated about the delay."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:9",
+          "seq_id": 9,
+          "speaker": "agent",
+          "start_seconds": 32.0,
+          "end_seconds": 35.0,
+          "text": "I understand. The transfer is complete now."
+        },
+        {
+          "segment_id": "challenge-recovery-observed:segment:10",
+          "seq_id": 10,
+          "speaker": "customer",
+          "start_seconds": 36.0,
+          "end_seconds": 39.0,
+          "text": "Thank you for resolving it."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-recovery-observed:known-answer",
+        "call_id": "challenge-recovery-observed",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.explicit_dissatisfaction",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-recovery-observed:8"
+            ],
+            "rationale": "Explicit dissatisfaction remains reviewable after recovery."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-observed:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-observed:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-observed:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          },
+          {
+            "finding_type": "escalation.recovery_observed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-observed:10"
+            ],
+            "rationale": "The authored delivery condition settles after resolution."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-recovery-observed:8",
+            "segment_id": "challenge-recovery-observed:segment:8",
+            "seq_id": 8,
+            "speaker": "customer",
+            "start_seconds": 28.0,
+            "end_seconds": 31.0,
+            "quote": "I am very frustrated about the delay.",
+            "purpose": "Known-answer evidence for escalation.explicit_dissatisfaction."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-observed:3",
+            "segment_id": "challenge-recovery-observed:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-observed:6",
+            "segment_id": "challenge-recovery-observed:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-observed:7",
+            "segment_id": "challenge-recovery-observed:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-observed:10",
+            "segment_id": "challenge-recovery-observed:segment:10",
+            "seq_id": 10,
+            "speaker": "customer",
+            "start_seconds": 36.0,
+            "end_seconds": 39.0,
+            "quote": "Thank you for resolving it.",
+            "purpose": "Known-answer evidence for escalation.recovery_observed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the recovery manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "title": "Elevated customer delivery remains unresolved",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "unresolved_elevation",
+      "segments": [
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:8",
+          "seq_id": 8,
+          "speaker": "customer",
+          "start_seconds": 28.0,
+          "end_seconds": 31.0,
+          "text": "I am very frustrated about the delay."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:9",
+          "seq_id": 9,
+          "speaker": "agent",
+          "start_seconds": 32.0,
+          "end_seconds": 35.0,
+          "text": "I understand. The transfer is complete now."
+        },
+        {
+          "segment_id": "challenge-recovery-unresolved:segment:10",
+          "seq_id": 10,
+          "speaker": "customer",
+          "start_seconds": 36.0,
+          "end_seconds": 39.0,
+          "text": "Thank you for resolving it."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-recovery-unresolved:known-answer",
+        "call_id": "challenge-recovery-unresolved",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "required",
+        "expected_findings": [
+          {
+            "finding_type": "escalation.explicit_dissatisfaction",
+            "polarity": "negative",
+            "evidence_ids": [
+              "evidence:challenge-recovery-unresolved:8"
+            ],
+            "rationale": "Explicit dissatisfaction remains reviewable after recovery."
+          },
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-unresolved:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-unresolved:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-recovery-unresolved:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-recovery-unresolved:8",
+            "segment_id": "challenge-recovery-unresolved:segment:8",
+            "seq_id": 8,
+            "speaker": "customer",
+            "start_seconds": 28.0,
+            "end_seconds": 31.0,
+            "quote": "I am very frustrated about the delay.",
+            "purpose": "Known-answer evidence for escalation.explicit_dissatisfaction."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-unresolved:3",
+            "segment_id": "challenge-recovery-unresolved:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-unresolved:6",
+            "segment_id": "challenge-recovery-unresolved:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-recovery-unresolved:7",
+            "segment_id": "challenge-recovery-unresolved:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the recovery manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "title": "Clean transfer at ordinary spacing",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-duration-short:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 4.0,
+          "end_seconds": 7.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 8.0,
+          "end_seconds": 11.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 12.0,
+          "end_seconds": 15.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 16.0,
+          "end_seconds": 19.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 20.0,
+          "end_seconds": 23.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-duration-short:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 24.0,
+          "end_seconds": 27.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-duration-short:known-answer",
+        "call_id": "challenge-duration-short",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-short:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-short:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-short:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-duration-short:3",
+            "segment_id": "challenge-duration-short:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 8.0,
+            "end_seconds": 11.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-duration-short:6",
+            "segment_id": "challenge-duration-short:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 20.0,
+            "end_seconds": 23.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-duration-short:7",
+            "segment_id": "challenge-duration-short:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 24.0,
+            "end_seconds": 27.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the duration manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "title": "Same clean transfer with long spacing",
+      "intent_ids": [
+        "transfer.one_time"
+      ],
+      "facts": {
+        "request.executes_transaction": true,
+        "transfer.executed_during_call": true
+      },
+      "acoustic_condition": "calm",
+      "segments": [
+        {
+          "segment_id": "challenge-duration-long:segment:1",
+          "seq_id": 1,
+          "speaker": "agent",
+          "start_seconds": 0.0,
+          "end_seconds": 3.0,
+          "text": "Thank you for calling North Star Bank. My name is Maya."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:2",
+          "seq_id": 2,
+          "speaker": "customer",
+          "start_seconds": 18.0,
+          "end_seconds": 21.0,
+          "text": "Please transfer 200 dollars from savings to checking today."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:3",
+          "seq_id": 3,
+          "speaker": "agent",
+          "start_seconds": 36.0,
+          "end_seconds": 39.0,
+          "text": "Before I access the accounts, please confirm your date of birth."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:4",
+          "seq_id": 4,
+          "speaker": "customer",
+          "start_seconds": 54.0,
+          "end_seconds": 57.0,
+          "text": "It is May 4, 1988."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:5",
+          "seq_id": 5,
+          "speaker": "agent",
+          "start_seconds": 72.0,
+          "end_seconds": 75.0,
+          "text": "I have 200 dollars from savings to checking today, with no fee."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:6",
+          "seq_id": 6,
+          "speaker": "customer",
+          "start_seconds": 90.0,
+          "end_seconds": 93.0,
+          "text": "Yes, please proceed."
+        },
+        {
+          "segment_id": "challenge-duration-long:segment:7",
+          "seq_id": 7,
+          "speaker": "agent",
+          "start_seconds": 108.0,
+          "end_seconds": 111.0,
+          "text": "The 200 dollar transfer is complete and available today."
+        }
+      ],
+      "annotation": {
+        "annotation_id": "annotation:challenge-duration-long:known-answer",
+        "call_id": "challenge-duration-long",
+        "profile_id": "banking-demo-v1",
+        "source_type": "controlled_challenge",
+        "expected_attention": "not_required",
+        "expected_findings": [
+          {
+            "finding_type": "control.identity_verification_completed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-long:3"
+            ],
+            "rationale": "Identity is checked before account access."
+          },
+          {
+            "finding_type": "control.transfer_authorization_obtained",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-long:6"
+            ],
+            "rationale": "The customer explicitly authorizes the transfer."
+          },
+          {
+            "finding_type": "outcome.transfer_confirmed",
+            "polarity": "positive",
+            "evidence_ids": [
+              "evidence:challenge-duration-long:7"
+            ],
+            "rationale": "The agent confirms the completed outcome."
+          }
+        ],
+        "evidence": [
+          {
+            "evidence_id": "evidence:challenge-duration-long:3",
+            "segment_id": "challenge-duration-long:segment:3",
+            "seq_id": 3,
+            "speaker": "agent",
+            "start_seconds": 36.0,
+            "end_seconds": 39.0,
+            "quote": "Before I access the accounts, please confirm your date of birth.",
+            "purpose": "Known-answer evidence for control.identity_verification_completed."
+          },
+          {
+            "evidence_id": "evidence:challenge-duration-long:6",
+            "segment_id": "challenge-duration-long:segment:6",
+            "seq_id": 6,
+            "speaker": "customer",
+            "start_seconds": 90.0,
+            "end_seconds": 93.0,
+            "quote": "Yes, please proceed.",
+            "purpose": "Known-answer evidence for control.transfer_authorization_obtained."
+          },
+          {
+            "evidence_id": "evidence:challenge-duration-long:7",
+            "segment_id": "challenge-duration-long:segment:7",
+            "seq_id": 7,
+            "speaker": "agent",
+            "start_seconds": 108.0,
+            "end_seconds": 111.0,
+            "quote": "The 200 dollar transfer is complete and available today.",
+            "purpose": "Known-answer evidence for outcome.transfer_confirmed."
+          }
+        ],
+        "uncertainty_notes": [],
+        "provenance": {
+          "annotator_id": "controlled-challenge-author",
+          "annotator_type": "synthetic_author",
+          "status": "adjudicated",
+          "method": "known-answer counterfactual authored from one declared change",
+          "requires_human_review": false,
+          "ground_truth_basis": "the duration manipulation is explicit and all declared invariants are checked"
+        }
+      }
+    }
+  ],
+  "counterfactual_pairs": [
+    {
+      "pair_id": "pair:transcript:manager-attribution",
+      "axis": "transcript",
+      "baseline_call_id": "challenge-transcript-context",
+      "variant_call_id": "challenge-transcript-request",
+      "controlled_change": "A contextual agent statement becomes an explicit customer manager request.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "acoustic_condition"
+      ],
+      "expected_effect": "attention_changes"
+    },
+    {
+      "pair_id": "pair:delivery:acoustic-support",
+      "axis": "delivery",
+      "baseline_call_id": "challenge-delivery-calm",
+      "variant_call_id": "challenge-delivery-elevated",
+      "controlled_change": "Only the authored acoustic condition changes from calm to persistent elevation.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "transcript",
+        "attention"
+      ],
+      "expected_effect": "support_changes"
+    },
+    {
+      "pair_id": "pair:outcome:completion-confirmation",
+      "axis": "outcome",
+      "baseline_call_id": "challenge-outcome-confirmed",
+      "variant_call_id": "challenge-outcome-unclear",
+      "controlled_change": "The completion statement becomes an ambiguous request acknowledgement.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "acoustic_condition"
+      ],
+      "expected_effect": "attention_changes"
+    },
+    {
+      "pair_id": "pair:control:identity-verification",
+      "axis": "control",
+      "baseline_call_id": "challenge-control-identity-present",
+      "variant_call_id": "challenge-control-identity-missing",
+      "controlled_change": "The identity request and response become unverified account acknowledgement.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "acoustic_condition"
+      ],
+      "expected_effect": "attention_changes"
+    },
+    {
+      "pair_id": "pair:control:transfer-authorization",
+      "axis": "control",
+      "baseline_call_id": "challenge-control-authorization-present",
+      "variant_call_id": "challenge-control-authorization-missing",
+      "controlled_change": "The customer's explicit approval becomes an agent execution statement.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "acoustic_condition"
+      ],
+      "expected_effect": "attention_changes"
+    },
+    {
+      "pair_id": "pair:recovery:settled-versus-unresolved",
+      "axis": "recovery",
+      "baseline_call_id": "challenge-recovery-observed",
+      "variant_call_id": "challenge-recovery-unresolved",
+      "controlled_change": "Only the authored late-call acoustic trajectory changes from recovered to unresolved.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "transcript",
+        "attention"
+      ],
+      "expected_effect": "recovery_changes"
+    },
+    {
+      "pair_id": "pair:duration:spacing-invariance",
+      "axis": "duration",
+      "baseline_call_id": "challenge-duration-short",
+      "variant_call_id": "challenge-duration-long",
+      "controlled_change": "Only segment timing and total duration are expanded.",
+      "invariant_dimensions": [
+        "intent_and_facts",
+        "transcript",
+        "acoustic_condition",
+        "attention"
+      ],
+      "expected_effect": "no_decision_change"
+    }
+  ]
+}

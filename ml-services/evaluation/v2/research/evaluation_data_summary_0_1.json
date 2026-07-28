@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "banking-evaluator-v2",
+  "dataset_version": "0.1.0",
+  "profile_id": "banking-demo-v1",
+  "existing_calls": {
+    "count": 10,
+    "annotation_status_counts": {
+      "draft": 10
+    },
+    "expected_attention_counts": {
+      "not_required": 6,
+      "required": 4
+    },
+    "human_adjudicated_count": 0,
+    "requires_human_review_count": 10
+  },
+  "controlled_challenges": {
+    "call_count": 14,
+    "pair_count": 7,
+    "pair_axis_counts": {
+      "control": 2,
+      "delivery": 1,
+      "duration": 1,
+      "outcome": 1,
+      "recovery": 1,
+      "transcript": 1
+    },
+    "expected_attention_counts": {
+      "not_required": 6,
+      "required": 8
+    },
+    "known_answer_count": 14
+  }
+}
