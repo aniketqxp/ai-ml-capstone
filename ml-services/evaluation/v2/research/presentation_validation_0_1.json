@@ -1,0 +1,586 @@
+{
+  "schema_version": "1.0",
+  "presentation_version": "0.1.0",
+  "scenario_source": "banking-evaluator-v2:0.1.0:controlled_challenges",
+  "scenario_count": 14,
+  "passed_scenario_count": 14,
+  "structural_checks_passed": true,
+  "human_comprehension_status": "not_run",
+  "human_test_questions": [
+    "Does this call need attention?",
+    "What is the main reason?",
+    "Where in the call is the supporting evidence?",
+    "What did the agent handle well?",
+    "What action follows from this result?",
+    "Is the evaluation complete?"
+  ],
+  "inventory": [
+    {
+      "output_id": "decision.attention_state",
+      "source_fields": [
+        "attention_required",
+        "decision_status"
+      ],
+      "visibility": "primary",
+      "representation": "status_text",
+      "visible_when": "always",
+      "rationale": "Answers whether this call needs attention without implying a continuous risk score."
+    },
+    {
+      "output_id": "decision.controlling_findings",
+      "source_fields": [
+        "decision_trace.controlling_finding_ids"
+      ],
+      "visibility": "primary",
+      "representation": "reason_list",
+      "visible_when": "attention is required",
+      "rationale": "At most two evidence-backed reasons explain the decision."
+    },
+    {
+      "output_id": "decision.recommended_action",
+      "source_fields": [
+        "recommended_action"
+      ],
+      "visibility": "primary",
+      "representation": "action",
+      "visible_when": "attention is required",
+      "rationale": "One constrained next action is more useful than another score."
+    },
+    {
+      "output_id": "findings.positive_highlights",
+      "source_fields": [
+        "positive_findings"
+      ],
+      "visibility": "primary",
+      "representation": "checklist",
+      "visible_when": "usable positive findings exist",
+      "rationale": "At most two grounded positives credit handling that went well."
+    },
+    {
+      "output_id": "findings.selected_evidence",
+      "source_fields": [
+        "finding.evidence"
+      ],
+      "visibility": "evidence",
+      "representation": "evidence_timeline",
+      "visible_when": "a primary reason or positive is shown",
+      "rationale": "Quotes and timestamps answer where the finding occurred."
+    },
+    {
+      "output_id": "decision.completeness",
+      "source_fields": [
+        "decision_status",
+        "uncertainties"
+      ],
+      "visibility": "primary",
+      "representation": "notice",
+      "visible_when": "the evaluation is partial or insufficient",
+      "rationale": "An incomplete evaluation must never look like a cleared call."
+    },
+    {
+      "output_id": "findings.additional_context",
+      "source_fields": [
+        "triggered_findings",
+        "positive_findings",
+        "counter_evidence"
+      ],
+      "visibility": "details",
+      "representation": "disclosure",
+      "visible_when": "the user opens details",
+      "rationale": "Non-controlling findings and contradictions remain available without competing with the decision."
+    },
+    {
+      "output_id": "evaluation.provenance",
+      "source_fields": [
+        "evaluator_version",
+        "domain_profile_id",
+        "decision_trace.policy_id"
+      ],
+      "visibility": "details",
+      "representation": "disclosure",
+      "visible_when": "the user opens evaluation details",
+      "rationale": "Version and policy context support traceability, not scanning."
+    },
+    {
+      "output_id": "signals.raw_model_outputs",
+      "source_fields": [
+        "sentiment probabilities",
+        "pitch",
+        "volume",
+        "energy",
+        "speech rate",
+        "normalized acoustic values"
+      ],
+      "visibility": "internal",
+      "representation": "not_rendered",
+      "visible_when": "never on the call evaluator page",
+      "rationale": "Raw model telemetry is not a business conclusion and may only support a grounded finding."
+    },
+    {
+      "output_id": "decision.internal_logic",
+      "source_fields": [
+        "decision_trace.qualifications",
+        "detection_rule.thresholds",
+        "reliability reasons",
+        "hashes"
+      ],
+      "visibility": "internal",
+      "representation": "not_rendered",
+      "visible_when": "never on the call evaluator page",
+      "rationale": "Policy mechanics belong in diagnostics and exported evidence."
+    },
+    {
+      "output_id": "scores.composites",
+      "source_fields": [
+        "overall score",
+        "compliance percentage",
+        "workflow percentage",
+        "quality rating",
+        "friction score"
+      ],
+      "visibility": "internal",
+      "representation": "not_rendered",
+      "visible_when": "not produced by evaluator v2",
+      "rationale": "These aggregates mix unlike claims and create false precision."
+    },
+    {
+      "output_id": "timeline.duplicate_lanes",
+      "source_fields": [
+        "compliance markers",
+        "workflow markers",
+        "quality markers",
+        "sentiment markers"
+      ],
+      "visibility": "internal",
+      "representation": "not_rendered",
+      "visible_when": "not produced by evaluator v2",
+      "rationale": "One selected evidence timeline replaces overlapping lanes."
+    }
+  ],
+  "scenarios": [
+    {
+      "call_id": "challenge-transcript-context",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-transcript-request",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer requested a manager"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0,
+          28.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-delivery-calm",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer explicitly expressed dissatisfaction"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0,
+          28.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-delivery-elevated",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer explicitly expressed dissatisfaction"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0,
+          28.0,
+          28.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-outcome-confirmed",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-outcome-unclear",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Transfer completion confirmed was not demonstrated"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          24.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Request customer follow-up",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-control-identity-present",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer identity verified before transaction access was not demonstrated"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          8.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-control-authorization-present",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer authorizes the transfer was not demonstrated"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          20.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-recovery-observed",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer explicitly expressed dissatisfaction"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0,
+          28.0,
+          36.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-recovery-unresolved",
+      "answer_key": {
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer explicitly expressed dissatisfaction"
+        ],
+        "evidence_locations_seconds": [
+          0.0,
+          28.0,
+          28.0,
+          36.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": "Create review case",
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-duration-short",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          24.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    },
+    {
+      "call_id": "challenge-duration-long",
+      "answer_key": {
+        "attention_state": "no_attention_finding",
+        "reasons": [],
+        "evidence_locations_seconds": [
+          0.0,
+          108.0
+        ],
+        "positive_handling": [
+          "Agent and organization identified was demonstrated",
+          "Outcome and next steps summarized was demonstrated"
+        ],
+        "action": null,
+        "completeness": "complete"
+      },
+      "check": {
+        "attention_is_literal": true,
+        "reasons_are_bounded": true,
+        "reasons_have_evidence": true,
+        "positives_are_bounded": true,
+        "action_is_unambiguous": true,
+        "completeness_is_explicit": true,
+        "content_is_deduplicated": true,
+        "no_score_fields": true,
+        "passed": true
+      }
+    }
+  ],
+  "limitations": [
+    "Structural checks verify that each scenario exposes one literal answer path; they do not measure human comprehension.",
+    "No unfamiliar-user sessions were run in this phase. The six-question protocol must be run after the Phase 11 page is interactive.",
+    "Controlled challenge calls use authored known answers and do not establish real-world manager agreement."
+  ]
+}
