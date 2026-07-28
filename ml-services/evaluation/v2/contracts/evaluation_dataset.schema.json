@@ -1,0 +1,525 @@
+{
+  "$defs": {
+    "AcousticCondition": {
+      "enum": [
+        "not_modeled",
+        "calm",
+        "persistent_elevation",
+        "recovered_elevation",
+        "unresolved_elevation"
+      ],
+      "title": "AcousticCondition",
+      "type": "string"
+    },
+    "AnnotationEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_.:-]+$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "segment_id": {
+          "minLength": 1,
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "seq_id": {
+          "minimum": 0,
+          "title": "Seq Id",
+          "type": "integer"
+        },
+        "speaker": {
+          "$ref": "#/$defs/Speaker"
+        },
+        "start_seconds": {
+          "minimum": 0.0,
+          "title": "Start Seconds",
+          "type": "number"
+        },
+        "end_seconds": {
+          "minimum": 0.0,
+          "title": "End Seconds",
+          "type": "number"
+        },
+        "quote": {
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        },
+        "purpose": {
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "segment_id",
+        "seq_id",
+        "speaker",
+        "start_seconds",
+        "end_seconds",
+        "quote",
+        "purpose"
+      ],
+      "title": "AnnotationEvidence",
+      "type": "object"
+    },
+    "AnnotationProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "annotator_id": {
+          "minLength": 1,
+          "title": "Annotator Id",
+          "type": "string"
+        },
+        "annotator_type": {
+          "$ref": "#/$defs/AnnotatorType"
+        },
+        "status": {
+          "$ref": "#/$defs/AnnotationStatus"
+        },
+        "method": {
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        },
+        "requires_human_review": {
+          "title": "Requires Human Review",
+          "type": "boolean"
+        },
+        "ground_truth_basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ground Truth Basis"
+        }
+      },
+      "required": [
+        "annotator_id",
+        "annotator_type",
+        "status",
+        "method",
+        "requires_human_review"
+      ],
+      "title": "AnnotationProvenance",
+      "type": "object"
+    },
+    "AnnotationStatus": {
+      "enum": [
+        "draft",
+        "reviewed",
+        "adjudicated"
+      ],
+      "title": "AnnotationStatus",
+      "type": "string"
+    },
+    "AnnotatorType": {
+      "enum": [
+        "human",
+        "model_assisted_researcher_seed",
+        "synthetic_author"
+      ],
+      "title": "AnnotatorType",
+      "type": "string"
+    },
+    "CallAnnotation": {
+      "additionalProperties": false,
+      "properties": {
+        "annotation_id": {
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_.:-]+$",
+          "title": "Annotation Id",
+          "type": "string"
+        },
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "profile_id": {
+          "minLength": 1,
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "source_type": {
+          "$ref": "#/$defs/EvaluationSourceType"
+        },
+        "expected_attention": {
+          "$ref": "#/$defs/ExpectedAttention"
+        },
+        "expected_findings": {
+          "items": {
+            "$ref": "#/$defs/ExpectedFindingLabel"
+          },
+          "title": "Expected Findings",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/AnnotationEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "uncertainty_notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Uncertainty Notes",
+          "type": "array"
+        },
+        "provenance": {
+          "$ref": "#/$defs/AnnotationProvenance"
+        }
+      },
+      "required": [
+        "annotation_id",
+        "call_id",
+        "profile_id",
+        "source_type",
+        "expected_attention",
+        "provenance"
+      ],
+      "title": "CallAnnotation",
+      "type": "object"
+    },
+    "ChallengeCall": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "intent_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Intent Ids",
+          "type": "array"
+        },
+        "facts": {
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "Facts",
+          "type": "object"
+        },
+        "acoustic_condition": {
+          "$ref": "#/$defs/AcousticCondition"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/ChallengeSegment"
+          },
+          "minItems": 1,
+          "title": "Segments",
+          "type": "array"
+        },
+        "annotation": {
+          "$ref": "#/$defs/CallAnnotation"
+        }
+      },
+      "required": [
+        "call_id",
+        "title",
+        "intent_ids",
+        "facts",
+        "acoustic_condition",
+        "segments",
+        "annotation"
+      ],
+      "title": "ChallengeCall",
+      "type": "object"
+    },
+    "ChallengeSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "segment_id": {
+          "minLength": 1,
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "seq_id": {
+          "minimum": 0,
+          "title": "Seq Id",
+          "type": "integer"
+        },
+        "speaker": {
+          "$ref": "#/$defs/Speaker"
+        },
+        "start_seconds": {
+          "minimum": 0.0,
+          "title": "Start Seconds",
+          "type": "number"
+        },
+        "end_seconds": {
+          "minimum": 0.0,
+          "title": "End Seconds",
+          "type": "number"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "segment_id",
+        "seq_id",
+        "speaker",
+        "start_seconds",
+        "end_seconds",
+        "text"
+      ],
+      "title": "ChallengeSegment",
+      "type": "object"
+    },
+    "CounterfactualAxis": {
+      "enum": [
+        "transcript",
+        "delivery",
+        "outcome",
+        "control",
+        "recovery",
+        "duration"
+      ],
+      "title": "CounterfactualAxis",
+      "type": "string"
+    },
+    "CounterfactualPair": {
+      "additionalProperties": false,
+      "properties": {
+        "pair_id": {
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_.:-]+$",
+          "title": "Pair Id",
+          "type": "string"
+        },
+        "axis": {
+          "$ref": "#/$defs/CounterfactualAxis"
+        },
+        "baseline_call_id": {
+          "minLength": 1,
+          "title": "Baseline Call Id",
+          "type": "string"
+        },
+        "variant_call_id": {
+          "minLength": 1,
+          "title": "Variant Call Id",
+          "type": "string"
+        },
+        "controlled_change": {
+          "minLength": 1,
+          "title": "Controlled Change",
+          "type": "string"
+        },
+        "invariant_dimensions": {
+          "items": {
+            "enum": [
+              "intent_and_facts",
+              "transcript",
+              "acoustic_condition",
+              "attention"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Invariant Dimensions",
+          "type": "array"
+        },
+        "expected_effect": {
+          "$ref": "#/$defs/ExpectedPairEffect"
+        }
+      },
+      "required": [
+        "pair_id",
+        "axis",
+        "baseline_call_id",
+        "variant_call_id",
+        "controlled_change",
+        "invariant_dimensions",
+        "expected_effect"
+      ],
+      "title": "CounterfactualPair",
+      "type": "object"
+    },
+    "EvaluationSourceType": {
+      "enum": [
+        "existing_call",
+        "controlled_challenge"
+      ],
+      "title": "EvaluationSourceType",
+      "type": "string"
+    },
+    "ExistingCallRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "transcript_path": {
+          "minLength": 1,
+          "title": "Transcript Path",
+          "type": "string"
+        },
+        "transcript_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Transcript Sha256",
+          "type": "string"
+        },
+        "annotation": {
+          "$ref": "#/$defs/CallAnnotation"
+        }
+      },
+      "required": [
+        "call_id",
+        "transcript_path",
+        "transcript_sha256",
+        "annotation"
+      ],
+      "title": "ExistingCallRecord",
+      "type": "object"
+    },
+    "ExpectedAttention": {
+      "enum": [
+        "required",
+        "not_required",
+        "uncertain"
+      ],
+      "title": "ExpectedAttention",
+      "type": "string"
+    },
+    "ExpectedFindingLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "finding_type": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_.]+$",
+          "title": "Finding Type",
+          "type": "string"
+        },
+        "polarity": {
+          "$ref": "#/$defs/FindingPolarity"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "finding_type",
+        "polarity",
+        "rationale"
+      ],
+      "title": "ExpectedFindingLabel",
+      "type": "object"
+    },
+    "ExpectedPairEffect": {
+      "enum": [
+        "attention_changes",
+        "reasons_change",
+        "support_changes",
+        "recovery_changes",
+        "no_decision_change"
+      ],
+      "title": "ExpectedPairEffect",
+      "type": "string"
+    },
+    "FindingPolarity": {
+      "enum": [
+        "negative",
+        "positive"
+      ],
+      "title": "FindingPolarity",
+      "type": "string"
+    },
+    "Speaker": {
+      "enum": [
+        "agent",
+        "customer",
+        "system",
+        "unknown"
+      ],
+      "title": "Speaker",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "const": "banking-evaluator-v2",
+      "default": "banking-evaluator-v2",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "dataset_version": {
+      "minLength": 1,
+      "title": "Dataset Version",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "existing_calls": {
+      "items": {
+        "$ref": "#/$defs/ExistingCallRecord"
+      },
+      "title": "Existing Calls",
+      "type": "array"
+    },
+    "challenge_calls": {
+      "items": {
+        "$ref": "#/$defs/ChallengeCall"
+      },
+      "title": "Challenge Calls",
+      "type": "array"
+    },
+    "counterfactual_pairs": {
+      "items": {
+        "$ref": "#/$defs/CounterfactualPair"
+      },
+      "title": "Counterfactual Pairs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataset_version",
+    "profile_id"
+  ],
+  "title": "EvaluationDataset",
+  "type": "object"
+}

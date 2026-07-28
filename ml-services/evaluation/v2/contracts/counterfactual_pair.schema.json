@@ -1,0 +1,82 @@
+{
+  "$defs": {
+    "CounterfactualAxis": {
+      "enum": [
+        "transcript",
+        "delivery",
+        "outcome",
+        "control",
+        "recovery",
+        "duration"
+      ],
+      "title": "CounterfactualAxis",
+      "type": "string"
+    },
+    "ExpectedPairEffect": {
+      "enum": [
+        "attention_changes",
+        "reasons_change",
+        "support_changes",
+        "recovery_changes",
+        "no_decision_change"
+      ],
+      "title": "ExpectedPairEffect",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "pair_id": {
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Pair Id",
+      "type": "string"
+    },
+    "axis": {
+      "$ref": "#/$defs/CounterfactualAxis"
+    },
+    "baseline_call_id": {
+      "minLength": 1,
+      "title": "Baseline Call Id",
+      "type": "string"
+    },
+    "variant_call_id": {
+      "minLength": 1,
+      "title": "Variant Call Id",
+      "type": "string"
+    },
+    "controlled_change": {
+      "minLength": 1,
+      "title": "Controlled Change",
+      "type": "string"
+    },
+    "invariant_dimensions": {
+      "items": {
+        "enum": [
+          "intent_and_facts",
+          "transcript",
+          "acoustic_condition",
+          "attention"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Invariant Dimensions",
+      "type": "array"
+    },
+    "expected_effect": {
+      "$ref": "#/$defs/ExpectedPairEffect"
+    }
+  },
+  "required": [
+    "pair_id",
+    "axis",
+    "baseline_call_id",
+    "variant_call_id",
+    "controlled_change",
+    "invariant_dimensions",
+    "expected_effect"
+  ],
+  "title": "CounterfactualPair",
+  "type": "object"
+}
