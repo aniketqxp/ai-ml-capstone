@@ -40,6 +40,11 @@ from .findings import (
     derive_findings,
 )
 from .schemas import CallDecision, SignalBundle
+from .signal_validation import (
+    SIGNAL_VALIDATION_VERSION,
+    AblationVariant,
+    SignalValidationReport,
+)
 from .validation import validate_decision_references
 
 __all__ = [
@@ -50,6 +55,8 @@ __all__ = [
     "EVALUATION_DATASET_ID",
     "EVALUATION_DATASET_VERSION",
     "FINDINGS_VERSION",
+    "SIGNAL_VALIDATION_VERSION",
+    "AblationVariant",
     "CallAnnotation",
     "CallDecision",
     "CounterfactualPair",
@@ -63,6 +70,7 @@ __all__ = [
     "RequirementVerdict",
     "ResolvedDomainPlan",
     "SignalBundle",
+    "SignalValidationReport",
     "build_call_decision",
     "derive_acoustic_dynamics",
     "derive_findings",

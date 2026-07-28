@@ -17,6 +17,7 @@ from v2.findings import (
     RequirementAssessmentBatch,
 )
 from v2.schemas import CallDecision, SignalBundle
+from v2.signal_validation import SignalValidationReport
 
 HERE = Path(__file__).resolve().parent
 OUTPUT_DIR = HERE / "contracts"
@@ -37,6 +38,9 @@ def main():
         "call_annotation.schema.json": CallAnnotation,
         "counterfactual_pair.schema.json": CounterfactualPair,
         "evaluation_dataset.schema.json": EvaluationDataset,
+        "signal_validation_report.schema.json": (
+            SignalValidationReport
+        ),
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
