@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1586157:v2:57eaa91e725b9733",
+  "run_id": "en_US_General_Banking_1586157:v2:3b5beb696e24202e",
   "call_id": "en_US_General_Banking_1586157",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "268288a63143ff20d26e0c316e615d771a919a6cae2f88f9a4f3ce060f185151",
+  "decision_sha256": "85bbbd7a9f78cd3078cad00fa22f964155a9041d5713da93b015dad77b3f7ae5",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1586157",
@@ -16,8 +16,97 @@
     "signal_bundle_schema_version": "2.0",
     "signal_bundle_sha256": "c7c3e5e2c8589ae5d815a5f7224a6cf9a8a625714593ac1c2ae3adf1adcb22bc",
     "decision_status": "complete",
-    "attention_required": false,
-    "triggered_findings": [],
+    "attention_required": true,
+    "triggered_findings": [
+      {
+        "finding_id": "finding-negative-experience-accessibility_barrier",
+        "finding_type": "experience.accessibility_barrier",
+        "category": "agent_behavior",
+        "polarity": "negative",
+        "severity": "review",
+        "title": "Customer reported an access barrier",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "business_definition": "The customer explicitly states that a physical-access barrier prevents them from using the offered service path.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "experience.accessibility_barrier",
+          "reason": "Explicit escalation and repeat-contact rules apply to every supported call.",
+          "selected_branch": null
+        },
+        "detection_rule": {
+          "rule_id": "experience.accessibility_barrier",
+          "rule_version": "0.1.0",
+          "detector": "high_precision_explicit_text",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "transcript.customer_text",
+              "operator": "contains",
+              "value": "versioned_explicit_phrase_pattern",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "evidence:experience.accessibility_barrier:CUSTOMER_017",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_017"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 219.24,
+            "end_seconds": 221.76,
+            "quote": "thing is, I can't go to the bank physically myself.",
+            "observation": null
+          },
+          {
+            "evidence_id": "evidence:experience.accessibility_barrier:CUSTOMER_018",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_018"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 221.9,
+            "end_seconds": 222.7,
+            "quote": "I'm in a wheelchair.",
+            "observation": null
+          }
+        ],
+        "counter_evidence": [
+          {
+            "evidence_id": "counter:experience.accessibility_barrier:AGENT_026",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_026"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 228.3,
+            "end_seconds": 231.26,
+            "quote": "I do apologize, ma 'am.",
+            "observation": null
+          }
+        ],
+        "reliability": {
+          "status": "usable",
+          "coverage_ratio": null,
+          "reasons": [
+            "high_precision_explicit_phrase_match"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 30
+      }
+    ],
     "positive_findings": [
       {
         "finding_id": "finding-positive-agent-identification_clear",
@@ -26,7 +115,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Agent and organization identified",
-        "summary": "The agent identifies themselves by stating their name and the organization at the beginning of the call.",
+        "summary": "The agent identifies themselves as Erica Smith and the organization as Central Bank at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -87,7 +176,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Recurring transfer schedule confirmed",
-        "summary": "The frequency and start timing of the recurring transfer are stated and accepted by the customer.",
+        "summary": "The frequency and start timing for the recurring transfer are explicitly stated and accepted by the customer.",
         "business_definition": "Frequency, start timing, and any applicable end condition are explicit.",
         "applicability": {
           "applies": true,
@@ -116,16 +205,16 @@
             "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_067",
-              "CUSTOMER_046"
+              "AGENT_069",
+              "CUSTOMER_053"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": null,
-            "start_seconds": 415.04,
-            "end_seconds": 471.68,
+            "start_seconds": 480.45,
+            "end_seconds": 490.53,
             "quote": null,
-            "observation": "AGENT: So just to be clear, you will be transferring from your savings account four, six, five, eight, seven, three, two, two.\nCUSTOMER: Yes, on the 20th of every month."
+            "observation": "AGENT: A total of three hundred and fifty -two dollars and eighty -six cents on a monthly basis, scheduled every 17th of the month.\nCUSTOMER: Yes, man."
           }
         ],
         "counter_evidence": [],
@@ -148,7 +237,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Source and destination accounts confirmed",
-        "summary": "The agent and customer confirm the source and destination account types and identifiers during the transfer process.",
+        "summary": "The agent and customer confirm the source and destination accounts for the transfer, ensuring clarity on both accounts involved.",
         "business_definition": "The transfer direction and both participating accounts are unambiguous.",
         "applicability": {
           "applies": true,
@@ -209,7 +298,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer amount confirmed",
-        "summary": "The customer explicitly states the amount to be transferred, and the agent confirms it before proceeding.",
+        "summary": "The customer explicitly states the amount to be transferred as $482.62, and the agent confirms this amount before proceeding.",
         "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
         "applicability": {
           "applies": true,
@@ -270,7 +359,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer authorizes the transfer",
-        "summary": "The customer gives clear approval for the transfer after the amount and accounts are established.",
+        "summary": "The customer gives clear approval for the transfer after the amount, accounts, and timing are stated by the agent.",
         "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
         "applicability": {
           "applies": true,
@@ -299,15 +388,15 @@
             "evidence_id": "semantic:transfer.authorization_obtained:support",
             "modality": "transcript",
             "segment_ids": [
-              "CUSTOMER_014"
+              "CUSTOMER_015"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "customer",
-            "start_seconds": 156.55,
-            "end_seconds": 157.43,
+            "start_seconds": 181.66,
+            "end_seconds": 184.9,
             "quote": null,
-            "observation": "CUSTOMER: Yes, continue."
+            "observation": "CUSTOMER: And there's really no way that you can speed this up."
           }
         ],
         "counter_evidence": [],
@@ -330,7 +419,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the transfer details and explains the timeframe for completion before closing the call.",
+        "summary": "The agent summarizes the completed transfer and explains the timing for the recurring transfer before closing the call.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -359,15 +448,16 @@
             "evidence_id": "semantic:outcome.summary_and_next_steps:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_072"
+              "AGENT_072",
+              "AGENT_073"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 501.96,
-            "end_seconds": 510.92,
+            "end_seconds": 520.74,
             "quote": null,
-            "observation": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date."
+            "observation": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date.\nAGENT: So if you want to extend prior to ending, you would have to contact us again so that we can reschedule the automatic transfers."
           }
         ],
         "counter_evidence": [],
@@ -390,7 +480,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirms the successful setup of the transfer and recaps the details before closing the call.",
+        "summary": "The agent confirms the successful transfer and recaps the amount and accounts involved, providing a clear confirmation of completion.",
         "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
         "applicability": {
           "applies": true,
@@ -419,15 +509,15 @@
             "evidence_id": "semantic:transfer.completion_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_072"
+              "AGENT_022"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 501.96,
-            "end_seconds": 510.92,
+            "start_seconds": 164.98,
+            "end_seconds": 180.24,
             "quote": null,
-            "observation": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date."
+            "observation": "AGENT: So $482 .62 has been transferred, Ms. Richards, from your savings account, 4 -6 -5 -8 -7 -3 -2 -2 to your checking account that you have and file."
           }
         ],
         "counter_evidence": [],
@@ -450,7 +540,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer request confirmed",
-        "summary": "The agent restates the customer's request for a transfer from savings to checking, confirming their intent before proceeding.",
+        "summary": "The agent restates the customer's request to transfer money from savings to checking, confirming the intent before proceeding.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -510,7 +600,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Recurring transfer change path explained",
-        "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information.",
+        "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information for future modifications.",
         "business_definition": "The customer is told how recurring instructions can be changed, paused, or stopped.",
         "applicability": {
           "applies": true,
@@ -570,7 +660,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Relevant transfer terms explained",
-        "summary": "The agent explains the processing time for the transfer, which is two to three business days, fulfilling the requirement for relevant transfer terms.",
+        "summary": "The agent explains the processing time for the transfer, stating it usually takes two to three business days, which is relevant information for the customer.",
         "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
         "applicability": {
           "applies": true,
@@ -599,16 +689,15 @@
             "evidence_id": "semantic:transfer.terms_explained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_017",
-              "AGENT_072"
+              "AGENT_017"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 123.22,
-            "end_seconds": 510.92,
+            "end_seconds": 130.78,
             "quote": null,
-            "observation": "AGENT: Our transfers from savings to checking usually take two to three business days to complete. I\nAGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date."
+            "observation": "AGENT: Our transfers from savings to checking usually take two to three business days to complete. I"
           }
         ],
         "counter_evidence": [],
@@ -626,21 +715,32 @@
       }
     ],
     "recommended_action": {
-      "action_type": "none",
-      "execution": "no_action",
-      "label": "No automated action",
-      "reason": "No negative finding qualified for attention.",
-      "finding_ids": [],
+      "action_type": "agent_coaching",
+      "execution": "requires_approval",
+      "label": "Email coaching recommendation to manager",
+      "reason": "Controlling findings: Customer reported an access barrier.",
+      "finding_ids": [
+        "finding-negative-experience-accessibility_barrier"
+      ],
       "automation_allowed": false,
-      "requires_human_approval": false
+      "requires_human_approval": true
     },
     "uncertainties": [],
     "decision_trace": {
       "policy_id": "evaluator-v2-attention",
       "policy_version": "0.1.0",
       "aggregation": "any_qualifying_finding",
-      "qualifications": [],
-      "controlling_finding_ids": [],
+      "qualifications": [
+        {
+          "finding_id": "finding-negative-experience-accessibility_barrier",
+          "qualifies_for_attention": true,
+          "reason": "qualifies_review",
+          "precedence_group": "review.agent_behavior"
+        }
+      ],
+      "controlling_finding_ids": [
+        "finding-negative-experience-accessibility_barrier"
+      ],
       "recovery_finding_ids": [],
       "recovery_effect": "none"
     },
@@ -662,52 +762,57 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1586157",
-    "decision_sha256": "268288a63143ff20d26e0c316e615d771a919a6cae2f88f9a4f3ce060f185151",
-    "state": "no_attention_finding",
+    "decision_sha256": "85bbbd7a9f78cd3078cad00fa22f964155a9041d5713da93b015dad77b3f7ae5",
+    "state": "needs_attention",
     "evaluation_status": "complete",
-    "attention_required": false,
-    "headline": "No review finding identified",
-    "summary": "Applicable rules produced no qualifying negative finding.",
+    "attention_required": true,
+    "headline": "Needs attention",
+    "summary": "One or more evidence-backed findings require review.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "The agent summarizes the transfer details and explains the timeframe for completion before closing the call.",
+        "summary": "The agent restates the customer's request to transfer money from savings to checking, confirming the intent before proceeding.",
         "evidence_ids": [
-          "semantic:outcome.summary_and_next_steps:support",
-          "semantic:transfer.completion_confirmed:support",
           "semantic:request.intent_confirmed:support"
         ]
       },
       {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "All 7 applicable workflow checks were demonstrated.",
+        "summary": "6 applicable process checks were supported by transcript evidence.",
         "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
           "semantic:transfer.recurring_schedule_confirmed:support",
-          "semantic:transfer.accounts_confirmed:support"
+          "semantic:transfer.accounts_confirmed:support",
+          "semantic:transfer.amount_confirmed:support"
         ]
       },
       {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "unclear",
-        "answer_label": "Unable to determine",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "partly",
+        "answer_label": "Partly",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "evidence_ids": [
+          "evidence:experience.accessibility_barrier:CUSTOMER_017",
+          "evidence:experience.accessibility_barrier:CUSTOMER_018",
+          "semantic:interaction.agent_identification:support"
+        ]
       },
       {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent summarizes the completed transfer and explains the timing for the recurring transfer before closing the call.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:transfer.completion_confirmed:support"
+        ]
       }
     ],
     "checklist": [
@@ -716,7 +821,7 @@
         "title": "Agent and organization identified",
         "category": "agent_behavior",
         "status": "demonstrated",
-        "summary": "The agent identifies themselves by stating their name and the organization at the beginning of the call.",
+        "summary": "The agent identifies themselves as Erica Smith and the organization as Central Bank at the beginning of the call.",
         "evidence_ids": [
           "semantic:interaction.agent_identification:support"
         ],
@@ -727,7 +832,7 @@
         "title": "Outcome and next steps summarized",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent summarizes the transfer details and explains the timeframe for completion before closing the call.",
+        "summary": "The agent summarizes the completed transfer and explains the timing for the recurring transfer before closing the call.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -738,7 +843,7 @@
         "title": "Transfer completion confirmed",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent confirms the successful setup of the transfer and recaps the details before closing the call.",
+        "summary": "The agent confirms the successful transfer and recaps the amount and accounts involved, providing a clear confirmation of completion.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -749,7 +854,7 @@
         "title": "Customer request confirmed",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent restates the customer's request for a transfer from savings to checking, confirming their intent before proceeding.",
+        "summary": "The agent restates the customer's request to transfer money from savings to checking, confirming the intent before proceeding.",
         "evidence_ids": [
           "semantic:request.intent_confirmed:support"
         ],
@@ -760,7 +865,7 @@
         "title": "Recurring transfer change path explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information.",
+        "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information for future modifications.",
         "evidence_ids": [
           "semantic:transfer.recurring_change_path_explained:support"
         ],
@@ -771,7 +876,7 @@
         "title": "Relevant transfer terms explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains the processing time for the transfer, which is two to three business days, fulfilling the requirement for relevant transfer terms.",
+        "summary": "The agent explains the processing time for the transfer, stating it usually takes two to three business days, which is relevant information for the customer.",
         "evidence_ids": [
           "semantic:transfer.terms_explained:support"
         ],
@@ -782,7 +887,7 @@
         "title": "Recurring transfer schedule confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The frequency and start timing of the recurring transfer are stated and accepted by the customer.",
+        "summary": "The frequency and start timing for the recurring transfer are explicitly stated and accepted by the customer.",
         "evidence_ids": [
           "semantic:transfer.recurring_schedule_confirmed:support"
         ],
@@ -793,7 +898,7 @@
         "title": "Source and destination accounts confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent and customer confirm the source and destination account types and identifiers during the transfer process.",
+        "summary": "The agent and customer confirm the source and destination accounts for the transfer, ensuring clarity on both accounts involved.",
         "evidence_ids": [
           "semantic:transfer.accounts_confirmed:support"
         ],
@@ -804,7 +909,7 @@
         "title": "Transfer amount confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer explicitly states the amount to be transferred, and the agent confirms it before proceeding.",
+        "summary": "The customer explicitly states the amount to be transferred as $482.62, and the agent confirms this amount before proceeding.",
         "evidence_ids": [
           "semantic:transfer.amount_confirmed:support"
         ],
@@ -815,7 +920,7 @@
         "title": "Customer authorizes the transfer",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer gives clear approval for the transfer after the amount and accounts are established.",
+        "summary": "The customer gives clear approval for the transfer after the amount, accounts, and timing are stated by the agent.",
         "evidence_ids": [
           "semantic:transfer.authorization_obtained:support"
         ],
@@ -828,7 +933,22 @@
       "conclusion": "No sustained vocal-friction pattern crossed the provisional support gate.",
       "observations": []
     },
-    "primary_reasons": [],
+    "primary_reasons": [
+      {
+        "finding_id": "finding-negative-experience-accessibility_barrier",
+        "category": "agent_behavior",
+        "category_label": "Agent handling",
+        "title": "Customer reported an access barrier",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "evidence_ids": [
+          "evidence:experience.accessibility_barrier:CUSTOMER_017",
+          "evidence:experience.accessibility_barrier:CUSTOMER_018"
+        ],
+        "counter_evidence_count": 1,
+        "reliability_note": null,
+        "outcome": "incorrect"
+      }
+    ],
     "additional_reason_count": 0,
     "positive_highlights": [
       {
@@ -836,7 +956,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the transfer details and explains the timeframe for completion before closing the call.",
+        "summary": "The agent summarizes the completed transfer and explains the timing for the recurring transfer before closing the call.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -849,7 +969,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirms the successful setup of the transfer and recaps the details before closing the call.",
+        "summary": "The agent confirms the successful transfer and recaps the amount and accounts involved, providing a clear confirmation of completion.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -859,8 +979,68 @@
       }
     ],
     "additional_positive_count": 8,
-    "recommended_action": null,
+    "recommended_action": {
+      "action_type": "agent_coaching",
+      "execution": "requires_approval",
+      "label": "Email coaching recommendation to manager",
+      "execution_label": "Manager approval required before email delivery",
+      "basis_finding_ids": [
+        "finding-negative-experience-accessibility_barrier"
+      ],
+      "automation_allowed": false,
+      "requires_human_approval": true,
+      "delivery": "email",
+      "audience": "manager"
+    },
     "evidence": [
+      {
+        "evidence_id": "semantic:transfer.completion_confirmed:support",
+        "finding_ids": [
+          "finding-positive-outcome-transfer_confirmed"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 164.98,
+        "end_seconds": 180.24,
+        "text": "AGENT: So $482 .62 has been transferred, Ms. Richards, from your savings account, 4 -6 -5 -8 -7 -3 -2 -2 to your checking account that you have and file.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "evidence:experience.accessibility_barrier:CUSTOMER_017",
+        "finding_ids": [
+          "finding-negative-experience-accessibility_barrier"
+        ],
+        "purposes": [
+          "reason"
+        ],
+        "kind": "transcript",
+        "speaker": "customer",
+        "start_seconds": 219.24,
+        "end_seconds": 221.76,
+        "text": "thing is, I can't go to the bank physically myself.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "evidence:experience.accessibility_barrier:CUSTOMER_018",
+        "finding_ids": [
+          "finding-negative-experience-accessibility_barrier"
+        ],
+        "purposes": [
+          "reason"
+        ],
+        "kind": "transcript",
+        "speaker": "customer",
+        "start_seconds": 221.9,
+        "end_seconds": 222.7,
+        "text": "I'm in a wheelchair.",
+        "seekable": true,
+        "supporting_only": false
+      },
       {
         "evidence_id": "semantic:outcome.summary_and_next_steps:support",
         "finding_ids": [
@@ -872,24 +1052,8 @@
         "kind": "transcript",
         "speaker": "agent",
         "start_seconds": 501.96,
-        "end_seconds": 510.92,
-        "text": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date.",
-        "seekable": true,
-        "supporting_only": false
-      },
-      {
-        "evidence_id": "semantic:transfer.completion_confirmed:support",
-        "finding_ids": [
-          "finding-positive-outcome-transfer_confirmed"
-        ],
-        "purposes": [
-          "positive"
-        ],
-        "kind": "transcript",
-        "speaker": "agent",
-        "start_seconds": 501.96,
-        "end_seconds": 510.92,
-        "text": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date.",
+        "end_seconds": 520.74,
+        "text": "AGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date.\nAGENT: So if you want to extend prior to ending, you would have to contact us again so that we can reschedule the automatic transfers.",
         "seekable": true,
         "supporting_only": false
       }
@@ -903,7 +1067,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Recurring transfer schedule confirmed",
-          "summary": "The frequency and start timing of the recurring transfer are stated and accepted by the customer.",
+          "summary": "The frequency and start timing for the recurring transfer are explicitly stated and accepted by the customer.",
           "evidence_ids": [
             "semantic:transfer.recurring_schedule_confirmed:support"
           ],
@@ -916,7 +1080,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Source and destination accounts confirmed",
-          "summary": "The agent and customer confirm the source and destination account types and identifiers during the transfer process.",
+          "summary": "The agent and customer confirm the source and destination accounts for the transfer, ensuring clarity on both accounts involved.",
           "evidence_ids": [
             "semantic:transfer.accounts_confirmed:support"
           ],
@@ -929,7 +1093,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Transfer amount confirmed",
-          "summary": "The customer explicitly states the amount to be transferred, and the agent confirms it before proceeding.",
+          "summary": "The customer explicitly states the amount to be transferred as $482.62, and the agent confirms this amount before proceeding.",
           "evidence_ids": [
             "semantic:transfer.amount_confirmed:support"
           ],
@@ -942,7 +1106,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Customer authorizes the transfer",
-          "summary": "The customer gives clear approval for the transfer after the amount and accounts are established.",
+          "summary": "The customer gives clear approval for the transfer after the amount, accounts, and timing are stated by the agent.",
           "evidence_ids": [
             "semantic:transfer.authorization_obtained:support"
           ],
@@ -955,7 +1119,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Customer request confirmed",
-          "summary": "The agent restates the customer's request for a transfer from savings to checking, confirming their intent before proceeding.",
+          "summary": "The agent restates the customer's request to transfer money from savings to checking, confirming the intent before proceeding.",
           "evidence_ids": [
             "semantic:request.intent_confirmed:support"
           ],
@@ -968,7 +1132,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Recurring transfer change path explained",
-          "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information.",
+          "summary": "The agent explains how the customer can change or cancel the recurring transfer, providing necessary information for future modifications.",
           "evidence_ids": [
             "semantic:transfer.recurring_change_path_explained:support"
           ],
@@ -981,7 +1145,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Relevant transfer terms explained",
-          "summary": "The agent explains the processing time for the transfer, which is two to three business days, fulfilling the requirement for relevant transfer terms.",
+          "summary": "The agent explains the processing time for the transfer, stating it usually takes two to three business days, which is relevant information for the customer.",
           "evidence_ids": [
             "semantic:transfer.terms_explained:support"
           ],
@@ -994,7 +1158,7 @@
           "category": "agent_behavior",
           "category_label": "Agent handling",
           "title": "Agent and organization identified",
-          "summary": "The agent identifies themselves by stating their name and the organization at the beginning of the call.",
+          "summary": "The agent identifies themselves as Erica Smith and the organization as Central Bank at the beginning of the call.",
           "evidence_ids": [
             "semantic:interaction.agent_identification:support"
           ],
@@ -1063,8 +1227,8 @@
           "kind": "transcript",
           "speaker": "agent",
           "start_seconds": 123.22,
-          "end_seconds": 510.92,
-          "text": "AGENT: Our transfers from savings to checking usually take two to three business days to complete. I\nAGENT: Also, please note that this transfer, this recurring transfer, does have an expiration date of three years from today's date.",
+          "end_seconds": 130.78,
+          "text": "AGENT: Our transfers from savings to checking usually take two to three business days to complete. I",
           "seekable": true,
           "supporting_only": false
         },
@@ -1078,25 +1242,9 @@
           ],
           "kind": "transcript",
           "speaker": "customer",
-          "start_seconds": 156.55,
-          "end_seconds": 157.43,
-          "text": "CUSTOMER: Yes, continue.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
-          "finding_ids": [
-            "finding-positive-control-recurring_schedule_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": null,
-          "start_seconds": 415.04,
-          "end_seconds": 471.68,
-          "text": "AGENT: So just to be clear, you will be transferring from your savings account four, six, five, eight, seven, three, two, two.\nCUSTOMER: Yes, on the 20th of every month.",
+          "start_seconds": 181.66,
+          "end_seconds": 184.9,
+          "text": "CUSTOMER: And there's really no way that you can speed this up.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1113,6 +1261,22 @@
           "start_seconds": 463.4,
           "end_seconds": 479.66,
           "text": "AGENT: So just to be clear, you will be transferring from your savings account four, six, five, eight, seven, three, two, two.\nAGENT: Your checking account number five, six, four, three, six, three, eight, two.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-recurring_schedule_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 480.45,
+          "end_seconds": 490.53,
+          "text": "AGENT: A total of three hundred and fifty -two dollars and eighty -six cents on a monthly basis, scheduled every 17th of the month.\nCUSTOMER: Yes, man.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1160,7 +1324,7 @@
   "comparison": {
     "comparable": true,
     "reason": "Both evaluators produced a complete attention value under their named policies.",
-    "attention_agreement": false
+    "attention_agreement": true
   },
   "limitations": [
     "research_domain_profile",

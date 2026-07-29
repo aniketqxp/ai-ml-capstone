@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_CA_Banking_1592237:v2:5f3f5ce6c30b1256",
+  "run_id": "en_CA_Banking_1592237:v2:fc9402d3b9d3eb37",
   "call_id": "en_CA_Banking_1592237",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "3a5c28b8f027adfc94ef727174bdd2e7291c82c86fe67098b3398e105d7628d8",
+  "decision_sha256": "748b43228c8d801f0d759d1787de1276bd48f7abd2524ccef84d31da63f27f23",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_CA_Banking_1592237",
@@ -87,7 +87,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer consents to account opening",
-        "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
+        "summary": "The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
         "business_definition": "The customer explicitly agrees to open the account after relevant terms are discussed.",
         "applicability": {
           "applies": true,
@@ -116,15 +116,16 @@
             "evidence_id": "semantic:account.opening_consent:support",
             "modality": "transcript",
             "segment_ids": [
-              "CUSTOMER_022"
+              "CUSTOMER_022",
+              "CUSTOMER_023"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "customer",
             "start_seconds": 559.04,
-            "end_seconds": 565.62,
+            "end_seconds": 600.73,
             "quote": null,
-            "observation": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account."
+            "observation": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account.\nCUSTOMER: Yes, I think I'd like to go ahead with that as well."
           }
         ],
         "counter_evidence": [],
@@ -208,7 +209,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Account opening confirmed",
-        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for the customer.",
         "business_definition": "The customer receives confirmation of the account outcome and access next steps.",
         "applicability": {
           "applies": true,
@@ -268,7 +269,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -297,17 +298,17 @@
             "evidence_id": "semantic:outcome.summary_and_next_steps:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_054",
               "AGENT_056",
-              "AGENT_058"
+              "AGENT_057",
+              "AGENT_066"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 518.01,
-            "end_seconds": 555.5,
+            "start_seconds": 531.79,
+            "end_seconds": 616.23,
             "quote": null,
-            "observation": "AGENT: Oh no, this is not a long process at all since we already have many of your information on file from the credit card.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: You'll have to create a pin, which all the instructions will be done there, and will be in the envelope once you receive your card."
+            "observation": "AGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it.\nAGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts."
           }
         ],
         "counter_evidence": [],
@@ -330,7 +331,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Checking-account terms explained",
-        "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
+        "summary": "The agent explains that there are no fees associated with the checking account, which is a relevant term for the customer.",
         "business_definition": "The customer receives the material account features, fees, and usage conditions relevant to the request.",
         "applicability": {
           "applies": true,
@@ -392,7 +393,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer request confirmed",
-        "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
+        "summary": "The agent acknowledges the customer's request to open a checking account linked to their credit card.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -545,7 +546,7 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_CA_Banking_1592237",
-    "decision_sha256": "3a5c28b8f027adfc94ef727174bdd2e7291c82c86fe67098b3398e105d7628d8",
+    "decision_sha256": "748b43228c8d801f0d759d1787de1276bd48f7abd2524ccef84d31da63f27f23",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
@@ -553,44 +554,47 @@
     "summary": "Applicable rules produced no qualifying negative finding.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "summary": "The agent acknowledges the customer's request to open a checking account linked to their credit card.",
         "evidence_ids": [
-          "semantic:account.opening_confirmation:support",
-          "semantic:outcome.summary_and_next_steps:support",
           "semantic:request.intent_confirmed:support"
         ]
       },
       {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "All 5 applicable workflow checks were demonstrated.",
+        "summary": "4 applicable process checks were supported by transcript evidence.",
         "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
           "semantic:account.opening_consent:support",
-          "semantic:security.account_opening_identity_verified:support"
+          "semantic:security.account_opening_identity_verified:support",
+          "semantic:account.product_terms_explained:support"
         ]
       },
       {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "no",
-        "answer_label": "No concern identified",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ]
       },
       {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for the customer.",
+        "evidence_ids": [
+          "semantic:account.opening_confirmation:support",
+          "semantic:outcome.summary_and_next_steps:support"
+        ]
       }
     ],
     "checklist": [
@@ -610,7 +614,7 @@
         "title": "Account opening confirmed",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for the customer.",
         "evidence_ids": [
           "semantic:account.opening_confirmation:support"
         ],
@@ -621,7 +625,7 @@
         "title": "Outcome and next steps summarized",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -632,7 +636,7 @@
         "title": "Checking-account terms explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
+        "summary": "The agent explains that there are no fees associated with the checking account, which is a relevant term for the customer.",
         "evidence_ids": [
           "semantic:account.product_terms_explained:support"
         ],
@@ -643,7 +647,7 @@
         "title": "Customer request confirmed",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
+        "summary": "The agent acknowledges the customer's request to open a checking account linked to their credit card.",
         "evidence_ids": [
           "semantic:request.intent_confirmed:support"
         ],
@@ -665,7 +669,7 @@
         "title": "Customer consents to account opening",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
+        "summary": "The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
         "evidence_ids": [
           "semantic:account.opening_consent:support"
         ],
@@ -697,7 +701,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Account opening confirmed",
-        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for the customer.",
         "evidence_ids": [
           "semantic:account.opening_confirmation:support"
         ],
@@ -710,7 +714,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -732,9 +736,9 @@
         ],
         "kind": "transcript",
         "speaker": "agent",
-        "start_seconds": 518.01,
-        "end_seconds": 555.5,
-        "text": "AGENT: Oh no, this is not a long process at all since we already have many of your information on file from the credit card.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: You'll have to create a pin, which all the instructions will be done there, and will be in the envelope once you receive your card.",
+        "start_seconds": 531.79,
+        "end_seconds": 616.23,
+        "text": "AGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it.\nAGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.",
         "seekable": true,
         "supporting_only": false
       },
@@ -764,7 +768,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Customer consents to account opening",
-          "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
+          "summary": "The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
           "evidence_ids": [
             "semantic:account.opening_consent:support"
           ],
@@ -790,7 +794,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Checking-account terms explained",
-          "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
+          "summary": "The agent explains that there are no fees associated with the checking account, which is a relevant term for the customer.",
           "evidence_ids": [
             "semantic:account.product_terms_explained:support"
           ],
@@ -803,7 +807,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Customer request confirmed",
-          "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
+          "summary": "The agent acknowledges the customer's request to open a checking account linked to their credit card.",
           "evidence_ids": [
             "semantic:request.intent_confirmed:support"
           ],
@@ -930,8 +934,8 @@
           "kind": "transcript",
           "speaker": "customer",
           "start_seconds": 559.04,
-          "end_seconds": 565.62,
-          "text": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account.",
+          "end_seconds": 600.73,
+          "text": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account.\nCUSTOMER: Yes, I think I'd like to go ahead with that as well.",
           "seekable": true,
           "supporting_only": false
         }

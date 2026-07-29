@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1586893:v2:fefcc80119700840",
+  "run_id": "en_US_General_Banking_1586893:v2:4e495eec7e7d90a7",
   "call_id": "en_US_General_Banking_1586893",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "9f871d6982dd9d11c0b544b26a697b6386736f317b71b0c5a0aa957e8b9e160a",
+  "decision_sha256": "4b51bb698fcd2cda978eeac89d6b13159a42146c8db91341cfdb68f1d31f1a19",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1586893",
@@ -116,16 +116,16 @@
             "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "CUSTOMER_015",
-              "AGENT_063"
+              "AGENT_063",
+              "CUSTOMER_029"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": null,
-            "start_seconds": 184.28,
-            "end_seconds": 402.32,
+            "start_seconds": 396.44,
+            "end_seconds": 405.66,
             "quote": null,
-            "observation": "CUSTOMER: Let's say the fifth of next month, then that should give my paycheck time to clear.\nAGENT: The frequency is going to be monthly on the fifth starting next month and it's ongoing until canceled."
+            "observation": "AGENT: The frequency is going to be monthly on the fifth starting next month and it's ongoing until canceled.\nCUSTOMER: Yes."
           }
         ],
         "counter_evidence": [],
@@ -177,16 +177,17 @@
             "evidence_id": "semantic:transfer.accounts_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_032",
-              "AGENT_061"
+              "AGENT_028",
+              "CUSTOMER_014",
+              "CUSTOMER_032"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 192.64,
-            "end_seconds": 390.6,
+            "speaker": null,
+            "start_seconds": 159.32,
+            "end_seconds": 418.96,
             "quote": null,
-            "observation": "AGENT: Perfect.\nAGENT: So just to confirm with you here, the transfer amount is 750 US dollars."
+            "observation": "AGENT: So it looks like your Summit everyday checking and your goal builder savings account.\nCUSTOMER: and let's start with $150 per month.\nCUSTOMER: Yeah, that's all correct."
           }
         ],
         "counter_evidence": [],
@@ -270,7 +271,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer authorizes the transfer",
-        "summary": "The customer gives clear approval after the material transfer details are established.",
+        "summary": "The customer gives clear approval after the transfer details are established.",
         "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
         "applicability": {
           "applies": true,
@@ -299,15 +300,16 @@
             "evidence_id": "semantic:transfer.authorization_obtained:support",
             "modality": "transcript",
             "segment_ids": [
-              "CUSTOMER_029"
+              "CUSTOMER_029",
+              "CUSTOMER_032"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "customer",
             "start_seconds": 405.66,
-            "end_seconds": 405.66,
+            "end_seconds": 418.96,
             "quote": null,
-            "observation": "CUSTOMER: Yes."
+            "observation": "CUSTOMER: Yes.\nCUSTOMER: Yeah, that's all correct."
           }
         ],
         "counter_evidence": [],
@@ -360,6 +362,7 @@
             "modality": "transcript",
             "segment_ids": [
               "AGENT_107",
+              "AGENT_108",
               "AGENT_109"
             ],
             "signal_ids": [],
@@ -368,7 +371,7 @@
             "start_seconds": 612.22,
             "end_seconds": 626.82,
             "quote": null,
-            "observation": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime."
+            "observation": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The first transfer will begin on November 5th next month.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime."
           }
         ],
         "counter_evidence": [],
@@ -481,15 +484,16 @@
             "evidence_id": "semantic:request.intent_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_018"
+              "AGENT_018",
+              "CUSTOMER_010"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
+            "speaker": null,
             "start_seconds": 101.46,
-            "end_seconds": 104.64,
+            "end_seconds": 107.44,
             "quote": null,
-            "observation": "AGENT: So you'd like to set up a recurring transfer from checking to savings."
+            "observation": "AGENT: So you'd like to set up a recurring transfer from checking to savings.\nCUSTOMER: Yes."
           }
         ],
         "counter_evidence": [],
@@ -512,7 +516,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Recurring transfer change path explained",
-        "summary": "The agent explains how the customer can pause or adjust the recurring transfers.",
+        "summary": "The agent explains how the customer can pause or change the recurring transfer.",
         "business_definition": "The customer is told how recurring instructions can be changed, paused, or stopped.",
         "applicability": {
           "applies": true,
@@ -541,15 +545,16 @@
             "evidence_id": "semantic:transfer.recurring_change_path_explained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_092"
+              "AGENT_092",
+              "AGENT_093"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 540.21,
-            "end_seconds": 547.97,
+            "end_seconds": 552.21,
             "quote": null,
-            "observation": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card."
+            "observation": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card.\nAGENT: When paused, it will skip that month's transfer, but it won't delete the schedule."
           }
         ],
         "counter_evidence": [],
@@ -572,7 +577,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Relevant transfer terms explained",
-        "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause transfers.",
+        "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause them.",
         "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
         "applicability": {
           "applies": true,
@@ -602,15 +607,15 @@
             "modality": "transcript",
             "segment_ids": [
               "AGENT_042",
-              "AGENT_092"
+              "AGENT_050"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 240.66,
-            "end_seconds": 547.97,
+            "end_seconds": 315.9,
             "quote": null,
-            "observation": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.\nAGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card."
+            "observation": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.\nAGENT: Super easy."
           }
         ],
         "counter_evidence": [],
@@ -664,7 +669,7 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1586893",
-    "decision_sha256": "9f871d6982dd9d11c0b544b26a697b6386736f317b71b0c5a0aa957e8b9e160a",
+    "decision_sha256": "4b51bb698fcd2cda978eeac89d6b13159a42146c8db91341cfdb68f1d31f1a19",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
@@ -672,44 +677,47 @@
     "summary": "Applicable rules produced no qualifying negative finding.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent confirms the customer's request to set up a recurring transfer before proceeding.",
+        "evidence_ids": [
+          "semantic:request.intent_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "6 applicable process checks were supported by transcript evidence.",
+        "evidence_ids": [
+          "semantic:transfer.recurring_schedule_confirmed:support",
+          "semantic:transfer.accounts_confirmed:support",
+          "semantic:transfer.amount_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ]
+      },
+      {
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
         "answer": "yes",
         "answer_label": "Yes",
         "summary": "The agent summarizes the completed actions and explains the next steps before closing the call.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support",
-          "semantic:transfer.completion_confirmed:support",
-          "semantic:request.intent_confirmed:support"
+          "semantic:transfer.completion_confirmed:support"
         ]
-      },
-      {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
-        "answer": "yes",
-        "answer_label": "Yes",
-        "summary": "All 7 applicable workflow checks were demonstrated.",
-        "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
-          "semantic:transfer.recurring_schedule_confirmed:support",
-          "semantic:transfer.accounts_confirmed:support"
-        ]
-      },
-      {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "unclear",
-        "answer_label": "Unable to determine",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
-      },
-      {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
       }
     ],
     "checklist": [
@@ -762,7 +770,7 @@
         "title": "Recurring transfer change path explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains how the customer can pause or adjust the recurring transfers.",
+        "summary": "The agent explains how the customer can pause or change the recurring transfer.",
         "evidence_ids": [
           "semantic:transfer.recurring_change_path_explained:support"
         ],
@@ -773,7 +781,7 @@
         "title": "Relevant transfer terms explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause transfers.",
+        "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause them.",
         "evidence_ids": [
           "semantic:transfer.terms_explained:support"
         ],
@@ -817,7 +825,7 @@
         "title": "Customer authorizes the transfer",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer gives clear approval after the material transfer details are established.",
+        "summary": "The customer gives clear approval after the transfer details are established.",
         "evidence_ids": [
           "semantic:transfer.authorization_obtained:support"
         ],
@@ -891,7 +899,7 @@
         "speaker": "agent",
         "start_seconds": 612.22,
         "end_seconds": 626.82,
-        "text": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime.",
+        "text": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The first transfer will begin on November 5th next month.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime.",
         "seekable": true,
         "supporting_only": false
       }
@@ -944,7 +952,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Customer authorizes the transfer",
-          "summary": "The customer gives clear approval after the material transfer details are established.",
+          "summary": "The customer gives clear approval after the transfer details are established.",
           "evidence_ids": [
             "semantic:transfer.authorization_obtained:support"
           ],
@@ -970,7 +978,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Recurring transfer change path explained",
-          "summary": "The agent explains how the customer can pause or adjust the recurring transfers.",
+          "summary": "The agent explains how the customer can pause or change the recurring transfer.",
           "evidence_ids": [
             "semantic:transfer.recurring_change_path_explained:support"
           ],
@@ -983,7 +991,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Relevant transfer terms explained",
-          "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause transfers.",
+          "summary": "The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause them.",
           "evidence_ids": [
             "semantic:transfer.terms_explained:support"
           ],
@@ -1031,10 +1039,26 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
+          "speaker": null,
           "start_seconds": 101.46,
-          "end_seconds": 104.64,
-          "text": "AGENT: So you'd like to set up a recurring transfer from checking to savings.",
+          "end_seconds": 107.44,
+          "text": "AGENT: So you'd like to set up a recurring transfer from checking to savings.\nCUSTOMER: Yes.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.accounts_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-transfer_accounts_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 159.32,
+          "end_seconds": 418.96,
+          "text": "AGENT: So it looks like your Summit everyday checking and your goal builder savings account.\nCUSTOMER: and let's start with $150 per month.\nCUSTOMER: Yeah, that's all correct.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1055,38 +1079,6 @@
           "supporting_only": false
         },
         {
-          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
-          "finding_ids": [
-            "finding-positive-control-recurring_schedule_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": null,
-          "start_seconds": 184.28,
-          "end_seconds": 402.32,
-          "text": "CUSTOMER: Let's say the fifth of next month, then that should give my paycheck time to clear.\nAGENT: The frequency is going to be monthly on the fifth starting next month and it's ongoing until canceled.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:transfer.accounts_confirmed:support",
-          "finding_ids": [
-            "finding-positive-control-transfer_accounts_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 192.64,
-          "end_seconds": 390.6,
-          "text": "AGENT: Perfect.\nAGENT: So just to confirm with you here, the transfer amount is 750 US dollars.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
           "evidence_id": "semantic:transfer.terms_explained:support",
           "finding_ids": [
             "finding-positive-process-transfer_terms_explained"
@@ -1097,8 +1089,24 @@
           "kind": "transcript",
           "speaker": "agent",
           "start_seconds": 240.66,
-          "end_seconds": 547.97,
-          "text": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.\nAGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card.",
+          "end_seconds": 315.9,
+          "text": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.\nAGENT: Super easy.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-recurring_schedule_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 396.44,
+          "end_seconds": 405.66,
+          "text": "AGENT: The frequency is going to be monthly on the fifth starting next month and it's ongoing until canceled.\nCUSTOMER: Yes.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1113,8 +1121,8 @@
           "kind": "transcript",
           "speaker": "customer",
           "start_seconds": 405.66,
-          "end_seconds": 405.66,
-          "text": "CUSTOMER: Yes.",
+          "end_seconds": 418.96,
+          "text": "CUSTOMER: Yes.\nCUSTOMER: Yeah, that's all correct.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1129,8 +1137,8 @@
           "kind": "transcript",
           "speaker": "agent",
           "start_seconds": 540.21,
-          "end_seconds": 547.97,
-          "text": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card.",
+          "end_seconds": 552.21,
+          "text": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card.\nAGENT: When paused, it will skip that month's transfer, but it won't delete the schedule.",
           "seekable": true,
           "supporting_only": false
         }

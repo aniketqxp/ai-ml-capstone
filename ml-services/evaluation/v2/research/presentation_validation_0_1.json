@@ -316,13 +316,13 @@
           "Transfer completion confirmed"
         ],
         "evidence_locations_seconds": [
-          16.0,
+          8.0,
           24.0,
           24.0
         ],
         "positive_handling": [
           "Outcome and next steps summarized",
-          "Source and destination accounts confirmed"
+          "Customer identity verified before transaction access"
         ],
         "action": "Prepare customer follow-up email",
         "completeness": "complete"
@@ -370,9 +370,12 @@
     {
       "call_id": "challenge-control-identity-missing",
       "answer_key": {
-        "attention_state": "no_attention_finding",
-        "reasons": [],
+        "attention_state": "needs_attention",
+        "reasons": [
+          "Customer identity verified before transaction access"
+        ],
         "evidence_locations_seconds": [
+          8.0,
           24.0,
           24.0
         ],
@@ -380,7 +383,7 @@
           "Outcome and next steps summarized",
           "Transfer completion confirmed"
         ],
-        "action": null,
+        "action": "Email manager review summary",
         "completeness": "complete"
       },
       "check": {

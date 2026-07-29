@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_CA_Banking_1586889:v2:fa550c4fd37d8603",
+  "run_id": "en_CA_Banking_1586889:v2:47f3025f068a3c66",
   "call_id": "en_CA_Banking_1586889",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "7953b1d29b95b7cf7a72f11fce068886f66f0913cb505d25746a533ad6baf7b7",
+  "decision_sha256": "be2e78b205e02bc1c8b72731291d961d1b3c49ad92425b5889b4894a87877f06",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_CA_Banking_1586889",
@@ -26,7 +26,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Agent and organization identified",
-        "summary": "The agent identified themselves and the organization at the beginning of the call.",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -87,7 +87,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Recurring transfer schedule confirmed",
-        "summary": "The frequency and start timing of the recurring transfer were confirmed with the customer.",
+        "summary": "The frequency and start timing of the recurring transfer are confirmed by the customer.",
         "business_definition": "Frequency, start timing, and any applicable end condition are explicit.",
         "applicability": {
           "applies": true,
@@ -116,15 +116,16 @@
             "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_016"
+              "AGENT_016",
+              "CUSTOMER_013"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
+            "speaker": null,
             "start_seconds": 132.03,
-            "end_seconds": 146.35,
+            "end_seconds": 148.05,
             "quote": null,
-            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November."
+            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right."
           }
         ],
         "counter_evidence": [],
@@ -147,7 +148,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Source and destination accounts confirmed",
-        "summary": "The agent confirmed the source and destination accounts for the transfer with the customer.",
+        "summary": "The agent and customer confirm the source and destination accounts for the transfer.",
         "business_definition": "The transfer direction and both participating accounts are unambiguous.",
         "applicability": {
           "applies": true,
@@ -176,15 +177,16 @@
             "evidence_id": "semantic:transfer.accounts_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_016"
+              "AGENT_016",
+              "CUSTOMER_013"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
+            "speaker": null,
             "start_seconds": 132.03,
-            "end_seconds": 146.35,
+            "end_seconds": 148.05,
             "quote": null,
-            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November."
+            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right."
           }
         ],
         "counter_evidence": [],
@@ -207,7 +209,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer amount confirmed",
-        "summary": "The agent confirmed the transfer amount of $400 with the customer before proceeding.",
+        "summary": "The amount of $400 is confirmed by the customer before the transfer is set up.",
         "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
         "applicability": {
           "applies": true,
@@ -236,15 +238,16 @@
             "evidence_id": "semantic:transfer.amount_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_014"
+              "AGENT_016",
+              "CUSTOMER_013"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 110.67,
-            "end_seconds": 110.67,
+            "speaker": null,
+            "start_seconds": 132.03,
+            "end_seconds": 148.05,
             "quote": null,
-            "observation": "AGENT: Great."
+            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right."
           }
         ],
         "counter_evidence": [],
@@ -267,7 +270,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer authorizes the transfer",
-        "summary": "The customer explicitly agreed to the transfer details after they were established.",
+        "summary": "The customer explicitly agrees to the transfer details after they are stated by the agent.",
         "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
         "applicability": {
           "applies": true,
@@ -296,15 +299,16 @@
             "evidence_id": "semantic:transfer.authorization_obtained:support",
             "modality": "transcript",
             "segment_ids": [
+              "AGENT_016",
               "CUSTOMER_013"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "customer",
-            "start_seconds": 147.67,
+            "speaker": null,
+            "start_seconds": 132.03,
             "end_seconds": 148.05,
             "quote": null,
-            "observation": "CUSTOMER: That's right."
+            "observation": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right."
           }
         ],
         "counter_evidence": [],
@@ -327,7 +331,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarized the actions taken and explained the next steps before closing the call.",
+        "summary": "The agent summarizes the actions taken and explains the next steps before closing the call.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -389,7 +393,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirmed the successful setup of the transfer and recapped the details.",
+        "summary": "The agent confirms that the transfer has been set up successfully and recaps the details.",
         "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
         "applicability": {
           "applies": true,
@@ -418,15 +422,17 @@
             "evidence_id": "semantic:transfer.completion_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
+              "AGENT_018",
+              "AGENT_022",
               "AGENT_023"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 176.84,
+            "start_seconds": 153.52,
             "end_seconds": 185.06,
             "quote": null,
-            "observation": "AGENT: So the first transfer will be scheduled for November 2, 2025 in the amount of $400 Canadian dollars."
+            "observation": "AGENT: Okay, that's been entered.\nAGENT: Okay, all set.\nAGENT: So the first transfer will be scheduled for November 2, 2025 in the amount of $400 Canadian dollars."
           }
         ],
         "counter_evidence": [],
@@ -449,7 +455,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer request confirmed",
-        "summary": "The agent confirmed the customer's request to set up an automatic transfer before proceeding.",
+        "summary": "The agent confirms the customer's request to set up an automatic transfer before proceeding.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -478,15 +484,16 @@
             "evidence_id": "semantic:request.intent_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_010"
+              "AGENT_010",
+              "CUSTOMER_007"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
+            "speaker": null,
             "start_seconds": 74.93,
-            "end_seconds": 80.35,
+            "end_seconds": 82.13,
             "quote": null,
-            "observation": "AGENT: So you'd like to set up an automatic transfer from your checking to your new savings account, correct?"
+            "observation": "AGENT: So you'd like to set up an automatic transfer from your checking to your new savings account, correct?\nCUSTOMER: right."
           }
         ],
         "counter_evidence": [],
@@ -509,7 +516,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Recurring transfer change path explained",
-        "summary": "The agent explained how the customer can change or pause the recurring transfer.",
+        "summary": "The agent explains how the customer can pause or change the recurring transfer.",
         "business_definition": "The customer is told how recurring instructions can be changed, paused, or stopped.",
         "applicability": {
           "applies": true,
@@ -538,15 +545,16 @@
             "evidence_id": "semantic:transfer.recurring_change_path_explained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_030"
+              "AGENT_038",
+              "AGENT_040"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 234.03,
-            "end_seconds": 239.21,
+            "start_seconds": 305.28,
+            "end_seconds": 314.82,
             "quote": null,
-            "observation": "AGENT: So you can just adjust or cancel the transfer at any time through the mobile app or online banking."
+            "observation": "AGENT: Yeah, absolutely.\nAGENT: So you can do that on your online account or by giving us a quick call."
           }
         ],
         "counter_evidence": [],
@@ -569,7 +577,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Relevant transfer terms explained",
-        "summary": "The agent explained the relevant transfer terms, including the timing and limits.",
+        "summary": "The agent explains the limits and conditions related to the transfer, including the maximum amount.",
         "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
         "applicability": {
           "applies": true,
@@ -598,15 +606,16 @@
             "evidence_id": "semantic:transfer.terms_explained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_027"
+              "AGENT_027",
+              "AGENT_028"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 207.31,
-            "end_seconds": 217.19,
+            "end_seconds": 221.8,
             "quote": null,
-            "observation": "AGENT: So for the regular checking and savings account, like yours, so the maximum automated transfer is $10 ,000 per month."
+            "observation": "AGENT: So for the regular checking and savings account, like yours, so the maximum automated transfer is $10 ,000 per month.\nAGENT: So since you're transferring $400, you're well within the limit."
           }
         ],
         "counter_evidence": [],
@@ -660,7 +669,7 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_CA_Banking_1586889",
-    "decision_sha256": "7953b1d29b95b7cf7a72f11fce068886f66f0913cb505d25746a533ad6baf7b7",
+    "decision_sha256": "be2e78b205e02bc1c8b72731291d961d1b3c49ad92425b5889b4894a87877f06",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
@@ -668,44 +677,47 @@
     "summary": "Applicable rules produced no qualifying negative finding.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "The agent summarized the actions taken and explained the next steps before closing the call.",
+        "summary": "The agent confirms the customer's request to set up an automatic transfer before proceeding.",
         "evidence_ids": [
-          "semantic:outcome.summary_and_next_steps:support",
-          "semantic:transfer.completion_confirmed:support",
           "semantic:request.intent_confirmed:support"
         ]
       },
       {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "All 7 applicable workflow checks were demonstrated.",
+        "summary": "6 applicable process checks were supported by transcript evidence.",
         "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
           "semantic:transfer.recurring_schedule_confirmed:support",
-          "semantic:transfer.accounts_confirmed:support"
+          "semantic:transfer.accounts_confirmed:support",
+          "semantic:transfer.amount_confirmed:support"
         ]
       },
       {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "unclear",
-        "answer_label": "Unable to determine",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ]
       },
       {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent summarizes the actions taken and explains the next steps before closing the call.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:transfer.completion_confirmed:support"
+        ]
       }
     ],
     "checklist": [
@@ -714,7 +726,7 @@
         "title": "Agent and organization identified",
         "category": "agent_behavior",
         "status": "demonstrated",
-        "summary": "The agent identified themselves and the organization at the beginning of the call.",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
         "evidence_ids": [
           "semantic:interaction.agent_identification:support"
         ],
@@ -725,7 +737,7 @@
         "title": "Outcome and next steps summarized",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent summarized the actions taken and explained the next steps before closing the call.",
+        "summary": "The agent summarizes the actions taken and explains the next steps before closing the call.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -736,7 +748,7 @@
         "title": "Transfer completion confirmed",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent confirmed the successful setup of the transfer and recapped the details.",
+        "summary": "The agent confirms that the transfer has been set up successfully and recaps the details.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -747,7 +759,7 @@
         "title": "Customer request confirmed",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent confirmed the customer's request to set up an automatic transfer before proceeding.",
+        "summary": "The agent confirms the customer's request to set up an automatic transfer before proceeding.",
         "evidence_ids": [
           "semantic:request.intent_confirmed:support"
         ],
@@ -758,7 +770,7 @@
         "title": "Recurring transfer change path explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explained how the customer can change or pause the recurring transfer.",
+        "summary": "The agent explains how the customer can pause or change the recurring transfer.",
         "evidence_ids": [
           "semantic:transfer.recurring_change_path_explained:support"
         ],
@@ -769,7 +781,7 @@
         "title": "Relevant transfer terms explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explained the relevant transfer terms, including the timing and limits.",
+        "summary": "The agent explains the limits and conditions related to the transfer, including the maximum amount.",
         "evidence_ids": [
           "semantic:transfer.terms_explained:support"
         ],
@@ -780,7 +792,7 @@
         "title": "Recurring transfer schedule confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The frequency and start timing of the recurring transfer were confirmed with the customer.",
+        "summary": "The frequency and start timing of the recurring transfer are confirmed by the customer.",
         "evidence_ids": [
           "semantic:transfer.recurring_schedule_confirmed:support"
         ],
@@ -791,7 +803,7 @@
         "title": "Source and destination accounts confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent confirmed the source and destination accounts for the transfer with the customer.",
+        "summary": "The agent and customer confirm the source and destination accounts for the transfer.",
         "evidence_ids": [
           "semantic:transfer.accounts_confirmed:support"
         ],
@@ -802,7 +814,7 @@
         "title": "Transfer amount confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent confirmed the transfer amount of $400 with the customer before proceeding.",
+        "summary": "The amount of $400 is confirmed by the customer before the transfer is set up.",
         "evidence_ids": [
           "semantic:transfer.amount_confirmed:support"
         ],
@@ -813,7 +825,7 @@
         "title": "Customer authorizes the transfer",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer explicitly agreed to the transfer details after they were established.",
+        "summary": "The customer explicitly agrees to the transfer details after they are stated by the agent.",
         "evidence_ids": [
           "semantic:transfer.authorization_obtained:support"
         ],
@@ -834,7 +846,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarized the actions taken and explained the next steps before closing the call.",
+        "summary": "The agent summarizes the actions taken and explains the next steps before closing the call.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -847,7 +859,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirmed the successful setup of the transfer and recapped the details.",
+        "summary": "The agent confirms that the transfer has been set up successfully and recaps the details.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -869,9 +881,9 @@
         ],
         "kind": "transcript",
         "speaker": "agent",
-        "start_seconds": 176.84,
+        "start_seconds": 153.52,
         "end_seconds": 185.06,
-        "text": "AGENT: So the first transfer will be scheduled for November 2, 2025 in the amount of $400 Canadian dollars.",
+        "text": "AGENT: Okay, that's been entered.\nAGENT: Okay, all set.\nAGENT: So the first transfer will be scheduled for November 2, 2025 in the amount of $400 Canadian dollars.",
         "seekable": true,
         "supporting_only": false
       },
@@ -901,7 +913,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Recurring transfer schedule confirmed",
-          "summary": "The frequency and start timing of the recurring transfer were confirmed with the customer.",
+          "summary": "The frequency and start timing of the recurring transfer are confirmed by the customer.",
           "evidence_ids": [
             "semantic:transfer.recurring_schedule_confirmed:support"
           ],
@@ -914,7 +926,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Source and destination accounts confirmed",
-          "summary": "The agent confirmed the source and destination accounts for the transfer with the customer.",
+          "summary": "The agent and customer confirm the source and destination accounts for the transfer.",
           "evidence_ids": [
             "semantic:transfer.accounts_confirmed:support"
           ],
@@ -927,7 +939,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Transfer amount confirmed",
-          "summary": "The agent confirmed the transfer amount of $400 with the customer before proceeding.",
+          "summary": "The amount of $400 is confirmed by the customer before the transfer is set up.",
           "evidence_ids": [
             "semantic:transfer.amount_confirmed:support"
           ],
@@ -940,7 +952,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Customer authorizes the transfer",
-          "summary": "The customer explicitly agreed to the transfer details after they were established.",
+          "summary": "The customer explicitly agrees to the transfer details after they are stated by the agent.",
           "evidence_ids": [
             "semantic:transfer.authorization_obtained:support"
           ],
@@ -953,7 +965,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Customer request confirmed",
-          "summary": "The agent confirmed the customer's request to set up an automatic transfer before proceeding.",
+          "summary": "The agent confirms the customer's request to set up an automatic transfer before proceeding.",
           "evidence_ids": [
             "semantic:request.intent_confirmed:support"
           ],
@@ -966,7 +978,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Recurring transfer change path explained",
-          "summary": "The agent explained how the customer can change or pause the recurring transfer.",
+          "summary": "The agent explains how the customer can pause or change the recurring transfer.",
           "evidence_ids": [
             "semantic:transfer.recurring_change_path_explained:support"
           ],
@@ -979,7 +991,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Relevant transfer terms explained",
-          "summary": "The agent explained the relevant transfer terms, including the timing and limits.",
+          "summary": "The agent explains the limits and conditions related to the transfer, including the maximum amount.",
           "evidence_ids": [
             "semantic:transfer.terms_explained:support"
           ],
@@ -992,7 +1004,7 @@
           "category": "agent_behavior",
           "category_label": "Agent handling",
           "title": "Agent and organization identified",
-          "summary": "The agent identified themselves and the organization at the beginning of the call.",
+          "summary": "The agent identifies themselves and the organization at the beginning of the call.",
           "evidence_ids": [
             "semantic:interaction.agent_identification:support"
           ],
@@ -1027,26 +1039,10 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
+          "speaker": null,
           "start_seconds": 74.93,
-          "end_seconds": 80.35,
-          "text": "AGENT: So you'd like to set up an automatic transfer from your checking to your new savings account, correct?",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:transfer.amount_confirmed:support",
-          "finding_ids": [
-            "finding-positive-control-transfer_amount_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 110.67,
-          "end_seconds": 110.67,
-          "text": "AGENT: Great.",
+          "end_seconds": 82.13,
+          "text": "AGENT: So you'd like to set up an automatic transfer from your checking to your new savings account, correct?\nCUSTOMER: right.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1059,26 +1055,26 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
+          "speaker": null,
           "start_seconds": 132.03,
-          "end_seconds": 146.35,
-          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.",
+          "end_seconds": 148.05,
+          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right.",
           "seekable": true,
           "supporting_only": false
         },
         {
-          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+          "evidence_id": "semantic:transfer.amount_confirmed:support",
           "finding_ids": [
-            "finding-positive-control-recurring_schedule_confirmed"
+            "finding-positive-control-transfer_amount_confirmed"
           ],
           "purposes": [
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
+          "speaker": null,
           "start_seconds": 132.03,
-          "end_seconds": 146.35,
-          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.",
+          "end_seconds": 148.05,
+          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1091,10 +1087,26 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "customer",
-          "start_seconds": 147.67,
+          "speaker": null,
+          "start_seconds": 132.03,
           "end_seconds": 148.05,
-          "text": "CUSTOMER: That's right.",
+          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-recurring_schedule_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 132.03,
+          "end_seconds": 148.05,
+          "text": "AGENT: so just to confirm, you'd like to automatically transfer $400 from your checking account ending in 2046 to your savings account ending in 3172 on the second of each month starting in November.\nCUSTOMER: That's right.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1109,8 +1121,8 @@
           "kind": "transcript",
           "speaker": "agent",
           "start_seconds": 207.31,
-          "end_seconds": 217.19,
-          "text": "AGENT: So for the regular checking and savings account, like yours, so the maximum automated transfer is $10 ,000 per month.",
+          "end_seconds": 221.8,
+          "text": "AGENT: So for the regular checking and savings account, like yours, so the maximum automated transfer is $10 ,000 per month.\nAGENT: So since you're transferring $400, you're well within the limit.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1124,9 +1136,9 @@
           ],
           "kind": "transcript",
           "speaker": "agent",
-          "start_seconds": 234.03,
-          "end_seconds": 239.21,
-          "text": "AGENT: So you can just adjust or cancel the transfer at any time through the mobile app or online banking.",
+          "start_seconds": 305.28,
+          "end_seconds": 314.82,
+          "text": "AGENT: Yeah, absolutely.\nAGENT: So you can do that on your online account or by giving us a quick call.",
           "seekable": true,
           "supporting_only": false
         }

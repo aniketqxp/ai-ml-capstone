@@ -18,9 +18,9 @@
       "unknown_reference": 14
     },
     "context_char_count": {
-      "minimum": 5708,
-      "median": 6431.0,
-      "maximum": 7639,
+      "minimum": 5766,
+      "median": 7101.0,
+      "maximum": 7696,
       "limit": 16000
     }
   },
@@ -30,7 +30,7 @@
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5743,
+      "context_char_count": 5800,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
       "positive_finding_count": 4,
@@ -38,10 +38,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -100,7 +100,7 @@
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "manager_review",
-      "context_char_count": 7042,
+      "context_char_count": 7099,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
       "positive_finding_count": 4,
@@ -108,10 +108,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -170,7 +170,7 @@
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "manager_review",
-      "context_char_count": 7144,
+      "context_char_count": 7201,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
       "positive_finding_count": 4,
@@ -178,10 +178,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -240,7 +240,7 @@
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "manager_review",
-      "context_char_count": 7574,
+      "context_char_count": 7631,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
       "positive_finding_count": 4,
@@ -248,10 +248,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -310,7 +310,7 @@
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5736,
+      "context_char_count": 5793,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
       "positive_finding_count": 4,
@@ -318,10 +318,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -380,79 +380,9 @@
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "customer_follow_up",
-      "context_char_count": 7046,
+      "context_char_count": 7103,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
-      "positive_finding_count": 4,
-      "uncertainty_count": 0,
-      "omissions": {
-        "triggered_findings": 0,
-        "controlling_findings": 0,
-        "positive_findings": 4,
-        "uncertainties": 0,
-        "evidence_items": 4,
-        "contradiction_items": 4
-      },
-      "cases": [
-        {
-          "case_id": "valid",
-          "expected_fallback_reason": null,
-          "actual_fallback_reason": null,
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "attention_override",
-          "expected_fallback_reason": "invalid_contract",
-          "actual_fallback_reason": "invalid_contract",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "action_override",
-          "expected_fallback_reason": "invalid_contract",
-          "actual_fallback_reason": "invalid_contract",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "unknown_reference",
-          "expected_fallback_reason": "unknown_reference",
-          "actual_fallback_reason": "unknown_reference",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "forbidden_language",
-          "expected_fallback_reason": "forbidden_decision_language",
-          "actual_fallback_reason": "forbidden_decision_language",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "malformed_json",
-          "expected_fallback_reason": "invalid_json",
-          "actual_fallback_reason": "invalid_json",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "missing_response",
-          "expected_fallback_reason": "missing_response",
-          "actual_fallback_reason": "missing_response",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        }
-      ]
-    },
-    {
-      "call_id": "challenge-control-identity-present",
-      "attention_required": false,
-      "decision_status": "complete",
-      "permitted_action": "none",
-      "context_char_count": 5785,
-      "context_char_limit": 16000,
-      "triggered_finding_count": 0,
       "positive_finding_count": 4,
       "uncertainty_count": 0,
       "omissions": {
@@ -516,13 +446,83 @@
       ]
     },
     {
-      "call_id": "challenge-control-identity-missing",
+      "call_id": "challenge-control-identity-present",
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5785,
+      "context_char_count": 5842,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-identity-missing",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "manager_review",
+      "context_char_count": 7221,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
       "positive_finding_count": 4,
       "uncertainty_count": 0,
       "omissions": {
@@ -590,9 +590,79 @@
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5820,
+      "context_char_count": 5877,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
+      "positive_finding_count": 4,
+      "uncertainty_count": 0,
+      "omissions": {
+        "triggered_findings": 0,
+        "controlling_findings": 0,
+        "positive_findings": 6,
+        "uncertainties": 0,
+        "evidence_items": 6,
+        "contradiction_items": 6
+      },
+      "cases": [
+        {
+          "case_id": "valid",
+          "expected_fallback_reason": null,
+          "actual_fallback_reason": null,
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "attention_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "action_override",
+          "expected_fallback_reason": "invalid_contract",
+          "actual_fallback_reason": "invalid_contract",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "unknown_reference",
+          "expected_fallback_reason": "unknown_reference",
+          "actual_fallback_reason": "unknown_reference",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "forbidden_language",
+          "expected_fallback_reason": "forbidden_decision_language",
+          "actual_fallback_reason": "forbidden_decision_language",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "malformed_json",
+          "expected_fallback_reason": "invalid_json",
+          "actual_fallback_reason": "invalid_json",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        },
+        {
+          "case_id": "missing_response",
+          "expected_fallback_reason": "missing_response",
+          "actual_fallback_reason": "missing_response",
+          "expectation_passed": true,
+          "decision_lock_preserved": true
+        }
+      ]
+    },
+    {
+      "call_id": "challenge-control-authorization-missing",
+      "attention_required": true,
+      "decision_status": "complete",
+      "permitted_action": "manager_review",
+      "context_char_count": 7234,
+      "context_char_limit": 16000,
+      "triggered_finding_count": 1,
       "positive_finding_count": 4,
       "uncertainty_count": 0,
       "omissions": {
@@ -656,11 +726,11 @@
       ]
     },
     {
-      "call_id": "challenge-control-authorization-missing",
+      "call_id": "challenge-recovery-observed",
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "manager_review",
-      "context_char_count": 7183,
+      "context_char_count": 7672,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
       "positive_finding_count": 4,
@@ -668,10 +738,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 4,
+        "positive_findings": 7,
         "uncertainties": 0,
-        "evidence_items": 4,
-        "contradiction_items": 4
+        "evidence_items": 7,
+        "contradiction_items": 7
       },
       "cases": [
         {
@@ -726,11 +796,11 @@
       ]
     },
     {
-      "call_id": "challenge-recovery-observed",
+      "call_id": "challenge-recovery-unresolved",
       "attention_required": true,
       "decision_status": "complete",
       "permitted_action": "manager_review",
-      "context_char_count": 7615,
+      "context_char_count": 7696,
       "context_char_limit": 16000,
       "triggered_finding_count": 1,
       "positive_finding_count": 4,
@@ -796,81 +866,11 @@
       ]
     },
     {
-      "call_id": "challenge-recovery-unresolved",
-      "attention_required": true,
-      "decision_status": "complete",
-      "permitted_action": "manager_review",
-      "context_char_count": 7639,
-      "context_char_limit": 16000,
-      "triggered_finding_count": 1,
-      "positive_finding_count": 4,
-      "uncertainty_count": 0,
-      "omissions": {
-        "triggered_findings": 0,
-        "controlling_findings": 0,
-        "positive_findings": 5,
-        "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
-      },
-      "cases": [
-        {
-          "case_id": "valid",
-          "expected_fallback_reason": null,
-          "actual_fallback_reason": null,
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "attention_override",
-          "expected_fallback_reason": "invalid_contract",
-          "actual_fallback_reason": "invalid_contract",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "action_override",
-          "expected_fallback_reason": "invalid_contract",
-          "actual_fallback_reason": "invalid_contract",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "unknown_reference",
-          "expected_fallback_reason": "unknown_reference",
-          "actual_fallback_reason": "unknown_reference",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "forbidden_language",
-          "expected_fallback_reason": "forbidden_decision_language",
-          "actual_fallback_reason": "forbidden_decision_language",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "malformed_json",
-          "expected_fallback_reason": "invalid_json",
-          "actual_fallback_reason": "invalid_json",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        },
-        {
-          "case_id": "missing_response",
-          "expected_fallback_reason": "missing_response",
-          "actual_fallback_reason": "missing_response",
-          "expectation_passed": true,
-          "decision_lock_preserved": true
-        }
-      ]
-    },
-    {
       "call_id": "challenge-duration-short",
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5715,
+      "context_char_count": 5772,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
       "positive_finding_count": 4,
@@ -878,10 +878,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {
@@ -940,7 +940,7 @@
       "attention_required": false,
       "decision_status": "complete",
       "permitted_action": "none",
-      "context_char_count": 5708,
+      "context_char_count": 5766,
       "context_char_limit": 16000,
       "triggered_finding_count": 0,
       "positive_finding_count": 4,
@@ -948,10 +948,10 @@
       "omissions": {
         "triggered_findings": 0,
         "controlling_findings": 0,
-        "positive_findings": 5,
+        "positive_findings": 6,
         "uncertainties": 0,
-        "evidence_items": 5,
-        "contradiction_items": 5
+        "evidence_items": 6,
+        "contradiction_items": 6
       },
       "cases": [
         {

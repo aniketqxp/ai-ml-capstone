@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1584540:v2:69d4cd07910d11a7",
+  "run_id": "en_US_General_Banking_1584540:v2:7e6662f56dbb10b6",
   "call_id": "en_US_General_Banking_1584540",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "976ee3e2a61f14766c9f91960bbf5a4d4f49e32d1672e7c31015b1f1295ddf0e",
+  "decision_sha256": "6114de0fa820ed31b7ac23b074d468347fc83d811efeed7a94c2932eb892ef4a",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1584540",
@@ -86,7 +86,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Loan inquiry next step confirmed",
-        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "summary": "The agent provides a follow-up path for the customer to improve their credit and reapply in the future.",
         "business_definition": "The customer receives a concrete route to continue the loan inquiry or application.",
         "applicability": {
           "applies": true,
@@ -146,7 +146,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "summary": "The agent explains the outcome of the loan inquiry and provides next steps for the customer to improve their eligibility.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -207,7 +207,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer request confirmed",
-        "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
+        "summary": "The agent acknowledges the customer's request for a loan and confirms the type of loan being sought.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -236,16 +236,16 @@
             "evidence_id": "semantic:request.intent_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_006",
-              "AGENT_008"
+              "AGENT_008",
+              "CUSTOMER_003"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 40.47,
-            "end_seconds": 63.06,
+            "speaker": null,
+            "start_seconds": 54.16,
+            "end_seconds": 66.92,
             "quote": null,
-            "observation": "AGENT: And yes, we do offer various consumer loans.\nAGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?"
+            "observation": "AGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?\nCUSTOMER: Well, it's got to be agricultural."
           }
         ],
         "counter_evidence": [],
@@ -268,7 +268,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Loan eligibility considerations explained",
-        "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
+        "summary": "The agent explains the eligibility requirements for the loan, including credit score and income needed.",
         "business_definition": "The customer receives a qualified explanation of relevant eligibility factors without a promise of approval.",
         "applicability": {
           "applies": true,
@@ -297,17 +297,17 @@
             "evidence_id": "semantic:loan.eligibility_explained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_061",
               "AGENT_062",
-              "AGENT_063"
+              "AGENT_063",
+              "AGENT_064"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 517.57,
-            "end_seconds": 552.54,
+            "start_seconds": 533.1,
+            "end_seconds": 575.02,
             "quote": null,
-            "observation": "AGENT: based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.\nAGENT: We do need a minimum credit score of $650 for any loan that we offer through our credit union here.\nAGENT: And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify."
+            "observation": "AGENT: We do need a minimum credit score of $650 for any loan that we offer through our credit union here.\nAGENT: And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify.\nAGENT: And with your $400 credit and your $1 ,200 a month income, which also, which most of it goes towards your living, you would not, according to our calculations, you would not be able to make payments on a loan at this time."
           }
         ],
         "counter_evidence": [],
@@ -360,15 +360,15 @@
             "modality": "transcript",
             "segment_ids": [
               "CUSTOMER_004",
-              "CUSTOMER_006"
+              "AGENT_040"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "customer",
+            "speaker": null,
             "start_seconds": 67.38,
-            "end_seconds": 92.07,
+            "end_seconds": 376.87,
             "quote": null,
-            "observation": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nCUSTOMER: So what do I need to be doing to get a loan for these equipment?"
+            "observation": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nAGENT: So you sit here thinking about borrowing about $10 ,000 for the purpose of purchasing new equipment to help maintain the farm that your grandfather left behind."
           }
         ],
         "counter_evidence": [],
@@ -422,7 +422,7 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1584540",
-    "decision_sha256": "976ee3e2a61f14766c9f91960bbf5a4d4f49e32d1672e7c31015b1f1295ddf0e",
+    "decision_sha256": "6114de0fa820ed31b7ac23b074d468347fc83d811efeed7a94c2932eb892ef4a",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
@@ -430,44 +430,46 @@
     "summary": "Applicable rules produced no qualifying negative finding.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "summary": "The agent acknowledges the customer's request for a loan and confirms the type of loan being sought.",
         "evidence_ids": [
-          "semantic:loan.next_step_confirmed:support",
-          "semantic:outcome.summary_and_next_steps:support",
-          "semantic:request.intent_confirmed:support"
-        ]
-      },
-      {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
-        "answer": "yes",
-        "answer_label": "Yes",
-        "summary": "All 3 applicable workflow checks were demonstrated.",
-        "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
-          "semantic:loan.eligibility_explained:support",
+          "semantic:request.intent_confirmed:support",
           "semantic:loan.purpose_and_stage_confirmed:support"
         ]
       },
       {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "no",
-        "answer_label": "No concern identified",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "1 applicable process checks were supported by transcript evidence.",
+        "evidence_ids": [
+          "semantic:loan.eligibility_explained:support"
+        ]
       },
       {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ]
+      },
+      {
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent provides a follow-up path for the customer to improve their credit and reapply in the future.",
+        "evidence_ids": [
+          "semantic:loan.next_step_confirmed:support",
+          "semantic:outcome.summary_and_next_steps:support"
+        ]
       }
     ],
     "checklist": [
@@ -487,7 +489,7 @@
         "title": "Loan inquiry next step confirmed",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "summary": "The agent provides a follow-up path for the customer to improve their credit and reapply in the future.",
         "evidence_ids": [
           "semantic:loan.next_step_confirmed:support"
         ],
@@ -498,7 +500,7 @@
         "title": "Outcome and next steps summarized",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "summary": "The agent explains the outcome of the loan inquiry and provides next steps for the customer to improve their eligibility.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -509,7 +511,7 @@
         "title": "Customer request confirmed",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
+        "summary": "The agent acknowledges the customer's request for a loan and confirms the type of loan being sought.",
         "evidence_ids": [
           "semantic:request.intent_confirmed:support"
         ],
@@ -520,7 +522,7 @@
         "title": "Loan eligibility considerations explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
+        "summary": "The agent explains the eligibility requirements for the loan, including credit score and income needed.",
         "evidence_ids": [
           "semantic:loan.eligibility_explained:support"
         ],
@@ -552,7 +554,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Loan inquiry next step confirmed",
-        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "summary": "The agent provides a follow-up path for the customer to improve their credit and reapply in the future.",
         "evidence_ids": [
           "semantic:loan.next_step_confirmed:support"
         ],
@@ -565,7 +567,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "summary": "The agent explains the outcome of the loan inquiry and provides next steps for the customer to improve their eligibility.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -619,7 +621,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Customer request confirmed",
-          "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
+          "summary": "The agent acknowledges the customer's request for a loan and confirms the type of loan being sought.",
           "evidence_ids": [
             "semantic:request.intent_confirmed:support"
           ],
@@ -632,7 +634,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Loan eligibility considerations explained",
-          "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
+          "summary": "The agent explains the eligibility requirements for the loan, including credit score and income needed.",
           "evidence_ids": [
             "semantic:loan.eligibility_explained:support"
           ],
@@ -693,10 +695,10 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 40.47,
-          "end_seconds": 63.06,
-          "text": "AGENT: And yes, we do offer various consumer loans.\nAGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?",
+          "speaker": null,
+          "start_seconds": 54.16,
+          "end_seconds": 66.92,
+          "text": "AGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?\nCUSTOMER: Well, it's got to be agricultural.",
           "seekable": true,
           "supporting_only": false
         },
@@ -709,10 +711,10 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "customer",
+          "speaker": null,
           "start_seconds": 67.38,
-          "end_seconds": 92.07,
-          "text": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nCUSTOMER: So what do I need to be doing to get a loan for these equipment?",
+          "end_seconds": 376.87,
+          "text": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nAGENT: So you sit here thinking about borrowing about $10 ,000 for the purpose of purchasing new equipment to help maintain the farm that your grandfather left behind.",
           "seekable": true,
           "supporting_only": false
         },
@@ -726,9 +728,9 @@
           ],
           "kind": "transcript",
           "speaker": "agent",
-          "start_seconds": 517.57,
-          "end_seconds": 552.54,
-          "text": "AGENT: based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.\nAGENT: We do need a minimum credit score of $650 for any loan that we offer through our credit union here.\nAGENT: And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify.",
+          "start_seconds": 533.1,
+          "end_seconds": 575.02,
+          "text": "AGENT: We do need a minimum credit score of $650 for any loan that we offer through our credit union here.\nAGENT: And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify.\nAGENT: And with your $400 credit and your $1 ,200 a month income, which also, which most of it goes towards your living, you would not, according to our calculations, you would not be able to make payments on a loan at this time.",
           "seekable": true,
           "supporting_only": false
         }

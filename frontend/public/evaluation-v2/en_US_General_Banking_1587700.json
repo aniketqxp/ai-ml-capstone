@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1587700:v2:1dfb2f214d4b2e85",
+  "run_id": "en_US_General_Banking_1587700:v2:beea527c95b40a52",
   "call_id": "en_US_General_Banking_1587700",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "110c36adac4f582125f914969cb8d426040696629fe4c27168d03afee2ecaeb2",
+  "decision_sha256": "6f65a873e6f8c7a013494087bd7cef931677b994eb698059eb5e18d4af431c21",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1587700",
@@ -16,8 +16,97 @@
     "signal_bundle_schema_version": "2.0",
     "signal_bundle_sha256": "effb4099d886f256165732b6dde87f91525da7330e17d6f9a815c03c59effac3",
     "decision_status": "complete",
-    "attention_required": false,
-    "triggered_findings": [],
+    "attention_required": true,
+    "triggered_findings": [
+      {
+        "finding_id": "finding-negative-escalation-explicit_dissatisfaction",
+        "finding_type": "escalation.explicit_dissatisfaction",
+        "category": "escalation",
+        "polarity": "negative",
+        "severity": "review",
+        "title": "Customer explicitly expressed dissatisfaction",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "business_definition": "The customer directly describes strong dissatisfaction rather than the evaluator inferring emotion from wording.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "escalation.explicit_dissatisfaction",
+          "reason": "Explicit escalation and repeat-contact rules apply to every supported call.",
+          "selected_branch": null
+        },
+        "detection_rule": {
+          "rule_id": "escalation.explicit_dissatisfaction",
+          "rule_version": "0.1.0",
+          "detector": "high_precision_explicit_text",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "transcript.customer_text",
+              "operator": "contains",
+              "value": "versioned_explicit_phrase_pattern",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "evidence:escalation.explicit_dissatisfaction:CUSTOMER_032",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_032"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 467.23,
+            "end_seconds": 469.45,
+            "quote": "This is honestly a nightmare.",
+            "observation": null
+          },
+          {
+            "evidence_id": "evidence:escalation.explicit_dissatisfaction:CUSTOMER_047",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_047"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 690.53,
+            "end_seconds": 694.25,
+            "quote": "Quite frankly, I was stressing me out tremendously.",
+            "observation": null
+          }
+        ],
+        "counter_evidence": [
+          {
+            "evidence_id": "counter:escalation.explicit_dissatisfaction:AGENT_080",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_080"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 695.28,
+            "end_seconds": 696.12,
+            "quote": "Oh, no problem.",
+            "observation": null
+          }
+        ],
+        "reliability": {
+          "status": "usable",
+          "coverage_ratio": null,
+          "reasons": [
+            "high_precision_explicit_phrase_match"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 30
+      }
+    ],
     "positive_findings": [
       {
         "finding_id": "finding-positive-agent-identification_clear",
@@ -26,7 +115,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Agent and organization identified",
-        "summary": "The agent identified themselves as Susan and the organization as Washington Mutual at the beginning of the call.",
+        "summary": "The agent identified herself as Susan and the organization as Washington Mutual at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -87,7 +176,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Source and destination accounts confirmed",
-        "summary": "The agent confirmed the source and destination accounts by discussing the specific accounts involved in the transfer.",
+        "summary": "The agent and customer confirmed the source account (savings account ending in 1-0) and destination account (checking account titled Household) for the transfer.",
         "business_definition": "The transfer direction and both participating accounts are unambiguous.",
         "applicability": {
           "applies": true,
@@ -116,16 +205,16 @@
             "evidence_id": "semantic:transfer.accounts_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_022",
-              "AGENT_038"
+              "AGENT_044",
+              "CUSTOMER_021"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 149.83,
-            "end_seconds": 296.66,
+            "speaker": null,
+            "start_seconds": 298.52,
+            "end_seconds": 328.63,
             "quote": null,
-            "observation": "AGENT: I was able to look into your savings account, and I'm saying that you have more than one savings account with us.\nAGENT: Which account would you like for me to transfer that $6 ,500 into?"
+            "observation": "AGENT: I'm going to transfer $6 ,500 out of that account.\nCUSTOMER: That would be the household account."
           }
         ],
         "counter_evidence": [],
@@ -148,7 +237,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer amount confirmed",
-        "summary": "The agent confirmed the transfer amount of $6,500 after the customer stated it.",
+        "summary": "The customer explicitly stated the amount to be transferred as $6,500, and the agent acknowledged this amount.",
         "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
         "applicability": {
           "applies": true,
@@ -177,16 +266,16 @@
             "evidence_id": "semantic:transfer.amount_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_012",
+              "CUSTOMER_012",
               "AGENT_015"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 70.09,
+            "speaker": null,
+            "start_seconds": 102.48,
             "end_seconds": 110.06,
             "quote": null,
-            "observation": "AGENT: Okay, I see your account here, and you said that you wanted to move some money from your savings to your checking?\nAGENT: Wow, okay, $6 ,500."
+            "observation": "CUSTOMER: Actually, we need to transfer $6 ,500.\nAGENT: Wow, okay, $6 ,500."
           }
         ],
         "counter_evidence": [],
@@ -209,7 +298,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Customer authorizes the transfer",
-        "summary": "The customer explicitly agreed to the transfer amount and accounts after the agent provided the necessary details.",
+        "summary": "The customer gave clear approval for the transfer after the agent explained the amount and accounts involved.",
         "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
         "applicability": {
           "applies": true,
@@ -238,15 +327,16 @@
             "evidence_id": "semantic:transfer.authorization_obtained:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_051"
+              "CUSTOMER_014",
+              "AGENT_053"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 366.38,
-            "end_seconds": 369.62,
+            "speaker": null,
+            "start_seconds": 178.85,
+            "end_seconds": 382.68,
             "quote": null,
-            "observation": "AGENT: So $6 ,500 is going into your checking account."
+            "observation": "CUSTOMER: That would be the one zero, which is my backup account.\nAGENT: And I just made the transfer of $6 ,500."
           }
         ],
         "counter_evidence": [],
@@ -269,7 +359,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarized the completed transfer and confirmed the amount and accounts involved before closing the call.",
+        "summary": "The agent summarized the completed transfer and explained that the customer would receive a confirmation text with the transaction details.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -298,16 +388,15 @@
             "evidence_id": "semantic:outcome.summary_and_next_steps:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_053",
               "AGENT_091"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 379.46,
+            "start_seconds": 763.91,
             "end_seconds": 777.95,
             "quote": null,
-            "observation": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household."
+            "observation": "AGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household."
           }
         ],
         "counter_evidence": [],
@@ -330,7 +419,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirmed the successful transfer and recapped the amount and accounts involved.",
+        "summary": "The agent confirmed that the transfer of $6,500 was completed and recapped the new balance in the checking account.",
         "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
         "applicability": {
           "applies": true,
@@ -360,15 +449,15 @@
             "modality": "transcript",
             "segment_ids": [
               "AGENT_053",
-              "AGENT_091"
+              "AGENT_054"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 379.46,
-            "end_seconds": 777.95,
+            "end_seconds": 386.9,
             "quote": null,
-            "observation": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household."
+            "observation": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: So you now have $16 ,500 in that account."
           }
         ],
         "counter_evidence": [],
@@ -451,7 +540,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "Relevant transfer terms explained",
-        "summary": "The agent explained the transfer limit and the process for overriding it, providing relevant information about timing and limits.",
+        "summary": "The agent explained the daily transfer limit of $3,000 and that a supervisor could override this limit for the transfer.",
         "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
         "applicability": {
           "applies": true,
@@ -512,7 +601,7 @@
         "polarity": "positive",
         "severity": "info",
         "title": "One-time transfer timing confirmed",
-        "summary": "The agent confirmed that the transfer would be immediate and the customer accepted this timing.",
+        "summary": "The agent confirmed that the transfer would be immediate, and the customer accepted this timing.",
         "business_definition": "The execution date or immediate timing of a one-time transfer is explicit.",
         "applicability": {
           "applies": true,
@@ -542,15 +631,15 @@
             "modality": "transcript",
             "segment_ids": [
               "AGENT_055",
-              "AGENT_059"
+              "CUSTOMER_028"
             ],
             "signal_ids": [],
             "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 398.38,
-            "end_seconds": 428.94,
+            "speaker": null,
+            "start_seconds": 396.85,
+            "end_seconds": 400.5,
             "quote": null,
-            "observation": "AGENT: The transfer typically is immediate.\nAGENT: However, because the supervisor was able to override that, you're able to use those funds as soon as possible."
+            "observation": "AGENT: The transfer typically is immediate.\nCUSTOMER: The transfer is immediate."
           }
         ],
         "counter_evidence": [],
@@ -568,12 +657,14 @@
       }
     ],
     "recommended_action": {
-      "action_type": "none",
-      "execution": "no_action",
-      "label": "No automated action",
-      "reason": "No negative finding qualified for attention.",
-      "finding_ids": [],
-      "automation_allowed": false,
+      "action_type": "manager_review",
+      "execution": "automatic",
+      "label": "Email manager review summary",
+      "reason": "Controlling findings: Customer explicitly expressed dissatisfaction.",
+      "finding_ids": [
+        "finding-negative-escalation-explicit_dissatisfaction"
+      ],
+      "automation_allowed": true,
       "requires_human_approval": false
     },
     "uncertainties": [],
@@ -581,8 +672,17 @@
       "policy_id": "evaluator-v2-attention",
       "policy_version": "0.1.0",
       "aggregation": "any_qualifying_finding",
-      "qualifications": [],
-      "controlling_finding_ids": [],
+      "qualifications": [
+        {
+          "finding_id": "finding-negative-escalation-explicit_dissatisfaction",
+          "qualifies_for_attention": true,
+          "reason": "qualifies_review",
+          "precedence_group": "review.escalation"
+        }
+      ],
+      "controlling_finding_ids": [
+        "finding-negative-escalation-explicit_dissatisfaction"
+      ],
       "recovery_finding_ids": [],
       "recovery_effect": "none"
     },
@@ -604,52 +704,57 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1587700",
-    "decision_sha256": "110c36adac4f582125f914969cb8d426040696629fe4c27168d03afee2ecaeb2",
-    "state": "no_attention_finding",
+    "decision_sha256": "6f65a873e6f8c7a013494087bd7cef931677b994eb698059eb5e18d4af431c21",
+    "state": "needs_attention",
     "evaluation_status": "complete",
-    "attention_required": false,
-    "headline": "No review finding identified",
-    "summary": "Applicable rules produced no qualifying negative finding.",
+    "attention_required": true,
+    "headline": "Needs attention",
+    "summary": "One or more evidence-backed findings require review.",
     "manager_questions": [
       {
-        "question_id": "call.objective",
-        "question": "Did the agent understand and address the objective?",
+        "question_id": "call.request",
+        "question": "Was the customer's request understood?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "The agent summarized the completed transfer and confirmed the amount and accounts involved before closing the call.",
+        "summary": "The agent confirmed the customer's request to transfer money from savings to checking by restating the action.",
         "evidence_ids": [
-          "semantic:outcome.summary_and_next_steps:support",
-          "semantic:transfer.completion_confirmed:support",
           "semantic:request.intent_confirmed:support"
         ]
       },
       {
-        "question_id": "call.workflow",
-        "question": "Did the agent follow the applicable workflow?",
+        "question_id": "call.process",
+        "question": "Was the applicable process followed?",
         "answer": "yes",
         "answer_label": "Yes",
-        "summary": "All 6 applicable workflow checks were demonstrated.",
+        "summary": "5 applicable process checks were supported by transcript evidence.",
         "evidence_ids": [
-          "semantic:interaction.agent_identification:support",
           "semantic:transfer.accounts_confirmed:support",
-          "semantic:transfer.amount_confirmed:support"
+          "semantic:transfer.amount_confirmed:support",
+          "semantic:transfer.authorization_obtained:support"
         ]
       },
       {
-        "question_id": "call.friction",
-        "question": "Did the interaction introduce customer friction?",
-        "answer": "no",
-        "answer_label": "No concern identified",
-        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
-        "evidence_ids": []
+        "question_id": "call.experience",
+        "question": "Was the customer experience handled appropriately?",
+        "answer": "partly",
+        "answer_label": "Partly",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "evidence_ids": [
+          "evidence:escalation.explicit_dissatisfaction:CUSTOMER_032",
+          "evidence:escalation.explicit_dissatisfaction:CUSTOMER_047",
+          "semantic:interaction.agent_identification:support"
+        ]
       },
       {
-        "question_id": "call.follow_up",
-        "question": "Is follow-up, coaching, or customer action required?",
-        "answer": "no",
-        "answer_label": "No",
-        "summary": "No evidence-backed action was triggered.",
-        "evidence_ids": []
+        "question_id": "call.outcome",
+        "question": "Was the outcome clear and complete?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent summarized the completed transfer and explained that the customer would receive a confirmation text with the transaction details.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:transfer.completion_confirmed:support"
+        ]
       }
     ],
     "checklist": [
@@ -658,7 +763,7 @@
         "title": "Agent and organization identified",
         "category": "agent_behavior",
         "status": "demonstrated",
-        "summary": "The agent identified themselves as Susan and the organization as Washington Mutual at the beginning of the call.",
+        "summary": "The agent identified herself as Susan and the organization as Washington Mutual at the beginning of the call.",
         "evidence_ids": [
           "semantic:interaction.agent_identification:support"
         ],
@@ -669,7 +774,7 @@
         "title": "Outcome and next steps summarized",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent summarized the completed transfer and confirmed the amount and accounts involved before closing the call.",
+        "summary": "The agent summarized the completed transfer and explained that the customer would receive a confirmation text with the transaction details.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -680,7 +785,7 @@
         "title": "Transfer completion confirmed",
         "category": "outcome",
         "status": "demonstrated",
-        "summary": "The agent confirmed the successful transfer and recapped the amount and accounts involved.",
+        "summary": "The agent confirmed that the transfer of $6,500 was completed and recapped the new balance in the checking account.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -702,7 +807,7 @@
         "title": "Relevant transfer terms explained",
         "category": "process",
         "status": "demonstrated",
-        "summary": "The agent explained the transfer limit and the process for overriding it, providing relevant information about timing and limits.",
+        "summary": "The agent explained the daily transfer limit of $3,000 and that a supervisor could override this limit for the transfer.",
         "evidence_ids": [
           "semantic:transfer.terms_explained:support"
         ],
@@ -713,7 +818,7 @@
         "title": "Source and destination accounts confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent confirmed the source and destination accounts by discussing the specific accounts involved in the transfer.",
+        "summary": "The agent and customer confirmed the source account (savings account ending in 1-0) and destination account (checking account titled Household) for the transfer.",
         "evidence_ids": [
           "semantic:transfer.accounts_confirmed:support"
         ],
@@ -724,7 +829,7 @@
         "title": "Transfer amount confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent confirmed the transfer amount of $6,500 after the customer stated it.",
+        "summary": "The customer explicitly stated the amount to be transferred as $6,500, and the agent acknowledged this amount.",
         "evidence_ids": [
           "semantic:transfer.amount_confirmed:support"
         ],
@@ -735,7 +840,7 @@
         "title": "Customer authorizes the transfer",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The customer explicitly agreed to the transfer amount and accounts after the agent provided the necessary details.",
+        "summary": "The customer gave clear approval for the transfer after the agent explained the amount and accounts involved.",
         "evidence_ids": [
           "semantic:transfer.authorization_obtained:support"
         ],
@@ -746,7 +851,7 @@
         "title": "One-time transfer timing confirmed",
         "category": "required_control",
         "status": "demonstrated",
-        "summary": "The agent confirmed that the transfer would be immediate and the customer accepted this timing.",
+        "summary": "The agent confirmed that the transfer would be immediate, and the customer accepted this timing.",
         "evidence_ids": [
           "semantic:transfer.one_time_timing_confirmed:support"
         ],
@@ -759,7 +864,22 @@
       "conclusion": "No sustained vocal-friction pattern crossed the provisional support gate.",
       "observations": []
     },
-    "primary_reasons": [],
+    "primary_reasons": [
+      {
+        "finding_id": "finding-negative-escalation-explicit_dissatisfaction",
+        "category": "escalation",
+        "category_label": "Customer risk",
+        "title": "Customer explicitly expressed dissatisfaction",
+        "summary": "2 customer segments matched a high-precision explicit-text rule.",
+        "evidence_ids": [
+          "evidence:escalation.explicit_dissatisfaction:CUSTOMER_032",
+          "evidence:escalation.explicit_dissatisfaction:CUSTOMER_047"
+        ],
+        "counter_evidence_count": 1,
+        "reliability_note": null,
+        "outcome": "observed_concern"
+      }
+    ],
     "additional_reason_count": 0,
     "positive_highlights": [
       {
@@ -767,7 +887,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Outcome and next steps summarized",
-        "summary": "The agent summarized the completed transfer and confirmed the amount and accounts involved before closing the call.",
+        "summary": "The agent summarized the completed transfer and explained that the customer would receive a confirmation text with the transaction details.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
@@ -780,7 +900,7 @@
         "category": "outcome",
         "category_label": "Outcome",
         "title": "Transfer completion confirmed",
-        "summary": "The agent confirmed the successful transfer and recapped the amount and accounts involved.",
+        "summary": "The agent confirmed that the transfer of $6,500 was completed and recapped the new balance in the checking account.",
         "evidence_ids": [
           "semantic:transfer.completion_confirmed:support"
         ],
@@ -790,24 +910,20 @@
       }
     ],
     "additional_positive_count": 7,
-    "recommended_action": null,
+    "recommended_action": {
+      "action_type": "manager_review",
+      "execution": "automatic",
+      "label": "Email manager review summary",
+      "execution_label": "Automatic manager notification",
+      "basis_finding_ids": [
+        "finding-negative-escalation-explicit_dissatisfaction"
+      ],
+      "automation_allowed": true,
+      "requires_human_approval": false,
+      "delivery": "email",
+      "audience": "manager"
+    },
     "evidence": [
-      {
-        "evidence_id": "semantic:outcome.summary_and_next_steps:support",
-        "finding_ids": [
-          "finding-positive-outcome-next_steps_confirmed"
-        ],
-        "purposes": [
-          "positive"
-        ],
-        "kind": "transcript",
-        "speaker": "agent",
-        "start_seconds": 379.46,
-        "end_seconds": 777.95,
-        "text": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household.",
-        "seekable": true,
-        "supporting_only": false
-      },
       {
         "evidence_id": "semantic:transfer.completion_confirmed:support",
         "finding_ids": [
@@ -819,8 +935,56 @@
         "kind": "transcript",
         "speaker": "agent",
         "start_seconds": 379.46,
+        "end_seconds": 386.9,
+        "text": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: So you now have $16 ,500 in that account.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "evidence:escalation.explicit_dissatisfaction:CUSTOMER_032",
+        "finding_ids": [
+          "finding-negative-escalation-explicit_dissatisfaction"
+        ],
+        "purposes": [
+          "reason"
+        ],
+        "kind": "transcript",
+        "speaker": "customer",
+        "start_seconds": 467.23,
+        "end_seconds": 469.45,
+        "text": "This is honestly a nightmare.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "evidence:escalation.explicit_dissatisfaction:CUSTOMER_047",
+        "finding_ids": [
+          "finding-negative-escalation-explicit_dissatisfaction"
+        ],
+        "purposes": [
+          "reason"
+        ],
+        "kind": "transcript",
+        "speaker": "customer",
+        "start_seconds": 690.53,
+        "end_seconds": 694.25,
+        "text": "Quite frankly, I was stressing me out tremendously.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "semantic:outcome.summary_and_next_steps:support",
+        "finding_ids": [
+          "finding-positive-outcome-next_steps_confirmed"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 763.91,
         "end_seconds": 777.95,
-        "text": "AGENT: And I just made the transfer of $6 ,500.\nAGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household.",
+        "text": "AGENT: You will see your transaction identification number that will come through with the confirmation of that transfer of $6 ,500 from your savings account ending in 1 -0 to your checking account titled Household.",
         "seekable": true,
         "supporting_only": false
       }
@@ -834,7 +998,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Source and destination accounts confirmed",
-          "summary": "The agent confirmed the source and destination accounts by discussing the specific accounts involved in the transfer.",
+          "summary": "The agent and customer confirmed the source account (savings account ending in 1-0) and destination account (checking account titled Household) for the transfer.",
           "evidence_ids": [
             "semantic:transfer.accounts_confirmed:support"
           ],
@@ -847,7 +1011,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Transfer amount confirmed",
-          "summary": "The agent confirmed the transfer amount of $6,500 after the customer stated it.",
+          "summary": "The customer explicitly stated the amount to be transferred as $6,500, and the agent acknowledged this amount.",
           "evidence_ids": [
             "semantic:transfer.amount_confirmed:support"
           ],
@@ -860,7 +1024,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "Customer authorizes the transfer",
-          "summary": "The customer explicitly agreed to the transfer amount and accounts after the agent provided the necessary details.",
+          "summary": "The customer gave clear approval for the transfer after the agent explained the amount and accounts involved.",
           "evidence_ids": [
             "semantic:transfer.authorization_obtained:support"
           ],
@@ -873,7 +1037,7 @@
           "category": "required_control",
           "category_label": "Required step",
           "title": "One-time transfer timing confirmed",
-          "summary": "The agent confirmed that the transfer would be immediate and the customer accepted this timing.",
+          "summary": "The agent confirmed that the transfer would be immediate, and the customer accepted this timing.",
           "evidence_ids": [
             "semantic:transfer.one_time_timing_confirmed:support"
           ],
@@ -899,7 +1063,7 @@
           "category": "process",
           "category_label": "Call handling",
           "title": "Relevant transfer terms explained",
-          "summary": "The agent explained the transfer limit and the process for overriding it, providing relevant information about timing and limits.",
+          "summary": "The agent explained the daily transfer limit of $3,000 and that a supervisor could override this limit for the transfer.",
           "evidence_ids": [
             "semantic:transfer.terms_explained:support"
           ],
@@ -912,7 +1076,7 @@
           "category": "agent_behavior",
           "category_label": "Agent handling",
           "title": "Agent and organization identified",
-          "summary": "The agent identified themselves as Susan and the organization as Washington Mutual at the beginning of the call.",
+          "summary": "The agent identified herself as Susan and the organization as Washington Mutual at the beginning of the call.",
           "evidence_ids": [
             "semantic:interaction.agent_identification:support"
           ],
@@ -963,10 +1127,10 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 70.09,
+          "speaker": null,
+          "start_seconds": 102.48,
           "end_seconds": 110.06,
-          "text": "AGENT: Okay, I see your account here, and you said that you wanted to move some money from your savings to your checking?\nAGENT: Wow, okay, $6 ,500.",
+          "text": "CUSTOMER: Actually, we need to transfer $6 ,500.\nAGENT: Wow, okay, $6 ,500.",
           "seekable": true,
           "supporting_only": false
         },
@@ -987,22 +1151,6 @@
           "supporting_only": false
         },
         {
-          "evidence_id": "semantic:transfer.accounts_confirmed:support",
-          "finding_ids": [
-            "finding-positive-control-transfer_accounts_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 149.83,
-          "end_seconds": 296.66,
-          "text": "AGENT: I was able to look into your savings account, and I'm saying that you have more than one savings account with us.\nAGENT: Which account would you like for me to transfer that $6 ,500 into?",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
           "evidence_id": "semantic:transfer.authorization_obtained:support",
           "finding_ids": [
             "finding-positive-control-transfer_authorization_obtained"
@@ -1011,10 +1159,26 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 366.38,
-          "end_seconds": 369.62,
-          "text": "AGENT: So $6 ,500 is going into your checking account.",
+          "speaker": null,
+          "start_seconds": 178.85,
+          "end_seconds": 382.68,
+          "text": "CUSTOMER: That would be the one zero, which is my backup account.\nAGENT: And I just made the transfer of $6 ,500.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.accounts_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-transfer_accounts_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 298.52,
+          "end_seconds": 328.63,
+          "text": "AGENT: I'm going to transfer $6 ,500 out of that account.\nCUSTOMER: That would be the household account.",
           "seekable": true,
           "supporting_only": false
         },
@@ -1027,10 +1191,10 @@
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 398.38,
-          "end_seconds": 428.94,
-          "text": "AGENT: The transfer typically is immediate.\nAGENT: However, because the supervisor was able to override that, you're able to use those funds as soon as possible.",
+          "speaker": null,
+          "start_seconds": 396.85,
+          "end_seconds": 400.5,
+          "text": "AGENT: The transfer typically is immediate.\nCUSTOMER: The transfer is immediate.",
           "seekable": true,
           "supporting_only": false
         }
@@ -1062,7 +1226,7 @@
   "comparison": {
     "comparable": true,
     "reason": "Both evaluators produced a complete attention value under their named policies.",
-    "attention_agreement": false
+    "attention_agreement": true
   },
   "limitations": [
     "research_domain_profile",
