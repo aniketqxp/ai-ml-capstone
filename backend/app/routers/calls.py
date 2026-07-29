@@ -1,14 +1,24 @@
-import uuid
 import os
 import shutil
+import uuid
 from datetime import datetime
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
-from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
+from typing import Literal
+
+from app import storage, worker
 from app.database import get_db
-from app.models import Call, Job, Transcript, Evaluation, SentimentSegment
-from app import worker, storage
+from app.models import (
+    Call,
+    Evaluation,
+    EvaluationFeedback,
+    EvaluationRun,
+    Job,
+    SentimentSegment,
+    Transcript,
+)
 from app.routing import apply_action_routing
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from pydantic import BaseModel, Field, model_validator
+from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/calls", tags=["calls"])
 
@@ -17,11 +27,67 @@ class AnalyzeRequest(BaseModel):
     call_ids: list[uuid.UUID] = Field(min_length=1, max_length=10)
 
 
+class EvaluationFeedbackRequest(BaseModel):
+    feedback_type: Literal[
+        "approve_action",
+        "dismiss_decision",
+        "dismiss_finding",
+        "confirm_finding",
+        "action_completed",
+        "action_failed",
+    ]
+    decision_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    finding_id: str | None = None
+    action_type: str | None = None
+    note: str | None = Field(default=None, max_length=500)
+
+    @model_validator(mode="after")
+    def validate_target(self):
+        if self.feedback_type in {
+            "dismiss_finding",
+            "confirm_finding",
+        } and not self.finding_id:
+            raise ValueError(
+                f"{self.feedback_type} requires finding_id"
+            )
+        if self.feedback_type in {
+            "approve_action",
+            "action_completed",
+            "action_failed",
+        } and not self.action_type:
+            raise ValueError(
+                f"{self.feedback_type} requires action_type"
+            )
+        return self
+
+
 def _latest_job(db, call_id):
     return (
         db.query(Job)
         .filter(Job.call_id == call_id)
         .order_by(Job.created_at.desc())
+        .first()
+    )
+
+
+def _call_by_public_id(db, public_id):
+    return (
+        db.query(Call)
+        .filter(
+            Call.call_metadata["public_call_id"].astext == public_id
+        )
+        .first()
+    )
+
+
+def _latest_v2_run(db, public_id):
+    return (
+        db.query(EvaluationRun)
+        .filter(
+            EvaluationRun.public_call_id == public_id,
+            EvaluationRun.evaluator_version.like("v2%"),
+        )
+        .order_by(EvaluationRun.created_at.desc())
         .first()
     )
 
@@ -54,7 +120,7 @@ async def ingest_call(
     """
     from app.pipeline_bridge import install
     install()
-    from audio_io import prepare_channels, AudioError
+    from audio_io import AudioError, prepare_channels
 
     public_id = f"{domain.lower()}_{datetime.utcnow():%Y%m%d}_{uuid.uuid4().hex[:8]}"
     inc = _incoming_dir(public_id)
@@ -218,6 +284,132 @@ def get_call_status(call_id: str, db: Session = Depends(get_db)):
         "error": job.error,
         "updated_at": job.updated_at.isoformat() if job.updated_at else None
     }
+
+
+@router.get("/{public_call_id}/evaluation-runs")
+def get_evaluation_runs(
+    public_call_id: str,
+    db: Session = Depends(get_db),
+):
+    if not _call_by_public_id(db, public_call_id):
+        raise HTTPException(status_code=404, detail="call not found")
+    rows = (
+        db.query(EvaluationRun)
+        .filter(EvaluationRun.public_call_id == public_call_id)
+        .order_by(EvaluationRun.created_at.desc())
+        .all()
+    )
+    return [
+        {
+            "evaluation_run_id": str(row.evaluation_run_id),
+            "runtime_run_id": row.runtime_run_id,
+            "evaluator_version": row.evaluator_version,
+            "mode": row.mode,
+            "status": row.status,
+            "decision_sha256": row.decision_sha256,
+            "attention_required": row.attention_required,
+            "created_at": row.created_at.isoformat(),
+        }
+        for row in rows
+    ]
+
+
+@router.post("/{public_call_id}/feedback", status_code=201)
+def record_evaluation_feedback(
+    public_call_id: str,
+    payload: EvaluationFeedbackRequest,
+    db: Session = Depends(get_db),
+):
+    call = _call_by_public_id(db, public_call_id)
+    if not call:
+        raise HTTPException(status_code=404, detail="call not found")
+    run = _latest_v2_run(db, public_call_id)
+    if not run or run.decision_sha256 != payload.decision_sha256:
+        raise HTTPException(
+            status_code=409,
+            detail="feedback decision does not match the latest v2 run",
+        )
+
+    decision = (run.payload or {}).get("decision") or {}
+    known_findings = {
+        item.get("finding_id")
+        for item in (
+            (decision.get("triggered_findings") or [])
+            + (decision.get("positive_findings") or [])
+        )
+    }
+    if (
+        payload.finding_id
+        and payload.finding_id not in known_findings
+    ):
+        raise HTTPException(
+            status_code=422,
+            detail="feedback references an unknown finding",
+        )
+    action = decision.get("recommended_action") or {}
+    if (
+        payload.action_type
+        and payload.action_type != action.get("action_type")
+    ):
+        raise HTTPException(
+            status_code=422,
+            detail="feedback references an unknown action",
+        )
+    if (
+        payload.feedback_type == "approve_action"
+        and not action.get("requires_human_approval")
+    ):
+        raise HTTPException(
+            status_code=422,
+            detail="this action does not require manager approval",
+        )
+
+    feedback = EvaluationFeedback(
+        evaluation_run_id=run.evaluation_run_id,
+        public_call_id=public_call_id,
+        decision_sha256=payload.decision_sha256,
+        feedback_type=payload.feedback_type,
+        finding_id=payload.finding_id,
+        action_type=payload.action_type,
+        note=payload.note,
+    )
+    db.add(feedback)
+    db.commit()
+    db.refresh(feedback)
+    return {
+        "feedback_id": str(feedback.feedback_id),
+        "public_call_id": public_call_id,
+        "feedback_type": feedback.feedback_type,
+        "created_at": feedback.created_at.isoformat(),
+    }
+
+
+@router.get("/{public_call_id}/feedback")
+def get_evaluation_feedback(
+    public_call_id: str,
+    db: Session = Depends(get_db),
+):
+    if not _call_by_public_id(db, public_call_id):
+        raise HTTPException(status_code=404, detail="call not found")
+    rows = (
+        db.query(EvaluationFeedback)
+        .filter(
+            EvaluationFeedback.public_call_id == public_call_id
+        )
+        .order_by(EvaluationFeedback.created_at.desc())
+        .all()
+    )
+    return [
+        {
+            "feedback_id": str(row.feedback_id),
+            "feedback_type": row.feedback_type,
+            "finding_id": row.finding_id,
+            "action_type": row.action_type,
+            "note": row.note,
+            "created_at": row.created_at.isoformat(),
+        }
+        for row in rows
+    ]
 
 @router.post("/transcripts/ingest", status_code=201)
 async def ingest_transcript(

@@ -10,9 +10,9 @@ Layout in the bucket (keys):
   calls/{id}.json  audio/{id}.mp3  sentence_segments/{id}.json
   sentiment/{id}.json  transcripts/{id}.json  uploads/{id}/<name>
 """
-import os
 import json
 import mimetypes
+import os
 from pathlib import Path
 
 import requests
@@ -75,6 +75,9 @@ def upload_bytes(key, data, content_type="application/octet-stream"):
     r = requests.post(object_url(key), headers=headers, data=data, timeout=_TIMEOUT)
     if r.status_code not in (200, 201):
         raise StorageError(f"upload {key} failed: {r.status_code} {r.text[:200]}")
+    cached = _cache_path(key)
+    if cached.exists():
+        cached.unlink()
     return key
 
 

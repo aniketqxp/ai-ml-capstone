@@ -10,13 +10,12 @@ JSON artifacts are proxied (small; keeps the API's CORS headers in front of the
 Vercel origin); audio 307-redirects to the Supabase CDN, which owns Range +
 bandwidth. calls_index is built live from the Call rows' index_summary.
 """
+from app import storage
+from app.database import get_db
+from app.models import Call
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
 from sqlalchemy.orm import Session
-
-from app.database import get_db
-from app.models import Call
-from app import storage
 
 router = APIRouter(tags=["artifacts"])
 
@@ -53,6 +52,11 @@ def sentiment(call_id: str):
         return JSONResponse(storage.stream_json(f"sentiment/{call_id}.json"))
     except FileNotFoundError:
         return JSONResponse({"segments": []})
+
+
+@router.get("/evaluation-v2/{call_id}.json")
+def evaluation_v2(call_id: str):
+    return _json_or_404(f"evaluation-v2/{call_id}.json")
 
 
 @router.get("/audio/{call_id}.mp3")

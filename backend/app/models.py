@@ -1,9 +1,23 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, Float, Boolean, DateTime, Text, ForeignKey, SmallInteger, Numeric
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    Numeric,
+    SmallInteger,
+    String,
+    Text,
+)
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import relationship
+
 from .database import Base
+
 
 class Agent(Base):
     __tablename__ = "agents"
@@ -72,6 +86,49 @@ class Evaluation(Base):
     manual_review_required = Column(Boolean, default=False)
     llm_scored             = Column(Boolean, default=True)
     created_at             = Column(DateTime, default=datetime.utcnow)
+
+
+class EvaluationRun(Base):
+    __tablename__ = "evaluation_runs"
+
+    evaluation_run_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    job_id = Column(UUID(as_uuid=True), ForeignKey("jobs.job_id"))
+    call_id = Column(UUID(as_uuid=True), ForeignKey("calls.call_id"))
+    public_call_id = Column(String(100), nullable=False, index=True)
+    runtime_run_id = Column(String(200), nullable=False)
+    evaluator_version = Column(String(100), nullable=False)
+    mode = Column(String(20), nullable=False)
+    status = Column(String(50), nullable=False)
+    decision_sha256 = Column(String(64))
+    attention_required = Column(Boolean)
+    payload = Column(JSONB, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class EvaluationFeedback(Base):
+    __tablename__ = "evaluation_feedback"
+
+    feedback_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    evaluation_run_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("evaluation_runs.evaluation_run_id"),
+    )
+    public_call_id = Column(String(100), nullable=False, index=True)
+    decision_sha256 = Column(String(64), nullable=False)
+    feedback_type = Column(String(40), nullable=False)
+    finding_id = Column(String(200))
+    action_type = Column(String(80))
+    note = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
 
 class SentimentSegment(Base):
     __tablename__ = "sentiment_segments"

@@ -12,17 +12,26 @@ On startup we re-enqueue every job still marked queued/processing and
 re-download its original channels from storage; the orchestrator is idempotent
 (an existing transcript is reused), so a re-run resumes rather than restarts.
 """
+import hashlib
+import json
 import os
-import uuid
 import queue
+import re
 import threading
 import traceback
+import uuid
 from datetime import datetime
 
-from app.database import SessionLocal
 from app import storage
-from app.models import (Call, Job, Transcript, Evaluation,
-                        SentimentSegment, CallAudioSummary)
+from app.database import SessionLocal
+from app.models import (
+    Call,
+    Evaluation,
+    EvaluationRun,
+    Job,
+    SentimentSegment,
+    Transcript,
+)
 from app.routing import apply_action_routing
 
 _q = queue.Queue()
@@ -127,18 +136,45 @@ def _upload_artifacts(public_id, artifacts):
     ]
     if artifacts.get("acoustic") and p.get("sentiment"):
         plan.append(("sentiment", f"sentiment/{public_id}.json", "application/json"))
+    if p.get("evaluation_v2"):
+        plan.append((
+            "evaluation_v2",
+            f"evaluation-v2/{public_id}.json",
+            "application/json",
+        ))
     for local_key, obj_key, ctype in plan:
         local = p.get(local_key)
         if local and os.path.exists(local):
             storage.upload_file(obj_key, local, ctype)
             keys[local_key] = obj_key
+
+    if p.get("evaluation"):
+        with open(p["evaluation"], encoding="utf-8") as f:
+            legacy = json.load(f)
+        marker = hashlib.sha256(
+            json.dumps(
+                legacy,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()[:16]
+        key = f"evaluation-runs/{public_id}/v1-{marker}.json"
+        storage.upload_file(key, p["evaluation"], "application/json")
+        keys["evaluation_v1_run"] = key
+    if p.get("evaluation_v2"):
+        with open(p["evaluation_v2"], encoding="utf-8") as f:
+            shadow = json.load(f)
+        marker = str(shadow.get("decision_sha256") or shadow["run_id"])
+        marker = re.sub(r"[^a-zA-Z0-9_-]", "-", marker)[:64]
+        key = f"evaluation-runs/{public_id}/v2-{marker}.json"
+        storage.upload_file(key, p["evaluation_v2"], "application/json")
+        keys["evaluation_v2_run"] = key
     return keys
 
 
-def _write_db_rows(db, call, public_id, artifacts):
+def _write_db_rows(db, call, job, public_id, artifacts):
     """Populate the relational tables from the produced artifacts. The frontend
     reads artifacts from storage; these rows back the flags/summary endpoints."""
-    import json
     p = artifacts["paths"]
 
     # transcripts: one row per sentence segment
@@ -188,6 +224,47 @@ def _write_db_rows(db, call, public_id, artifacts):
     apply_action_routing(evaluation, max_escalation)
     db.add(evaluation)
 
+    from v2.runtime import legacy_attention_proxy
+
+    legacy_proxy = legacy_attention_proxy(ev)
+    db.query(EvaluationRun).filter(
+        EvaluationRun.job_id == job.job_id,
+        EvaluationRun.evaluator_version == "v1",
+    ).delete()
+    db.add(EvaluationRun(
+        job_id=job.job_id,
+        call_id=call.call_id,
+        public_call_id=public_id,
+        runtime_run_id=f"{public_id}:v1:{job.job_id}",
+        evaluator_version="v1",
+        mode="primary",
+        status="succeeded",
+        attention_required=(
+            legacy_proxy.attention_required if legacy_proxy else None
+        ),
+        payload=ev,
+    ))
+
+    shadow = artifacts.get("evaluation_v2")
+    if shadow:
+        db.query(EvaluationRun).filter(
+            EvaluationRun.job_id == job.job_id,
+            EvaluationRun.evaluator_version.like("v2%"),
+        ).delete(synchronize_session=False)
+        decision = shadow.get("decision") or {}
+        db.add(EvaluationRun(
+            job_id=job.job_id,
+            call_id=call.call_id,
+            public_call_id=public_id,
+            runtime_run_id=shadow["run_id"],
+            evaluator_version=shadow["evaluator_version"],
+            mode=shadow["mode"],
+            status=shadow["status"],
+            decision_sha256=shadow.get("decision_sha256"),
+            attention_required=decision.get("attention_required"),
+            payload=shadow,
+        ))
+
 
 def _run_job(job_id):
     db = SessionLocal()
@@ -222,7 +299,7 @@ def _run_job(job_id):
         keys = _upload_artifacts(public_id, artifacts)
 
         _set(db, job, stage="persisting")
-        _write_db_rows(db, call, public_id, artifacts)
+        _write_db_rows(db, call, job, public_id, artifacts)
 
         summary = artifacts.get("index_summary") or {}
         meta["index_summary"] = summary
