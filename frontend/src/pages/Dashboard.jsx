@@ -1,17 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   AudioLines,
   BrainCircuit,
   Check,
   CircleCheck,
+  CircleHelp,
   ClipboardCheck,
   Clock3,
   CloudUpload,
   FileAudio,
   LoaderCircle,
   Minus,
-  SearchCheck,
+  Play,
   ScanText,
   ShieldCheck,
   TriangleAlert,
@@ -22,13 +23,19 @@ import { fmt } from '../lib/format';
 
 const PAGE_SIZE = 10;
 const ACTIVE_STATUSES = new Set(['queued', 'processing']);
+const ASPECTS = [
+  ['request', 'Request'],
+  ['process', 'Process'],
+  ['experience', 'Experience'],
+  ['outcome', 'Outcome'],
+];
 const STAGE_ICONS = {
   queued: Clock3,
   transcript: FileAudio,
   segments: ScanText,
   acoustic: AudioLines,
   evaluation: BrainCircuit,
-  evidence: SearchCheck,
+  evidence: ScanText,
   requirements: ClipboardCheck,
   findings: ScanText,
   decision: ShieldCheck,
@@ -36,70 +43,102 @@ const STAGE_ICONS = {
   publish: CloudUpload,
   ready: CircleCheck,
 };
-
-const DISPOSITION = {
-  needs_attention: {
-    label: 'Needs attention',
-    cls: 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
-  },
-  no_attention_finding: {
-    label: 'No attention finding',
-    cls: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300',
-  },
-  evaluation_incomplete: {
-    label: 'Evaluation incomplete',
-    cls: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
-  },
-  setup_required: {
-    label: 'Setup required',
-    cls: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
-  },
-  unsupported: {
-    label: 'Not supported',
-    cls: 'border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400',
-  },
-  not_evaluated: {
-    label: 'Not evaluated',
-    cls: 'border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
-  },
-  processing: {
-    label: 'In progress',
-    cls: 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-900 dark:bg-indigo-950 dark:text-indigo-300',
-  },
+const RESULT_ORDER = {
+  review: 0,
+  uncertain: 1,
+  processing: 2,
+  ok: 3,
+  ready: 4,
+  unsupported: 5,
 };
 
-function dispositionFor(call) {
-  if (
-    ACTIVE_STATUSES.has(call.status)
-    && !call.evaluation_available
-  ) {
-    return DISPOSITION.processing;
-  }
-  return DISPOSITION[call.evaluation_state] || DISPOSITION.not_evaluated;
+function callResult(call) {
+  if (ACTIVE_STATUSES.has(call.status)) return 'processing';
+  if (call.result) return call.result;
+  if (!call.evaluation_supported) return 'unsupported';
+  return 'ready';
 }
 
-function checklistSummary(call) {
-  const counts = call.checklist_counts || {};
-  const concerns = (counts.incorrect || 0) + (counts.not_demonstrated || 0);
-  const unclear = counts.unable_to_determine || 0;
-  if (!call.evaluation_available) return { demonstrated: '-', concerns: '-', unclear: '-' };
-  return {
-    demonstrated: counts.demonstrated || 0,
-    concerns,
-    unclear,
-  };
+function AspectMark({ aspect, label }) {
+  const state = aspect?.state || 'uncertain';
+  const config = {
+    ok: {
+      Icon: Check,
+      label: `${label}: satisfactory`,
+      cls: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+    },
+    concern: {
+      Icon: TriangleAlert,
+      label: `${label}: concern`,
+      cls: 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
+    },
+    uncertain: {
+      Icon: CircleHelp,
+      label: `${label}: insufficient evidence`,
+      cls: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+    },
+  }[state];
+  const { Icon } = config;
+  return (
+    <span
+      className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full border ${config.cls}`}
+      title={aspect?.summary || config.label}
+      aria-label={config.label}
+    >
+      <Icon className="h-4 w-4" aria-hidden="true" />
+    </span>
+  );
+}
+
+function ResultBadge({ result }) {
+  const config = {
+    review: {
+      label: 'Review',
+      Icon: TriangleAlert,
+      cls: 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
+    },
+    uncertain: {
+      label: 'Uncertain',
+      Icon: CircleHelp,
+      cls: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+    },
+    processing: {
+      label: 'Processing',
+      Icon: LoaderCircle,
+      cls: 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-900 dark:bg-indigo-950 dark:text-indigo-300',
+    },
+    ok: {
+      label: 'OK',
+      Icon: Check,
+      cls: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+    },
+    ready: {
+      label: 'Ready',
+      Icon: Play,
+      cls: 'border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
+    },
+    unsupported: {
+      label: 'Unsupported',
+      Icon: Minus,
+      cls: 'border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400',
+    },
+  }[result];
+  const { Icon } = config;
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded border px-2 py-1 text-xs font-semibold ${config.cls}`}>
+      <Icon className={`h-3.5 w-3.5 ${result === 'processing' ? 'animate-spin' : ''}`} aria-hidden="true" />
+      {config.label}
+    </span>
+  );
 }
 
 function ProcessingStatus({ call }) {
-  const pipeline = call.pipeline;
-  const percent = pipeline?.percent || 0;
-  const label = pipeline?.current_stage_label || call.stage || 'Queued';
+  const percent = call.pipeline?.percent || 0;
+  const label = call.pipeline?.current_stage_label || call.stage || 'Queued';
   return (
-    <div className="w-40" aria-label={`Analysis stage: ${label}`}>
-      <div className="mb-1.5 flex justify-between gap-3 text-xs">
-        <span className="truncate font-medium text-indigo-700 dark:text-indigo-300">
-          {label}
-        </span>
+    <div className="w-32" title={`Processing: ${label}`}>
+      <div className="mb-1 flex items-center justify-between gap-2 text-[11px]">
+        <span className="truncate font-medium text-indigo-700 dark:text-indigo-300">{label}</span>
         <span className="font-mono text-slate-500">{percent}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-700">
@@ -109,6 +148,44 @@ function ProcessingStatus({ call }) {
         />
       </div>
     </div>
+  );
+}
+
+function StatusMark({ call }) {
+  if (ACTIVE_STATUSES.has(call.status)) return <ProcessingStatus call={call} />;
+  if (call.status === 'failed') {
+    return (
+      <TriangleAlert
+        className="mx-auto h-5 w-5 text-red-600"
+        title={call.error || 'Processing failed'}
+        aria-label="Processing failed"
+      />
+    );
+  }
+  if (call.evaluation_available) {
+    return (
+      <CircleCheck
+        className="mx-auto h-5 w-5 text-emerald-600"
+        title="Evaluation ready"
+        aria-label="Evaluation ready"
+      />
+    );
+  }
+  if (call.evaluation_supported) {
+    return (
+      <Clock3
+        className="mx-auto h-5 w-5 text-slate-400"
+        title="Ready to evaluate"
+        aria-label="Ready to evaluate"
+      />
+    );
+  }
+  return (
+    <Minus
+      className="mx-auto h-5 w-5 text-slate-300"
+      title="Outside current evaluator coverage"
+      aria-label="Outside current evaluator coverage"
+    />
   );
 }
 
@@ -123,36 +200,21 @@ function PipelineStep({ step }) {
       : failed ? TriangleAlert
         : skipped ? Minus
           : StageIcon;
-
   return (
     <li className="min-w-0">
-      <div className="flex items-center gap-2.5">
-        <span
-          className={[
-            'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border',
-            completed && 'border-emerald-600 bg-emerald-600 text-white',
-            active && 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-100 dark:bg-indigo-950 dark:text-indigo-300 dark:ring-indigo-900',
-            failed && 'border-red-600 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-            skipped && 'border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-800',
-            step.state === 'pending' && 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-950',
-          ].filter(Boolean).join(' ')}
-        >
-          <Icon className={`h-4 w-4 ${active ? 'animate-spin' : ''}`} aria-hidden="true" />
+      <div className="flex items-center gap-2">
+        <span className={[
+          'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border',
+          completed && 'border-emerald-600 bg-emerald-600 text-white',
+          active && 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-100 dark:bg-indigo-950 dark:text-indigo-300 dark:ring-indigo-900',
+          failed && 'border-red-600 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
+          skipped && 'border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-800',
+          step.state === 'pending' && 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-950',
+        ].filter(Boolean).join(' ')}>
+          <Icon className={`h-3.5 w-3.5 ${active ? 'animate-spin' : ''}`} aria-hidden="true" />
         </span>
-        <span className="min-w-0">
-          <span className={[
-            'block text-xs font-medium leading-4',
-            active || completed
-              ? 'text-slate-900 dark:text-slate-100'
-              : failed
-                ? 'text-red-700 dark:text-red-300'
-                : 'text-slate-500',
-          ].join(' ')}>
-            {step.label}
-          </span>
-          <span className="block text-[11px] capitalize text-slate-400">
-            {step.state}
-          </span>
+        <span className={`truncate text-[11px] font-medium ${active || completed ? 'text-slate-800 dark:text-slate-100' : 'text-slate-400'}`}>
+          {step.label}
         </span>
       </div>
     </li>
@@ -161,67 +223,36 @@ function PipelineStep({ step }) {
 
 function PipelineActivity({ calls }) {
   if (!calls.length) return null;
-
   return (
-    <section className="mb-6" aria-labelledby="pipeline-activity-title">
-      <div className="mb-3 flex items-center justify-between">
-        <div>
-          <h2 id="pipeline-activity-title" className="text-sm font-semibold text-slate-900 dark:text-white">
-            Pipeline activity
-          </h2>
-          <p className="mt-0.5 text-xs text-slate-500">
-            Live worker stages from the processing service
-          </p>
-        </div>
-        <span className="font-mono text-xs text-slate-500">
-          {calls.length} active
-        </span>
+    <section className="mb-5" aria-labelledby="pipeline-activity-title">
+      <div className="mb-2 flex items-center justify-between">
+        <h2 id="pipeline-activity-title" className="text-sm font-semibold text-slate-900 dark:text-white">
+          Processing
+        </h2>
+        <span className="font-mono text-xs text-slate-500">{calls.length} active</span>
       </div>
-
-      <div className="space-y-3">
-        {calls.map((call) => {
-          const pipeline = call.pipeline;
-          return (
-            <article
-              key={call.db_call_id}
-              className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="truncate font-mono text-sm font-semibold text-slate-900 dark:text-white">
-                    {call.call_id}
-                  </p>
-                  <p className="mt-1 text-xs capitalize text-slate-500">
-                    {call.domain} · {call.accent}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
-                    {pipeline?.current_stage_label || call.stage || 'Queued'}
-                  </p>
-                  <p className="mt-0.5 font-mono text-xs text-slate-500">
-                    {pipeline?.percent || 0}%
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-4 h-2 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-800">
-                <div
-                  className="h-full bg-indigo-600 transition-[width] duration-500"
-                  style={{ width: `${pipeline?.percent || 0}%` }}
-                />
-              </div>
-
-              {pipeline?.stages?.length > 0 && (
-                <ol className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 xl:grid-cols-6">
-                  {pipeline.stages.map((step) => (
-                    <PipelineStep key={step.id} step={step} />
-                  ))}
-                </ol>
-              )}
-            </article>
-          );
-        })}
+      <div className="space-y-2">
+        {calls.map((call) => (
+          <article key={call.db_call_id} className="rounded-lg border border-indigo-100 bg-white p-4 shadow-sm dark:border-indigo-900 dark:bg-slate-950">
+            <div className="flex items-center justify-between gap-4">
+              <p className="truncate font-mono text-sm font-semibold">{call.call_id}</p>
+              <p className="shrink-0 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                {call.pipeline?.current_stage_label || call.stage || 'Queued'} · {call.pipeline?.percent || 0}%
+              </p>
+            </div>
+            <div className="mt-3 h-1.5 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-800">
+              <div
+                className="h-full bg-indigo-600 transition-[width] duration-500"
+                style={{ width: `${call.pipeline?.percent || 0}%` }}
+              />
+            </div>
+            {call.pipeline?.stages?.length > 0 && (
+              <ol className="mt-4 grid grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-4 xl:grid-cols-6">
+                {call.pipeline.stages.map((step) => <PipelineStep key={step.id} step={step} />)}
+              </ol>
+            )}
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -232,12 +263,10 @@ export default function Dashboard() {
   const [loadError, setLoadError] = useState(null);
   const [selected, setSelected] = useState(new Set());
   const [submitting, setSubmitting] = useState(false);
-  const [domainFilter, setDomainFilter] = useState('all');
-  const [accentFilter, setAccentFilter] = useState('all');
-  const [dispositionFilter, setDispositionFilter] = useState('all');
-  const [sortField, setSortField] = useState(null);
-  const [sortDir, setSortDir] = useState('asc');
+  const [view, setView] = useState('evaluated');
+  const [resultFilter, setResultFilter] = useState('all');
   const [page, setPage] = useState(1);
+
   const activeCallKey = calls
     ?.filter((call) => ACTIVE_STATUSES.has(call.status))
     .map((call) => call.db_call_id)
@@ -247,7 +276,7 @@ export default function Dashboard() {
   const loadCatalog = useCallback(async () => {
     try {
       const response = await fetch(apiUrl('/calls/catalog'));
-      if (!response.ok) throw new Error('could not load the call catalog');
+      if (!response.ok) throw new Error('Could not load the call catalog.');
       setCalls(await response.json());
       setLoadError(null);
     } catch (error) {
@@ -263,8 +292,7 @@ export default function Dashboard() {
     if (!activeCallKey) return undefined;
     let cancelled = false;
     const poll = async () => {
-      const activeIds = activeCallKey.split('|');
-      const updates = await Promise.all(activeIds.map(async (callId) => {
+      const updates = await Promise.all(activeCallKey.split('|').map(async (callId) => {
         try {
           const response = await fetch(apiUrl(`/calls/${callId}/status`));
           return response.ok ? await response.json() : null;
@@ -277,15 +305,7 @@ export default function Dashboard() {
       const reachedTerminal = updates.some((update) => update && ['succeeded', 'failed', 'complete'].includes(update.status));
       setCalls((current) => current.map((call) => {
         const update = byId.get(call.db_call_id);
-        return update
-          ? {
-            ...call,
-            status: update.status,
-            stage: update.stage,
-            pipeline: update.pipeline,
-            error: update.error,
-          }
-          : call;
+        return update ? { ...call, status: update.status, stage: update.stage, pipeline: update.pipeline, error: update.error } : call;
       }));
       if (reachedTerminal) await loadCatalog();
     };
@@ -299,7 +319,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     setPage(1);
-  }, [domainFilter, accentFilter, dispositionFilter]);
+  }, [view, resultFilter]);
 
   const toggleSelected = (dbCallId) => {
     setSelected((current) => {
@@ -321,21 +341,13 @@ export default function Dashboard() {
       });
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
-        throw new Error(body.detail?.message || body.detail || 'could not queue calls');
+        throw new Error(body.detail?.message || body.detail || 'Could not queue calls.');
       }
       const { jobs } = await response.json();
       const byId = new Map(jobs.map((job) => [job.call_id, job]));
       setCalls((current) => current.map((call) => {
         const job = byId.get(call.db_call_id);
-        return job
-          ? {
-            ...call,
-            status: job.status,
-            stage: 'uploaded',
-            pipeline: null,
-            job_id: job.job_id,
-          }
-          : call;
+        return job ? { ...call, status: job.status, stage: 'uploaded', pipeline: null, job_id: job.job_id } : call;
       }));
       setSelected(new Set());
     } catch (error) {
@@ -345,88 +357,45 @@ export default function Dashboard() {
     }
   };
 
-  const domains = calls ? [...new Set(calls.map((call) => call.domain).filter(Boolean))].sort() : [];
-  const accents = calls ? [...new Set(calls.map((call) => call.accent).filter(Boolean))].sort() : [];
-  const filtered = calls ? calls.filter((call) =>
-    (domainFilter === 'all' || call.domain === domainFilter) &&
-    (accentFilter === 'all' || call.accent === accentFilter) &&
-    (
-      dispositionFilter === 'all'
-      || (
-        dispositionFilter === 'processing'
-          ? ACTIVE_STATUSES.has(call.status)
-          : call.evaluation_state === dispositionFilter
-      )
-    )
-  ) : [];
-  const evaluated = calls?.filter((call) => call.evaluation_available) || [];
   const activeCalls = calls?.filter((call) => ACTIVE_STATUSES.has(call.status)) || [];
+  const evaluated = calls?.filter((call) => call.evaluation_available) || [];
+  const counts = {
+    review: evaluated.filter((call) => call.result === 'review').length,
+    uncertain: evaluated.filter((call) => call.result === 'uncertain').length,
+    ok: evaluated.filter((call) => call.result === 'ok').length,
+    processing: activeCalls.length,
+  };
 
-  const toggleSort = (field) => {
-    if (sortField === field) setSortDir((direction) => direction === 'asc' ? 'desc' : 'asc');
-    else { setSortField(field); setSortDir('asc'); }
-  };
-  const sortValue = (call) => {
-    if (sortField === 'duration') return call.duration || 0;
-    if (sortField === 'demonstrated') {
-      return call.checklist_counts?.demonstrated ?? -1;
-    }
-    if (sortField === 'concerns') {
-      return (
-        (call.checklist_counts?.incorrect || 0)
-        + (call.checklist_counts?.not_demonstrated || 0)
-      );
-    }
-    return 0;
-  };
-  const sorted = sortField
-    ? [...filtered].sort((a, b) => (sortValue(a) - sortValue(b)) * (sortDir === 'asc' ? 1 : -1))
-    : [...filtered].sort((a, b) => {
-      const activeDifference = Number(ACTIVE_STATUSES.has(b.status))
-        - Number(ACTIVE_STATUSES.has(a.status));
-      if (activeDifference) return activeDifference;
-      const attentionDifference = Number(b.attention_required)
-        - Number(a.attention_required);
-      if (attentionDifference) return attentionDifference;
-      return Number(b.evaluation_available) - Number(a.evaluation_available);
-    });
-  const sortArrow = (field) => sortField === field ? (sortDir === 'asc' ? ' ^' : ' v') : '';
-  const needsAttention = evaluated.filter((call) => call.attention_required).length;
-  const completeCount = evaluated.filter(
-    (call) => call.evaluation_status === 'complete',
-  ).length;
-  const incompleteCount = calls?.filter(
-    (call) => call.evaluation_state === 'evaluation_incomplete',
-  ).length || 0;
-  const readyCount = calls?.filter(
-    (call) => (
-      call.evaluation_supported
-      && !call.evaluation_available
-      && !ACTIVE_STATUSES.has(call.status)
-    ),
-  ).length || 0;
-  const unsupportedCount = calls?.filter(
-    (call) => call.evaluation_state === 'unsupported',
-  ).length || 0;
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const sorted = useMemo(() => {
+    if (!calls) return [];
+    return calls
+      .filter((call) => view === 'all' || call.evaluation_available)
+      .filter((call) => resultFilter === 'all' || callResult(call) === resultFilter)
+      .sort((a, b) => {
+        const resultDifference = RESULT_ORDER[callResult(a)] - RESULT_ORDER[callResult(b)];
+        if (resultDifference) return resultDifference;
+        const concernDifference = (b.concern_count || 0) - (a.concern_count || 0);
+        if (concernDifference) return concernDifference;
+        return String(a.call_id).localeCompare(String(b.call_id));
+      });
+  }, [calls, resultFilter, view]);
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const pageSafe = Math.min(page, totalPages);
   const paged = sorted.slice((pageSafe - 1) * PAGE_SIZE, pageSafe * PAGE_SIZE);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 flex flex-col">
-      <header className="px-6 py-4 border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-indigo-600 dark:text-indigo-400">Call Evaluation Dashboard</h1>
-          <p className="mt-0.5 text-sm text-slate-500">
-            {calls
-              ? `${evaluated.length} evaluated, ${readyCount} ready to run, ${unsupportedCount} outside current coverage`
-              : 'Loading...'}
-          </p>
+    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+      <header className="border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-800 dark:bg-slate-950">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-bold text-indigo-700 dark:text-indigo-300">Call Evaluation</h1>
+            <p className="mt-0.5 text-sm text-slate-500">Evidence-backed review across four operational questions</p>
+          </div>
+          <ThemeToggle />
         </div>
-        <ThemeToggle />
       </header>
 
-      <main className="flex-grow max-w-7xl w-full mx-auto p-6">
+      <main className="mx-auto w-full max-w-7xl flex-grow p-6">
         {loadError && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{loadError}</p>}
         {!calls && !loadError && <p className="text-sm text-slate-500">Loading calls...</p>}
 
@@ -434,142 +403,135 @@ export default function Dashboard() {
           <>
             <PipelineActivity calls={activeCalls} />
 
-            <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" aria-label="Call summary">
-              <div className="bg-white rounded-lg border border-slate-200 p-4 dark:bg-slate-950 dark:border-slate-800">
-                <div className="text-xs uppercase text-slate-500 font-semibold">Evaluated</div>
-                <div className="text-3xl font-bold mt-1">{evaluated.length}</div>
-                <div className="text-xs text-slate-500 mt-0.5">{readyCount} ready to run</div>
-              </div>
-              <div className="bg-white rounded-lg border border-slate-200 p-4 dark:bg-slate-950 dark:border-slate-800">
-                <div className="text-xs uppercase text-slate-500 font-semibold">Needs attention</div>
-                <div className={`text-3xl font-bold mt-1 ${needsAttention ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                  {needsAttention}
-                </div>
-                <div className="text-xs text-slate-500 mt-0.5">Evidence-backed disposition</div>
-              </div>
-              <div className="bg-white rounded-lg border border-slate-200 p-4 dark:bg-slate-950 dark:border-slate-800">
-                <div className="text-xs uppercase text-slate-500 font-semibold">Complete coverage</div>
-                <div className="text-3xl font-bold mt-1">{completeCount}</div>
-                <div className="text-xs text-slate-500 mt-0.5">All applicable checks assessed</div>
-              </div>
-              <div className="bg-white rounded-lg border border-slate-200 p-4 dark:bg-slate-950 dark:border-slate-800">
-                <div className="text-xs uppercase text-slate-500 font-semibold">Incomplete</div>
-                <div className={`text-3xl font-bold mt-1 ${incompleteCount ? 'text-amber-600 dark:text-amber-400' : ''}`}>
-                  {incompleteCount}
-                </div>
-                <div className="text-xs text-slate-500 mt-0.5">{activeCalls.length} processing now</div>
-              </div>
+            <section className="mb-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-slate-200 py-3 text-sm dark:border-slate-800" aria-label="Evaluation summary">
+              <span><strong className="font-mono text-slate-900 dark:text-white">{evaluated.length}</strong> <span className="text-slate-500">evaluated</span></span>
+              <span><strong className="font-mono text-red-700 dark:text-red-300">{counts.review}</strong> <span className="text-slate-500">review</span></span>
+              <span><strong className="font-mono text-amber-700 dark:text-amber-300">{counts.uncertain}</strong> <span className="text-slate-500">uncertain</span></span>
+              <span><strong className="font-mono text-emerald-700 dark:text-emerald-300">{counts.ok}</strong> <span className="text-slate-500">OK</span></span>
+              <span><strong className="font-mono text-indigo-700 dark:text-indigo-300">{counts.processing}</strong> <span className="text-slate-500">processing</span></span>
             </section>
 
-            <div className="mb-3 flex min-h-10 items-center justify-between gap-4">
-              <p className="text-sm text-slate-500">
-                Select supported calls to evaluate or run again.
-              </p>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="inline-flex rounded-md border border-slate-200 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-950" aria-label="Call visibility">
+                  {[
+                    ['evaluated', 'Evaluated'],
+                    ['all', 'All calls'],
+                  ].map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setView(value)}
+                      className={`rounded px-3 py-1.5 text-xs font-semibold ${view === value ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <select
+                  value={resultFilter}
+                  onChange={(event) => setResultFilter(event.target.value)}
+                  className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-600 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300"
+                  aria-label="Filter by result"
+                >
+                  <option value="all">All results</option>
+                  <option value="review">Review</option>
+                  <option value="uncertain">Uncertain</option>
+                  <option value="ok">OK</option>
+                  <option value="processing">Processing</option>
+                </select>
+              </div>
               <button
                 type="button"
                 onClick={analyzeSelected}
                 disabled={!selected.size || submitting}
-                className="min-w-40 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-9 min-w-36 items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                {submitting ? 'Queueing...' : `Analyze ${selected.size || ''} call${selected.size === 1 ? '' : 's'}`}
+                {submitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+                {submitting ? 'Queueing' : `Analyze ${selected.size || ''}`.trim()}
               </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
-              <table className="w-full min-w-[1060px] text-base">
+            <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+              <table className="w-full min-w-[980px] text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 text-left text-xs uppercase text-slate-500 dark:border-slate-800">
-                    <th className="w-12 px-4 py-4"><span className="sr-only">Select</span></th>
-                    <th className="px-4 py-4 font-semibold">Call</th>
-                    <th className="px-4 py-4 font-semibold">
-                      <select value={domainFilter} onChange={(event) => setDomainFilter(event.target.value)} className="bg-transparent font-semibold uppercase text-slate-500 focus:outline-none">
-                        <option value="all">Domain</option>
-                        {domains.map((domain) => <option key={domain} value={domain}>{domain}</option>)}
-                      </select>
-                    </th>
-                    <th className="px-4 py-4 font-semibold">
-                      <select value={accentFilter} onChange={(event) => setAccentFilter(event.target.value)} className="bg-transparent font-semibold uppercase text-slate-500 focus:outline-none">
-                        <option value="all">Accent</option>
-                        {accents.map((accent) => <option key={accent} value={accent}>{accent}</option>)}
-                      </select>
-                    </th>
-                    <th className="px-4 py-4 font-semibold"><button onClick={() => toggleSort('duration')}>Duration{sortArrow('duration')}</button></th>
-                    <th className="px-4 py-4 font-semibold">
-                      <select value={dispositionFilter} onChange={(event) => setDispositionFilter(event.target.value)} className="bg-transparent font-semibold uppercase text-slate-500 focus:outline-none">
-                        <option value="all">Disposition</option>
-                        {Object.entries(DISPOSITION).map(([value, item]) => (
-                          <option key={value} value={value}>{item.label}</option>
-                        ))}
-                      </select>
-                    </th>
-                    <th className="px-4 py-4 font-semibold"><button onClick={() => toggleSort('demonstrated')}>Demonstrated{sortArrow('demonstrated')}</button></th>
-                    <th className="px-4 py-4 font-semibold"><button onClick={() => toggleSort('concerns')}>Concerns{sortArrow('concerns')}</button></th>
-                    <th className="px-4 py-4 font-semibold">Audio support</th>
-                    <th className="px-4 py-4 font-semibold">Status</th>
+                  <tr className="border-b border-slate-200 bg-slate-50/80 text-left text-[11px] uppercase text-slate-500 dark:border-slate-800 dark:bg-slate-900/70">
+                    <th className="w-11 px-3 py-3"><span className="sr-only">Select</span></th>
+                    <th className="px-3 py-3 font-semibold">Call</th>
+                    {ASPECTS.map(([key, label]) => (
+                      <th key={key} className="w-24 px-3 py-3 text-center font-semibold">{label}</th>
+                    ))}
+                    <th className="w-24 px-3 py-3 text-center font-semibold">Concerns</th>
+                    <th className="w-28 px-3 py-3 font-semibold">Result</th>
+                    <th className="w-36 px-3 py-3 text-center font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!filtered.length && <tr><td colSpan={10} className="px-4 py-6 text-center text-sm text-slate-500">No calls match the selected filters.</td></tr>}
+                  {!paged.length && (
+                    <tr>
+                      <td colSpan={9} className="px-4 py-8 text-center text-sm text-slate-500">No calls match this view.</td>
+                    </tr>
+                  )}
                   {paged.map((call) => {
                     const active = ACTIVE_STATUSES.has(call.status);
                     const selectable = !active && call.evaluation_supported;
-                    const disposition = dispositionFor(call);
-                    const checks = checklistSummary(call);
+                    const result = callResult(call);
                     return (
-                      <tr key={call.call_id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/60 dark:hover:bg-slate-900/60">
-                        <td className="px-4 py-4 text-center">
-                          {selectable && <input type="checkbox" checked={selected.has(call.db_call_id)} onChange={() => toggleSelected(call.db_call_id)} aria-label={`Select ${call.call_id}`} className="h-4 w-4 accent-indigo-600" />}
-                        </td>
-                        <td className="px-4 py-4 whitespace-nowrap font-mono text-sm">
-                          {call.evaluation_available
-                            ? <Link to={`/calls/${call.call_id}`} className="text-indigo-600 hover:underline dark:text-indigo-400">{call.call_id}</Link>
-                            : <span className="text-slate-700 dark:text-slate-300">{call.call_id}</span>}
-                        </td>
-                        <td className="px-4 py-4 capitalize text-slate-700 dark:text-slate-300">{call.domain}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-slate-500">{call.accent}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-slate-500">{fmt(call.duration || 0)}</td>
-                        <td className="px-4 py-4">
-                          <span className={`rounded border px-2 py-0.5 text-xs font-semibold ${disposition.cls}`}>
-                            {disposition.label}
-                          </span>
-                        </td>
-                        <td className="px-4 py-4 font-mono text-sm text-emerald-700 dark:text-emerald-400">
-                          {checks.demonstrated}
-                        </td>
-                        <td className={`px-4 py-4 font-mono text-sm ${checks.concerns > 0 ? 'font-semibold text-red-700 dark:text-red-400' : 'text-slate-500'}`}>
-                          {checks.concerns}
-                          {checks.unclear !== '-' && checks.unclear > 0 && (
-                            <span className="ml-1.5 text-xs text-amber-600" title="Unable to determine">
-                              +{checks.unclear} unclear
-                            </span>
+                      <tr key={call.call_id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/70 dark:hover:bg-slate-900/60">
+                        <td className="px-3 py-3 text-center">
+                          {selectable && (
+                            <input
+                              type="checkbox"
+                              checked={selected.has(call.db_call_id)}
+                              onChange={() => toggleSelected(call.db_call_id)}
+                              aria-label={`Select ${call.call_id}`}
+                              className="h-4 w-4 accent-indigo-600"
+                            />
                           )}
                         </td>
-                        <td className="px-4 py-4">
-                          {call.evaluation_available
-                            ? (
-                              <span className="text-xs text-slate-600 dark:text-slate-300" title={call.acoustic_coverage || undefined}>
-                                {call.acoustic_status === 'available' ? 'Available' : call.acoustic_status === 'limited' ? 'Limited' : 'Unavailable'}
-                              </span>
-                            )
-                            : <span className="text-xs text-slate-400">-</span>}
+                        <td className="px-3 py-3">
+                          {call.evaluation_available ? (
+                            <Link to={`/calls/${call.call_id}`} className="font-mono text-xs font-semibold text-indigo-700 hover:underline dark:text-indigo-300">
+                              {call.call_id}
+                            </Link>
+                          ) : (
+                            <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">{call.call_id}</span>
+                          )}
+                          <p className="mt-1 text-[11px] capitalize text-slate-400">
+                            {call.domain} · {call.accent} · {fmt(call.duration || 0)}
+                          </p>
                         </td>
-                        <td className="px-4 py-4">
-                          {active ? <ProcessingStatus call={call} /> : call.status === 'failed'
-                            ? <span className="text-xs font-semibold text-red-600" title={call.error}>Failed</span>
-                            : <span className={`text-xs font-semibold ${call.evaluation_available ? 'text-emerald-600' : 'text-slate-500'}`}>{call.evaluation_available ? 'Evaluated' : call.evaluation_supported ? 'Ready' : 'Unavailable'}</span>}
+                        {ASPECTS.map(([key, label]) => (
+                          <td key={key} className="px-3 py-3 text-center">
+                            {call.evaluation_available ? <AspectMark aspect={call.aspects?.[key]} label={label} /> : <span className="text-slate-300">-</span>}
+                          </td>
+                        ))}
+                        <td className="px-3 py-3 text-center">
+                          {call.evaluation_available ? (
+                            <span className={`inline-flex items-center justify-center gap-1.5 font-mono font-semibold ${(call.concern_count || 0) > 0 ? 'text-red-700 dark:text-red-300' : 'text-slate-500'}`}>
+                              {call.concern_count || 0}
+                              {call.audio_warning && (
+                                <AudioLines className="h-4 w-4 text-indigo-600" title="Audio supports a surfaced warning" aria-label="Audio supports a surfaced warning" />
+                              )}
+                            </span>
+                          ) : <span className="text-slate-300">-</span>}
                         </td>
+                        <td className="px-3 py-3"><ResultBadge result={result} /></td>
+                        <td className="px-3 py-3 text-center"><StatusMark call={call} /></td>
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
-              {filtered.length > 0 && totalPages > 1 && (
-                <div className="flex items-center justify-between border-t border-slate-200 px-5 py-3 text-sm dark:border-slate-800">
-                  <span className="text-slate-500">Showing {(pageSafe - 1) * PAGE_SIZE + 1}-{Math.min(pageSafe * PAGE_SIZE, filtered.length)} of {filtered.length}</span>
+              {sorted.length > PAGE_SIZE && (
+                <div className="flex items-center justify-between border-t border-slate-200 px-4 py-3 text-xs dark:border-slate-800">
+                  <span className="text-slate-500">
+                    {(pageSafe - 1) * PAGE_SIZE + 1}-{Math.min(pageSafe * PAGE_SIZE, sorted.length)} of {sorted.length}
+                  </span>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => setPage((value) => Math.max(1, value - 1))} disabled={pageSafe === 1} className="rounded border border-slate-200 px-3 py-1 disabled:opacity-40 dark:border-slate-700">Previous</button>
-                    <span className="font-mono text-xs text-slate-500">{pageSafe}/{totalPages}</span>
-                    <button onClick={() => setPage((value) => Math.min(totalPages, value + 1))} disabled={pageSafe === totalPages} className="rounded border border-slate-200 px-3 py-1 disabled:opacity-40 dark:border-slate-700">Next</button>
+                    <button type="button" onClick={() => setPage((value) => Math.max(1, value - 1))} disabled={pageSafe === 1} className="rounded border border-slate-200 px-2.5 py-1.5 disabled:opacity-40 dark:border-slate-700">Previous</button>
+                    <span className="font-mono text-slate-500">{pageSafe}/{totalPages}</span>
+                    <button type="button" onClick={() => setPage((value) => Math.min(totalPages, value + 1))} disabled={pageSafe === totalPages} className="rounded border border-slate-200 px-2.5 py-1.5 disabled:opacity-40 dark:border-slate-700">Next</button>
                   </div>
                 </div>
               )}

@@ -279,20 +279,78 @@ def _evaluation_summary(public_id, domain, run=None):
 
     acoustic = presentation.get("acoustic_context") or {}
     action = presentation.get("recommended_action") or {}
+    questions = {
+        item.get("question_id"): item
+        for item in presentation.get("manager_questions") or []
+    }
+
+    def aspect(question_id):
+        item = questions.get(question_id) or {}
+        answer = item.get("answer")
+        if answer == "yes":
+            state = "ok"
+        elif answer in {"partly", "no"}:
+            state = "concern"
+        else:
+            state = "uncertain"
+        return {
+            "state": state,
+            "summary": item.get("summary"),
+            "evidence_ids": item.get("evidence_ids") or [],
+        }
+
+    aspects = {
+        name: aspect(f"call.{name}")
+        for name in ("request", "process", "experience", "outcome")
+    }
+    evaluation_status = (
+        presentation.get("evaluation_status")
+        or decision.get("decision_status")
+        or ("failed" if run_status == "failed" else None)
+    )
+    if available and bool(presentation.get("attention_required")):
+        result = "review"
+    elif available and (
+        evaluation_status != "complete"
+        or any(item["state"] == "uncertain" for item in aspects.values())
+    ):
+        result = "uncertain"
+    elif available:
+        result = "ok"
+    else:
+        result = None
+
+    evidence = [
+        *(presentation.get("evidence") or []),
+        *((presentation.get("details") or {}).get("evidence") or []),
+    ]
     return {
         "analyzed": available,
         "evaluation_available": available,
         "evaluation_supported": evaluator_supported,
         "evaluation_state": state,
-        "evaluation_status": (
-            presentation.get("evaluation_status")
-            or decision.get("decision_status")
-            or ("failed" if run_status == "failed" else None)
-        ),
+        "evaluation_status": evaluation_status,
         "attention_required": (
             bool(presentation.get("attention_required"))
             if available
             else None
+        ),
+        "result": result,
+        "aspects": aspects if available else None,
+        "concern_count": (
+            len(presentation.get("primary_reasons") or [])
+            + int(presentation.get("additional_reason_count") or 0)
+            if available
+            else None
+        ),
+        "audio_warning": (
+            any(
+                item.get("kind") == "audio_support"
+                and "reason" in (item.get("purposes") or [])
+                for item in evidence
+            )
+            if available
+            else False
         ),
         "checklist_counts": checklist_counts,
         "checklist_total": len(checklist),

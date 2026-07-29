@@ -143,6 +143,15 @@ class PresentationProjectionTests(unittest.TestCase):
         self.assertIsNone(view.completeness_notice)
         self.assertEqual(len(view.manager_questions), 4)
         self.assertEqual(
+            [item.question_id for item in view.manager_questions],
+            [
+                "call.request",
+                "call.process",
+                "call.experience",
+                "call.outcome",
+            ],
+        )
+        self.assertEqual(
             view.acoustic_context.status.value,
             "unavailable",
         )

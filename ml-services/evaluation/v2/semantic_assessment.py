@@ -24,7 +24,7 @@ from .schemas import (
     SourceProvenance,
 )
 
-SEMANTIC_ASSESSOR_VERSION = "0.2.0"
+SEMANTIC_ASSESSOR_VERSION = "0.3.0"
 _TIERS = ("qa-primary", "qa-fallback", "qa-safety")
 SYSTEM_PROMPT = """You evaluate a customer-service transcript against a fixed
 list of applicable business requirements.
@@ -33,6 +33,25 @@ Rules:
 - Assess every supplied requirement exactly once.
 - Use only the supplied requirement IDs and transcript segment IDs.
 - MET requires direct transcript evidence that demonstrates the requirement.
+- Treat each evidence expectation as a claim that must be supported. A general
+  acknowledgment does not satisfy a requirement whose expectations name
+  specific details.
+- For MET, cite the substantive agent statement and any customer response
+  needed to prove agreement. Do not cite the customer's request as proof that
+  the agent confirmed, explained, authorized, or completed it.
+- A later statement cannot prove that an earlier required authorization
+  occurred. Respect the sequence of the cited segments.
+- If the transcript contains materially conflicting statements about an
+  amount, account, timing, fee, schedule, or outcome, return INCORRECT unless
+  the agent clearly corrects the statement before action and the customer
+  confirms the corrected details.
+- Source and destination accounts, amount, timing or schedule, authorization,
+  and completion are separate requirements. Evidence for one must not be
+  reused as a shortcut for another.
+- Completion requires an explicit statement that the action succeeded or was
+  scheduled. An intention such as "I will do that" is not completion.
+- Outcome and next steps require a closing recap of what happened and any
+  remaining customer action. An earlier explanation alone is insufficient.
 - INCORRECT means the agent directly gave wrong information or performed the
   applicable behavior incorrectly. It requires direct transcript evidence of
   what the agent said or did.

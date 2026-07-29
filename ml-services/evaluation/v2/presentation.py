@@ -1025,142 +1025,167 @@ def _question_summary(
 
 def _manager_questions(
     decision: CallDecision,
-    acoustic: AcousticContext,
+    _acoustic: AcousticContext,
 ) -> list[ManagerQuestion]:
     all_findings = (
         decision.triggered_findings + decision.positive_findings
     )
-    objective = [
+    request_ids = {
+        "request.intent_confirmed",
+        "loan.purpose_and_stage_confirmed",
+    }
+    request = [
         item
         for item in all_findings
-        if (
-            item.applicability.rule_id == "request.intent_confirmed"
-            or item.category == FindingCategory.OUTCOME
-        )
+        if item.applicability.rule_id in request_ids
     ]
-    objective_negative = [
-        item for item in objective if item.polarity.value == "negative"
-    ]
-    objective_positive = [
-        item for item in objective if item.polarity.value == "positive"
-    ]
-    if objective_negative:
-        objective_answer = ManagerAnswer.PARTLY
-        objective_label = "Partly"
-    elif objective_positive:
-        objective_answer = ManagerAnswer.YES
-        objective_label = "Yes"
-    else:
-        objective_answer = ManagerAnswer.UNCLEAR
-        objective_label = "Unable to determine"
-
-    workflow = [
+    process = [
         item
         for item in all_findings
         if (
             item.detection_rule.detector
             == "structured_requirement_assessment"
-            and item not in objective
+            and item.applicability.rule_id not in request_ids
+            and item.category
+            not in (
+                FindingCategory.OUTCOME,
+                FindingCategory.AGENT_BEHAVIOR,
+            )
         )
     ]
-    workflow_negative = [
-        item for item in workflow if item.polarity.value == "negative"
-    ]
-    if any(
-        item.severity.value == "critical"
-        for item in workflow_negative
-    ):
-        workflow_answer = ManagerAnswer.NO
-        workflow_label = "No"
-    elif workflow_negative:
-        workflow_answer = ManagerAnswer.PARTLY
-        workflow_label = "Partly"
-    elif workflow:
-        workflow_answer = ManagerAnswer.YES
-        workflow_label = "Yes"
-    else:
-        workflow_answer = ManagerAnswer.UNCLEAR
-        workflow_label = "Unable to determine"
-
-    friction = [
+    experience = [
         item
         for item in all_findings
-        if item.category == FindingCategory.ESCALATION
+        if (
+            item.category == FindingCategory.ESCALATION
+            or item.finding_type.startswith("experience.")
+            or (
+                item.category == FindingCategory.AGENT_BEHAVIOR
+                and item.detection_rule.detector
+                == "structured_requirement_assessment"
+            )
+        )
     ]
-    if friction:
-        friction_answer = ManagerAnswer.YES
-        friction_label = "Concern identified"
-    elif acoustic.status == AcousticStatus.AVAILABLE:
-        friction_answer = ManagerAnswer.NO
-        friction_label = "No concern identified"
-    else:
-        friction_answer = ManagerAnswer.UNCLEAR
-        friction_label = "Unable to determine"
+    outcome = [
+        item
+        for item in all_findings
+        if item.category == FindingCategory.OUTCOME
+    ]
 
-    action = decision.recommended_action
-    needs_action = action.action_type != ActionType.NONE
+    def answer(
+        findings: list[Finding],
+        *,
+        clear_when_empty: bool = False,
+    ) -> tuple[ManagerAnswer, str]:
+        negative = [
+            item
+            for item in findings
+            if item.polarity.value == "negative"
+        ]
+        positive = [
+            item
+            for item in findings
+            if item.polarity.value == "positive"
+        ]
+        if any(
+            item.severity.value == "critical"
+            for item in negative
+        ):
+            return ManagerAnswer.NO, "No"
+        if negative:
+            return ManagerAnswer.PARTLY, "Partly"
+        if positive or (
+            clear_when_empty
+            and decision.decision_status == DecisionStatus.COMPLETE
+        ):
+            return ManagerAnswer.YES, "Yes"
+        return ManagerAnswer.UNCLEAR, "Unable to determine"
+
+    request_answer, request_label = answer(request)
+    process_answer, process_label = answer(process)
+    experience_answer, experience_label = answer(
+        experience,
+        clear_when_empty=True,
+    )
+    outcome_answer, outcome_label = answer(outcome)
+
+    request_negative = [
+        item for item in request if item.polarity.value == "negative"
+    ]
+    request_positive = [
+        item for item in request if item.polarity.value == "positive"
+    ]
+    process_negative = [
+        item for item in process if item.polarity.value == "negative"
+    ]
+    experience_negative = [
+        item for item in experience if item.polarity.value == "negative"
+    ]
+    experience_positive = [
+        item for item in experience if item.polarity.value == "positive"
+    ]
+    outcome_negative = [
+        item for item in outcome if item.polarity.value == "negative"
+    ]
+    outcome_positive = [
+        item for item in outcome if item.polarity.value == "positive"
+    ]
     return [
         ManagerQuestion(
-            question_id="call.objective",
-            question="Did the agent understand and address the objective?",
-            answer=objective_answer,
-            answer_label=objective_label,
+            question_id="call.request",
+            question="Was the customer's request understood?",
+            answer=request_answer,
+            answer_label=request_label,
             summary=_question_summary(
-                objective_negative or objective_positive,
-                "The available evidence did not resolve the call objective.",
+                request_negative or request_positive,
+                "The available evidence did not resolve the request.",
             ),
-            evidence_ids=_finding_evidence_ids(objective),
+            evidence_ids=_finding_evidence_ids(request),
         ),
         ManagerQuestion(
-            question_id="call.workflow",
-            question="Did the agent follow the applicable workflow?",
-            answer=workflow_answer,
-            answer_label=workflow_label,
+            question_id="call.process",
+            question="Was the applicable process followed?",
+            answer=process_answer,
+            answer_label=process_label,
             summary=(
                 _question_summary(
-                    workflow_negative,
-                    "No applicable workflow checks were available.",
+                    process_negative,
+                    "No applicable process checks were available.",
                 )
-                if workflow_negative
+                if process_negative
                 else (
-                    f"All {len(workflow)} applicable workflow checks were "
-                    "demonstrated."
-                    if workflow
-                    else "No applicable workflow checks were available."
+                    f"{len(process)} applicable process checks were "
+                    "supported by transcript evidence."
+                    if process
+                    else "No applicable process checks were available."
                 )
             ),
-            evidence_ids=_finding_evidence_ids(workflow),
+            evidence_ids=_finding_evidence_ids(process),
         ),
         ManagerQuestion(
-            question_id="call.friction",
-            question="Did the interaction introduce customer friction?",
-            answer=friction_answer,
-            answer_label=friction_label,
+            question_id="call.experience",
+            question="Was the customer experience handled appropriately?",
+            answer=experience_answer,
+            answer_label=experience_label,
             summary=_question_summary(
-                friction,
-                acoustic.conclusion,
+                experience_negative or experience_positive,
+                (
+                    "No customer-experience concern requiring review was "
+                    "identified in the transcript."
+                ),
             ),
-            evidence_ids=_finding_evidence_ids(friction),
+            evidence_ids=_finding_evidence_ids(experience),
         ),
         ManagerQuestion(
-            question_id="call.follow_up",
-            question="Is follow-up, coaching, or customer action required?",
-            answer=(
-                ManagerAnswer.YES if needs_action else ManagerAnswer.NO
+            question_id="call.outcome",
+            question="Was the outcome clear and complete?",
+            answer=outcome_answer,
+            answer_label=outcome_label,
+            summary=_question_summary(
+                outcome_negative or outcome_positive,
+                "The available evidence did not resolve the call outcome.",
             ),
-            answer_label="Yes" if needs_action else "No",
-            summary=(
-                action.label
-                if needs_action
-                else "No evidence-backed action was triggered."
-            ),
-            evidence_ids=_finding_evidence_ids(
-                [
-                    item
-                    for item in decision.triggered_findings
-                    if item.finding_id in action.finding_ids
-                ]
-            ),
+            evidence_ids=_finding_evidence_ids(outcome),
         ),
     ]
 

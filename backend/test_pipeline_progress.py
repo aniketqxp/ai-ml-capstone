@@ -115,6 +115,34 @@ class EvaluationSummaryTests(unittest.TestCase):
                     "state": "needs_attention",
                     "evaluation_status": "complete",
                     "attention_required": True,
+                    "manager_questions": [
+                        {
+                            "question_id": "call.request",
+                            "answer": "yes",
+                            "summary": "Request confirmed.",
+                            "evidence_ids": ["evidence-request"],
+                        },
+                        {
+                            "question_id": "call.process",
+                            "answer": "partly",
+                            "summary": "One process concern.",
+                            "evidence_ids": ["evidence-process"],
+                        },
+                        {
+                            "question_id": "call.experience",
+                            "answer": "yes",
+                            "summary": "Experience handled.",
+                            "evidence_ids": [],
+                        },
+                        {
+                            "question_id": "call.outcome",
+                            "answer": "yes",
+                            "summary": "Outcome confirmed.",
+                            "evidence_ids": ["evidence-outcome"],
+                        },
+                    ],
+                    "primary_reasons": [{"finding_id": "finding-a"}],
+                    "additional_reason_count": 1,
                     "checklist": [
                         {"status": "demonstrated"},
                         {"status": "incorrect"},
@@ -133,6 +161,10 @@ class EvaluationSummaryTests(unittest.TestCase):
         self.assertTrue(summary["evaluation_available"])
         self.assertTrue(summary["attention_required"])
         self.assertEqual(summary["evaluation_state"], "needs_attention")
+        self.assertEqual(summary["result"], "review")
+        self.assertEqual(summary["aspects"]["request"]["state"], "ok")
+        self.assertEqual(summary["aspects"]["process"]["state"], "concern")
+        self.assertEqual(summary["concern_count"], 2)
         self.assertEqual(summary["checklist_counts"]["demonstrated"], 1)
         self.assertEqual(summary["checklist_counts"]["incorrect"], 1)
         self.assertEqual(

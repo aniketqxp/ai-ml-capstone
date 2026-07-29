@@ -217,6 +217,26 @@ TEXT_ESCALATION_RULES = (
             r"(?:frustrated|angry|upset)\b",
             r"\bthis\s+is\s+(?:completely\s+|absolutely\s+)?"
             r"unacceptable\b",
+            r"\b(?:this|it)\s+is\s+(?:really\s+|absolutely\s+)?"
+            r"ridiculous\b",
+            r"\bthis\s+is\s+(?:honestly\s+)?(?:a\s+)?nightmare\b",
+            r"\b(?:was|is|has\s+been)\s+stressing\s+me\s+out\s+"
+            r"(?:tremendously|badly)\b",
+        ),
+    ),
+    TextEscalationRule(
+        finding_type="experience.accessibility_barrier",
+        title="Customer reported an access barrier",
+        business_definition=(
+            "The customer explicitly states that a physical-access barrier "
+            "prevents them from using the offered service path."
+        ),
+        severity=FindingSeverity.REVIEW,
+        category=FindingCategory.AGENT_BEHAVIOR,
+        patterns=_patterns(
+            r"\b(?:can't|cannot|unable\s+to)\s+(?:go|visit)\s+"
+            r"(?:to\s+)?(?:the\s+)?(?:bank|branch)\s+physically\b",
+            r"\bi(?:'m|\s+am)\s+(?:currently\s+)?in\s+a\s+wheelchair\b",
         ),
     ),
 )

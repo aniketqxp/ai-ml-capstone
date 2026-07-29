@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from pathlib import Path
 
 from .runtime import (
@@ -50,7 +51,21 @@ def main() -> int:
         default=[],
         help="Call ID to rerun even when its existing artifact succeeded.",
     )
+    parser.add_argument(
+        "--only-call",
+        action="append",
+        default=[],
+        help="Restrict the batch to one or more call IDs.",
+    )
+    parser.add_argument(
+        "--delay-seconds",
+        type=float,
+        default=0.0,
+        help="Pause between provider calls to respect token rate limits.",
+    )
     args = parser.parse_args()
+    if args.delay_seconds < 0:
+        parser.error("--delay-seconds cannot be negative")
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
     counts: dict[str, int] = {}
@@ -64,7 +79,17 @@ def main() -> int:
     legacy_attention = 0
     v2_attention = 0
     rows = []
-    for transcript_path in sorted(TRANSCRIPT_ROOT.glob("*.json")):
+    transcript_paths = sorted(TRANSCRIPT_ROOT.glob("*.json"))
+    if args.only_call:
+        selected = set(args.only_call)
+        transcript_paths = [
+            path for path in transcript_paths if path.stem in selected
+        ]
+        missing = sorted(selected - {path.stem for path in transcript_paths})
+        if missing:
+            parser.error(f"unknown --only-call values: {missing}")
+
+    for transcript_index, transcript_path in enumerate(transcript_paths):
         call_id = transcript_path.stem
         legacy_path = LEGACY_ROOT / f"{call_id}_graph.json"
         sentiment_path = (
@@ -105,6 +130,11 @@ def main() -> int:
                 json.dumps(run.model_dump(mode="json"), indent=2) + "\n",
                 encoding="utf-8",
             )
+            if (
+                args.delay_seconds
+                and transcript_index < len(transcript_paths) - 1
+            ):
+                time.sleep(args.delay_seconds)
         counts[run.status.value] = counts.get(run.status.value, 0) + 1
         if run.legacy_proxy and run.legacy_proxy.attention_required:
             legacy_attention += 1

@@ -473,6 +473,37 @@ class RequirementFindingTests(unittest.TestCase):
 
 
 class ExplicitEscalationTests(unittest.TestCase):
+    def test_direct_dissatisfaction_phrases_are_detected(self):
+        findings = derive_findings(
+            _bundle("This is ridiculous."),
+            _plan(),
+        ).triggered_findings
+
+        self.assertIn(
+            "escalation.explicit_dissatisfaction",
+            {finding.finding_type for finding in findings},
+        )
+
+    def test_explicit_physical_access_barrier_is_detected(self):
+        findings = derive_findings(
+            _bundle(
+                "I can't go to the bank physically because "
+                "I'm in a wheelchair."
+            ),
+            _plan(),
+        ).triggered_findings
+
+        barrier = next(
+            finding
+            for finding in findings
+            if finding.finding_type
+            == "experience.accessibility_barrier"
+        )
+        self.assertEqual(
+            barrier.category,
+            FindingCategory.AGENT_BEHAVIOR,
+        )
+
     def test_manager_request_is_detected_but_manager_reference_is_not(self):
         plan = _plan()
         detected = derive_findings(_bundle(), plan)

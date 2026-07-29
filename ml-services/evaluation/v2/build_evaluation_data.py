@@ -554,6 +554,7 @@ def _challenge_call(
         facts={
             "request.executes_transaction": True,
             "transfer.executed_during_call": True,
+            "policy.requires_identity_challenge": True,
         },
         acoustic_condition=acoustic,
         segments=segments,
