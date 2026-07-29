@@ -4,7 +4,12 @@ import argparse
 import json
 from pathlib import Path
 
-from .runtime import RUNTIME_VERSION, safe_run_shadow_evaluation
+from .runtime import (
+    RUNTIME_VERSION,
+    EvaluationV2Run,
+    ShadowRunStatus,
+    safe_run_shadow_evaluation,
+)
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[2]
@@ -26,6 +31,17 @@ def main() -> int:
         type=Path,
         default=DEFAULT_SUMMARY,
     )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Reuse existing succeeded artifacts and retry other calls.",
+    )
+    parser.add_argument(
+        "--rerun-call",
+        action="append",
+        default=[],
+        help="Call ID to rerun even when its existing artifact succeeded.",
+    )
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -43,18 +59,30 @@ def main() -> int:
     for transcript_path in sorted(TRANSCRIPT_ROOT.glob("*.json")):
         call_id = transcript_path.stem
         legacy_path = LEGACY_ROOT / f"{call_id}_graph.json"
-        run = safe_run_shadow_evaluation(
-            transcript=_load(transcript_path),
-            legacy_evaluation=(
-                _load(legacy_path) if legacy_path.exists() else None
-            ),
-            transcript_source=str(transcript_path.relative_to(REPO_ROOT)),
-        )
         output = args.output_dir / f"{call_id}.json"
-        output.write_text(
-            json.dumps(run.model_dump(mode="json"), indent=2) + "\n",
-            encoding="utf-8",
-        )
+        run = None
+        if (
+            args.resume
+            and call_id not in args.rerun_call
+            and output.exists()
+        ):
+            existing = EvaluationV2Run.model_validate(_load(output))
+            if existing.status == ShadowRunStatus.SUCCEEDED:
+                run = existing
+        if run is None:
+            run = safe_run_shadow_evaluation(
+                transcript=_load(transcript_path),
+                legacy_evaluation=(
+                    _load(legacy_path) if legacy_path.exists() else None
+                ),
+                transcript_source=str(
+                    transcript_path.relative_to(REPO_ROOT)
+                ),
+            )
+            output.write_text(
+                json.dumps(run.model_dump(mode="json"), indent=2) + "\n",
+                encoding="utf-8",
+            )
         counts[run.status.value] = counts.get(run.status.value, 0) + 1
         if run.legacy_proxy and run.legacy_proxy.attention_required:
             legacy_attention += 1
@@ -110,8 +138,12 @@ def main() -> int:
         "v2_attention_count": v2_attention,
         "comparison": comparison_counts,
         "conclusion": (
-            "No attention disagreement is reported because every v2 run "
-            "has incomplete semantic requirement coverage."
+            f"{comparison_counts['comparable']} calls produced comparable "
+            "attention decisions: "
+            f"{comparison_counts['attention_agreement']} agreements and "
+            f"{comparison_counts['attention_disagreement']} disagreements. "
+            f"{comparison_counts['not_comparable']} calls remain "
+            "non-comparable because requirement coverage is partial."
         ),
         "calls": rows,
     }

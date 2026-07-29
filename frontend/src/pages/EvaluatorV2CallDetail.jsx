@@ -27,7 +27,6 @@ import { Link, useParams } from 'react-router-dom';
 import { apiUrl } from '../api';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { fmt } from '../lib/format';
-import LegacyCallDetail from './LegacyCallDetail';
 
 const STATE_COPY = {
   needs_attention: {
@@ -48,6 +47,12 @@ const STATE_COPY = {
     tone: 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100',
     iconTone: 'text-amber-600 dark:text-amber-400',
   },
+  evaluation_unavailable: {
+    label: 'Evaluation unavailable',
+    icon: FileQuestion,
+    tone: 'border-slate-300 bg-slate-50 text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100',
+    iconTone: 'text-slate-500',
+  },
 };
 
 function classNames(...values) {
@@ -64,6 +69,22 @@ async function fetchOptionalJson(path) {
   }
 }
 
+async function fetchEvaluatorArtifact(path) {
+  const candidates = [...new Set([path, apiUrl(path)])];
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate);
+      if (!response.ok) continue;
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) continue;
+      return await response.json();
+    } catch {
+      // Try the processing API after a missing same-origin artifact.
+    }
+  }
+  return null;
+}
+
 function speakerLabel(speaker) {
   if (String(speaker).toUpperCase() === 'AGENT') return 'Agent';
   if (String(speaker).toUpperCase() === 'CUSTOMER') return 'Customer';
@@ -71,7 +92,59 @@ function speakerLabel(speaker) {
 }
 
 function evidenceText(item) {
-  return item.text || 'Evidence is linked to the source call.';
+  const text = item.text || 'Evidence is linked to the source call.';
+  if (!item.speaker) return text;
+  const prefix = `${speakerLabel(item.speaker).toUpperCase()}:`;
+  return text
+    .split('\n')
+    .map((line) => (
+      line.toUpperCase().startsWith(prefix)
+        ? line.slice(prefix.length).trimStart()
+        : line
+    ))
+    .join(' ');
+}
+
+function unavailableRun(call, shadow) {
+  const unsupported = shadow?.status === 'unsupported_domain';
+  const failed = shadow?.status === 'failed';
+  const summary = unsupported
+    ? `Evaluator v2 does not yet have a ${call.evaluation?.metadata?.domain || 'matching'} domain profile for this call.`
+    : failed
+      ? 'The evaluator could not complete this run. The call and transcript remain available.'
+      : 'No evaluator v2 artifact is available for this call.';
+  return {
+    mode: 'shadow',
+    status: shadow?.status || 'unavailable',
+    evaluator_version: shadow?.evaluator_version || 'v2',
+    decision_sha256: null,
+    presentation: {
+      state: 'evaluation_unavailable',
+      evaluation_status: shadow?.status || 'unavailable',
+      attention_required: false,
+      headline: 'Evaluation unavailable',
+      summary,
+      primary_reasons: [],
+      additional_reason_count: 0,
+      positive_highlights: [],
+      additional_positive_count: 0,
+      recommended_action: null,
+      evidence: [],
+      completeness_notice: null,
+      details: {
+        additional_findings: [],
+        additional_positive_findings: [],
+        evidence: [],
+        uncertainty_messages: shadow?.failure_reason
+          ? [shadow.failure_reason]
+          : [],
+        evaluator_version: shadow?.evaluator_version || 'v2',
+        domain_profile_id: shadow?.profile_id || 'not available',
+        decision_policy_id: 'not run',
+        decision_policy_version: '',
+      },
+    },
+  };
 }
 
 function FeedbackButton({
@@ -467,8 +540,65 @@ function DetailsSection({ view, run }) {
   );
 }
 
+function ChapterNavigation({ chapters, currentTime, onSeek }) {
+  const activeIndex = useMemo(() => {
+    let active = 0;
+    for (let index = 0; index < chapters.length; index += 1) {
+      if (currentTime >= chapters[index].start) active = index;
+      else break;
+    }
+    return active;
+  }, [chapters, currentTime]);
+
+  if (!chapters.length) return null;
+  const active = chapters[activeIndex];
+
+  return (
+    <nav
+      aria-label="Call chapters"
+      className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
+    >
+      <div className="overflow-x-auto">
+        <ol className="flex min-w-max">
+          {chapters.map((chapter, index) => {
+            const selected = index === activeIndex;
+            return (
+              <li key={`${chapter.index}-${chapter.start}`}>
+                <button
+                  type="button"
+                  onClick={() => onSeek(chapter.start)}
+                  aria-current={selected ? 'step' : undefined}
+                  className={classNames(
+                    'h-16 w-40 border-b-2 px-4 text-left transition sm:w-44',
+                    selected
+                      ? 'border-sky-600 bg-sky-50/70 dark:bg-sky-950/30'
+                      : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-900',
+                  )}
+                >
+                  <span className="block truncate text-xs font-semibold text-slate-800 dark:text-slate-200">
+                    {chapter.label}
+                  </span>
+                  <span className="mt-1 block font-mono text-[11px] text-slate-400">
+                    {fmt(chapter.start)}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+      {active?.summary && (
+        <p className="border-t border-slate-100 px-5 py-2 text-xs leading-5 text-slate-500 dark:border-slate-900">
+          {active.summary}
+        </p>
+      )}
+    </nav>
+  );
+}
+
 function Transcript({
   turns,
+  chapters,
   currentTime,
   onSeek,
   activeTurnRef,
@@ -498,6 +628,11 @@ function Transcript({
         </h2>
         <span className="text-xs text-slate-500">{turns.length} turns</span>
       </div>
+      <ChapterNavigation
+        chapters={chapters}
+        currentTime={currentTime}
+        onSeek={onSeek}
+      />
       <div
         ref={scrollRef}
         className="max-h-[calc(100vh-13rem)] overflow-y-auto px-4 py-5 sm:px-6"
@@ -574,7 +709,7 @@ export default function EvaluatorV2CallDetail() {
     setLoadState('loading');
     Promise.all([
       fetchOptionalJson(`/calls/${encodeURIComponent(callId)}.json`),
-      fetchOptionalJson(
+      fetchEvaluatorArtifact(
         `/evaluation-v2/${encodeURIComponent(callId)}.json`,
       ),
     ]).then(([call, shadow]) => {
@@ -590,7 +725,8 @@ export default function EvaluatorV2CallDetail() {
         embedded?.status !== 'succeeded' ||
         !embedded?.presentation
       ) {
-        setLoadState('legacy');
+        setRun(unavailableRun(call, embedded));
+        setLoadState('ready');
         return;
       }
       setRun(embedded);
@@ -680,10 +816,6 @@ export default function EvaluatorV2CallDetail() {
     [callId, run],
   );
 
-  if (loadState === 'legacy') {
-    return <LegacyCallDetail />;
-  }
-
   if (loadState === 'loading') {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white text-sm text-slate-500 dark:bg-slate-950">
@@ -746,7 +878,7 @@ export default function EvaluatorV2CallDetail() {
               title="Evaluator v2 is running alongside the current evaluator"
             >
               <CircleHelp size={14} aria-hidden="true" />
-              Shadow run
+              Evaluator v2
             </span>
             <ThemeToggle />
           </div>
@@ -789,6 +921,7 @@ export default function EvaluatorV2CallDetail() {
         </aside>
         <Transcript
           turns={callData.turns || []}
+          chapters={callData.chapters || []}
           currentTime={currentTime}
           onSeek={seek}
           activeTurnRef={activeTurnRef}

@@ -389,7 +389,8 @@
       "business_definition": "The customer leaves knowing what occurred and what must happen next.",
       "level": "required",
       "evidence_expectations": [
-        "Agent summarizes completed actions or clearly explains pending next steps before closing."
+        "Agent summarizes completed actions or clearly explains pending next steps before closing.",
+        "For an ineligible request, explaining the reason and a concrete route or timeframe to try again satisfies this requirement even when the customer declines an offered resource."
       ],
       "policy_source_ids": [
         "capstone.banking_service_rules"
@@ -409,7 +410,8 @@
       "level": "critical",
       "evidence_expectations": [
         "Agent requests verification information before exposing account details or executing the transaction.",
-        "Transcript shows the customer responding to the verification request."
+        "Transcript shows the customer responding to the verification request.",
+        "Source or destination account numbers identify the accounts but do not by themselves demonstrate customer identity verification."
       ],
       "policy_source_ids": [
         "capstone.banking_service_rules"
@@ -728,7 +730,13 @@
       "applies_to_intents": [
         "loan.agricultural_equipment"
       ],
-      "conditions": []
+      "conditions": [
+        {
+          "fact_id": "request.starts_application",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
     },
     {
       "requirement_id": "loan.next_step_confirmed",
@@ -736,7 +744,8 @@
       "business_definition": "The customer receives a concrete route to continue the loan inquiry or application.",
       "level": "required",
       "evidence_expectations": [
-        "Agent provides an application, referral, document request, appointment, or follow-up path."
+        "Agent provides an application, referral, document request, appointment, or follow-up path.",
+        "An offered resource or a concrete timeframe and route to reapply counts even if the customer declines the offer."
       ],
       "policy_source_ids": [
         "capstone.banking_service_rules"
@@ -842,7 +851,13 @@
       "applies_to_intents": [
         "loan.agricultural_equipment"
       ],
-      "conditions": []
+      "conditions": [
+        {
+          "fact_id": "request.starts_application",
+          "operator": "is_true",
+          "value": null
+        }
+      ]
     }
   ]
 }

@@ -1,12 +1,25 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
+from v2.findings import (
+    RequirementAssessment,
+    RequirementAssessmentBatch,
+    RequirementVerdict,
+)
 from v2.runtime import (
     ShadowRunStatus,
     legacy_attention_proxy,
     run_shadow_evaluation,
     safe_run_shadow_evaluation,
+)
+from v2.schemas import (
+    EvidenceRef,
+    Modality,
+    ReliabilityAssessment,
+    ReliabilityStatus,
+    SourceProvenance,
 )
 
 
@@ -40,13 +53,72 @@ def _transcript(
     }
 
 
+def _assessments(bundle, plan):
+    segment = bundle.segments[0]
+    provenance = SourceProvenance(
+        producer="test",
+        producer_version="1",
+        method="runtime_test",
+    )
+    return RequirementAssessmentBatch(
+        call_id=bundle.call_id,
+        profile_id=plan.profile_id,
+        assessments=[
+            RequirementAssessment(
+                assessment_id=f"assessment:{requirement.requirement_id}",
+                requirement_id=requirement.requirement_id,
+                verdict=RequirementVerdict.MET,
+                rationale="The requirement is demonstrated in the test.",
+                evidence=[
+                    EvidenceRef(
+                        evidence_id=(
+                            f"evidence:{requirement.requirement_id}"
+                        ),
+                        modality=Modality.TRANSCRIPT,
+                        segment_ids=[segment.segment_id],
+                        speaker=segment.speaker,
+                        start_seconds=segment.start_seconds,
+                        end_seconds=segment.end_seconds,
+                        quote=segment.text,
+                    )
+                ],
+                reliability=ReliabilityAssessment(
+                    status=ReliabilityStatus.LIMITED,
+                    coverage_ratio=1.0,
+                    reasons=["test"],
+                ),
+                provenance=provenance,
+            )
+            for requirement in plan.requirements
+        ],
+        provenance=provenance,
+    )
+
+
 class ShadowRuntimeTests(unittest.TestCase):
-    def test_known_banking_call_runs_without_fabricating_assessments(self):
+    @patch("v2.runtime.assess_requirements", side_effect=_assessments)
+    def test_known_banking_call_runs_semantic_assessments(self, assessor):
         run = run_shadow_evaluation(transcript=_transcript())
 
         self.assertEqual(run.status, ShadowRunStatus.SUCCEEDED)
         self.assertIsNotNone(run.decision)
         self.assertIsNotNone(run.presentation)
+        self.assertEqual(
+            run.decision.decision_status.value,
+            "complete",
+        )
+        self.assertNotIn(
+            "semantic_requirement_assessments_missing",
+            run.limitations,
+        )
+        assessor.assert_called_once()
+
+    def test_semantic_assessment_can_be_explicitly_disabled(self):
+        run = run_shadow_evaluation(
+            transcript=_transcript(),
+            run_semantic_assessor=False,
+        )
+
         self.assertEqual(
             run.decision.decision_status.value,
             "insufficient_evidence",
@@ -88,6 +160,7 @@ class ShadowRuntimeTests(unittest.TestCase):
         run = run_shadow_evaluation(
             transcript=_transcript(),
             legacy_evaluation=legacy,
+            run_semantic_assessor=False,
         )
 
         self.assertTrue(run.legacy_proxy.attention_required)

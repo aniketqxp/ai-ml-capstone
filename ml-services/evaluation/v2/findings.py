@@ -60,7 +60,7 @@ class RequirementAssessment(ContractModel):
     verdict: RequirementVerdict
     rationale: str = Field(min_length=1)
     evidence: list[EvidenceRef] = Field(min_length=1)
-    counter_evidence: list[EvidenceRef] = Field(min_length=1)
+    counter_evidence: list[EvidenceRef] = Field(default_factory=list)
     reliability: ReliabilityAssessment
     provenance: SourceProvenance
 
@@ -116,12 +116,9 @@ class FindingDerivation(ContractModel):
             for finding in self.positive_findings
         ):
             raise ValueError("positive_findings must be positive")
-        if any(
-            not finding.evidence or not finding.counter_evidence
-            for finding in all_findings
-        ):
+        if any(not finding.evidence for finding in all_findings):
             raise ValueError(
-                "derived findings require evidence and counter-evidence"
+                "derived findings require evidence"
             )
         return self
 

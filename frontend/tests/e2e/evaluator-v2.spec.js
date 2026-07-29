@@ -10,6 +10,8 @@ const FIXTURE = path.resolve(
   '../../public/evaluation-v2/en_CA_Banking_1586889.json',
 );
 const CALL_PATH = '/calls/en_CA_Banking_1586889';
+const ATTENTION_CALL_PATH =
+  '/calls/en_US_General_Banking_1586678';
 
 function captureBrowserErrors(page) {
   const errors = [];
@@ -99,11 +101,15 @@ function attentionFixture() {
   return run;
 }
 
-test('renders the truthful incomplete shadow state', async ({ page }) => {
+test('renders a complete evidence-gated evaluation', async ({ page }) => {
   const errors = captureBrowserErrors(page);
   await page.goto(CALL_PATH);
   await expect(
-    page.getByText('Evaluation incomplete', { exact: true }),
+    page.getByText('No review finding identified', { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText('Handled well')).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Call chapters' }),
   ).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Conversation' })).toBeVisible();
   await expect(page.getByText('Compliance score')).toHaveCount(0);
@@ -145,6 +151,27 @@ test('renders attention, evidence, action, and local feedback', async ({
   expect(errors).toEqual([]);
 });
 
+test('renders a real guarded-control finding', async ({ page }) => {
+  const errors = captureBrowserErrors(page);
+  await page.goto(ATTENTION_CALL_PATH);
+  await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole('heading', {
+      name: 'Customer identity verified before transaction access was not demonstrated',
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /Can I start by getting your checking account number/,
+    ).first(),
+  ).toBeVisible();
+  expect(errors).toEqual([]);
+  await page.screenshot({
+    path: 'test-results/evaluator-v2-live-attention.png',
+    fullPage: true,
+  });
+});
+
 test('fits the v2 call page on a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.route('**/evaluation-v2/en_CA_Banking_1586889.json', (route) =>
@@ -162,9 +189,12 @@ test('fits the v2 call page on a mobile viewport', async ({ page }) => {
   });
 });
 
-test('keeps unsupported domains on the v1 page', async ({ page }) => {
+test('keeps unsupported domains in the evaluator v2 shell', async ({ page }) => {
   await page.goto('/calls/en_CA_Health_1587315');
   await expect(
-    page.getByRole('heading', { name: 'Call Compliance Player' }),
+    page.getByText('Evaluation unavailable', { exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Call Compliance Player' }),
+  ).toHaveCount(0);
 });

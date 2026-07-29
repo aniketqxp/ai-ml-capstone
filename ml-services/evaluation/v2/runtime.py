@@ -27,6 +27,7 @@ from .schemas import (
     DecisionStatus,
     SourceProvenance,
 )
+from .semantic_assessment import assess_requirements
 from .validation import validate_decision_references
 
 RUNTIME_VERSION = "0.1.0"
@@ -246,6 +247,7 @@ def run_shadow_evaluation(
     legacy_evaluation: dict[str, Any] | None = None,
     profile_selection: ProfileSelection | dict[str, Any] | None = None,
     assessments: RequirementAssessmentBatch | dict[str, Any] | None = None,
+    run_semantic_assessor: bool = True,
     transcript_source: str | None = None,
     sentiment_source: str | None = None,
 ) -> EvaluationV2Run:
@@ -288,6 +290,8 @@ def run_shadow_evaluation(
             if isinstance(assessments, RequirementAssessmentBatch)
             else RequirementAssessmentBatch.model_validate(assessments)
         )
+    elif run_semantic_assessor:
+        assessment_batch = assess_requirements(bundle, plan)
     derivation = derive_findings(bundle, plan, assessment_batch)
     decision = build_call_decision(bundle, derivation)
     validate_decision_references(decision, bundle)

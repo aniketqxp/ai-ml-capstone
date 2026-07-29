@@ -172,9 +172,10 @@ class CallEvaluationView(ContractModel):
             raise ValueError("page state must preserve attention")
         if not self.attention_required:
             expected_state = (
-                PageState.NO_ATTENTION_FINDING
-                if self.evaluation_status == DecisionStatus.COMPLETE
-                else PageState.EVALUATION_INCOMPLETE
+                PageState.EVALUATION_INCOMPLETE
+                if self.evaluation_status
+                == DecisionStatus.INSUFFICIENT_EVIDENCE
+                else PageState.NO_ATTENTION_FINDING
             )
             if self.state != expected_state:
                 raise ValueError(
@@ -483,9 +484,12 @@ def _source() -> SourceProvenance:
 def _state(decision: CallDecision) -> PageState:
     if decision.attention_required:
         return PageState.NEEDS_ATTENTION
-    if decision.decision_status == DecisionStatus.COMPLETE:
-        return PageState.NO_ATTENTION_FINDING
-    return PageState.EVALUATION_INCOMPLETE
+    if (
+        decision.decision_status
+        == DecisionStatus.INSUFFICIENT_EVIDENCE
+    ):
+        return PageState.EVALUATION_INCOMPLETE
+    return PageState.NO_ATTENTION_FINDING
 
 
 def _copy(decision: CallDecision) -> tuple[str, str]:
@@ -496,6 +500,14 @@ def _copy(decision: CallDecision) -> tuple[str, str]:
             "One or more evidence-backed findings require review.",
         )
     if state == PageState.NO_ATTENTION_FINDING:
+        if decision.decision_status == DecisionStatus.PARTIAL:
+            return (
+                "No review finding identified",
+                (
+                    "Assessed requirements produced no qualifying negative "
+                    "finding; one or more requirements remain uncertain."
+                ),
+            )
         return (
             "No review finding identified",
             "Applicable rules produced no qualifying negative finding.",

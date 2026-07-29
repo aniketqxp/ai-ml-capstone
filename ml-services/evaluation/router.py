@@ -48,7 +48,10 @@ def _model_list():
     ]
 
 # strict priority: primary -> fallback -> safety
-FALLBACKS = [{"qa-primary": ["qa-fallback", "qa-safety"]}]
+FALLBACKS = [
+    {"qa-primary": ["qa-fallback", "qa-safety"]},
+    {"qa-fallback": ["qa-safety"]},
+]
 
 _router = None
 
@@ -59,7 +62,7 @@ def get_router():
         _router = Router(
             model_list=_model_list(),
             fallbacks=FALLBACKS,
-            num_retries=2,          # retries on the same tier before falling back
+            num_retries=0,          # assessor retries with a named next tier
             timeout=90,             # per-request timeout (s)
             cooldown_time=60,       # park a failing deployment for 60s
             retry_after=2,

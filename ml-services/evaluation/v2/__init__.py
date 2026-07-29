@@ -54,6 +54,10 @@ from .runtime import (
     safe_run_shadow_evaluation,
 )
 from .schemas import CallDecision, SignalBundle
+from .semantic_assessment import (
+    SEMANTIC_ASSESSOR_VERSION,
+    assess_requirements,
+)
 from .signal_validation import (
     SIGNAL_VALIDATION_VERSION,
     AblationVariant,
@@ -82,6 +86,7 @@ __all__ = [
     "OUTPUT_INVENTORY",
     "PRESENTATION_VERSION",
     "RUNTIME_VERSION",
+    "SEMANTIC_ASSESSOR_VERSION",
     "SIGNAL_VALIDATION_VERSION",
     "SUPERVISOR_VERSION",
     "AblationVariant",
@@ -107,6 +112,7 @@ __all__ = [
     "SupervisorDraft",
     "SupervisorLimits",
     "SupervisorResult",
+    "assess_requirements",
     "build_call_decision",
     "build_supervisor_context",
     "build_supervisor_prompt",

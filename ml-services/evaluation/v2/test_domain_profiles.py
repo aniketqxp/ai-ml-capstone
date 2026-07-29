@@ -100,6 +100,8 @@ class BankingProfileTests(unittest.TestCase):
             "security.loan_application_identity_verified",
             requirement_ids,
         )
+        self.assertNotIn("loan.documents_explained", requirement_ids)
+        self.assertNotIn("loan.terms_path_explained", requirement_ids)
         self.assertNotIn(
             "workflow.loan.verify_applicant",
             step_ids,
@@ -123,6 +125,8 @@ class BankingProfileTests(unittest.TestCase):
             "security.loan_application_identity_verified",
             requirement_ids,
         )
+        self.assertIn("loan.documents_explained", requirement_ids)
+        self.assertIn("loan.terms_path_explained", requirement_ids)
         self.assertIn(
             "workflow.loan.verify_applicant",
             step_ids,
