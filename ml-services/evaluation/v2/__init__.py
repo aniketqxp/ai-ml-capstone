@@ -46,6 +46,13 @@ from .presentation import (
     PresentationValidationReport,
     project_call_evaluation,
 )
+from .runtime import (
+    RUNTIME_VERSION,
+    EvaluationV2Run,
+    ShadowRunStatus,
+    run_shadow_evaluation,
+    safe_run_shadow_evaluation,
+)
 from .schemas import CallDecision, SignalBundle
 from .signal_validation import (
     SIGNAL_VALIDATION_VERSION,
@@ -74,6 +81,7 @@ __all__ = [
     "FINDINGS_VERSION",
     "OUTPUT_INVENTORY",
     "PRESENTATION_VERSION",
+    "RUNTIME_VERSION",
     "SIGNAL_VALIDATION_VERSION",
     "SUPERVISOR_VERSION",
     "AblationVariant",
@@ -84,6 +92,7 @@ __all__ = [
     "DomainProfile",
     "DynamicsConfig",
     "EvaluationDataset",
+    "EvaluationV2Run",
     "FindingDerivation",
     "PresentationValidationReport",
     "ProfileSelection",
@@ -91,6 +100,7 @@ __all__ = [
     "RequirementAssessmentBatch",
     "RequirementVerdict",
     "ResolvedDomainPlan",
+    "ShadowRunStatus",
     "SignalBundle",
     "SignalValidationReport",
     "SupervisorContext",
@@ -106,6 +116,8 @@ __all__ = [
     "project_call_evaluation",
     "resolve_domain_plan",
     "resolve_supervisor_response",
+    "run_shadow_evaluation",
+    "safe_run_shadow_evaluation",
     "signal_bundle_sha256",
     "validate_decision_references",
     "validate_evaluation_dataset",

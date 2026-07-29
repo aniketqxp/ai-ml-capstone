@@ -63,6 +63,15 @@ def _acoustic_enabled(explicit):
     return os.environ.get("ENABLE_ACOUSTIC", "0").strip().lower() not in ("", "0", "false", "no")
 
 
+def _v2_shadow_enabled():
+    return os.environ.get("EVALUATOR_V2_SHADOW", "0").strip().lower() not in (
+        "",
+        "0",
+        "false",
+        "no",
+    )
+
+
 def _canonical_wavs(call_id, accent, agent_wav, customer_wav):
     """Ensure per-channel WAVs sit at the dataset convention path the export +
     manifest consumers expect: NA_TESTSET/{accent}/{call_id}_{role}.wav.
@@ -194,12 +203,43 @@ def process_call(spec, *, progress=_noop, enable_acoustic=None):
     _write(EVAL_RESULTS / f"{call_id}_graph.json", ev)
     artifacts["paths"]["evaluation"] = str(EVAL_RESULTS / f"{call_id}_graph.json")
 
+    # 5b. evaluator v2 shadow -------------------------------------------------
+    if _v2_shadow_enabled():
+        progress("evaluating_v2_shadow")
+        from v2.runtime import safe_run_shadow_evaluation
+
+        sentiment_payload = None
+        sentiment_path = artifacts["paths"].get("sentiment")
+        if sentiment_path and os.path.exists(sentiment_path):
+            sentiment_payload = json.loads(
+                Path(sentiment_path).read_text(encoding="utf-8")
+            )
+        shadow = safe_run_shadow_evaluation(
+            transcript=seg,
+            sentiment=sentiment_payload,
+            legacy_evaluation=ev,
+            transcript_source=artifacts["paths"]["sentence_segments"],
+            sentiment_source=sentiment_path,
+        )
+        shadow_path = (
+            EVAL_RESULTS / f"{call_id}_v2_shadow.json"
+        )
+        _write(shadow_path, shadow.model_dump(mode="json"))
+        artifacts["paths"]["evaluation_v2"] = str(shadow_path)
+        artifacts["evaluation_v2"] = shadow.model_dump(mode="json")
+
     # 6. export ---------------------------------------------------------------
     progress("exporting")
     meta = load_manifest()[call_id]
     calls_out = str(paths.FRONTEND_PUBLIC / "calls")
     audio_out = str(paths.FRONTEND_PUBLIC / "audio")
     out = export_call_artifacts(call_id, meta, calls_out, audio_out)
+    if artifacts.get("evaluation_v2"):
+        out["evaluation_v2"] = artifacts["evaluation_v2"]
+        _write(
+            Path(calls_out) / f"{call_id}.json",
+            out,
+        )
     summary = summarize(call_id, out)
     _publish_index(call_id, summary)
     artifacts["paths"]["call_json"] = os.path.join(calls_out, f"{call_id}.json")

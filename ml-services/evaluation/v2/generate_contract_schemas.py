@@ -20,6 +20,7 @@ from v2.presentation import (
     CallEvaluationView,
     PresentationValidationReport,
 )
+from v2.runtime import EvaluationV2Run
 from v2.schemas import CallDecision, SignalBundle
 from v2.signal_validation import SignalValidationReport
 from v2.supervisor import (
@@ -57,6 +58,7 @@ def main():
         "presentation_validation_report.schema.json": (
             PresentationValidationReport
         ),
+        "evaluation_v2_run.schema.json": EvaluationV2Run,
     }
     for filename, model in models.items():
         path = OUTPUT_DIR / filename
