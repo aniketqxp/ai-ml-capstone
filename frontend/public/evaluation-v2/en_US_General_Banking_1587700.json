@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "runtime_version": "0.1.0",
+  "run_id": "en_US_General_Banking_1587700:v2:0b449d670d6e4545",
+  "call_id": "en_US_General_Banking_1587700",
+  "mode": "shadow",
+  "status": "succeeded",
+  "evaluator_version": "v2-policy-0.1.0",
+  "profile_id": "banking-demo-v1",
+  "decision_sha256": "249537109d7506473b619c75f04f5ac468f16c335041e520b9f2ce2fa5985019",
+  "decision": {
+    "schema_version": "2.0",
+    "call_id": "en_US_General_Banking_1587700",
+    "evaluator_version": "v2-policy-0.1.0",
+    "domain_profile_id": "banking-demo-v1",
+    "signal_bundle_schema_version": "2.0",
+    "signal_bundle_sha256": "26dc6a15733b48a6e46fdad5eb562ce5285ea011ad2c89ccd048290104d1e006",
+    "decision_status": "insufficient_evidence",
+    "attention_required": false,
+    "triggered_findings": [],
+    "positive_findings": [],
+    "recommended_action": {
+      "action_type": "none",
+      "execution": "no_action",
+      "label": "No automated action",
+      "reason": "No action because applicable requirements remain unassessed; this call has not been cleared.",
+      "finding_ids": [],
+      "automation_allowed": false,
+      "requires_human_approval": false
+    },
+    "uncertainties": [
+      {
+        "code": "requirement.not_assessed.interaction.agent_identification",
+        "message": "Agent and organization identified has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.request.intent_confirmed",
+        "message": "Customer request confirmed has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.outcome.summary_and_next_steps",
+        "message": "Outcome and next steps summarized has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.security.transaction_identity_verified",
+        "message": "Customer identity verified before transaction access has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.accounts_confirmed",
+        "message": "Source and destination accounts confirmed has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.amount_confirmed",
+        "message": "Transfer amount confirmed has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.terms_explained",
+        "message": "Relevant transfer terms explained has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.authorization_obtained",
+        "message": "Customer authorizes the transfer has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.completion_confirmed",
+        "message": "Transfer completion confirmed has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      },
+      {
+        "code": "requirement.not_assessed.transfer.one_time_timing_confirmed",
+        "message": "One-time transfer timing confirmed has no grounded requirement assessment.",
+        "modality": "text",
+        "affected_signal_ids": [],
+        "affected_finding_ids": [],
+        "visibility": "internal"
+      }
+    ],
+    "decision_trace": {
+      "policy_id": "evaluator-v2-attention",
+      "policy_version": "0.1.0",
+      "aggregation": "any_qualifying_finding",
+      "qualifications": [],
+      "controlling_finding_ids": [],
+      "recovery_finding_ids": [],
+      "recovery_effect": "none"
+    },
+    "presentation": {
+      "primary_finding_ids": [],
+      "positive_finding_ids": [],
+      "detail_finding_ids": []
+    },
+    "provenance": {
+      "producer": "evaluator_v2.decisions",
+      "producer_version": "0.1.0",
+      "source_artifact": null,
+      "source_sha256": null,
+      "generated_at": null,
+      "method": "any_qualifying_finding_with_named_precedence_and_constrained_actions"
+    }
+  },
+  "presentation": {
+    "schema_version": "1.0",
+    "presentation_version": "0.1.0",
+    "call_id": "en_US_General_Banking_1587700",
+    "decision_sha256": "249537109d7506473b619c75f04f5ac468f16c335041e520b9f2ce2fa5985019",
+    "state": "evaluation_incomplete",
+    "evaluation_status": "insufficient_evidence",
+    "attention_required": false,
+    "headline": "Evaluation incomplete",
+    "summary": "No attention finding is asserted because applicable requirements remain unassessed.",
+    "primary_reasons": [],
+    "additional_reason_count": 0,
+    "positive_highlights": [],
+    "additional_positive_count": 0,
+    "recommended_action": null,
+    "evidence": [],
+    "completeness_notice": {
+      "status": "insufficient_evidence",
+      "title": "Evaluation incomplete",
+      "message": "Applicable requirements could not be assessed, so this call has not been cleared.",
+      "affected_requirements": [
+        "Agent and organization identified has no grounded requirement assessment.",
+        "Customer request confirmed has no grounded requirement assessment.",
+        "Outcome and next steps summarized has no grounded requirement assessment.",
+        "Customer identity verified before transaction access has no grounded requirement assessment.",
+        "Source and destination accounts confirmed has no grounded requirement assessment.",
+        "Transfer amount confirmed has no grounded requirement assessment.",
+        "Relevant transfer terms explained has no grounded requirement assessment.",
+        "Customer authorizes the transfer has no grounded requirement assessment.",
+        "Transfer completion confirmed has no grounded requirement assessment.",
+        "One-time transfer timing confirmed has no grounded requirement assessment."
+      ]
+    },
+    "details": {
+      "additional_findings": [],
+      "additional_positive_findings": [],
+      "evidence": [],
+      "uncertainty_messages": [],
+      "supervisor_context_note": null,
+      "evaluator_version": "v2-policy-0.1.0",
+      "domain_profile_id": "banking-demo-v1",
+      "decision_policy_id": "evaluator-v2-attention",
+      "decision_policy_version": "0.1.0",
+      "supervisor_fallback_used": null
+    },
+    "provenance": {
+      "producer": "evaluator_v2.presentation",
+      "producer_version": "0.1.0",
+      "source_artifact": null,
+      "source_sha256": null,
+      "generated_at": null,
+      "method": "bounded_decision_preserving_page_projection"
+    }
+  },
+  "legacy_proxy": {
+    "evaluator_version": "0.4.1",
+    "attention_required": true,
+    "basis": "failed_compliance_or_escalation",
+    "failed_compliance_count": 1,
+    "escalation_tier": "none"
+  },
+  "comparison": {
+    "comparable": false,
+    "reason": "v2 requirement coverage is incomplete; attention values must not be treated as equivalent.",
+    "attention_agreement": null
+  },
+  "limitations": [
+    "research_domain_profile",
+    "bounded_supervisor_not_run",
+    "semantic_requirement_assessments_missing",
+    "acoustic_input_unavailable"
+  ],
+  "failure_reason": null,
+  "provenance": {
+    "producer": "evaluator_v2.runtime",
+    "producer_version": "0.1.0",
+    "source_artifact": null,
+    "source_sha256": null,
+    "generated_at": null,
+    "method": "feature_flagged_shadow_evaluation"
+  }
+}
