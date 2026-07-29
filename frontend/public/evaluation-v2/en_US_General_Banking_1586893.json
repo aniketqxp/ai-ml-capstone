@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1586893:v2:b2ac24eb75e885c9",
+  "run_id": "en_US_General_Banking_1586893:v2:296ebb33f6bad91d",
   "call_id": "en_US_General_Banking_1586893",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "70856ec0b59f4b26a4eb32b214caea526a1aeded753e5070555edf1f951b33bf",
+  "decision_sha256": "02593da591597e57dfbcc7e797e52cb9afeeee36948aa45c1c7683a9d9c89d73",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1586893",
@@ -15,109 +15,688 @@
     "domain_profile_id": "banking-demo-v1",
     "signal_bundle_schema_version": "2.0",
     "signal_bundle_sha256": "d33fa549f7ad4f3031dc49411e8e98aa55e9c583bf9b02193014218d21331ed0",
-    "decision_status": "insufficient_evidence",
+    "decision_status": "complete",
     "attention_required": false,
     "triggered_findings": [],
-    "positive_findings": [],
+    "positive_findings": [
+      {
+        "finding_id": "finding-positive-agent-identification_clear",
+        "finding_type": "agent.identification_clear",
+        "category": "agent_behavior",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Agent and organization identified was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "business_definition": "The customer can identify the representative and organization handling the call.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "interaction.agent_identification",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "interaction.agent_identification",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:interaction.agent_identification:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_003",
+              "AGENT_004"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 19.76,
+            "end_seconds": 23.84,
+            "quote": null,
+            "observation": "AGENT: Thank you for calling Summit National Bank.\nAGENT: My name is Sophia Carson."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-identity_verification_completed",
+        "finding_type": "control.identity_verification_completed",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer identity verified before transaction access was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent verifies the customer's identity by asking for personal information before proceeding with the transaction.",
+        "business_definition": "Account-specific transaction activity follows a clear customer-verification exchange.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "security.transaction_identity_verified",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.core"
+        },
+        "detection_rule": {
+          "rule_id": "security.transaction_identity_verified",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:security.transaction_identity_verified:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_007",
+              "AGENT_009",
+              "CUSTOMER_006"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": null,
+            "start_seconds": 41.31,
+            "end_seconds": 67.99,
+            "quote": null,
+            "observation": "AGENT: Now before we begin, may I please verify your identity?\nAGENT: Could you confirm your full name, date of birth, and the last four digits of your social security number? Okay,\nCUSTOMER: It's Elena Riaz, born March 19, 1992, and the last four digits, 2047."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-recurring_schedule_confirmed",
+        "finding_type": "control.recurring_schedule_confirmed",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Recurring transfer schedule confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The frequency and start timing of the recurring transfer are stated and accepted by the customer.",
+        "business_definition": "Frequency, start timing, and any applicable end condition are explicit.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.recurring_schedule_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.recurring.details"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.recurring_schedule_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_033",
+              "CUSTOMER_015"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": null,
+            "start_seconds": 184.28,
+            "end_seconds": 206.88,
+            "quote": null,
+            "observation": "AGENT: Okay, so I'll set up a recurring transfer of 750 from your checking ending in 6821 to your savings ending in 1159 to occur on the fifth of every month starting next month.\nCUSTOMER: Let's say the fifth of next month, then that should give my paycheck time to clear."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-transfer_accounts_confirmed",
+        "finding_type": "control.transfer_accounts_confirmed",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Source and destination accounts confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent and customer confirm the source and destination accounts for the transfer.",
+        "business_definition": "The transfer direction and both participating accounts are unambiguous.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.accounts_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.core"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.accounts_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.accounts_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_028",
+              "CUSTOMER_012"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": null,
+            "start_seconds": 132.58,
+            "end_seconds": 164.28,
+            "quote": null,
+            "observation": "AGENT: So it looks like your Summit everyday checking and your goal builder savings account.\nCUSTOMER: You can pull them up."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-transfer_amount_confirmed",
+        "finding_type": "control.transfer_amount_confirmed",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Transfer amount confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The customer explicitly states the amount they wish to transfer each month before execution.",
+        "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.amount_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.core"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.amount_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.amount_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_014"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 171.8,
+            "end_seconds": 175.7,
+            "quote": null,
+            "observation": "CUSTOMER: and let's start with $150 per month."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-transfer_authorization_obtained",
+        "finding_type": "control.transfer_authorization_obtained",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer authorizes the transfer was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The customer gives clear approval after the material transfer details are established.",
+        "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.authorization_obtained",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.execution"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.authorization_obtained",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.authorization_obtained:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_029"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 405.66,
+            "end_seconds": 405.66,
+            "quote": null,
+            "observation": "CUSTOMER: Yes."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-outcome-next_steps_confirmed",
+        "finding_type": "outcome.next_steps_confirmed",
+        "category": "outcome",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Outcome and next steps summarized was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent summarizes the completed actions and explains the next steps before closing the call.",
+        "business_definition": "The customer leaves knowing what occurred and what must happen next.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "outcome.summary_and_next_steps",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "outcome.summary_and_next_steps",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:outcome.summary_and_next_steps:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_107",
+              "AGENT_109"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 612.22,
+            "end_seconds": 626.82,
+            "quote": null,
+            "observation": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-outcome-transfer_confirmed",
+        "finding_type": "outcome.transfer_confirmed",
+        "category": "outcome",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Transfer completion confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent confirms that the transfer has been officially scheduled and recaps the details.",
+        "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.completion_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.confirmation"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.completion_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.completion_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_070",
+              "AGENT_072"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 426.13,
+            "end_seconds": 434.03,
+            "quote": null,
+            "observation": "AGENT: It's officially scheduled.\nAGENT: You'll receive a confirmation email in about two minutes and you'll see the transfer listed in your upcoming transactions tab online."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-intent_confirmed",
+        "finding_type": "process.intent_confirmed",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer request confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent confirms the customer's request to set up a recurring transfer before proceeding.",
+        "business_definition": "The agent establishes what the customer wants before taking account or application action.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "request.intent_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "request.intent_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:request.intent_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_018"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 101.46,
+            "end_seconds": 104.64,
+            "quote": null,
+            "observation": "AGENT: So you'd like to set up a recurring transfer from checking to savings."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-recurring_change_path_explained",
+        "finding_type": "process.recurring_change_path_explained",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Recurring transfer change path explained was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent explains how the customer can pause or adjust the recurring transfers.",
+        "business_definition": "The customer is told how recurring instructions can be changed, paused, or stopped.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.recurring_change_path_explained",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.recurring.details"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.recurring_change_path_explained",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.recurring_change_path_explained:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_092"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 540.21,
+            "end_seconds": 547.97,
+            "quote": null,
+            "observation": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-transfer_terms_explained",
+        "finding_type": "process.transfer_terms_explained",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Relevant transfer terms explained was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause the transfers.",
+        "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "transfer.terms_explained",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "transfer.core"
+        },
+        "detection_rule": {
+          "rule_id": "transfer.terms_explained",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:transfer.terms_explained:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_042"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 240.66,
+            "end_seconds": 250.1,
+            "quote": null,
+            "observation": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      }
+    ],
     "recommended_action": {
       "action_type": "none",
       "execution": "no_action",
       "label": "No automated action",
-      "reason": "No action because applicable requirements remain unassessed; this call has not been cleared.",
+      "reason": "No negative finding qualified for attention.",
       "finding_ids": [],
       "automation_allowed": false,
       "requires_human_approval": false
     },
-    "uncertainties": [
-      {
-        "code": "requirement.not_assessed.interaction.agent_identification",
-        "message": "Agent and organization identified has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.request.intent_confirmed",
-        "message": "Customer request confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.outcome.summary_and_next_steps",
-        "message": "Outcome and next steps summarized has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.security.transaction_identity_verified",
-        "message": "Customer identity verified before transaction access has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.accounts_confirmed",
-        "message": "Source and destination accounts confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.amount_confirmed",
-        "message": "Transfer amount confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.terms_explained",
-        "message": "Relevant transfer terms explained has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.authorization_obtained",
-        "message": "Customer authorizes the transfer has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.completion_confirmed",
-        "message": "Transfer completion confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.recurring_schedule_confirmed",
-        "message": "Recurring transfer schedule confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.transfer.recurring_change_path_explained",
-        "message": "Recurring transfer change path explained has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      }
-    ],
+    "uncertainties": [],
     "decision_trace": {
       "policy_id": "evaluator-v2-attention",
       "policy_version": "0.1.0",
@@ -145,40 +724,335 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1586893",
-    "decision_sha256": "70856ec0b59f4b26a4eb32b214caea526a1aeded753e5070555edf1f951b33bf",
-    "state": "evaluation_incomplete",
-    "evaluation_status": "insufficient_evidence",
+    "decision_sha256": "02593da591597e57dfbcc7e797e52cb9afeeee36948aa45c1c7683a9d9c89d73",
+    "state": "no_attention_finding",
+    "evaluation_status": "complete",
     "attention_required": false,
-    "headline": "Evaluation incomplete",
-    "summary": "No attention finding is asserted because applicable requirements remain unassessed.",
+    "headline": "No review finding identified",
+    "summary": "Applicable rules produced no qualifying negative finding.",
     "primary_reasons": [],
     "additional_reason_count": 0,
-    "positive_highlights": [],
-    "additional_positive_count": 0,
+    "positive_highlights": [
+      {
+        "finding_id": "finding-positive-agent-identification_clear",
+        "category": "agent_behavior",
+        "category_label": "Agent handling",
+        "title": "Agent and organization identified was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited."
+      },
+      {
+        "finding_id": "finding-positive-outcome-next_steps_confirmed",
+        "category": "outcome",
+        "category_label": "Outcome",
+        "title": "Outcome and next steps summarized was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent summarizes the completed actions and explains the next steps before closing the call.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited."
+      }
+    ],
+    "additional_positive_count": 9,
     "recommended_action": null,
-    "evidence": [],
-    "completeness_notice": {
-      "status": "insufficient_evidence",
-      "title": "Evaluation incomplete",
-      "message": "Applicable requirements could not be assessed, so this call has not been cleared.",
-      "affected_requirements": [
-        "Agent and organization identified has no grounded requirement assessment.",
-        "Customer request confirmed has no grounded requirement assessment.",
-        "Outcome and next steps summarized has no grounded requirement assessment.",
-        "Customer identity verified before transaction access has no grounded requirement assessment.",
-        "Source and destination accounts confirmed has no grounded requirement assessment.",
-        "Transfer amount confirmed has no grounded requirement assessment.",
-        "Relevant transfer terms explained has no grounded requirement assessment.",
-        "Customer authorizes the transfer has no grounded requirement assessment.",
-        "Transfer completion confirmed has no grounded requirement assessment.",
-        "Recurring transfer schedule confirmed has no grounded requirement assessment.",
-        "Recurring transfer change path explained has no grounded requirement assessment."
-      ]
-    },
+    "evidence": [
+      {
+        "evidence_id": "semantic:interaction.agent_identification:support",
+        "finding_ids": [
+          "finding-positive-agent-identification_clear"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 19.76,
+        "end_seconds": 23.84,
+        "text": "AGENT: Thank you for calling Summit National Bank.\nAGENT: My name is Sophia Carson.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "semantic:outcome.summary_and_next_steps:support",
+        "finding_ids": [
+          "finding-positive-outcome-next_steps_confirmed"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 612.22,
+        "end_seconds": 626.82,
+        "text": "AGENT: We have a monthly transfer scheduled of 750 from your checkings to your savings.\nAGENT: The notifications were enabled for reminders and the low balance and the pause resume option is available anytime.",
+        "seekable": true,
+        "supporting_only": false
+      }
+    ],
+    "completeness_notice": null,
     "details": {
       "additional_findings": [],
-      "additional_positive_findings": [],
-      "evidence": [],
+      "additional_positive_findings": [
+        {
+          "finding_id": "finding-positive-outcome-transfer_confirmed",
+          "category": "outcome",
+          "category_label": "Outcome",
+          "title": "Transfer completion confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent confirms that the transfer has been officially scheduled and recaps the details.",
+          "evidence_ids": [
+            "semantic:transfer.completion_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-intent_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Customer request confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent confirms the customer's request to set up a recurring transfer before proceeding.",
+          "evidence_ids": [
+            "semantic:request.intent_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-recurring_change_path_explained",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Recurring transfer change path explained was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent explains how the customer can pause or adjust the recurring transfers.",
+          "evidence_ids": [
+            "semantic:transfer.recurring_change_path_explained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-transfer_terms_explained",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Relevant transfer terms explained was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees for internal transfers and provides information on how to adjust or pause the transfers.",
+          "evidence_ids": [
+            "semantic:transfer.terms_explained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-identity_verification_completed",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Customer identity verified before transaction access was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent verifies the customer's identity by asking for personal information before proceeding with the transaction.",
+          "evidence_ids": [
+            "semantic:security.transaction_identity_verified:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-recurring_schedule_confirmed",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Recurring transfer schedule confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The frequency and start timing of the recurring transfer are stated and accepted by the customer.",
+          "evidence_ids": [
+            "semantic:transfer.recurring_schedule_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-transfer_accounts_confirmed",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Source and destination accounts confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent and customer confirm the source and destination accounts for the transfer.",
+          "evidence_ids": [
+            "semantic:transfer.accounts_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-transfer_amount_confirmed",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Transfer amount confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The customer explicitly states the amount they wish to transfer each month before execution.",
+          "evidence_ids": [
+            "semantic:transfer.amount_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-transfer_authorization_obtained",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Customer authorizes the transfer was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The customer gives clear approval after the material transfer details are established.",
+          "evidence_ids": [
+            "semantic:transfer.authorization_obtained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "semantic:security.transaction_identity_verified:support",
+          "finding_ids": [
+            "finding-positive-control-identity_verification_completed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 41.31,
+          "end_seconds": 67.99,
+          "text": "AGENT: Now before we begin, may I please verify your identity?\nAGENT: Could you confirm your full name, date of birth, and the last four digits of your social security number? Okay,\nCUSTOMER: It's Elena Riaz, born March 19, 1992, and the last four digits, 2047.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:request.intent_confirmed:support",
+          "finding_ids": [
+            "finding-positive-process-intent_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 101.46,
+          "end_seconds": 104.64,
+          "text": "AGENT: So you'd like to set up a recurring transfer from checking to savings.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.accounts_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-transfer_accounts_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 132.58,
+          "end_seconds": 164.28,
+          "text": "AGENT: So it looks like your Summit everyday checking and your goal builder savings account.\nCUSTOMER: You can pull them up.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.amount_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-transfer_amount_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "customer",
+          "start_seconds": 171.8,
+          "end_seconds": 175.7,
+          "text": "CUSTOMER: and let's start with $150 per month.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.recurring_schedule_confirmed:support",
+          "finding_ids": [
+            "finding-positive-control-recurring_schedule_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": null,
+          "start_seconds": 184.28,
+          "end_seconds": 206.88,
+          "text": "AGENT: Okay, so I'll set up a recurring transfer of 750 from your checking ending in 6821 to your savings ending in 1159 to occur on the fifth of every month starting next month.\nCUSTOMER: Let's say the fifth of next month, then that should give my paycheck time to clear.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.terms_explained:support",
+          "finding_ids": [
+            "finding-positive-process-transfer_terms_explained"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 240.66,
+          "end_seconds": 250.1,
+          "text": "AGENT: Before I finalize it, I want to mention that there's no fee for internal transfers and you can adjust or pause them anytime through the mobile app or by calling us.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.authorization_obtained:support",
+          "finding_ids": [
+            "finding-positive-control-transfer_authorization_obtained"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "customer",
+          "start_seconds": 405.66,
+          "end_seconds": 405.66,
+          "text": "CUSTOMER: Yes.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.completion_confirmed:support",
+          "finding_ids": [
+            "finding-positive-outcome-transfer_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 426.13,
+          "end_seconds": 434.03,
+          "text": "AGENT: It's officially scheduled.\nAGENT: You'll receive a confirmation email in about two minutes and you'll see the transfer listed in your upcoming transactions tab online.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:transfer.recurring_change_path_explained:support",
+          "finding_ids": [
+            "finding-positive-process-recurring_change_path_explained"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 540.21,
+          "end_seconds": 547.97,
+          "text": "AGENT: You can temporarily pause transfers at any time, either through your online banking dashboard or by calling us at the number on your card.",
+          "seekable": true,
+          "supporting_only": false
+        }
+      ],
       "uncertainty_messages": [],
       "supervisor_context_note": null,
       "evaluator_version": "v2-policy-0.1.0",
@@ -204,14 +1078,13 @@
     "escalation_tier": "none"
   },
   "comparison": {
-    "comparable": false,
-    "reason": "v2 requirement coverage is incomplete; attention values must not be treated as equivalent.",
-    "attention_agreement": null
+    "comparable": true,
+    "reason": "Both evaluators produced a complete attention value under their named policies.",
+    "attention_agreement": false
   },
   "limitations": [
     "research_domain_profile",
     "bounded_supervisor_not_run",
-    "semantic_requirement_assessments_missing",
     "acoustic_input_unavailable"
   ],
   "failure_reason": null,

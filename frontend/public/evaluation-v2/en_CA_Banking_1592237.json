@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_CA_Banking_1592237:v2:6748c021c7ff046e",
+  "run_id": "en_CA_Banking_1592237:v2:a6d5927d6928d30f",
   "call_id": "en_CA_Banking_1592237",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "8f59c0dbbe0fda8721d8fa0beee38580e5082c15a94547bf988f918fd8733cd8",
+  "decision_sha256": "8bce077c74336a50c954d7f1f4fd368bd8179b8f4f33d4623bb3ba96900892c8",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_CA_Banking_1592237",
@@ -15,85 +15,511 @@
     "domain_profile_id": "banking-demo-v1",
     "signal_bundle_schema_version": "2.0",
     "signal_bundle_sha256": "7dc913ff6feb6ea2db655edd771a8c542b8de63c6da76df035ccbfae7191a1c8",
-    "decision_status": "insufficient_evidence",
+    "decision_status": "complete",
     "attention_required": false,
     "triggered_findings": [],
-    "positive_findings": [],
+    "positive_findings": [
+      {
+        "finding_id": "finding-positive-agent-identification_clear",
+        "finding_type": "agent.identification_clear",
+        "category": "agent_behavior",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Agent and organization identified was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "business_definition": "The customer can identify the representative and organization handling the call.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "interaction.agent_identification",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "interaction.agent_identification",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:interaction.agent_identification:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_001",
+              "AGENT_002"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 11.7,
+            "end_seconds": 16.38,
+            "quote": null,
+            "observation": "AGENT: Thank you for calling the Bank of Ottawa.\nAGENT: My name is Joao, customer support analyst."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-account_opening_consent_obtained",
+        "finding_type": "control.account_opening_consent_obtained",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer consents to account opening was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
+        "business_definition": "The customer explicitly agrees to open the account after relevant terms are discussed.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "account.opening_consent",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "account.open_checking"
+        },
+        "detection_rule": {
+          "rule_id": "account.opening_consent",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:account.opening_consent:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "CUSTOMER_022"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "customer",
+            "start_seconds": 559.04,
+            "end_seconds": 565.62,
+            "quote": null,
+            "observation": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-control-identity_verification_completed",
+        "finding_type": "control.identity_verification_completed",
+        "category": "required_control",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer identity verified for account opening was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
+        "business_definition": "The account-opening process includes a clear identity-verification exchange.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "security.account_opening_identity_verified",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "account.open_checking"
+        },
+        "detection_rule": {
+          "rule_id": "security.account_opening_identity_verified",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:security.account_opening_identity_verified:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_005",
+              "AGENT_008"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 42.66,
+            "end_seconds": 72.54,
+            "quote": null,
+            "observation": "AGENT: I just need your date of birth.\nAGENT: I also just need your date of birth to be able to confirm with our security, please."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-outcome-account_opening_confirmed",
+        "finding_type": "outcome.account_opening_confirmed",
+        "category": "outcome",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Account opening confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent confirms that the account has been opened and explains the next steps for the customer to receive their card and set it up.",
+        "business_definition": "The customer receives confirmation of the account outcome and access next steps.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "account.opening_confirmation",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "account.open_checking"
+        },
+        "detection_rule": {
+          "rule_id": "account.opening_confirmation",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:account.opening_confirmation:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_066",
+              "AGENT_067"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 606.61,
+            "end_seconds": 617.57,
+            "quote": null,
+            "observation": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.\nAGENT: We're glad to have your business."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-outcome-next_steps_confirmed",
+        "finding_type": "outcome.next_steps_confirmed",
+        "category": "outcome",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Outcome and next steps summarized was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
+        "business_definition": "The customer leaves knowing what occurred and what must happen next.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "outcome.summary_and_next_steps",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "outcome.summary_and_next_steps",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:outcome.summary_and_next_steps:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_055",
+              "AGENT_056",
+              "AGENT_057"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 523.45,
+            "end_seconds": 546.27,
+            "quote": null,
+            "observation": "AGENT: Please give me a few minutes to be able to enter all the information in, and I will email you directly with all the other information.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-account_terms_explained",
+        "finding_type": "process.account_terms_explained",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Checking-account terms explained was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees associated with the checking account and discusses its features.",
+        "business_definition": "The customer receives the material account features, fees, and usage conditions relevant to the request.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "account.product_terms_explained",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "account.open_checking"
+        },
+        "detection_rule": {
+          "rule_id": "account.product_terms_explained",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:account.product_terms_explained:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_030",
+              "AGENT_031",
+              "AGENT_032"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 283.07,
+            "end_seconds": 300.49,
+            "quote": null,
+            "observation": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: There is no annual fee with our card or even a monthly fee.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-intent_confirmed",
+        "finding_type": "process.intent_confirmed",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Customer request confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to open a checking account linked to their existing credit card.",
+        "business_definition": "The agent establishes what the customer wants before taking account or application action.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "request.intent_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "service.common"
+        },
+        "detection_rule": {
+          "rule_id": "request.intent_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:request.intent_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_010",
+              "AGENT_011"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 82.86,
+            "end_seconds": 90.58,
+            "quote": null,
+            "observation": "AGENT: I see you have an account with us under the credit card, and you're looking to open up a new checking account.\nAGENT: We can definitely help you with that today."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      },
+      {
+        "finding_id": "finding-positive-process-product_linkage_confirmed",
+        "finding_type": "process.product_linkage_confirmed",
+        "category": "process",
+        "polarity": "positive",
+        "severity": "info",
+        "title": "Requested product linkage confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
+        "business_definition": "The requested relationship between the new checking account and existing product is understood and confirmed.",
+        "applicability": {
+          "applies": true,
+          "profile_id": "banking-demo-v1",
+          "rule_id": "account.linkage_confirmed",
+          "reason": "Selected intent and applicability facts match this requirement.",
+          "selected_branch": "account.product_linkage"
+        },
+        "detection_rule": {
+          "rule_id": "account.linkage_confirmed",
+          "rule_version": "0.1.0",
+          "detector": "structured_requirement_assessment",
+          "signal_ids": [],
+          "thresholds": [
+            {
+              "signal_name": "assessment.requirement_verdict",
+              "operator": "eq",
+              "value": "met",
+              "unit": null,
+              "window": null
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "evidence_id": "semantic:account.linkage_confirmed:support",
+            "modality": "transcript",
+            "segment_ids": [
+              "AGENT_012",
+              "AGENT_014",
+              "AGENT_017"
+            ],
+            "signal_ids": [],
+            "episode_ids": [],
+            "speaker": "agent",
+            "start_seconds": 115.24,
+            "end_seconds": 144.4,
+            "quote": null,
+            "observation": "AGENT: Well, basically what we're going to do is that we're going to open up a new checking account, which that allows you to draw money from it.\nAGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: So you're going to have two cards."
+          }
+        ],
+        "counter_evidence": [],
+        "reliability": {
+          "status": "limited",
+          "coverage_ratio": 1.0,
+          "reasons": [
+            "llm_semantic_assessment",
+            "not_human_adjudicated"
+          ],
+          "quality_flags": []
+        },
+        "visibility": "details",
+        "display_priority": 200
+      }
+    ],
     "recommended_action": {
       "action_type": "none",
       "execution": "no_action",
       "label": "No automated action",
-      "reason": "No action because applicable requirements remain unassessed; this call has not been cleared.",
+      "reason": "No negative finding qualified for attention.",
       "finding_ids": [],
       "automation_allowed": false,
       "requires_human_approval": false
     },
-    "uncertainties": [
-      {
-        "code": "requirement.not_assessed.interaction.agent_identification",
-        "message": "Agent and organization identified has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.request.intent_confirmed",
-        "message": "Customer request confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.outcome.summary_and_next_steps",
-        "message": "Outcome and next steps summarized has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.security.account_opening_identity_verified",
-        "message": "Customer identity verified for account opening has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.account.product_terms_explained",
-        "message": "Checking-account terms explained has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.account.linkage_confirmed",
-        "message": "Requested product linkage confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.account.opening_consent",
-        "message": "Customer consents to account opening has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      },
-      {
-        "code": "requirement.not_assessed.account.opening_confirmation",
-        "message": "Account opening confirmed has no grounded requirement assessment.",
-        "modality": "text",
-        "affected_signal_ids": [],
-        "affected_finding_ids": [],
-        "visibility": "internal"
-      }
-    ],
+    "uncertainties": [],
     "decision_trace": {
       "policy_id": "evaluator-v2-attention",
       "policy_version": "0.1.0",
@@ -121,37 +547,251 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_CA_Banking_1592237",
-    "decision_sha256": "8f59c0dbbe0fda8721d8fa0beee38580e5082c15a94547bf988f918fd8733cd8",
-    "state": "evaluation_incomplete",
-    "evaluation_status": "insufficient_evidence",
+    "decision_sha256": "8bce077c74336a50c954d7f1f4fd368bd8179b8f4f33d4623bb3ba96900892c8",
+    "state": "no_attention_finding",
+    "evaluation_status": "complete",
     "attention_required": false,
-    "headline": "Evaluation incomplete",
-    "summary": "No attention finding is asserted because applicable requirements remain unassessed.",
+    "headline": "No review finding identified",
+    "summary": "Applicable rules produced no qualifying negative finding.",
     "primary_reasons": [],
     "additional_reason_count": 0,
-    "positive_highlights": [],
-    "additional_positive_count": 0,
+    "positive_highlights": [
+      {
+        "finding_id": "finding-positive-agent-identification_clear",
+        "category": "agent_behavior",
+        "category_label": "Agent handling",
+        "title": "Agent and organization identified was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited."
+      },
+      {
+        "finding_id": "finding-positive-outcome-account_opening_confirmed",
+        "category": "outcome",
+        "category_label": "Outcome",
+        "title": "Account opening confirmed was demonstrated",
+        "summary": "The applicable requirement was assessed as met: The agent confirms that the account has been opened and explains the next steps for the customer to receive their card and set it up.",
+        "evidence_ids": [
+          "semantic:account.opening_confirmation:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited."
+      }
+    ],
+    "additional_positive_count": 6,
     "recommended_action": null,
-    "evidence": [],
-    "completeness_notice": {
-      "status": "insufficient_evidence",
-      "title": "Evaluation incomplete",
-      "message": "Applicable requirements could not be assessed, so this call has not been cleared.",
-      "affected_requirements": [
-        "Agent and organization identified has no grounded requirement assessment.",
-        "Customer request confirmed has no grounded requirement assessment.",
-        "Outcome and next steps summarized has no grounded requirement assessment.",
-        "Customer identity verified for account opening has no grounded requirement assessment.",
-        "Checking-account terms explained has no grounded requirement assessment.",
-        "Requested product linkage confirmed has no grounded requirement assessment.",
-        "Customer consents to account opening has no grounded requirement assessment.",
-        "Account opening confirmed has no grounded requirement assessment."
-      ]
-    },
+    "evidence": [
+      {
+        "evidence_id": "semantic:interaction.agent_identification:support",
+        "finding_ids": [
+          "finding-positive-agent-identification_clear"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 11.7,
+        "end_seconds": 16.38,
+        "text": "AGENT: Thank you for calling the Bank of Ottawa.\nAGENT: My name is Joao, customer support analyst.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "semantic:account.opening_confirmation:support",
+        "finding_ids": [
+          "finding-positive-outcome-account_opening_confirmed"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 606.61,
+        "end_seconds": 617.57,
+        "text": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.\nAGENT: We're glad to have your business.",
+        "seekable": true,
+        "supporting_only": false
+      }
+    ],
+    "completeness_notice": null,
     "details": {
       "additional_findings": [],
-      "additional_positive_findings": [],
-      "evidence": [],
+      "additional_positive_findings": [
+        {
+          "finding_id": "finding-positive-outcome-next_steps_confirmed",
+          "category": "outcome",
+          "category_label": "Outcome",
+          "title": "Outcome and next steps summarized was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
+          "evidence_ids": [
+            "semantic:outcome.summary_and_next_steps:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-account_terms_explained",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Checking-account terms explained was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees associated with the checking account and discusses its features.",
+          "evidence_ids": [
+            "semantic:account.product_terms_explained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-intent_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Customer request confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to open a checking account linked to their existing credit card.",
+          "evidence_ids": [
+            "semantic:request.intent_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-process-product_linkage_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Requested product linkage confirmed was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
+          "evidence_ids": [
+            "semantic:account.linkage_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-account_opening_consent_obtained",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Customer consents to account opening was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
+          "evidence_ids": [
+            "semantic:account.opening_consent:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        },
+        {
+          "finding_id": "finding-positive-control-identity_verification_completed",
+          "category": "required_control",
+          "category_label": "Required step",
+          "title": "Customer identity verified for account opening was demonstrated",
+          "summary": "The applicable requirement was assessed as met: The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
+          "evidence_ids": [
+            "semantic:security.account_opening_identity_verified:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited."
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "semantic:security.account_opening_identity_verified:support",
+          "finding_ids": [
+            "finding-positive-control-identity_verification_completed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 42.66,
+          "end_seconds": 72.54,
+          "text": "AGENT: I just need your date of birth.\nAGENT: I also just need your date of birth to be able to confirm with our security, please.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:request.intent_confirmed:support",
+          "finding_ids": [
+            "finding-positive-process-intent_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 82.86,
+          "end_seconds": 90.58,
+          "text": "AGENT: I see you have an account with us under the credit card, and you're looking to open up a new checking account.\nAGENT: We can definitely help you with that today.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:account.linkage_confirmed:support",
+          "finding_ids": [
+            "finding-positive-process-product_linkage_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 115.24,
+          "end_seconds": 144.4,
+          "text": "AGENT: Well, basically what we're going to do is that we're going to open up a new checking account, which that allows you to draw money from it.\nAGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: So you're going to have two cards.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:account.product_terms_explained:support",
+          "finding_ids": [
+            "finding-positive-process-account_terms_explained"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 283.07,
+          "end_seconds": 300.49,
+          "text": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: There is no annual fee with our card or even a monthly fee.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:outcome.summary_and_next_steps:support",
+          "finding_ids": [
+            "finding-positive-outcome-next_steps_confirmed"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 523.45,
+          "end_seconds": 546.27,
+          "text": "AGENT: Please give me a few minutes to be able to enter all the information in, and I will email you directly with all the other information.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it.",
+          "seekable": true,
+          "supporting_only": false
+        },
+        {
+          "evidence_id": "semantic:account.opening_consent:support",
+          "finding_ids": [
+            "finding-positive-control-account_opening_consent_obtained"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "customer",
+          "start_seconds": 559.04,
+          "end_seconds": 565.62,
+          "text": "CUSTOMER: Okay, I think I'd like to go ahead with it then and setting up the new checking account.",
+          "seekable": true,
+          "supporting_only": false
+        }
+      ],
       "uncertainty_messages": [],
       "supervisor_context_note": null,
       "evaluator_version": "v2-policy-0.1.0",
@@ -177,14 +817,13 @@
     "escalation_tier": "none"
   },
   "comparison": {
-    "comparable": false,
-    "reason": "v2 requirement coverage is incomplete; attention values must not be treated as equivalent.",
-    "attention_agreement": null
+    "comparable": true,
+    "reason": "Both evaluators produced a complete attention value under their named policies.",
+    "attention_agreement": false
   },
   "limitations": [
     "research_domain_profile",
     "bounded_supervisor_not_run",
-    "semantic_requirement_assessments_missing",
     "acoustic_input_unavailable"
   ],
   "failure_reason": null,

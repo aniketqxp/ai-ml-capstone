@@ -7,155 +7,145 @@
     "succeeded": 10
   },
   "decision_statuses": {
-    "insufficient_evidence": 10
+    "complete": 10
   },
   "legacy_attention_proxy_count": 10,
-  "v2_attention_count": 0,
+  "v2_attention_count": 3,
   "comparison": {
-    "comparable": 0,
-    "not_comparable": 10,
-    "attention_agreement": 0,
-    "attention_disagreement": 0
+    "comparable": 10,
+    "not_comparable": 0,
+    "attention_agreement": 3,
+    "attention_disagreement": 7
   },
-  "conclusion": "No attention disagreement is reported because every v2 run has incomplete semantic requirement coverage.",
+  "conclusion": "10 calls produced comparable attention decisions: 3 agreements and 7 disagreements. 0 calls remain non-comparable because requirement coverage is partial.",
   "calls": [
     {
       "call_id": "en_CA_Banking_1586889",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_CA_Banking_1588683",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
-      "v2_attention": false,
-      "comparable": false,
+      "v2_attention": true,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_CA_Banking_1590992",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_CA_Banking_1592237",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1584540",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1586157",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1586678",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
-      "v2_attention": false,
-      "comparable": false,
+      "v2_attention": true,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1586893",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1587139",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
       "v2_attention": false,
-      "comparable": false,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     },
     {
       "call_id": "en_US_General_Banking_1587700",
       "status": "succeeded",
-      "decision_status": "insufficient_evidence",
+      "decision_status": "complete",
       "legacy_attention_proxy": true,
-      "v2_attention": false,
-      "comparable": false,
+      "v2_attention": true,
+      "comparable": true,
       "limitations": [
         "research_domain_profile",
         "bounded_supervisor_not_run",
-        "semantic_requirement_assessments_missing",
         "acoustic_input_unavailable"
       ]
     }
