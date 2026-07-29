@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_US_General_Banking_1584540:v2:7df9e6c6ad6809ba",
+  "run_id": "en_US_General_Banking_1584540:v2:69d4cd07910d11a7",
   "call_id": "en_US_General_Banking_1584540",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "357fe84af98a479c335e5fed9628f723d172a3d2248f82fb97a05f49f26b053e",
+  "decision_sha256": "976ee3e2a61f14766c9f91960bbf5a4d4f49e32d1672e7c31015b1f1295ddf0e",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_US_General_Banking_1584540",
     "evaluator_version": "v2-policy-0.1.0",
     "domain_profile_id": "banking-demo-v1",
     "signal_bundle_schema_version": "2.0",
-    "signal_bundle_sha256": "284f68925180afe8431021e0fe4165bf7545af2a108b4ca45c58d983ded0b50c",
+    "signal_bundle_sha256": "c7e079664bcaa51a46187c63ddb81431c0200f322709837b5585a4d627eea2d4",
     "decision_status": "complete",
     "attention_required": false,
     "triggered_findings": [],
@@ -25,8 +25,8 @@
         "category": "agent_behavior",
         "polarity": "positive",
         "severity": "info",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "title": "Agent and organization identified",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -85,8 +85,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Loan inquiry next step confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "title": "Loan inquiry next step confirmed",
+        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
         "business_definition": "The customer receives a concrete route to continue the loan inquiry or application.",
         "applicability": {
           "applies": true,
@@ -145,8 +145,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Outcome and next steps summarized was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -206,8 +206,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer request confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms the customer's request for a loan by acknowledging the type of loan the customer is seeking.",
+        "title": "Customer request confirmed",
+        "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -236,15 +236,16 @@
             "evidence_id": "semantic:request.intent_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
+              "AGENT_006",
               "AGENT_008"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 54.16,
+            "start_seconds": 40.47,
             "end_seconds": 63.06,
             "quote": null,
-            "observation": "AGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?"
+            "observation": "AGENT: And yes, we do offer various consumer loans.\nAGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?"
           }
         ],
         "counter_evidence": [],
@@ -266,8 +267,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Loan eligibility considerations explained was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent explains the eligibility requirements clearly, including the necessary credit score and income needed for the loan.",
+        "title": "Loan eligibility considerations explained",
+        "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
         "business_definition": "The customer receives a qualified explanation of relevant eligibility factors without a promise of approval.",
         "applicability": {
           "applies": true,
@@ -328,8 +329,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Loan purpose and inquiry stage confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms the purpose of the loan as agricultural equipment and distinguishes it from general information.",
+        "title": "Loan purpose and inquiry stage confirmed",
+        "summary": "The agent confirms the purpose of the loan as agricultural equipment and distinguishes it from general information.",
         "business_definition": "The agent establishes the financing purpose and whether the customer wants information or to begin an application.",
         "applicability": {
           "applies": true,
@@ -358,8 +359,8 @@
             "evidence_id": "semantic:loan.purpose_and_stage_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "CUSTOMER_006",
-              "CUSTOMER_004"
+              "CUSTOMER_004",
+              "CUSTOMER_006"
             ],
             "signal_ids": [],
             "episode_ids": [],
@@ -367,7 +368,7 @@
             "start_seconds": 67.38,
             "end_seconds": 92.07,
             "quote": null,
-            "observation": "CUSTOMER: So what do I need to be doing to get a loan for these equipment?\nCUSTOMER: You see I have this farm and basically I'm looking to buy some equipment."
+            "observation": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nCUSTOMER: So what do I need to be doing to get a loan for these equipment?"
           }
         ],
         "counter_evidence": [],
@@ -421,56 +422,174 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_US_General_Banking_1584540",
-    "decision_sha256": "357fe84af98a479c335e5fed9628f723d172a3d2248f82fb97a05f49f26b053e",
+    "decision_sha256": "976ee3e2a61f14766c9f91960bbf5a4d4f49e32d1672e7c31015b1f1295ddf0e",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
     "headline": "No review finding identified",
     "summary": "Applicable rules produced no qualifying negative finding.",
+    "manager_questions": [
+      {
+        "question_id": "call.objective",
+        "question": "Did the agent understand and address the objective?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "evidence_ids": [
+          "semantic:loan.next_step_confirmed:support",
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:request.intent_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.workflow",
+        "question": "Did the agent follow the applicable workflow?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "All 3 applicable workflow checks were demonstrated.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support",
+          "semantic:loan.eligibility_explained:support",
+          "semantic:loan.purpose_and_stage_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.friction",
+        "question": "Did the interaction introduce customer friction?",
+        "answer": "no",
+        "answer_label": "No concern identified",
+        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
+        "evidence_ids": []
+      },
+      {
+        "question_id": "call.follow_up",
+        "question": "Is follow-up, coaching, or customer action required?",
+        "answer": "no",
+        "answer_label": "No",
+        "summary": "No evidence-backed action was triggered.",
+        "evidence_ids": []
+      }
+    ],
+    "checklist": [
+      {
+        "requirement_id": "interaction.agent_identification",
+        "title": "Agent and organization identified",
+        "category": "agent_behavior",
+        "status": "demonstrated",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "loan.next_step_confirmed",
+        "title": "Loan inquiry next step confirmed",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "evidence_ids": [
+          "semantic:loan.next_step_confirmed:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "outcome.summary_and_next_steps",
+        "title": "Outcome and next steps summarized",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "request.intent_confirmed",
+        "title": "Customer request confirmed",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
+        "evidence_ids": [
+          "semantic:request.intent_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "loan.eligibility_explained",
+        "title": "Loan eligibility considerations explained",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
+        "evidence_ids": [
+          "semantic:loan.eligibility_explained:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "loan.purpose_and_stage_confirmed",
+        "title": "Loan purpose and inquiry stage confirmed",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent confirms the purpose of the loan as agricultural equipment and distinguishes it from general information.",
+        "evidence_ids": [
+          "semantic:loan.purpose_and_stage_confirmed:support"
+        ],
+        "promoted": false
+      }
+    ],
+    "acoustic_context": {
+      "status": "available",
+      "coverage_label": "Audio support on 58 of 106 segments",
+      "conclusion": "No sustained vocal-friction pattern crossed the provisional support gate.",
+      "observations": []
+    },
     "primary_reasons": [],
     "additional_reason_count": 0,
     "positive_highlights": [
       {
-        "finding_id": "finding-positive-agent-identification_clear",
-        "category": "agent_behavior",
-        "category_label": "Agent handling",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
-        "evidence_ids": [
-          "semantic:interaction.agent_identification:support"
-        ],
-        "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
-      },
-      {
         "finding_id": "finding-positive-outcome-loan_next_step_confirmed",
         "category": "outcome",
         "category_label": "Outcome",
-        "title": "Loan inquiry next step confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
+        "title": "Loan inquiry next step confirmed",
+        "summary": "The agent provides a concrete next step by suggesting the customer can improve their credit and reapply in the future.",
         "evidence_ids": [
           "semantic:loan.next_step_confirmed:support"
         ],
         "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
+      },
+      {
+        "finding_id": "finding-positive-outcome-next_steps_confirmed",
+        "category": "outcome",
+        "category_label": "Outcome",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
       }
     ],
     "additional_positive_count": 4,
     "recommended_action": null,
     "evidence": [
       {
-        "evidence_id": "semantic:interaction.agent_identification:support",
+        "evidence_id": "semantic:outcome.summary_and_next_steps:support",
         "finding_ids": [
-          "finding-positive-agent-identification_clear"
+          "finding-positive-outcome-next_steps_confirmed"
         ],
         "purposes": [
           "positive"
         ],
         "kind": "transcript",
         "speaker": "agent",
-        "start_seconds": 16.44,
-        "end_seconds": 19.38,
-        "text": "AGENT: Thank you for calling Justice Federal Credit Union.",
+        "start_seconds": 517.57,
+        "end_seconds": 593.06,
+        "text": "AGENT: based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.\nAGENT: What I can do is send you some information to help you get your credit in order and some budgeting tips that may help you to get on a better path towards financial solvency so you can reply maybe six months or one year down the line. You",
         "seekable": true,
         "supporting_only": false
       },
@@ -496,55 +615,75 @@
       "additional_findings": [],
       "additional_positive_findings": [
         {
-          "finding_id": "finding-positive-outcome-next_steps_confirmed",
-          "category": "outcome",
-          "category_label": "Outcome",
-          "title": "Outcome and next steps summarized was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent summarizes the outcome of the inquiry and provides next steps for the customer to improve their eligibility for a loan.",
-          "evidence_ids": [
-            "semantic:outcome.summary_and_next_steps:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
           "finding_id": "finding-positive-process-intent_confirmed",
           "category": "process",
           "category_label": "Call handling",
-          "title": "Customer request confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent confirms the customer's request for a loan by acknowledging the type of loan the customer is seeking.",
+          "title": "Customer request confirmed",
+          "summary": "The agent acknowledges the customer's request for a loan and asks clarifying questions about the type of loan.",
           "evidence_ids": [
             "semantic:request.intent_confirmed:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-process-loan_eligibility_explained",
           "category": "process",
           "category_label": "Call handling",
-          "title": "Loan eligibility considerations explained was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent explains the eligibility requirements clearly, including the necessary credit score and income needed for the loan.",
+          "title": "Loan eligibility considerations explained",
+          "summary": "The agent explains the eligibility requirements clearly, including the necessary credit score and income level.",
           "evidence_ids": [
             "semantic:loan.eligibility_explained:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-process-loan_request_confirmed",
           "category": "process",
           "category_label": "Call handling",
-          "title": "Loan purpose and inquiry stage confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent confirms the purpose of the loan as agricultural equipment and distinguishes it from general information.",
+          "title": "Loan purpose and inquiry stage confirmed",
+          "summary": "The agent confirms the purpose of the loan as agricultural equipment and distinguishes it from general information.",
           "evidence_ids": [
             "semantic:loan.purpose_and_stage_confirmed:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-agent-identification_clear",
+          "category": "agent_behavior",
+          "category_label": "Agent handling",
+          "title": "Agent and organization identified",
+          "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+          "evidence_ids": [
+            "semantic:interaction.agent_identification:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         }
       ],
       "evidence": [
+        {
+          "evidence_id": "semantic:interaction.agent_identification:support",
+          "finding_ids": [
+            "finding-positive-agent-identification_clear"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 16.44,
+          "end_seconds": 19.38,
+          "text": "AGENT: Thank you for calling Justice Federal Credit Union.",
+          "seekable": true,
+          "supporting_only": false
+        },
         {
           "evidence_id": "semantic:request.intent_confirmed:support",
           "finding_ids": [
@@ -555,9 +694,9 @@
           ],
           "kind": "transcript",
           "speaker": "agent",
-          "start_seconds": 54.16,
+          "start_seconds": 40.47,
           "end_seconds": 63.06,
-          "text": "AGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?",
+          "text": "AGENT: And yes, we do offer various consumer loans.\nAGENT: Are you interested in a personal loan, a business loan, a commercial loan, or an agricultural loan?",
           "seekable": true,
           "supporting_only": false
         },
@@ -573,7 +712,7 @@
           "speaker": "customer",
           "start_seconds": 67.38,
           "end_seconds": 92.07,
-          "text": "CUSTOMER: So what do I need to be doing to get a loan for these equipment?\nCUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.",
+          "text": "CUSTOMER: You see I have this farm and basically I'm looking to buy some equipment.\nCUSTOMER: So what do I need to be doing to get a loan for these equipment?",
           "seekable": true,
           "supporting_only": false
         },
@@ -590,22 +729,6 @@
           "start_seconds": 517.57,
           "end_seconds": 552.54,
           "text": "AGENT: based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.\nAGENT: We do need a minimum credit score of $650 for any loan that we offer through our credit union here.\nAGENT: And for a loan $10 ,000 or more, you would need at least a $4 ,000 monthly income in order to qualify.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:outcome.summary_and_next_steps:support",
-          "finding_ids": [
-            "finding-positive-outcome-next_steps_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 517.57,
-          "end_seconds": 593.06,
-          "text": "AGENT: based on the information you have provided for me, it is not likely that we would be able to extend a loan to you at this time, mainly for a few reasons, which I will explain to you.\nAGENT: What I can do is send you some information to help you get your credit in order and some budgeting tips that may help you to get on a better path towards financial solvency so you can reply maybe six months or one year down the line. You",
           "seekable": true,
           "supporting_only": false
         }
@@ -641,8 +764,7 @@
   },
   "limitations": [
     "research_domain_profile",
-    "bounded_supervisor_not_run",
-    "acoustic_input_unavailable"
+    "bounded_supervisor_not_run"
   ],
   "failure_reason": null,
   "provenance": {

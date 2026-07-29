@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_CA_Banking_1592237:v2:a6d5927d6928d30f",
+  "run_id": "en_CA_Banking_1592237:v2:5f3f5ce6c30b1256",
   "call_id": "en_CA_Banking_1592237",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "8bce077c74336a50c954d7f1f4fd368bd8179b8f4f33d4623bb3ba96900892c8",
+  "decision_sha256": "3a5c28b8f027adfc94ef727174bdd2e7291c82c86fe67098b3398e105d7628d8",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_CA_Banking_1592237",
     "evaluator_version": "v2-policy-0.1.0",
     "domain_profile_id": "banking-demo-v1",
     "signal_bundle_schema_version": "2.0",
-    "signal_bundle_sha256": "7dc913ff6feb6ea2db655edd771a8c542b8de63c6da76df035ccbfae7191a1c8",
+    "signal_bundle_sha256": "c43cefc79b0e5b9ba3b0d29068ad1f5b68d8afb076c0199ac0a92425d82434ec",
     "decision_status": "complete",
     "attention_required": false,
     "triggered_findings": [],
@@ -25,8 +25,8 @@
         "category": "agent_behavior",
         "polarity": "positive",
         "severity": "info",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
+        "title": "Agent and organization identified",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -86,8 +86,8 @@
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer consents to account opening was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
+        "title": "Customer consents to account opening",
+        "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
         "business_definition": "The customer explicitly agrees to open the account after relevant terms are discussed.",
         "applicability": {
           "applies": true,
@@ -146,8 +146,8 @@
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer identity verified for account opening was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
+        "title": "Customer identity verified for account opening",
+        "summary": "The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
         "business_definition": "The account-opening process includes a clear identity-verification exchange.",
         "applicability": {
           "applies": true,
@@ -207,8 +207,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Account opening confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms that the account has been opened and explains the next steps for the customer to receive their card and set it up.",
+        "title": "Account opening confirmed",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
         "business_definition": "The customer receives confirmation of the account outcome and access next steps.",
         "applicability": {
           "applies": true,
@@ -237,16 +237,15 @@
             "evidence_id": "semantic:account.opening_confirmation:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_066",
-              "AGENT_067"
+              "AGENT_066"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 606.61,
-            "end_seconds": 617.57,
+            "end_seconds": 616.23,
             "quote": null,
-            "observation": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.\nAGENT: We're glad to have your business."
+            "observation": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts."
           }
         ],
         "counter_evidence": [],
@@ -268,8 +267,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Outcome and next steps summarized was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -298,17 +297,17 @@
             "evidence_id": "semantic:outcome.summary_and_next_steps:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_055",
+              "AGENT_054",
               "AGENT_056",
-              "AGENT_057"
+              "AGENT_058"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 523.45,
-            "end_seconds": 546.27,
+            "start_seconds": 518.01,
+            "end_seconds": 555.5,
             "quote": null,
-            "observation": "AGENT: Please give me a few minutes to be able to enter all the information in, and I will email you directly with all the other information.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it."
+            "observation": "AGENT: Oh no, this is not a long process at all since we already have many of your information on file from the credit card.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: You'll have to create a pin, which all the instructions will be done there, and will be in the envelope once you receive your card."
           }
         ],
         "counter_evidence": [],
@@ -330,8 +329,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Checking-account terms explained was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees associated with the checking account and discusses its features.",
+        "title": "Checking-account terms explained",
+        "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
         "business_definition": "The customer receives the material account features, fees, and usage conditions relevant to the request.",
         "applicability": {
           "applies": true,
@@ -361,16 +360,16 @@
             "modality": "transcript",
             "segment_ids": [
               "AGENT_030",
-              "AGENT_031",
-              "AGENT_032"
+              "AGENT_032",
+              "AGENT_034"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
             "start_seconds": 283.07,
-            "end_seconds": 300.49,
+            "end_seconds": 309.75,
             "quote": null,
-            "observation": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: There is no annual fee with our card or even a monthly fee.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us."
+            "observation": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.\nAGENT: So it gives you the freedom to know that banking with us doesn't cost you money."
           }
         ],
         "counter_evidence": [],
@@ -392,8 +391,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer request confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to open a checking account linked to their existing credit card.",
+        "title": "Customer request confirmed",
+        "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -453,8 +452,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Requested product linkage confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
+        "title": "Requested product linkage confirmed",
+        "summary": "The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
         "business_definition": "The requested relationship between the new checking account and existing product is understood and confirmed.",
         "applicability": {
           "applies": true,
@@ -483,17 +482,16 @@
             "evidence_id": "semantic:account.linkage_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_012",
               "AGENT_014",
-              "AGENT_017"
+              "AGENT_018"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 115.24,
-            "end_seconds": 144.4,
+            "start_seconds": 127.6,
+            "end_seconds": 155.66,
             "quote": null,
-            "observation": "AGENT: Well, basically what we're going to do is that we're going to open up a new checking account, which that allows you to draw money from it.\nAGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: So you're going to have two cards."
+            "observation": "AGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: But with the checking account, you will be able to pay your credit card much quicker and be able to show up and have that available credit a lot faster than you would normally."
           }
         ],
         "counter_evidence": [],
@@ -547,56 +545,196 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_CA_Banking_1592237",
-    "decision_sha256": "8bce077c74336a50c954d7f1f4fd368bd8179b8f4f33d4623bb3ba96900892c8",
+    "decision_sha256": "3a5c28b8f027adfc94ef727174bdd2e7291c82c86fe67098b3398e105d7628d8",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
     "headline": "No review finding identified",
     "summary": "Applicable rules produced no qualifying negative finding.",
+    "manager_questions": [
+      {
+        "question_id": "call.objective",
+        "question": "Did the agent understand and address the objective?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "evidence_ids": [
+          "semantic:account.opening_confirmation:support",
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:request.intent_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.workflow",
+        "question": "Did the agent follow the applicable workflow?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "All 5 applicable workflow checks were demonstrated.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support",
+          "semantic:account.opening_consent:support",
+          "semantic:security.account_opening_identity_verified:support"
+        ]
+      },
+      {
+        "question_id": "call.friction",
+        "question": "Did the interaction introduce customer friction?",
+        "answer": "no",
+        "answer_label": "No concern identified",
+        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
+        "evidence_ids": []
+      },
+      {
+        "question_id": "call.follow_up",
+        "question": "Is follow-up, coaching, or customer action required?",
+        "answer": "no",
+        "answer_label": "No",
+        "summary": "No evidence-backed action was triggered.",
+        "evidence_ids": []
+      }
+    ],
+    "checklist": [
+      {
+        "requirement_id": "interaction.agent_identification",
+        "title": "Agent and organization identified",
+        "category": "agent_behavior",
+        "status": "demonstrated",
+        "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "account.opening_confirmation",
+        "title": "Account opening confirmed",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
+        "evidence_ids": [
+          "semantic:account.opening_confirmation:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "outcome.summary_and_next_steps",
+        "title": "Outcome and next steps summarized",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "account.product_terms_explained",
+        "title": "Checking-account terms explained",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
+        "evidence_ids": [
+          "semantic:account.product_terms_explained:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "request.intent_confirmed",
+        "title": "Customer request confirmed",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
+        "evidence_ids": [
+          "semantic:request.intent_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "account.linkage_confirmed",
+        "title": "Requested product linkage confirmed",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
+        "evidence_ids": [
+          "semantic:account.linkage_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "account.opening_consent",
+        "title": "Customer consents to account opening",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
+        "evidence_ids": [
+          "semantic:account.opening_consent:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "security.account_opening_identity_verified",
+        "title": "Customer identity verified for account opening",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
+        "evidence_ids": [
+          "semantic:security.account_opening_identity_verified:support"
+        ],
+        "promoted": false
+      }
+    ],
+    "acoustic_context": {
+      "status": "available",
+      "coverage_label": "Audio support on 68 of 96 segments",
+      "conclusion": "No sustained vocal-friction pattern crossed the provisional support gate.",
+      "observations": []
+    },
     "primary_reasons": [],
     "additional_reason_count": 0,
     "positive_highlights": [
       {
-        "finding_id": "finding-positive-agent-identification_clear",
-        "category": "agent_behavior",
-        "category_label": "Agent handling",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves and the organization at the beginning of the call.",
-        "evidence_ids": [
-          "semantic:interaction.agent_identification:support"
-        ],
-        "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
-      },
-      {
         "finding_id": "finding-positive-outcome-account_opening_confirmed",
         "category": "outcome",
         "category_label": "Outcome",
-        "title": "Account opening confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms that the account has been opened and explains the next steps for the customer to receive their card and set it up.",
+        "title": "Account opening confirmed",
+        "summary": "The agent confirms that the account has been opened and explains the next steps for accessing the account and receiving the card.",
         "evidence_ids": [
           "semantic:account.opening_confirmation:support"
         ],
         "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
+      },
+      {
+        "finding_id": "finding-positive-outcome-next_steps_confirmed",
+        "category": "outcome",
+        "category_label": "Outcome",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent summarizes the actions taken and explains the next steps for the customer, including the email confirmation and card delivery.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
       }
     ],
     "additional_positive_count": 6,
     "recommended_action": null,
     "evidence": [
       {
-        "evidence_id": "semantic:interaction.agent_identification:support",
+        "evidence_id": "semantic:outcome.summary_and_next_steps:support",
         "finding_ids": [
-          "finding-positive-agent-identification_clear"
+          "finding-positive-outcome-next_steps_confirmed"
         ],
         "purposes": [
           "positive"
         ],
         "kind": "transcript",
         "speaker": "agent",
-        "start_seconds": 11.7,
-        "end_seconds": 16.38,
-        "text": "AGENT: Thank you for calling the Bank of Ottawa.\nAGENT: My name is Joao, customer support analyst.",
+        "start_seconds": 518.01,
+        "end_seconds": 555.5,
+        "text": "AGENT: Oh no, this is not a long process at all since we already have many of your information on file from the credit card.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: You'll have to create a pin, which all the instructions will be done there, and will be in the envelope once you receive your card.",
         "seekable": true,
         "supporting_only": false
       },
@@ -611,8 +749,8 @@
         "kind": "transcript",
         "speaker": "agent",
         "start_seconds": 606.61,
-        "end_seconds": 617.57,
-        "text": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.\nAGENT: We're glad to have your business.",
+        "end_seconds": 616.23,
+        "text": "AGENT: Okay, I've entered the information and got you all started, so I'll be emailing you at the email that you've provided, and welcome aboard with our checking and savings accounts.",
         "seekable": true,
         "supporting_only": false
       }
@@ -622,79 +760,101 @@
       "additional_findings": [],
       "additional_positive_findings": [
         {
-          "finding_id": "finding-positive-outcome-next_steps_confirmed",
-          "category": "outcome",
-          "category_label": "Outcome",
-          "title": "Outcome and next steps summarized was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent summarizes the actions taken and explains the next steps for the customer to receive their new card and complete the setup.",
-          "evidence_ids": [
-            "semantic:outcome.summary_and_next_steps:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-process-account_terms_explained",
-          "category": "process",
-          "category_label": "Call handling",
-          "title": "Checking-account terms explained was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent explains that there are no fees associated with the checking account and discusses its features.",
-          "evidence_ids": [
-            "semantic:account.product_terms_explained:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-process-intent_confirmed",
-          "category": "process",
-          "category_label": "Call handling",
-          "title": "Customer request confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to open a checking account linked to their existing credit card.",
-          "evidence_ids": [
-            "semantic:request.intent_confirmed:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-process-product_linkage_confirmed",
-          "category": "process",
-          "category_label": "Call handling",
-          "title": "Requested product linkage confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
-          "evidence_ids": [
-            "semantic:account.linkage_confirmed:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
           "finding_id": "finding-positive-control-account_opening_consent_obtained",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "Customer consents to account opening was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The customer explicitly agrees to proceed with opening the checking account after discussing the terms.",
+          "title": "Customer consents to account opening",
+          "summary": "The customer explicitly agrees to open the checking account after discussing the relevant terms.",
           "evidence_ids": [
             "semantic:account.opening_consent:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-control-identity_verification_completed",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "Customer identity verified for account opening was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
+          "title": "Customer identity verified for account opening",
+          "summary": "The agent requests the customer's date of birth to verify their identity before proceeding with the account opening.",
           "evidence_ids": [
             "semantic:security.account_opening_identity_verified:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-process-account_terms_explained",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Checking-account terms explained",
+          "summary": "The agent explains that there are no fees associated with the checking account, detailing the features and conditions.",
+          "evidence_ids": [
+            "semantic:account.product_terms_explained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-process-intent_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Customer request confirmed",
+          "summary": "The agent confirms the customer's request to open a checking account by restating the action and the existing relationship with the credit card.",
+          "evidence_ids": [
+            "semantic:request.intent_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-process-product_linkage_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Requested product linkage confirmed",
+          "summary": "The agent explains how the new checking account can be linked to the existing credit card and confirms the customer's preference.",
+          "evidence_ids": [
+            "semantic:account.linkage_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-agent-identification_clear",
+          "category": "agent_behavior",
+          "category_label": "Agent handling",
+          "title": "Agent and organization identified",
+          "summary": "The agent identifies themselves and the organization at the beginning of the call.",
+          "evidence_ids": [
+            "semantic:interaction.agent_identification:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         }
       ],
       "evidence": [
+        {
+          "evidence_id": "semantic:interaction.agent_identification:support",
+          "finding_ids": [
+            "finding-positive-agent-identification_clear"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 11.7,
+          "end_seconds": 16.38,
+          "text": "AGENT: Thank you for calling the Bank of Ottawa.\nAGENT: My name is Joao, customer support analyst.",
+          "seekable": true,
+          "supporting_only": false
+        },
         {
           "evidence_id": "semantic:security.account_opening_identity_verified:support",
           "finding_ids": [
@@ -737,9 +897,9 @@
           ],
           "kind": "transcript",
           "speaker": "agent",
-          "start_seconds": 115.24,
-          "end_seconds": 144.4,
-          "text": "AGENT: Well, basically what we're going to do is that we're going to open up a new checking account, which that allows you to draw money from it.\nAGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: So you're going to have two cards.",
+          "start_seconds": 127.6,
+          "end_seconds": 155.66,
+          "text": "AGENT: This new checking account will be able to be linked to the credit card, meaning that you're able to make payments from your checking account to your credit card.\nAGENT: But with the checking account, you will be able to pay your credit card much quicker and be able to show up and have that available credit a lot faster than you would normally.",
           "seekable": true,
           "supporting_only": false
         },
@@ -754,24 +914,8 @@
           "kind": "transcript",
           "speaker": "agent",
           "start_seconds": 283.07,
-          "end_seconds": 300.49,
-          "text": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: There is no annual fee with our card or even a monthly fee.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:outcome.summary_and_next_steps:support",
-          "finding_ids": [
-            "finding-positive-outcome-next_steps_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 523.45,
-          "end_seconds": 546.27,
-          "text": "AGENT: Please give me a few minutes to be able to enter all the information in, and I will email you directly with all the other information.\nAGENT: You'll receive the new card in the mail within seven to ten business days.\nAGENT: And from there, it will give you further instructions on how to complete the setup and fully activate the card once you get it.",
+          "end_seconds": 309.75,
+          "text": "AGENT: In terms of the checking account, you're actually in luck.\nAGENT: We are a no fees bank, which means that you don't have to pay anything for maintaining your balance with us or your account with us.\nAGENT: So it gives you the freedom to know that banking with us doesn't cost you money.",
           "seekable": true,
           "supporting_only": false
         },
@@ -823,8 +967,7 @@
   },
   "limitations": [
     "research_domain_profile",
-    "bounded_supervisor_not_run",
-    "acoustic_input_unavailable"
+    "bounded_supervisor_not_run"
   ],
   "failure_reason": null,
   "provenance": {

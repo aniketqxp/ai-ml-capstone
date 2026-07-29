@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
   "runtime_version": "0.1.0",
-  "run_id": "en_CA_Banking_1590992:v2:842d5e52c137daf8",
+  "run_id": "en_CA_Banking_1590992:v2:8c404e441ddc8264",
   "call_id": "en_CA_Banking_1590992",
   "mode": "shadow",
   "status": "succeeded",
   "evaluator_version": "v2-policy-0.1.0",
   "profile_id": "banking-demo-v1",
-  "decision_sha256": "069752724aecf7ed7161cd7d1d5cb70c2b6483e96593fded6b330e5c18feb30c",
+  "decision_sha256": "ba34f5e1b22de886f4e223203b6c2a7ceed8d35962817516f62ab2b9b8753322",
   "decision": {
     "schema_version": "2.0",
     "call_id": "en_CA_Banking_1590992",
     "evaluator_version": "v2-policy-0.1.0",
     "domain_profile_id": "banking-demo-v1",
     "signal_bundle_schema_version": "2.0",
-    "signal_bundle_sha256": "e39d00249f684d2c319fc77cee22616450e2b71a7ba9fddcde9eefadad0ac2f0",
+    "signal_bundle_sha256": "4d294d160eeaceacc19f008ca0c4cf96b4f2f2fe0a440887df345fa5be216c4f",
     "decision_status": "complete",
     "attention_required": false,
     "triggered_findings": [],
@@ -25,8 +25,8 @@
         "category": "agent_behavior",
         "polarity": "positive",
         "severity": "info",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves as Julia from Greenville Bank at the beginning of the call.",
+        "title": "Agent and organization identified",
+        "summary": "The agent identified themselves as Julia from Greenville Bank at the beginning of the call.",
         "business_definition": "The customer can identify the representative and organization handling the call.",
         "applicability": {
           "applies": true,
@@ -81,75 +81,13 @@
         "display_priority": 200
       },
       {
-        "finding_id": "finding-positive-control-identity_verification_completed",
-        "finding_type": "control.identity_verification_completed",
-        "category": "required_control",
-        "polarity": "positive",
-        "severity": "info",
-        "title": "Customer identity verified before transaction access was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent verifies the customer's identity by asking security questions before proceeding with the transfer.",
-        "business_definition": "Account-specific transaction activity follows a clear customer-verification exchange.",
-        "applicability": {
-          "applies": true,
-          "profile_id": "banking-demo-v1",
-          "rule_id": "security.transaction_identity_verified",
-          "reason": "Selected intent and applicability facts match this requirement.",
-          "selected_branch": "transfer.core"
-        },
-        "detection_rule": {
-          "rule_id": "security.transaction_identity_verified",
-          "rule_version": "0.1.0",
-          "detector": "structured_requirement_assessment",
-          "signal_ids": [],
-          "thresholds": [
-            {
-              "signal_name": "assessment.requirement_verdict",
-              "operator": "eq",
-              "value": "met",
-              "unit": null,
-              "window": null
-            }
-          ]
-        },
-        "evidence": [
-          {
-            "evidence_id": "semantic:security.transaction_identity_verified:support",
-            "modality": "transcript",
-            "segment_ids": [
-              "AGENT_029",
-              "AGENT_030",
-              "AGENT_039"
-            ],
-            "signal_ids": [],
-            "episode_ids": [],
-            "speaker": "agent",
-            "start_seconds": 82.59,
-            "end_seconds": 118.05,
-            "quote": null,
-            "observation": "AGENT: I do have a couple questions, security questions, just to make sure that we are going about this process correctly.\nAGENT: I just need you to confirm.\nAGENT: That's been confirmed."
-          }
-        ],
-        "counter_evidence": [],
-        "reliability": {
-          "status": "limited",
-          "coverage_ratio": 1.0,
-          "reasons": [
-            "llm_semantic_assessment",
-            "not_human_adjudicated"
-          ],
-          "quality_flags": []
-        },
-        "visibility": "details",
-        "display_priority": 200
-      },
-      {
         "finding_id": "finding-positive-control-transfer_accounts_confirmed",
         "finding_type": "control.transfer_accounts_confirmed",
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "Source and destination accounts confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent and customer confirm the source and destination accounts during the transfer process.",
+        "title": "Source and destination accounts confirmed",
+        "summary": "The agent and customer confirmed the source and destination accounts for the transfer.",
         "business_definition": "The transfer direction and both participating accounts are unambiguous.",
         "applicability": {
           "applies": true,
@@ -179,15 +117,15 @@
             "modality": "transcript",
             "segment_ids": [
               "CUSTOMER_002",
-              "AGENT_065"
+              "AGENT_066"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": null,
             "start_seconds": 6.54,
-            "end_seconds": 225.17,
+            "end_seconds": 227.79,
             "quote": null,
-            "observation": "CUSTOMER: I need to transfer some money from my savings account into my checking account urgently here.\nAGENT: So I finally gained access to your account."
+            "observation": "CUSTOMER: I need to transfer some money from my savings account into my checking account urgently here.\nAGENT: I can go ahead and help you with transferring $500."
           }
         ],
         "counter_evidence": [],
@@ -209,8 +147,8 @@
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "Transfer amount confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The customer explicitly states the amount of $500 they wish to transfer, and the agent confirms it.",
+        "title": "Transfer amount confirmed",
+        "summary": "The customer explicitly stated the amount to be transferred as $500, and the agent confirmed this amount.",
         "business_definition": "The amount authorized by the customer is explicit before execution or scheduling.",
         "applicability": {
           "applies": true,
@@ -270,8 +208,8 @@
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer authorizes the transfer was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The customer gives clear approval for the transfer after discussing the amount and timing.",
+        "title": "Customer authorizes the transfer",
+        "summary": "The customer gave clear approval for the transfer after discussing the amount and timing.",
         "business_definition": "The agent obtains explicit agreement after the material transfer details are established.",
         "applicability": {
           "applies": true,
@@ -331,8 +269,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Outcome and next steps summarized was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent summarizes the transfer process and explains that the funds will show up immediately after the transfer is completed.",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent confirmed the transfer was completed and recapped the amount transferred and the accounts involved.",
         "business_definition": "The customer leaves knowing what occurred and what must happen next.",
         "applicability": {
           "applies": true,
@@ -361,16 +299,16 @@
             "evidence_id": "semantic:outcome.summary_and_next_steps:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_068",
-              "AGENT_070"
+              "AGENT_121",
+              "AGENT_126"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 231.66,
-            "end_seconds": 253.61,
+            "start_seconds": 477.79,
+            "end_seconds": 519.74,
             "quote": null,
-            "observation": "AGENT: And just so you know, once it does get transferred, the funds will show up immediately and then you should be good to go after that.\nAGENT: So you should get it within a few seconds, actually."
+            "observation": "AGENT: And then now I'm just going to process the the transfer of $500.\nAGENT: you're what you're very, very welcome."
           }
         ],
         "counter_evidence": [],
@@ -392,8 +330,8 @@
         "category": "outcome",
         "polarity": "positive",
         "severity": "info",
-        "title": "Transfer completion confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms the transfer was completed and recaps the details of the transaction.",
+        "title": "Transfer completion confirmed",
+        "summary": "The agent confirmed the transfer was processed and recapped the details to the customer.",
         "business_definition": "A transfer completed during the call is followed by a recap or confirmation.",
         "applicability": {
           "applies": true,
@@ -422,15 +360,16 @@
             "evidence_id": "semantic:transfer.completion_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
+              "AGENT_121",
               "AGENT_126"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": "agent",
-            "start_seconds": 518.06,
+            "start_seconds": 477.79,
             "end_seconds": 519.74,
             "quote": null,
-            "observation": "AGENT: you're what you're very, very welcome."
+            "observation": "AGENT: And then now I'm just going to process the the transfer of $500.\nAGENT: you're what you're very, very welcome."
           }
         ],
         "counter_evidence": [],
@@ -452,8 +391,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Customer request confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to transfer money by stating they can help with that.",
+        "title": "Customer request confirmed",
+        "summary": "The agent acknowledged the customer's request to transfer money by stating they can help with that.",
         "business_definition": "The agent establishes what the customer wants before taking account or application action.",
         "applicability": {
           "applies": true,
@@ -512,8 +451,8 @@
         "category": "process",
         "polarity": "positive",
         "severity": "info",
-        "title": "Relevant transfer terms explained was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent explains that the transfer will show up immediately and discusses the potential for delays, providing relevant timing information.",
+        "title": "Relevant transfer terms explained",
+        "summary": "The agent explained that the transfer would show up immediately and discussed potential delays, providing relevant timing information.",
         "business_definition": "The customer receives applicable timing, limit, fee, and modification information without requiring invented terms.",
         "applicability": {
           "applies": true,
@@ -573,8 +512,8 @@
         "category": "required_control",
         "polarity": "positive",
         "severity": "info",
-        "title": "One-time transfer timing confirmed was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent confirms that the transfer is immediate, and the customer accepts this timing.",
+        "title": "One-time transfer timing confirmed",
+        "summary": "The agent stated that the transfer would be immediate, and the customer accepted this timing.",
         "business_definition": "The execution date or immediate timing of a one-time transfer is explicit.",
         "applicability": {
           "applies": true,
@@ -603,16 +542,16 @@
             "evidence_id": "semantic:transfer.one_time_timing_confirmed:support",
             "modality": "transcript",
             "segment_ids": [
-              "AGENT_070",
+              "AGENT_068",
               "CUSTOMER_024"
             ],
             "signal_ids": [],
             "episode_ids": [],
             "speaker": null,
-            "start_seconds": 239.33,
-            "end_seconds": 253.61,
+            "start_seconds": 231.66,
+            "end_seconds": 242.99,
             "quote": null,
-            "observation": "AGENT: So you should get it within a few seconds, actually.\nCUSTOMER: Okay, so it's immediate and it won't take like a few hours or something."
+            "observation": "AGENT: And just so you know, once it does get transferred, the funds will show up immediately and then you should be good to go after that.\nCUSTOMER: Okay, so it's immediate and it won't take like a few hours or something."
           }
         ],
         "counter_evidence": [],
@@ -666,59 +605,194 @@
     "schema_version": "1.0",
     "presentation_version": "0.1.0",
     "call_id": "en_CA_Banking_1590992",
-    "decision_sha256": "069752724aecf7ed7161cd7d1d5cb70c2b6483e96593fded6b330e5c18feb30c",
+    "decision_sha256": "ba34f5e1b22de886f4e223203b6c2a7ceed8d35962817516f62ab2b9b8753322",
     "state": "no_attention_finding",
     "evaluation_status": "complete",
     "attention_required": false,
     "headline": "No review finding identified",
     "summary": "Applicable rules produced no qualifying negative finding.",
+    "manager_questions": [
+      {
+        "question_id": "call.objective",
+        "question": "Did the agent understand and address the objective?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "The agent confirmed the transfer was completed and recapped the amount transferred and the accounts involved.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support",
+          "semantic:transfer.completion_confirmed:support",
+          "semantic:request.intent_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.workflow",
+        "question": "Did the agent follow the applicable workflow?",
+        "answer": "yes",
+        "answer_label": "Yes",
+        "summary": "All 6 applicable workflow checks were demonstrated.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support",
+          "semantic:transfer.accounts_confirmed:support",
+          "semantic:transfer.amount_confirmed:support"
+        ]
+      },
+      {
+        "question_id": "call.friction",
+        "question": "Did the interaction introduce customer friction?",
+        "answer": "no",
+        "answer_label": "No concern identified",
+        "summary": "No sustained vocal-friction pattern crossed the provisional support gate.",
+        "evidence_ids": []
+      },
+      {
+        "question_id": "call.follow_up",
+        "question": "Is follow-up, coaching, or customer action required?",
+        "answer": "no",
+        "answer_label": "No",
+        "summary": "No evidence-backed action was triggered.",
+        "evidence_ids": []
+      }
+    ],
+    "checklist": [
+      {
+        "requirement_id": "interaction.agent_identification",
+        "title": "Agent and organization identified",
+        "category": "agent_behavior",
+        "status": "demonstrated",
+        "summary": "The agent identified themselves as Julia from Greenville Bank at the beginning of the call.",
+        "evidence_ids": [
+          "semantic:interaction.agent_identification:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "outcome.summary_and_next_steps",
+        "title": "Outcome and next steps summarized",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent confirmed the transfer was completed and recapped the amount transferred and the accounts involved.",
+        "evidence_ids": [
+          "semantic:outcome.summary_and_next_steps:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "transfer.completion_confirmed",
+        "title": "Transfer completion confirmed",
+        "category": "outcome",
+        "status": "demonstrated",
+        "summary": "The agent confirmed the transfer was processed and recapped the details to the customer.",
+        "evidence_ids": [
+          "semantic:transfer.completion_confirmed:support"
+        ],
+        "promoted": true
+      },
+      {
+        "requirement_id": "request.intent_confirmed",
+        "title": "Customer request confirmed",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent acknowledged the customer's request to transfer money by stating they can help with that.",
+        "evidence_ids": [
+          "semantic:request.intent_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "transfer.terms_explained",
+        "title": "Relevant transfer terms explained",
+        "category": "process",
+        "status": "demonstrated",
+        "summary": "The agent explained that the transfer would show up immediately and discussed potential delays, providing relevant timing information.",
+        "evidence_ids": [
+          "semantic:transfer.terms_explained:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "transfer.accounts_confirmed",
+        "title": "Source and destination accounts confirmed",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The agent and customer confirmed the source and destination accounts for the transfer.",
+        "evidence_ids": [
+          "semantic:transfer.accounts_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "transfer.amount_confirmed",
+        "title": "Transfer amount confirmed",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The customer explicitly stated the amount to be transferred as $500, and the agent confirmed this amount.",
+        "evidence_ids": [
+          "semantic:transfer.amount_confirmed:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "transfer.authorization_obtained",
+        "title": "Customer authorizes the transfer",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The customer gave clear approval for the transfer after discussing the amount and timing.",
+        "evidence_ids": [
+          "semantic:transfer.authorization_obtained:support"
+        ],
+        "promoted": false
+      },
+      {
+        "requirement_id": "transfer.one_time_timing_confirmed",
+        "title": "One-time transfer timing confirmed",
+        "category": "required_control",
+        "status": "demonstrated",
+        "summary": "The agent stated that the transfer would be immediate, and the customer accepted this timing.",
+        "evidence_ids": [
+          "semantic:transfer.one_time_timing_confirmed:support"
+        ],
+        "promoted": false
+      }
+    ],
+    "acoustic_context": {
+      "status": "available",
+      "coverage_label": "Audio support on 98 of 192 segments",
+      "conclusion": "No sustained vocal-friction pattern crossed the provisional support gate.",
+      "observations": []
+    },
     "primary_reasons": [],
     "additional_reason_count": 0,
     "positive_highlights": [
       {
-        "finding_id": "finding-positive-agent-identification_clear",
-        "category": "agent_behavior",
-        "category_label": "Agent handling",
-        "title": "Agent and organization identified was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent identifies themselves as Julia from Greenville Bank at the beginning of the call.",
-        "evidence_ids": [
-          "semantic:interaction.agent_identification:support"
-        ],
-        "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
-      },
-      {
         "finding_id": "finding-positive-outcome-next_steps_confirmed",
         "category": "outcome",
         "category_label": "Outcome",
-        "title": "Outcome and next steps summarized was demonstrated",
-        "summary": "The applicable requirement was assessed as met: The agent summarizes the transfer process and explains that the funds will show up immediately after the transfer is completed.",
+        "title": "Outcome and next steps summarized",
+        "summary": "The agent confirmed the transfer was completed and recapped the amount transferred and the accounts involved.",
         "evidence_ids": [
           "semantic:outcome.summary_and_next_steps:support"
         ],
         "counter_evidence_count": 0,
-        "reliability_note": "Supporting evidence is limited."
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
+      },
+      {
+        "finding_id": "finding-positive-outcome-transfer_confirmed",
+        "category": "outcome",
+        "category_label": "Outcome",
+        "title": "Transfer completion confirmed",
+        "summary": "The agent confirmed the transfer was processed and recapped the details to the customer.",
+        "evidence_ids": [
+          "semantic:transfer.completion_confirmed:support"
+        ],
+        "counter_evidence_count": 0,
+        "reliability_note": "Supporting evidence is limited.",
+        "outcome": "effective"
       }
     ],
-    "additional_positive_count": 8,
+    "additional_positive_count": 7,
     "recommended_action": null,
     "evidence": [
-      {
-        "evidence_id": "semantic:interaction.agent_identification:support",
-        "finding_ids": [
-          "finding-positive-agent-identification_clear"
-        ],
-        "purposes": [
-          "positive"
-        ],
-        "kind": "transcript",
-        "speaker": "agent",
-        "start_seconds": 1.3,
-        "end_seconds": 4.2,
-        "text": "AGENT: Thank you for calling Greenville Bank.\nAGENT: This is Julia.",
-        "seekable": true,
-        "supporting_only": false
-      },
       {
         "evidence_id": "semantic:outcome.summary_and_next_steps:support",
         "finding_ids": [
@@ -729,9 +803,25 @@
         ],
         "kind": "transcript",
         "speaker": "agent",
-        "start_seconds": 231.66,
-        "end_seconds": 253.61,
-        "text": "AGENT: And just so you know, once it does get transferred, the funds will show up immediately and then you should be good to go after that.\nAGENT: So you should get it within a few seconds, actually.",
+        "start_seconds": 477.79,
+        "end_seconds": 519.74,
+        "text": "AGENT: And then now I'm just going to process the the transfer of $500.\nAGENT: you're what you're very, very welcome.",
+        "seekable": true,
+        "supporting_only": false
+      },
+      {
+        "evidence_id": "semantic:transfer.completion_confirmed:support",
+        "finding_ids": [
+          "finding-positive-outcome-transfer_confirmed"
+        ],
+        "purposes": [
+          "positive"
+        ],
+        "kind": "transcript",
+        "speaker": "agent",
+        "start_seconds": 477.79,
+        "end_seconds": 519.74,
+        "text": "AGENT: And then now I'm just going to process the the transfer of $500.\nAGENT: you're what you're very, very welcome.",
         "seekable": true,
         "supporting_only": false
       }
@@ -741,103 +831,114 @@
       "additional_findings": [],
       "additional_positive_findings": [
         {
-          "finding_id": "finding-positive-outcome-transfer_confirmed",
-          "category": "outcome",
-          "category_label": "Outcome",
-          "title": "Transfer completion confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent confirms the transfer was completed and recaps the details of the transaction.",
-          "evidence_ids": [
-            "semantic:transfer.completion_confirmed:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-process-intent_confirmed",
-          "category": "process",
-          "category_label": "Call handling",
-          "title": "Customer request confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent acknowledges the customer's request to transfer money by stating they can help with that.",
-          "evidence_ids": [
-            "semantic:request.intent_confirmed:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-process-transfer_terms_explained",
-          "category": "process",
-          "category_label": "Call handling",
-          "title": "Relevant transfer terms explained was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent explains that the transfer will show up immediately and discusses the potential for delays, providing relevant timing information.",
-          "evidence_ids": [
-            "semantic:transfer.terms_explained:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
-          "finding_id": "finding-positive-control-identity_verification_completed",
-          "category": "required_control",
-          "category_label": "Required step",
-          "title": "Customer identity verified before transaction access was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent verifies the customer's identity by asking security questions before proceeding with the transfer.",
-          "evidence_ids": [
-            "semantic:security.transaction_identity_verified:support"
-          ],
-          "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
-        },
-        {
           "finding_id": "finding-positive-control-transfer_accounts_confirmed",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "Source and destination accounts confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent and customer confirm the source and destination accounts during the transfer process.",
+          "title": "Source and destination accounts confirmed",
+          "summary": "The agent and customer confirmed the source and destination accounts for the transfer.",
           "evidence_ids": [
             "semantic:transfer.accounts_confirmed:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-control-transfer_amount_confirmed",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "Transfer amount confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The customer explicitly states the amount of $500 they wish to transfer, and the agent confirms it.",
+          "title": "Transfer amount confirmed",
+          "summary": "The customer explicitly stated the amount to be transferred as $500, and the agent confirmed this amount.",
           "evidence_ids": [
             "semantic:transfer.amount_confirmed:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-control-transfer_authorization_obtained",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "Customer authorizes the transfer was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The customer gives clear approval for the transfer after discussing the amount and timing.",
+          "title": "Customer authorizes the transfer",
+          "summary": "The customer gave clear approval for the transfer after discussing the amount and timing.",
           "evidence_ids": [
             "semantic:transfer.authorization_obtained:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         },
         {
           "finding_id": "finding-positive-process-transfer_timing_confirmed",
           "category": "required_control",
           "category_label": "Required step",
-          "title": "One-time transfer timing confirmed was demonstrated",
-          "summary": "The applicable requirement was assessed as met: The agent confirms that the transfer is immediate, and the customer accepts this timing.",
+          "title": "One-time transfer timing confirmed",
+          "summary": "The agent stated that the transfer would be immediate, and the customer accepted this timing.",
           "evidence_ids": [
             "semantic:transfer.one_time_timing_confirmed:support"
           ],
           "counter_evidence_count": 0,
-          "reliability_note": "Supporting evidence is limited."
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-process-intent_confirmed",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Customer request confirmed",
+          "summary": "The agent acknowledged the customer's request to transfer money by stating they can help with that.",
+          "evidence_ids": [
+            "semantic:request.intent_confirmed:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-process-transfer_terms_explained",
+          "category": "process",
+          "category_label": "Call handling",
+          "title": "Relevant transfer terms explained",
+          "summary": "The agent explained that the transfer would show up immediately and discussed potential delays, providing relevant timing information.",
+          "evidence_ids": [
+            "semantic:transfer.terms_explained:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
+        },
+        {
+          "finding_id": "finding-positive-agent-identification_clear",
+          "category": "agent_behavior",
+          "category_label": "Agent handling",
+          "title": "Agent and organization identified",
+          "summary": "The agent identified themselves as Julia from Greenville Bank at the beginning of the call.",
+          "evidence_ids": [
+            "semantic:interaction.agent_identification:support"
+          ],
+          "counter_evidence_count": 0,
+          "reliability_note": "Supporting evidence is limited.",
+          "outcome": "effective"
         }
       ],
       "evidence": [
+        {
+          "evidence_id": "semantic:interaction.agent_identification:support",
+          "finding_ids": [
+            "finding-positive-agent-identification_clear"
+          ],
+          "purposes": [
+            "positive"
+          ],
+          "kind": "transcript",
+          "speaker": "agent",
+          "start_seconds": 1.3,
+          "end_seconds": 4.2,
+          "text": "AGENT: Thank you for calling Greenville Bank.\nAGENT: This is Julia.",
+          "seekable": true,
+          "supporting_only": false
+        },
         {
           "evidence_id": "semantic:transfer.accounts_confirmed:support",
           "finding_ids": [
@@ -849,8 +950,8 @@
           "kind": "transcript",
           "speaker": null,
           "start_seconds": 6.54,
-          "end_seconds": 225.17,
-          "text": "CUSTOMER: I need to transfer some money from my savings account into my checking account urgently here.\nAGENT: So I finally gained access to your account.",
+          "end_seconds": 227.79,
+          "text": "CUSTOMER: I need to transfer some money from my savings account into my checking account urgently here.\nAGENT: I can go ahead and help you with transferring $500.",
           "seekable": true,
           "supporting_only": false
         },
@@ -887,18 +988,18 @@
           "supporting_only": false
         },
         {
-          "evidence_id": "semantic:security.transaction_identity_verified:support",
+          "evidence_id": "semantic:transfer.one_time_timing_confirmed:support",
           "finding_ids": [
-            "finding-positive-control-identity_verification_completed"
+            "finding-positive-process-transfer_timing_confirmed"
           ],
           "purposes": [
             "positive"
           ],
           "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 82.59,
-          "end_seconds": 118.05,
-          "text": "AGENT: I do have a couple questions, security questions, just to make sure that we are going about this process correctly.\nAGENT: I just need you to confirm.\nAGENT: That's been confirmed.",
+          "speaker": null,
+          "start_seconds": 231.66,
+          "end_seconds": 242.99,
+          "text": "AGENT: And just so you know, once it does get transferred, the funds will show up immediately and then you should be good to go after that.\nCUSTOMER: Okay, so it's immediate and it won't take like a few hours or something.",
           "seekable": true,
           "supporting_only": false
         },
@@ -919,22 +1020,6 @@
           "supporting_only": false
         },
         {
-          "evidence_id": "semantic:transfer.one_time_timing_confirmed:support",
-          "finding_ids": [
-            "finding-positive-process-transfer_timing_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": null,
-          "start_seconds": 239.33,
-          "end_seconds": 253.61,
-          "text": "AGENT: So you should get it within a few seconds, actually.\nCUSTOMER: Okay, so it's immediate and it won't take like a few hours or something.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
           "evidence_id": "semantic:transfer.authorization_obtained:support",
           "finding_ids": [
             "finding-positive-control-transfer_authorization_obtained"
@@ -947,22 +1032,6 @@
           "start_seconds": 454.78,
           "end_seconds": 482.96,
           "text": "CUSTOMER: Yeah, that would be amazing.\nAGENT: And then now I'm just going to process the the transfer of $500.",
-          "seekable": true,
-          "supporting_only": false
-        },
-        {
-          "evidence_id": "semantic:transfer.completion_confirmed:support",
-          "finding_ids": [
-            "finding-positive-outcome-transfer_confirmed"
-          ],
-          "purposes": [
-            "positive"
-          ],
-          "kind": "transcript",
-          "speaker": "agent",
-          "start_seconds": 518.06,
-          "end_seconds": 519.74,
-          "text": "AGENT: you're what you're very, very welcome.",
           "seekable": true,
           "supporting_only": false
         }
@@ -998,8 +1067,7 @@
   },
   "limitations": [
     "research_domain_profile",
-    "bounded_supervisor_not_run",
-    "acoustic_input_unavailable"
+    "bounded_supervisor_not_run"
   ],
   "failure_reason": null,
   "provenance": {
