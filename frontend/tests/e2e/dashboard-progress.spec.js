@@ -127,6 +127,16 @@ test('allows a completed call to be deliberately run again', async ({
           stage: 'done',
           pipeline: pipeline('ready', 100),
         }),
+        catalogCall({
+          call_id: 'en_CA_Health_1587315',
+          db_call_id: 'af66f0cc-8281-4f99-9a6e-53c1ac8ae936',
+          domain: 'health',
+          evaluation_supported: false,
+          evaluation_state: 'unsupported',
+          status: 'available',
+          stage: 'uploaded',
+          pipeline: null,
+        }),
       ],
     }),
   );
@@ -162,6 +172,7 @@ test('allows a completed call to be deliberately run again', async ({
   );
 
   await page.goto('/');
+  await expect(page.locator('tbody tr').first()).toContainText(PUBLIC_CALL_ID);
   await page.getByRole('checkbox', {
     name: `Select ${PUBLIC_CALL_ID}`,
   }).check();

@@ -388,7 +388,7 @@ export default function Dashboard() {
       const attentionDifference = Number(b.attention_required)
         - Number(a.attention_required);
       if (attentionDifference) return attentionDifference;
-      return Number(a.evaluation_available) - Number(b.evaluation_available);
+      return Number(b.evaluation_available) - Number(a.evaluation_available);
     });
   const sortArrow = (field) => sortField === field ? (sortDir === 'asc' ? ' ^' : ' v') : '';
   const needsAttention = evaluated.filter((call) => call.attention_required).length;
