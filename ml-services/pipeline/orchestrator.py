@@ -15,10 +15,10 @@ or the enable_acoustic arg) and degrades to text-only fusion on any failure.
 Artifacts land in the same places the batch flow uses, plus the flat
 frontend/public/{sentence_segments,sentiment}/ files CallDetail fetches.
 """
-import os
-import sys
 import json
+import os
 import shutil
+import sys
 from pathlib import Path
 
 # make the flat evaluation/scripts modules and the src package importable
@@ -64,7 +64,7 @@ def _acoustic_enabled(explicit):
 
 
 def _v2_shadow_enabled():
-    return os.environ.get("EVALUATOR_V2_SHADOW", "0").strip().lower() not in (
+    return os.environ.get("EVALUATOR_V2_SHADOW", "1").strip().lower() not in (
         "",
         "0",
         "false",
@@ -205,7 +205,6 @@ def process_call(spec, *, progress=_noop, enable_acoustic=None):
 
     # 5b. evaluator v2 shadow -------------------------------------------------
     if _v2_shadow_enabled():
-        progress("evaluating_v2_shadow")
         from v2.runtime import safe_run_shadow_evaluation
 
         sentiment_payload = None
@@ -220,6 +219,7 @@ def process_call(spec, *, progress=_noop, enable_acoustic=None):
             legacy_evaluation=ev,
             transcript_source=artifacts["paths"]["sentence_segments"],
             sentiment_source=sentiment_path,
+            progress=progress,
         )
         shadow_path = (
             EVAL_RESULTS / f"{call_id}_v2_shadow.json"

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal
@@ -250,7 +251,10 @@ def run_shadow_evaluation(
     run_semantic_assessor: bool = True,
     transcript_source: str | None = None,
     sentiment_source: str | None = None,
+    progress: Callable[[str], None] | None = None,
 ) -> EvaluationV2Run:
+    report = progress or (lambda _stage: None)
+    report("evaluating_v2_prepare")
     call_id = str(transcript.get("call_id") or "").strip()
     if not call_id:
         raise ValueError("transcript call_id is required")
@@ -275,6 +279,7 @@ def run_shadow_evaluation(
 
     profile = _profile()
     plan = resolve_domain_plan(profile, selection)
+    report("evaluating_v2_signals")
     bundle = build_signal_bundle(
         transcript,
         sentiment,
@@ -291,10 +296,14 @@ def run_shadow_evaluation(
             else RequirementAssessmentBatch.model_validate(assessments)
         )
     elif run_semantic_assessor:
+        report("evaluating_v2_requirements")
         assessment_batch = assess_requirements(bundle, plan)
+    report("evaluating_v2_findings")
     derivation = derive_findings(bundle, plan, assessment_batch)
+    report("evaluating_v2_decision")
     decision = build_call_decision(bundle, derivation)
     validate_decision_references(decision, bundle)
+    report("evaluating_v2_presentation")
     presentation = project_call_evaluation(decision, bundle=bundle)
     limitations = [
         "research_domain_profile",

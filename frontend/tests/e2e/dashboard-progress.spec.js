@@ -9,8 +9,12 @@ function pipeline(currentId, percent) {
     ['transcript', 'Transcript'],
     ['segments', 'Sentence segments'],
     ['acoustic', 'Audio signals'],
-    ['evaluation', 'LLM evaluation'],
-    ['evaluation_v2', 'V2 shadow'],
+    ['evaluation', 'Evaluation context'],
+    ['evidence', 'Prepare evidence'],
+    ['requirements', 'Assess requirements'],
+    ['findings', 'Ground findings'],
+    ['decision', 'Set disposition'],
+    ['presentation', 'Prepare evaluator'],
     ['publish', 'Publish results'],
     ['ready', 'Ready'],
   ];
@@ -23,7 +27,7 @@ function pipeline(currentId, percent) {
     stages: ids.map(([id, label], index) => ({
       id,
       label,
-      state: id === 'acoustic' || id === 'evaluation_v2'
+      state: id === 'acoustic'
         ? 'skipped'
         : index < currentIndex
           ? 'completed'
@@ -42,11 +46,25 @@ function catalogCall(overrides = {}) {
     accent: 'en-CA',
     duration: 636,
     analyzed: false,
+    evaluation_available: false,
+    evaluation_supported: true,
+    evaluation_state: 'not_evaluated',
+    evaluation_status: null,
+    attention_required: null,
+    checklist_counts: {
+      demonstrated: 0,
+      incorrect: 0,
+      not_demonstrated: 0,
+      unable_to_determine: 0,
+    },
+    checklist_total: 0,
+    acoustic_status: null,
+    acoustic_coverage: null,
     status: 'processing',
-    stage: 'evaluating',
+    stage: 'evaluating_v2_requirements',
     error: null,
     job_id: '75037e91-c17b-4827-8669-55639e24f56f',
-    pipeline: pipeline('evaluation', 50),
+    pipeline: pipeline('requirements', 54),
     ...overrides,
   };
 }
@@ -62,8 +80,8 @@ test('shows real ordered worker progress in a dedicated activity section', async
       json: {
         call_id: DB_CALL_ID,
         status: 'processing',
-        stage: 'evaluating',
-        pipeline: pipeline('evaluation', 50),
+        stage: 'evaluating_v2_requirements',
+        pipeline: pipeline('requirements', 54),
         error: null,
       },
     }),
@@ -75,13 +93,13 @@ test('shows real ordered worker progress in a dedicated activity section', async
   await expect(activity).toBeVisible();
   await expect(activity.getByText(PUBLIC_CALL_ID)).toBeVisible();
   await expect(
-    activity.getByText('LLM evaluation', { exact: true }).first(),
+    activity.getByText('Assess requirements', { exact: true }).first(),
   ).toBeVisible();
   await expect(
     activity.getByText('Audio signals', { exact: true }),
   ).toBeVisible();
-  await expect(activity.getByText('skipped', { exact: true })).toHaveCount(2);
-  await expect(activity.getByText('50%', { exact: true })).toBeVisible();
+  await expect(activity.getByText('skipped', { exact: true })).toHaveCount(1);
+  await expect(activity.getByText('54%', { exact: true })).toBeVisible();
 });
 
 test('allows a completed call to be deliberately run again', async ({
@@ -92,14 +110,22 @@ test('allows a completed call to be deliberately run again', async ({
       json: [
         catalogCall({
           analyzed: true,
+          evaluation_available: true,
+          evaluation_state: 'no_attention_finding',
+          evaluation_status: 'complete',
+          attention_required: false,
+          checklist_counts: {
+            demonstrated: 8,
+            incorrect: 0,
+            not_demonstrated: 0,
+            unable_to_determine: 0,
+          },
+          checklist_total: 8,
+          acoustic_status: 'limited',
+          acoustic_coverage: 'Audio support on 71 of 152 segments',
           status: 'succeeded',
           stage: 'done',
           pipeline: pipeline('ready', 100),
-          compliance_passed: 5,
-          compliance_applicable: 6,
-          workflow_met: 8,
-          workflow_total: 8,
-          risk_level: 'none',
         }),
       ],
     }),

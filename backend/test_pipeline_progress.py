@@ -3,7 +3,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from app.routers.calls import _pipeline_progress
+from app.routers.calls import _evaluation_summary, _pipeline_progress
 
 
 def _job(status, stage):
@@ -20,7 +20,7 @@ class PipelineProgressTests(unittest.TestCase):
             },
         ):
             progress = _pipeline_progress(
-                _job("processing", "evaluating_v2_shadow")
+                _job("processing", "evaluating_v2_requirements")
             )
 
         states = {
@@ -28,9 +28,14 @@ class PipelineProgressTests(unittest.TestCase):
             for stage in progress["stages"]
         }
         self.assertEqual(states["evaluation"], "completed")
-        self.assertEqual(states["evaluation_v2"], "active")
+        self.assertEqual(states["evidence"], "completed")
+        self.assertEqual(states["requirements"], "active")
+        self.assertEqual(states["findings"], "pending")
         self.assertEqual(states["publish"], "pending")
-        self.assertEqual(progress["current_stage_label"], "V2 shadow")
+        self.assertEqual(
+            progress["current_stage_label"],
+            "Assess requirements",
+        )
 
     def test_disabled_optional_stages_are_marked_skipped(self):
         with patch.dict(
@@ -49,7 +54,11 @@ class PipelineProgressTests(unittest.TestCase):
             for stage in progress["stages"]
         }
         self.assertEqual(states["acoustic"], "skipped")
-        self.assertEqual(states["evaluation_v2"], "skipped")
+        self.assertEqual(states["evidence"], "skipped")
+        self.assertEqual(states["requirements"], "skipped")
+        self.assertEqual(states["findings"], "skipped")
+        self.assertEqual(states["decision"], "skipped")
+        self.assertEqual(states["presentation"], "skipped")
         self.assertEqual(states["evaluation"], "active")
 
     def test_success_marks_enabled_pipeline_complete(self):
@@ -88,6 +97,64 @@ class PipelineProgressTests(unittest.TestCase):
             if stage["id"] == "segments"
         )
         self.assertEqual(current["state"], "failed")
+
+
+class EvaluationSummaryTests(unittest.TestCase):
+    def test_success_uses_evaluator_presentation_not_legacy_scores(self):
+        run = SimpleNamespace(
+            status="succeeded",
+            created_at=None,
+            payload={
+                "status": "succeeded",
+                "evaluator_version": "v2-policy-test",
+                "decision": {
+                    "decision_status": "complete",
+                    "attention_required": True,
+                },
+                "presentation": {
+                    "state": "needs_attention",
+                    "evaluation_status": "complete",
+                    "attention_required": True,
+                    "checklist": [
+                        {"status": "demonstrated"},
+                        {"status": "incorrect"},
+                        {"status": "not_demonstrated"},
+                    ],
+                    "acoustic_context": {
+                        "status": "limited",
+                        "coverage_label": "Audio support on 2 of 3 segments",
+                    },
+                },
+            },
+        )
+
+        summary = _evaluation_summary("call-a", "banking", run)
+
+        self.assertTrue(summary["evaluation_available"])
+        self.assertTrue(summary["attention_required"])
+        self.assertEqual(summary["evaluation_state"], "needs_attention")
+        self.assertEqual(summary["checklist_counts"]["demonstrated"], 1)
+        self.assertEqual(summary["checklist_counts"]["incorrect"], 1)
+        self.assertEqual(
+            summary["checklist_counts"]["not_demonstrated"],
+            1,
+        )
+        self.assertEqual(summary["acoustic_status"], "limited")
+
+    def test_domain_without_profile_is_not_reported_as_evaluated(self):
+        summary = _evaluation_summary(
+            "call-b",
+            "health",
+            SimpleNamespace(
+                status="unsupported_domain",
+                created_at=None,
+                payload={"status": "unsupported_domain"},
+            ),
+        )
+
+        self.assertFalse(summary["evaluation_available"])
+        self.assertFalse(summary["evaluation_supported"])
+        self.assertEqual(summary["evaluation_state"], "unsupported")
 
 
 if __name__ == "__main__":

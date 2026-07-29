@@ -98,7 +98,11 @@ def _assessments(bundle, plan):
 class ShadowRuntimeTests(unittest.TestCase):
     @patch("v2.runtime.assess_requirements", side_effect=_assessments)
     def test_known_banking_call_runs_semantic_assessments(self, assessor):
-        run = run_shadow_evaluation(transcript=_transcript())
+        stages = []
+        run = run_shadow_evaluation(
+            transcript=_transcript(),
+            progress=stages.append,
+        )
 
         self.assertEqual(run.status, ShadowRunStatus.SUCCEEDED)
         self.assertIsNotNone(run.decision)
@@ -112,6 +116,17 @@ class ShadowRuntimeTests(unittest.TestCase):
             run.limitations,
         )
         assessor.assert_called_once()
+        self.assertEqual(
+            stages,
+            [
+                "evaluating_v2_prepare",
+                "evaluating_v2_signals",
+                "evaluating_v2_requirements",
+                "evaluating_v2_findings",
+                "evaluating_v2_decision",
+                "evaluating_v2_presentation",
+            ],
+        )
 
     def test_semantic_assessment_can_be_explicitly_disabled(self):
         run = run_shadow_evaluation(

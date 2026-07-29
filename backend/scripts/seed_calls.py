@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 load_dotenv(REPO / ".env")
 
 from app.database import SessionLocal, init_db
-from app.models import Agent, Call
+from app.models import Agent, Call, EvaluationRun
 from app import storage
 
 PUBLIC = REPO / "frontend" / "public"
@@ -31,6 +31,7 @@ CALLS = PUBLIC / "calls"
 AUDIO = PUBLIC / "audio"
 SEG = PUBLIC / "sentence_segments"
 SENT = PUBLIC / "sentiment"
+EVAL_V2 = PUBLIC / "evaluation-v2"
 INDEX = PUBLIC / "calls_index.json"
 
 DEFAULT_AGENT = "Demo Agent"
@@ -53,6 +54,7 @@ def upload_artifacts(cid):
         (AUDIO / f"{cid}.mp3", f"audio/{cid}.mp3", "audio/mpeg"),
         (SEG / f"{cid}.json", f"sentence_segments/{cid}.json", "application/json"),
         (SENT / f"{cid}.json", f"sentiment/{cid}.json", "application/json"),
+        (EVAL_V2 / f"{cid}.json", f"evaluation-v2/{cid}.json", "application/json"),
     ]
     for local, key, ctype in pairs:
         if local.exists():
@@ -94,17 +96,39 @@ def main():
 
         meta = {"public_call_id": cid, "domain": domain, "accent": accent,
                 "index_summary": summary, "artifact_keys": keys}
-        existing = db.query(Call).filter(
+        call = db.query(Call).filter(
             Call.call_metadata["public_call_id"].astext == cid).first()
-        if existing:
-            existing.call_metadata = meta
-            existing.duration_seconds = int(duration) if duration else None
+        if call:
+            call.call_metadata = meta
+            call.duration_seconds = int(duration) if duration else None
         else:
-            db.add(Call(
+            call = Call(
                 agent_id=agent.agent_id, audio_path=f"audio/{cid}.mp3",
                 call_date=datetime.utcnow(),
                 duration_seconds=int(duration) if duration else None,
-                call_metadata=meta))
+                call_metadata=meta,
+            )
+            db.add(call)
+            db.flush()
+
+        v2_path = EVAL_V2 / f"{cid}.json"
+        if v2_path.exists():
+            run = json.loads(v2_path.read_text(encoding="utf-8"))
+            db.query(EvaluationRun).filter(
+                EvaluationRun.runtime_run_id == run["run_id"],
+            ).delete(synchronize_session=False)
+            decision = run.get("decision") or {}
+            db.add(EvaluationRun(
+                call_id=call.call_id,
+                public_call_id=cid,
+                runtime_run_id=run["run_id"],
+                evaluator_version=run["evaluator_version"],
+                mode=run["mode"],
+                status=run["status"],
+                decision_sha256=run.get("decision_sha256"),
+                attention_required=decision.get("attention_required"),
+                payload=run,
+            ))
         seeded += 1
         print(f"  seeded {cid}  ({domain})")
 

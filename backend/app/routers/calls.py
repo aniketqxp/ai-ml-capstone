@@ -1,12 +1,10 @@
+import json
 import os
 import shutil
 import uuid
 from datetime import datetime
+from pathlib import Path
 from typing import Literal
-
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
-from pydantic import BaseModel, Field, model_validator
-from sqlalchemy.orm import Session
 
 from app import storage, worker
 from app.database import get_db
@@ -20,6 +18,9 @@ from app.models import (
     Transcript,
 )
 from app.routing import apply_action_routing
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from pydantic import BaseModel, Field, model_validator
+from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/calls", tags=["calls"])
 
@@ -47,13 +48,40 @@ PIPELINE_STAGES = (
     },
     {
         "id": "evaluation",
-        "label": "LLM evaluation",
+        "label": "Evaluation context",
         "worker_stages": {"evaluating"},
     },
     {
-        "id": "evaluation_v2",
-        "label": "V2 shadow",
-        "worker_stages": {"evaluating_v2_shadow"},
+        "id": "evidence",
+        "label": "Prepare evidence",
+        "worker_stages": {
+            "evaluating_v2_prepare",
+            "evaluating_v2_signals",
+        },
+        "feature_flag": "EVALUATOR_V2_SHADOW",
+    },
+    {
+        "id": "requirements",
+        "label": "Assess requirements",
+        "worker_stages": {"evaluating_v2_requirements"},
+        "feature_flag": "EVALUATOR_V2_SHADOW",
+    },
+    {
+        "id": "findings",
+        "label": "Ground findings",
+        "worker_stages": {"evaluating_v2_findings"},
+        "feature_flag": "EVALUATOR_V2_SHADOW",
+    },
+    {
+        "id": "decision",
+        "label": "Set disposition",
+        "worker_stages": {"evaluating_v2_decision"},
+        "feature_flag": "EVALUATOR_V2_SHADOW",
+    },
+    {
+        "id": "presentation",
+        "label": "Prepare evaluator",
+        "worker_stages": {"evaluating_v2_presentation"},
         "feature_flag": "EVALUATOR_V2_SHADOW",
     },
     {
@@ -118,7 +146,8 @@ def _latest_job(db, call_id):
 
 
 def _flag_enabled(name):
-    value = os.environ.get(name, "0").strip().lower()
+    default = "1" if name == "EVALUATOR_V2_SHADOW" else "0"
+    value = os.environ.get(name, default).strip().lower()
     return value not in {"", "0", "false", "no", "off"}
 
 
@@ -193,6 +222,90 @@ def _latest_v2_run(db, public_id):
         .order_by(EvaluationRun.created_at.desc())
         .first()
     )
+
+
+def _local_v2_artifact(public_id):
+    path = (
+        Path(__file__).resolve().parents[3]
+        / "frontend"
+        / "public"
+        / "evaluation-v2"
+        / f"{public_id}.json"
+    )
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def _evaluation_summary(public_id, domain, run=None):
+    payload = (run.payload if run else None) or _local_v2_artifact(public_id)
+    run_status = (
+        str((payload or {}).get("status") or getattr(run, "status", "") or "")
+        .strip()
+        .lower()
+    )
+    presentation = (payload or {}).get("presentation") or {}
+    decision = (payload or {}).get("decision") or {}
+    available = run_status == "succeeded" and bool(presentation)
+    checklist = presentation.get("checklist") or []
+    checklist_counts = {
+        status: sum(item.get("status") == status for item in checklist)
+        for status in (
+            "demonstrated",
+            "incorrect",
+            "not_demonstrated",
+            "unable_to_determine",
+        )
+    }
+    evaluator_supported = str(domain or "").lower() == "banking"
+
+    if available:
+        state = presentation.get("state") or (
+            "needs_attention"
+            if decision.get("attention_required")
+            else "no_attention_finding"
+        )
+    elif run_status == "unsupported_domain" or not evaluator_supported:
+        state = "unsupported"
+    elif run_status == "profile_selection_unavailable":
+        state = "setup_required"
+    elif run_status == "failed":
+        state = "evaluation_incomplete"
+    else:
+        state = "not_evaluated"
+
+    acoustic = presentation.get("acoustic_context") or {}
+    action = presentation.get("recommended_action") or {}
+    return {
+        "analyzed": available,
+        "evaluation_available": available,
+        "evaluation_supported": evaluator_supported,
+        "evaluation_state": state,
+        "evaluation_status": (
+            presentation.get("evaluation_status")
+            or decision.get("decision_status")
+            or ("failed" if run_status == "failed" else None)
+        ),
+        "attention_required": (
+            bool(presentation.get("attention_required"))
+            if available
+            else None
+        ),
+        "checklist_counts": checklist_counts,
+        "checklist_total": len(checklist),
+        "acoustic_status": acoustic.get("status"),
+        "acoustic_coverage": acoustic.get("coverage_label"),
+        "recommended_action_type": action.get("action_type"),
+        "evaluator_version": (payload or {}).get("evaluator_version"),
+        "evaluated_at": (
+            run.created_at.isoformat()
+            if run and run.created_at
+            else None
+        ),
+    }
 
 
 def _incoming_dir(public_id):
@@ -278,7 +391,7 @@ async def ingest_call(
 
 @router.get("/catalog")
 def get_catalog(db: Session = Depends(get_db)):
-    """Return analyzed and staged calls in one dashboard-facing shape."""
+    """Return calls with evaluator-native state and live worker progress."""
     rows = db.query(Call).order_by(Call.created_at.desc()).all()
     catalog = []
     for call in rows:
@@ -289,20 +402,32 @@ def get_catalog(db: Session = Depends(get_db)):
 
         summary = dict(meta.get("index_summary") or {})
         job = _latest_job(db, call.call_id)
-        analyzed = bool(summary)
+        evaluation = _evaluation_summary(
+            public_id,
+            summary.get("domain") or meta.get("domain"),
+            _latest_v2_run(db, public_id),
+        )
+        active = job and job.status in {"queued", "processing"}
         item = {
-            **summary,
             "call_id": public_id,
             "db_call_id": str(call.call_id),
             "domain": summary.get("domain") or meta.get("domain"),
             "accent": summary.get("accent") or meta.get("accent"),
             "duration": summary.get("duration") or call.duration_seconds,
-            "analyzed": analyzed,
-            "status": job.status if job else ("analyzed" if analyzed else "available"),
-            "stage": job.stage if job else ("done" if analyzed else "uploaded"),
+            **evaluation,
+            "status": (
+                job.status
+                if active or (job and job.status == "failed")
+                else ("evaluated" if evaluation["evaluation_available"] else "available")
+            ),
+            "stage": (
+                job.stage
+                if active or (job and job.status == "failed")
+                else ("done" if evaluation["evaluation_available"] else "uploaded")
+            ),
             "error": job.error if job else None,
             "job_id": str(job.job_id) if job else None,
-            "pipeline": _pipeline_progress(job) if job else None,
+            "pipeline": _pipeline_progress(job) if active else None,
         }
         catalog.append(item)
     return catalog
@@ -341,7 +466,13 @@ def analyze_calls(payload: AnalyzeRequest, db: Session = Depends(get_db)):
             })
             continue
 
-        if meta.get("index_summary") and not payload.force:
+        domain = meta.get("domain")
+        evaluation = _evaluation_summary(
+            public_id,
+            domain,
+            _latest_v2_run(db, public_id),
+        )
+        if evaluation["evaluation_available"] and not payload.force:
             jobs.append({
                 "call_id": str(call_id),
                 "public_call_id": public_id,
