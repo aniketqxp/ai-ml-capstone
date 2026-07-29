@@ -1,5 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  AudioLines,
+  BrainCircuit,
+  Check,
+  CircleCheck,
+  Clock3,
+  CloudUpload,
+  FileAudio,
+  FlaskConical,
+  LoaderCircle,
+  Minus,
+  ScanText,
+  TriangleAlert,
+} from 'lucide-react';
 import { apiUrl } from '../api';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { RISK_STYLE } from '../lib/constants';
@@ -7,36 +21,151 @@ import { fmt } from '../lib/format';
 
 const PAGE_SIZE = 10;
 const ACTIVE_STATUSES = new Set(['queued', 'processing']);
-const STAGES = ['Transcribe', 'Segment', 'Acoustic', 'Evaluate', 'Export', 'Ready'];
-
-function stageIndex(stage) {
-  if (['uploaded', 'starting', 'transcribing', 'registering'].includes(stage)) return 0;
-  if (stage === 'segmenting') return 1;
-  if (stage === 'acoustic') return 2;
-  if (stage === 'evaluating') return 3;
-  if (['exporting', 'uploading', 'persisting'].includes(stage)) return 4;
-  if (stage === 'done') return 5;
-  return 0;
-}
+const STAGE_ICONS = {
+  queued: Clock3,
+  transcript: FileAudio,
+  segments: ScanText,
+  acoustic: AudioLines,
+  evaluation: BrainCircuit,
+  evaluation_v2: FlaskConical,
+  publish: CloudUpload,
+  ready: CircleCheck,
+};
 
 function ProcessingStatus({ call }) {
-  const current = stageIndex(call.stage);
+  const pipeline = call.pipeline;
+  const percent = pipeline?.percent || 0;
+  const label = pipeline?.current_stage_label || call.stage || 'Queued';
   return (
-    <div className="w-52" aria-label={`Analysis stage: ${call.stage}`}>
-      <div className="mb-1 flex justify-between text-[10px] uppercase text-slate-500">
-        <span>{call.stage || 'queued'}</span>
-        <span>{Math.round((current / (STAGES.length - 1)) * 100)}%</span>
+    <div className="w-52" aria-label={`Analysis stage: ${label}`}>
+      <div className="mb-1.5 flex justify-between gap-3 text-xs">
+        <span className="truncate font-medium text-indigo-700 dark:text-indigo-300">
+          {label}
+        </span>
+        <span className="font-mono text-slate-500">{percent}%</span>
       </div>
-      <div className="grid grid-cols-6 gap-1">
-        {STAGES.map((label, index) => (
-          <span
-            key={label}
-            title={label}
-            className={`h-1.5 rounded-sm ${index <= current ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'}`}
-          />
-        ))}
+      <div className="h-1.5 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-700">
+        <div
+          className="h-full bg-indigo-600 transition-[width] duration-500"
+          style={{ width: `${percent}%` }}
+        />
       </div>
     </div>
+  );
+}
+
+function PipelineStep({ step }) {
+  const StageIcon = STAGE_ICONS[step.id] || Clock3;
+  const completed = step.state === 'completed';
+  const active = step.state === 'active';
+  const failed = step.state === 'failed';
+  const skipped = step.state === 'skipped';
+  const Icon = completed ? Check
+    : active ? LoaderCircle
+      : failed ? TriangleAlert
+        : skipped ? Minus
+          : StageIcon;
+
+  return (
+    <li className="min-w-0">
+      <div className="flex items-center gap-2.5">
+        <span
+          className={[
+            'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border',
+            completed && 'border-emerald-600 bg-emerald-600 text-white',
+            active && 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-100 dark:bg-indigo-950 dark:text-indigo-300 dark:ring-indigo-900',
+            failed && 'border-red-600 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
+            skipped && 'border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-800',
+            step.state === 'pending' && 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-950',
+          ].filter(Boolean).join(' ')}
+        >
+          <Icon className={`h-4 w-4 ${active ? 'animate-spin' : ''}`} aria-hidden="true" />
+        </span>
+        <span className="min-w-0">
+          <span className={[
+            'block text-xs font-medium leading-4',
+            active || completed
+              ? 'text-slate-900 dark:text-slate-100'
+              : failed
+                ? 'text-red-700 dark:text-red-300'
+                : 'text-slate-500',
+          ].join(' ')}>
+            {step.label}
+          </span>
+          <span className="block text-[11px] capitalize text-slate-400">
+            {step.state}
+          </span>
+        </span>
+      </div>
+    </li>
+  );
+}
+
+function PipelineActivity({ calls }) {
+  if (!calls.length) return null;
+
+  return (
+    <section className="mb-6" aria-labelledby="pipeline-activity-title">
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <h2 id="pipeline-activity-title" className="text-sm font-semibold text-slate-900 dark:text-white">
+            Pipeline activity
+          </h2>
+          <p className="mt-0.5 text-xs text-slate-500">
+            Live worker stages from the processing service
+          </p>
+        </div>
+        <span className="font-mono text-xs text-slate-500">
+          {calls.length} active
+        </span>
+      </div>
+
+      <div className="space-y-3">
+        {calls.map((call) => {
+          const pipeline = call.pipeline;
+          return (
+            <article
+              key={call.db_call_id}
+              className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate font-mono text-sm font-semibold text-slate-900 dark:text-white">
+                    {call.call_id}
+                  </p>
+                  <p className="mt-1 text-xs capitalize text-slate-500">
+                    {call.domain} · {call.accent}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+                    {pipeline?.current_stage_label || call.stage || 'Queued'}
+                  </p>
+                  <p className="mt-0.5 font-mono text-xs text-slate-500">
+                    {pipeline?.percent || 0}%
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 h-2 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-800">
+                <div
+                  className="h-full bg-indigo-600 transition-[width] duration-500"
+                  style={{ width: `${pipeline?.percent || 0}%` }}
+                />
+              </div>
+
+              {pipeline?.stages?.length > 0 && (
+                <ol className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 xl:grid-cols-8">
+                  {pipeline.stages.map((step) => (
+                    <PipelineStep key={step.id} step={step} />
+                  ))}
+                </ol>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
@@ -51,6 +180,11 @@ export default function Dashboard() {
   const [sortField, setSortField] = useState(null);
   const [sortDir, setSortDir] = useState('asc');
   const [page, setPage] = useState(1);
+  const activeCallKey = calls
+    ?.filter((call) => ACTIVE_STATUSES.has(call.status))
+    .map((call) => call.db_call_id)
+    .sort()
+    .join('|') || '';
 
   const loadCatalog = useCallback(async () => {
     try {
@@ -68,13 +202,13 @@ export default function Dashboard() {
   }, [loadCatalog]);
 
   useEffect(() => {
-    if (!calls?.some((call) => ACTIVE_STATUSES.has(call.status))) return undefined;
+    if (!activeCallKey) return undefined;
     let cancelled = false;
     const poll = async () => {
-      const active = calls.filter((call) => ACTIVE_STATUSES.has(call.status));
-      const updates = await Promise.all(active.map(async (call) => {
+      const activeIds = activeCallKey.split('|');
+      const updates = await Promise.all(activeIds.map(async (callId) => {
         try {
-          const response = await fetch(apiUrl(`/calls/${call.db_call_id}/status`));
+          const response = await fetch(apiUrl(`/calls/${callId}/status`));
           return response.ok ? await response.json() : null;
         } catch {
           return null;
@@ -85,16 +219,25 @@ export default function Dashboard() {
       const reachedTerminal = updates.some((update) => update && ['succeeded', 'failed', 'complete'].includes(update.status));
       setCalls((current) => current.map((call) => {
         const update = byId.get(call.db_call_id);
-        return update ? { ...call, status: update.status, stage: update.stage, error: update.error } : call;
+        return update
+          ? {
+            ...call,
+            status: update.status,
+            stage: update.stage,
+            pipeline: update.pipeline,
+            error: update.error,
+          }
+          : call;
       }));
       if (reachedTerminal) await loadCatalog();
     };
+    poll();
     const timer = window.setInterval(poll, 4000);
     return () => {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [calls, loadCatalog]);
+  }, [activeCallKey, loadCatalog]);
 
   useEffect(() => {
     setPage(1);
@@ -116,7 +259,7 @@ export default function Dashboard() {
       const response = await fetch(apiUrl('/calls/analyze'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ call_ids: [...selected] }),
+        body: JSON.stringify({ call_ids: [...selected], force: true }),
       });
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
@@ -126,7 +269,15 @@ export default function Dashboard() {
       const byId = new Map(jobs.map((job) => [job.call_id, job]));
       setCalls((current) => current.map((call) => {
         const job = byId.get(call.db_call_id);
-        return job ? { ...call, status: job.status, stage: 'uploaded', job_id: job.job_id } : call;
+        return job
+          ? {
+            ...call,
+            status: job.status,
+            stage: 'uploaded',
+            pipeline: null,
+            job_id: job.job_id,
+          }
+          : call;
       }));
       setSelected(new Set());
     } catch (error) {
@@ -144,6 +295,7 @@ export default function Dashboard() {
     (riskFilter === 'all' || call.risk_level === riskFilter)
   ) : [];
   const analyzed = calls?.filter((call) => call.analyzed) || [];
+  const activeCalls = calls?.filter((call) => ACTIVE_STATUSES.has(call.status)) || [];
 
   const toggleSort = (field) => {
     if (sortField === field) setSortDir((direction) => direction === 'asc' ? 'desc' : 'asc');
@@ -204,6 +356,8 @@ export default function Dashboard() {
 
         {calls && (
           <>
+            <PipelineActivity calls={activeCalls} />
+
             <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" aria-label="Call summary">
               <div className="bg-white rounded-lg border border-slate-200 p-4 dark:bg-slate-950 dark:border-slate-800">
                 <div className="text-xs uppercase text-slate-500 font-semibold">Analyzed</div>
@@ -225,7 +379,9 @@ export default function Dashboard() {
             </section>
 
             <div className="mb-3 flex min-h-10 items-center justify-between gap-4">
-              <p className="text-sm text-slate-500">Select staged calls to run through the analysis pipeline.</p>
+              <p className="text-sm text-slate-500">
+                Select available calls to analyze or completed calls to run again.
+              </p>
               <button
                 type="button"
                 onClick={analyzeSelected}
@@ -270,7 +426,7 @@ export default function Dashboard() {
                   {!filtered.length && <tr><td colSpan={9} className="px-4 py-6 text-center text-sm text-slate-500">No calls match the selected filters.</td></tr>}
                   {paged.map((call) => {
                     const active = ACTIVE_STATUSES.has(call.status);
-                    const selectable = !call.analyzed && !active;
+                    const selectable = !active;
                     const risk = RISK_STYLE[call.risk_level];
                     return (
                       <tr key={call.call_id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/60 dark:hover:bg-slate-900/60">

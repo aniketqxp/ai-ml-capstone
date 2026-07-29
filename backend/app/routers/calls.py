@@ -4,6 +4,10 @@ import uuid
 from datetime import datetime
 from typing import Literal
 
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from pydantic import BaseModel, Field, model_validator
+from sqlalchemy.orm import Session
+
 from app import storage, worker
 from app.database import get_db
 from app.models import (
@@ -16,15 +20,58 @@ from app.models import (
     Transcript,
 )
 from app.routing import apply_action_routing
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
-from pydantic import BaseModel, Field, model_validator
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/calls", tags=["calls"])
+
+PIPELINE_STAGES = (
+    {
+        "id": "queued",
+        "label": "Queued",
+        "worker_stages": {"uploaded", "starting"},
+    },
+    {
+        "id": "transcript",
+        "label": "Transcript",
+        "worker_stages": {"transcribing", "registering"},
+    },
+    {
+        "id": "segments",
+        "label": "Sentence segments",
+        "worker_stages": {"segmenting"},
+    },
+    {
+        "id": "acoustic",
+        "label": "Audio signals",
+        "worker_stages": {"acoustic"},
+        "feature_flag": "ENABLE_ACOUSTIC",
+    },
+    {
+        "id": "evaluation",
+        "label": "LLM evaluation",
+        "worker_stages": {"evaluating"},
+    },
+    {
+        "id": "evaluation_v2",
+        "label": "V2 shadow",
+        "worker_stages": {"evaluating_v2_shadow"},
+        "feature_flag": "EVALUATOR_V2_SHADOW",
+    },
+    {
+        "id": "publish",
+        "label": "Publish results",
+        "worker_stages": {"exporting", "uploading", "persisting"},
+    },
+    {
+        "id": "ready",
+        "label": "Ready",
+        "worker_stages": {"done"},
+    },
+)
 
 
 class AnalyzeRequest(BaseModel):
     call_ids: list[uuid.UUID] = Field(min_length=1, max_length=10)
+    force: bool = False
 
 
 class EvaluationFeedbackRequest(BaseModel):
@@ -68,6 +115,62 @@ def _latest_job(db, call_id):
         .order_by(Job.created_at.desc())
         .first()
     )
+
+
+def _flag_enabled(name):
+    value = os.environ.get(name, "0").strip().lower()
+    return value not in {"", "0", "false", "no", "off"}
+
+
+def _pipeline_progress(job):
+    raw_stage = (job.stage or "uploaded").strip().lower()
+    current_index = next(
+        (
+            index
+            for index, step in enumerate(PIPELINE_STAGES)
+            if raw_stage in step["worker_stages"]
+        ),
+        0,
+    )
+    enabled = [
+        (
+            not step.get("feature_flag")
+            or _flag_enabled(step["feature_flag"])
+            or raw_stage in step["worker_stages"]
+        )
+        for step in PIPELINE_STAGES
+    ]
+    terminal_success = job.status in {"succeeded", "complete"}
+    failed = job.status == "failed"
+    stages = []
+    completed = 0
+
+    for index, step in enumerate(PIPELINE_STAGES):
+        if not enabled[index]:
+            state = "skipped"
+        elif terminal_success or index < current_index:
+            state = "completed"
+            completed += 1
+        elif index == current_index:
+            state = "failed" if failed else "active"
+        else:
+            state = "pending"
+        stages.append({
+            "id": step["id"],
+            "label": step["label"],
+            "state": state,
+        })
+
+    total = sum(enabled)
+    percent = 100 if terminal_success else round(completed / total * 100)
+    current = stages[current_index]
+    return {
+        "raw_stage": raw_stage,
+        "current_stage_id": current["id"],
+        "current_stage_label": current["label"],
+        "percent": percent,
+        "stages": stages,
+    }
 
 
 def _call_by_public_id(db, public_id):
@@ -199,6 +302,7 @@ def get_catalog(db: Session = Depends(get_db)):
             "stage": job.stage if job else ("done" if analyzed else "uploaded"),
             "error": job.error if job else None,
             "job_id": str(job.job_id) if job else None,
+            "pipeline": _pipeline_progress(job) if job else None,
         }
         catalog.append(item)
     return catalog
@@ -237,7 +341,7 @@ def analyze_calls(payload: AnalyzeRequest, db: Session = Depends(get_db)):
             })
             continue
 
-        if meta.get("index_summary"):
+        if meta.get("index_summary") and not payload.force:
             jobs.append({
                 "call_id": str(call_id),
                 "public_call_id": public_id,
@@ -281,6 +385,7 @@ def get_call_status(call_id: str, db: Session = Depends(get_db)):
         "public_call_id": public_id,
         "status": job.status,
         "stage": job.stage,
+        "pipeline": _pipeline_progress(job),
         "error": job.error,
         "updated_at": job.updated_at.isoformat() if job.updated_at else None
     }
