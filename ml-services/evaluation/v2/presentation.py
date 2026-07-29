@@ -824,9 +824,9 @@ def _present_action(decision: CallDecision) -> PresentedAction | None:
     if action.action_type == ActionType.NONE:
         return None
     execution_label = (
-        "Sent automatically after evaluation"
+        "Automatic manager notification"
         if action.execution == ActionExecution.AUTOMATIC
-        else "Manager approval required before sending"
+        else "Manager approval required before email delivery"
     )
     return PresentedAction(
         action_type=action.action_type,
