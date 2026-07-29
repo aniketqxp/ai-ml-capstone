@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import re
 import time
 from collections import Counter
 from collections.abc import Callable
@@ -27,16 +26,6 @@ from .schemas import (
 
 SEMANTIC_ASSESSOR_VERSION = "0.2.0"
 _TIERS = ("qa-primary", "qa-fallback", "qa-safety")
-_IDENTITY_CHALLENGE = re.compile(
-    r"\b(date of birth|birth date|social security|security questions?|"
-    r"passcode|one[- ]time code|security code|mother'?s maiden)\b",
-    re.IGNORECASE,
-)
-_ACCOUNT_IDENTIFIER = re.compile(
-    r"\b(account number|checking account|savings account)\b",
-    re.IGNORECASE,
-)
-
 SYSTEM_PROMPT = """You evaluate a customer-service transcript against a fixed
 list of applicable business requirements.
 
@@ -44,9 +33,12 @@ Rules:
 - Assess every supplied requirement exactly once.
 - Use only the supplied requirement IDs and transcript segment IDs.
 - MET requires direct transcript evidence that demonstrates the requirement.
+- INCORRECT means the agent directly gave wrong information or performed the
+  applicable behavior incorrectly. It requires direct transcript evidence of
+  what the agent said or did.
 - MISSED means the complete transcript lacks the required behavior or directly
-  contradicts it. Cite the closest relevant context segment and explain what
-  is absent; never invent a quote.
+  omits it. Cite the closest relevant context segment and explain what is
+  absent; never invent a quote.
 - UNCERTAIN means the transcript does not support a defensible MET or MISSED
   verdict.
 - evidence_segment_ids must contain 1 to 3 segments that support the verdict.
@@ -66,7 +58,7 @@ Rules:
 - Do not score the call and do not recommend actions.
 
 Return JSON only:
-{"assessments":[{"requirement_id":"...","verdict":"met|missed|uncertain",
+{"assessments":[{"requirement_id":"...","verdict":"met|incorrect|missed|uncertain",
 "rationale":"call-specific explanation","evidence_segment_ids":["..."],
 "counter_evidence_segment_ids":[]}]}"""
 
@@ -231,68 +223,6 @@ def _validate_response(
             )
 
 
-def _has_identity_challenge_response(bundle: SignalBundle) -> bool:
-    for index, segment in enumerate(bundle.segments):
-        if (
-            segment.speaker.value != "agent"
-            or not _IDENTITY_CHALLENGE.search(segment.text)
-        ):
-            continue
-        following = bundle.segments[index + 1:index + 6]
-        if any(
-            item.speaker.value == "customer" and item.text.strip()
-            for item in following
-        ):
-            return True
-    return False
-
-
-def _apply_policy_guards(
-    payload: SemanticVerdictBatch,
-    bundle: SignalBundle,
-) -> SemanticVerdictBatch:
-    guarded = []
-    has_identity_exchange = _has_identity_challenge_response(bundle)
-    closest_identifier = next(
-        (
-            segment.segment_id
-            for segment in bundle.segments
-            if (
-                segment.speaker.value == "agent"
-                and _ACCOUNT_IDENTIFIER.search(segment.text)
-            )
-        ),
-        None,
-    )
-    for item in payload.assessments:
-        if (
-            item.requirement_id
-            == "security.transaction_identity_verified"
-            and item.verdict == RequirementVerdict.MET
-            and not has_identity_exchange
-        ):
-            evidence_ids = (
-                [closest_identifier]
-                if closest_identifier
-                else item.evidence_segment_ids
-            )
-            item = item.model_copy(
-                update={
-                    "verdict": RequirementVerdict.MISSED,
-                    "rationale": (
-                        "The transcript requests account identifiers but "
-                        "does not demonstrate a separate customer identity-"
-                        "verification challenge and response before "
-                        "transaction access."
-                    ),
-                    "evidence_segment_ids": evidence_ids,
-                    "counter_evidence_segment_ids": [],
-                }
-            )
-        guarded.append(item)
-    return SemanticVerdictBatch(assessments=guarded)
-
-
 def _evidence(
     *,
     bundle: SignalBundle,
@@ -410,7 +340,6 @@ def assess_requirements(
             payload = SemanticVerdictBatch.model_validate_json(raw)
             payload = _normalize_duplicates(payload)
             _validate_response(payload, bundle, plan)
-            payload = _apply_policy_guards(payload, bundle)
             result = _materialize(
                 payload=payload,
                 bundle=bundle,

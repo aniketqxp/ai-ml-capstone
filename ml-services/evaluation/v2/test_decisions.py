@@ -192,7 +192,7 @@ class AttentionPolicyTests(unittest.TestCase):
             DecisionStatus.PARTIAL,
         )
 
-    def test_critical_control_creates_review_case(self):
+    def test_critical_control_emails_manager_review(self):
         finding = _finding(
             "control.identity_verification_missing",
             category=FindingCategory.REQUIRED_CONTROL,
@@ -207,7 +207,7 @@ class AttentionPolicyTests(unittest.TestCase):
         self.assertTrue(decision.attention_required)
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.CREATE_REVIEW_CASE,
+            ActionType.MANAGER_REVIEW,
         )
         self.assertEqual(
             decision.recommended_action.execution,
@@ -231,7 +231,7 @@ class AttentionPolicyTests(unittest.TestCase):
 
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.REQUEST_CUSTOMER_FOLLOW_UP,
+            ActionType.CUSTOMER_FOLLOW_UP,
         )
         self.assertEqual(
             decision.recommended_action.execution,
@@ -255,7 +255,7 @@ class AttentionPolicyTests(unittest.TestCase):
 
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.RECOMMEND_COACHING,
+            ActionType.AGENT_COACHING,
         )
         self.assertEqual(
             decision.recommended_action.execution,
@@ -276,14 +276,14 @@ class AttentionPolicyTests(unittest.TestCase):
 
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.REQUEST_CUSTOMER_FOLLOW_UP,
+            ActionType.CUSTOMER_FOLLOW_UP,
         )
         self.assertEqual(
             decision.recommended_action.execution,
             ActionExecution.REQUIRES_APPROVAL,
         )
 
-    def test_review_escalation_creates_review_case(self):
+    def test_review_escalation_emails_manager_review(self):
         finding = _finding(
             "escalation.explicit_dissatisfaction",
             category=FindingCategory.ESCALATION,
@@ -297,7 +297,7 @@ class AttentionPolicyTests(unittest.TestCase):
 
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.CREATE_REVIEW_CASE,
+            ActionType.MANAGER_REVIEW,
         )
         self.assertEqual(
             decision.recommended_action.execution,
@@ -413,7 +413,7 @@ class AttentionPolicyTests(unittest.TestCase):
         )
         self.assertEqual(
             decision.recommended_action.action_type,
-            ActionType.CREATE_REVIEW_CASE,
+            ActionType.MANAGER_REVIEW,
         )
 
     def test_recovery_is_context_and_does_not_cancel_attention(self):

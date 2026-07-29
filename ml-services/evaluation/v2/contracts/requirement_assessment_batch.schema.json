@@ -200,7 +200,6 @@
           "items": {
             "$ref": "#/$defs/EvidenceRef"
           },
-          "minItems": 1,
           "title": "Counter Evidence",
           "type": "array"
         },
@@ -217,7 +216,6 @@
         "verdict",
         "rationale",
         "evidence",
-        "counter_evidence",
         "reliability",
         "provenance"
       ],
@@ -227,6 +225,7 @@
     "RequirementVerdict": {
       "enum": [
         "met",
+        "incorrect",
         "missed",
         "uncertain"
       ],

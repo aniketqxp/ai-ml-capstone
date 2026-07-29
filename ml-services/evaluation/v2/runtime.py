@@ -295,7 +295,7 @@ def run_shadow_evaluation(
     derivation = derive_findings(bundle, plan, assessment_batch)
     decision = build_call_decision(bundle, derivation)
     validate_decision_references(decision, bundle)
-    presentation = project_call_evaluation(decision)
+    presentation = project_call_evaluation(decision, bundle=bundle)
     limitations = [
         "research_domain_profile",
         "bounded_supervisor_not_run",

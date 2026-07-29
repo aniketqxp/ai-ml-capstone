@@ -141,6 +141,11 @@ class PresentationProjectionTests(unittest.TestCase):
         self.assertNotIn("pass", view.headline.lower())
         self.assertIsNone(view.recommended_action)
         self.assertIsNone(view.completeness_notice)
+        self.assertEqual(len(view.manager_questions), 4)
+        self.assertEqual(
+            view.acoustic_context.status.value,
+            "unavailable",
+        )
         self.assertTrue(check_presentation(view).passed)
 
     def test_incomplete_call_is_not_cleared(self):
@@ -217,6 +222,14 @@ class PresentationProjectionTests(unittest.TestCase):
         self.assertEqual(view.additional_positive_count, 2)
         self.assertLessEqual(len(view.evidence), MAX_EVIDENCE_ITEMS)
         self.assertIsNotNone(view.recommended_action)
+        self.assertEqual(
+            view.recommended_action.delivery,
+            "email",
+        )
+        self.assertEqual(
+            view.recommended_action.audience,
+            "manager",
+        )
         self.assertTrue(check_presentation(view).passed)
 
     def test_audio_is_marked_as_supporting_only(self):

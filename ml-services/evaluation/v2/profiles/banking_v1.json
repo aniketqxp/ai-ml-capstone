@@ -92,6 +92,12 @@
       "description": "The customer moves from a loan inquiry into an application during the call.",
       "value_type": "boolean",
       "allowed_values": []
+    },
+    {
+      "fact_id": "policy.requires_identity_challenge",
+      "description": "The supplied business policy requires a separate identity challenge for this call type.",
+      "value_type": "boolean",
+      "allowed_values": []
     }
   ],
   "workflow_branches": [
@@ -130,11 +136,6 @@
       "conditions": [],
       "steps": [
         {
-          "step_id": "workflow.transfer.verify_identity",
-          "requirement_id": "security.transaction_identity_verified",
-          "sequence": 100
-        },
-        {
           "step_id": "workflow.transfer.confirm_accounts",
           "requirement_id": "transfer.accounts_confirmed",
           "sequence": 110
@@ -148,6 +149,28 @@
           "step_id": "workflow.transfer.explain_terms",
           "requirement_id": "transfer.terms_explained",
           "sequence": 150
+        }
+      ]
+    },
+    {
+      "branch_id": "transfer.identity_policy",
+      "title": "Policy-required transaction identity challenge",
+      "applies_to_intents": [
+        "transfer.one_time",
+        "transfer.recurring"
+      ],
+      "conditions": [
+        {
+          "fact_id": "policy.requires_identity_challenge",
+          "operator": "is_true",
+          "value": null
+        }
+      ],
+      "steps": [
+        {
+          "step_id": "workflow.transfer.verify_identity",
+          "requirement_id": "security.transaction_identity_verified",
+          "sequence": 100
         }
       ]
     },
@@ -426,6 +449,11 @@
       "conditions": [
         {
           "fact_id": "request.executes_transaction",
+          "operator": "is_true",
+          "value": null
+        },
+        {
+          "fact_id": "policy.requires_identity_challenge",
           "operator": "is_true",
           "value": null
         }

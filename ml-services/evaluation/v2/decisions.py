@@ -159,13 +159,13 @@ def _reason(findings: list[Finding]) -> str:
     return f"Controlling findings: {titles}."
 
 
-def _automatic_review_case(
+def _automatic_manager_review(
     findings: list[Finding],
 ) -> RecommendedAction:
     return RecommendedAction(
-        action_type=ActionType.CREATE_REVIEW_CASE,
+        action_type=ActionType.MANAGER_REVIEW,
         execution=ActionExecution.AUTOMATIC,
-        label="Create review case",
+        label="Email manager review summary",
         reason=_reason(findings),
         finding_ids=[
             finding.finding_id for finding in findings
@@ -216,7 +216,7 @@ def _recommended_action(
         finding.severity == FindingSeverity.CRITICAL
         for finding in controlling
     ):
-        return _automatic_review_case(controlling)
+        return _automatic_manager_review(controlling)
 
     categories = {finding.category for finding in controlling}
     if (
@@ -228,8 +228,8 @@ def _recommended_action(
     ):
         return _approval_action(
             controlling,
-            ActionType.REQUEST_CUSTOMER_FOLLOW_UP,
-            "Request customer follow-up",
+            ActionType.CUSTOMER_FOLLOW_UP,
+            "Prepare customer follow-up email",
         )
     if categories.intersection(
         {
@@ -239,10 +239,10 @@ def _recommended_action(
     ):
         return _approval_action(
             controlling,
-            ActionType.RECOMMEND_COACHING,
-            "Recommend coaching",
+            ActionType.AGENT_COACHING,
+            "Email coaching recommendation to manager",
         )
-    return _automatic_review_case(controlling)
+    return _automatic_manager_review(controlling)
 
 
 def _decision_trace(

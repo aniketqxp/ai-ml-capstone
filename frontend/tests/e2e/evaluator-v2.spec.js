@@ -10,8 +10,6 @@ const FIXTURE = path.resolve(
   '../../public/evaluation-v2/en_CA_Banking_1586889.json',
 );
 const CALL_PATH = '/calls/en_CA_Banking_1586889';
-const ATTENTION_CALL_PATH =
-  '/calls/en_US_General_Banking_1586678';
 
 function captureBrowserErrors(page) {
   const errors = [];
@@ -26,14 +24,15 @@ function attentionFixture() {
   const run = JSON.parse(fs.readFileSync(FIXTURE, 'utf-8'));
   const finding = {
     finding_id: 'finding-control-identity',
-    category: 'required_control',
-    category_label: 'Required step',
-    title: 'Identity verification was not demonstrated',
+    category: 'process',
+    category_label: 'Call handling',
+    title: 'Transfer amount confirmed incorrectly',
     summary:
-      'The call moved into account activity without a grounded verification exchange.',
+      'The agent repeated a different amount than the customer requested.',
     evidence_ids: ['evidence-control-identity'],
     counter_evidence_count: 0,
     reliability_note: null,
+    outcome: 'incorrect',
   };
   run.decision_sha256 = 'a'.repeat(64);
   run.presentation.decision_sha256 = run.decision_sha256;
@@ -56,17 +55,71 @@ function attentionFixture() {
       evidence_ids: ['evidence-intent-confirmed'],
       counter_evidence_count: 0,
       reliability_note: null,
+      outcome: 'effective',
     },
   ];
+  run.presentation.manager_questions = [
+    {
+      question_id: 'call.objective',
+      question: 'Did the agent understand and address the objective?',
+      answer: 'partly',
+      answer_label: 'Partly',
+      summary: finding.summary,
+      evidence_ids: finding.evidence_ids,
+    },
+    {
+      question_id: 'call.workflow',
+      question: 'Did the agent follow the applicable workflow?',
+      answer: 'no',
+      answer_label: 'No',
+      summary: finding.summary,
+      evidence_ids: finding.evidence_ids,
+    },
+    {
+      question_id: 'call.friction',
+      question: 'Did the interaction introduce customer friction?',
+      answer: 'unclear',
+      answer_label: 'Unable to determine',
+      summary: 'Audio support was limited.',
+      evidence_ids: [],
+    },
+    {
+      question_id: 'call.follow_up',
+      question: 'Is follow-up, coaching, or customer action required?',
+      answer: 'yes',
+      answer_label: 'Yes',
+      summary: 'Email manager review summary',
+      evidence_ids: finding.evidence_ids,
+    },
+  ];
+  run.presentation.checklist = [
+    {
+      requirement_id: 'transfer.amount_confirmed',
+      title: finding.title,
+      category: finding.category,
+      status: 'incorrect',
+      summary: finding.summary,
+      evidence_ids: finding.evidence_ids,
+      promoted: true,
+    },
+  ];
+  run.presentation.acoustic_context = {
+    status: 'limited',
+    coverage_label: 'Audio support on 4 of 8 segments',
+    conclusion: 'No sustained vocal-friction pattern crossed the provisional support gate.',
+    observations: [],
+  };
   run.presentation.additional_positive_count = 0;
   run.presentation.recommended_action = {
-    action_type: 'create_review_case',
+    action_type: 'manager_review',
     execution: 'automatic',
-    label: 'Create review case',
+    label: 'Email manager review summary',
     execution_label: 'Automatic',
     basis_finding_ids: [finding.finding_id],
     automation_allowed: true,
     requires_human_approval: false,
+    delivery: 'email',
+    audience: 'manager',
   };
   run.presentation.evidence = [
     {
@@ -107,7 +160,10 @@ test('renders a complete evidence-gated evaluation', async ({ page }) => {
   await expect(
     page.getByText('No review finding identified', { exact: true }),
   ).toBeVisible();
-  await expect(page.getByText('Handled well')).toBeVisible();
+  await expect(page.getByText('Effective moments')).toBeVisible();
+  await expect(page.getByText('Call assessment')).toBeVisible();
+  await expect(page.getByText('Applicable checks')).toBeVisible();
+  await expect(page.getByText('Acoustic support')).toBeVisible();
   await expect(
     page.getByRole('navigation', { name: 'Call chapters' }),
   ).toBeVisible();
@@ -125,7 +181,7 @@ test('renders a complete evidence-gated evaluation', async ({ page }) => {
   });
 });
 
-test('renders attention, evidence, action, and local feedback', async ({
+test('renders layered attention, evidence, and email action', async ({
   page,
 }) => {
   const errors = captureBrowserErrors(page);
@@ -139,37 +195,34 @@ test('renders attention, evidence, action, and local feedback', async ({
   await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
   await expect(
     page.getByRole('heading', {
-      name: 'Identity verification was not demonstrated',
+      name: 'Transfer amount confirmed incorrectly',
     }),
   ).toBeVisible();
-  await expect(page.getByText('Handled well')).toBeVisible();
-  await expect(page.getByText('Key evidence')).toBeVisible();
-  await page.getByRole('button', { name: 'Mark action complete' }).click();
+  await expect(page.getByText('Incorrect handling')).toBeVisible();
+  await expect(page.getByText('Effective moments')).toBeVisible();
+  await expect(page.getByText('Email action')).toBeVisible();
   await expect(
-    page.getByText('Feedback saved in this local preview.'),
+    page.getByText('Email manager review summary').last(),
   ).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test('renders a real guarded-control finding', async ({ page }) => {
+test('restores word-level playback highlighting', async ({ page }) => {
   const errors = captureBrowserErrors(page);
-  await page.goto(ATTENTION_CALL_PATH);
-  await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
-  await expect(
-    page.getByRole('heading', {
-      name: 'Customer identity verified before transaction access was not demonstrated',
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(
-      /Can I start by getting your checking account number/,
-    ).first(),
-  ).toBeVisible();
+  await page.goto(CALL_PATH);
+  const firstTimedWord = page.locator('[data-word-start]').first();
+  await expect(firstTimedWord).toBeVisible();
+  const start = Number(await firstTimedWord.getAttribute('data-word-start'));
+  await page.locator('input[aria-label="Seek through call"]').evaluate(
+    (element, value) => {
+      element.value = String(value);
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+      element.dispatchEvent(new Event('change', { bubbles: true }));
+    },
+    start + 0.01,
+  );
+  await expect(firstTimedWord).toHaveAttribute('data-active', 'true');
   expect(errors).toEqual([]);
-  await page.screenshot({
-    path: 'test-results/evaluator-v2-live-attention.png',
-    fullPage: true,
-  });
 });
 
 test('fits the v2 call page on a mobile viewport', async ({ page }) => {

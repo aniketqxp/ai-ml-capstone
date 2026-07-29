@@ -274,9 +274,9 @@ class DecisionContractTests(unittest.TestCase):
             attention_required=True,
             triggered_findings=[finding],
             recommended_action=RecommendedAction(
-                action_type=ActionType.CREATE_REVIEW_CASE,
+                action_type=ActionType.MANAGER_REVIEW,
                 execution=ActionExecution.AUTOMATIC,
-                label="Create review case",
+                label="Email manager review summary",
                 reason="An unresolved outcome requires review.",
                 finding_ids=[finding.finding_id],
                 automation_allowed=True,
@@ -307,9 +307,9 @@ class DecisionContractTests(unittest.TestCase):
                 decision_status=DecisionStatus.COMPLETE,
                 attention_required=True,
                 recommended_action=RecommendedAction(
-                    action_type=ActionType.CREATE_REVIEW_CASE,
+                    action_type=ActionType.MANAGER_REVIEW,
                     execution=ActionExecution.AUTOMATIC,
-                    label="Create review case",
+                    label="Email manager review summary",
                     reason="Review required.",
                     automation_allowed=True,
                 ),
@@ -328,7 +328,7 @@ class DecisionContractTests(unittest.TestCase):
     def test_consequential_action_cannot_be_automatic(self):
         with self.assertRaises(ValidationError):
             RecommendedAction(
-                action_type=ActionType.REQUEST_CUSTOMER_FOLLOW_UP,
+                action_type=ActionType.CUSTOMER_FOLLOW_UP,
                 execution=ActionExecution.AUTOMATIC,
                 label="Contact customer",
                 reason="The issue may be unresolved.",
@@ -364,9 +364,9 @@ class DecisionContractTests(unittest.TestCase):
             attention_required=True,
             triggered_findings=[finding],
             recommended_action=RecommendedAction(
-                action_type=ActionType.CREATE_REVIEW_CASE,
+                action_type=ActionType.MANAGER_REVIEW,
                 execution=ActionExecution.AUTOMATIC,
-                label="Create review case",
+                label="Email manager review summary",
                 reason="An unresolved outcome requires review.",
                 finding_ids=[finding.finding_id],
                 automation_allowed=True,

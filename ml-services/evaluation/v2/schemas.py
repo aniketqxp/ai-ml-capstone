@@ -74,9 +74,9 @@ class FindingSeverity(str, Enum):
 
 class ActionType(str, Enum):
     NONE = "none"
-    CREATE_REVIEW_CASE = "create_review_case"
-    RECOMMEND_COACHING = "recommend_coaching"
-    REQUEST_CUSTOMER_FOLLOW_UP = "request_customer_follow_up"
+    MANAGER_REVIEW = "manager_review"
+    AGENT_COACHING = "agent_coaching"
+    CUSTOMER_FOLLOW_UP = "customer_follow_up"
     POLICY_REVIEW = "policy_review"
 
 
@@ -382,13 +382,13 @@ class RecommendedAction(ContractModel):
                 "approval actions must disable automation and require approval"
             )
         if self.execution == ActionExecution.AUTOMATIC:
-            if self.action_type != ActionType.CREATE_REVIEW_CASE:
+            if self.action_type != ActionType.MANAGER_REVIEW:
                 raise ValueError(
-                    "only review-case creation may initially run automatically"
+                    "only manager review notification may run automatically"
                 )
             if not self.automation_allowed or self.requires_human_approval:
                 raise ValueError(
-                    "automatic review-case creation must be allowed without approval"
+                    "automatic manager notification must run without approval"
                 )
         return self
 

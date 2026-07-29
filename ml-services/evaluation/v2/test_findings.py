@@ -290,6 +290,33 @@ class RequirementFindingTests(unittest.TestCase):
         self.assertEqual(finding.category, FindingCategory.OUTCOME)
         self.assertEqual(finding.severity, FindingSeverity.INFO)
 
+    def test_incorrect_behavior_remains_distinct_from_an_omission(self):
+        bundle = _bundle("The transfer amount is five hundred dollars.")
+        plan = _plan()
+        assessment = _assessment(
+            bundle,
+            "transfer.amount_confirmed",
+            RequirementVerdict.INCORRECT,
+        )
+
+        result = derive_findings(
+            bundle,
+            plan,
+            _batch([assessment]),
+        )
+        finding = next(
+            item
+            for item in result.triggered_findings
+            if item.finding_type
+            == "control.transfer_amount_unconfirmed"
+        )
+
+        self.assertEqual(
+            finding.detection_rule.thresholds[0].value,
+            "incorrect",
+        )
+        self.assertEqual(finding.summary, assessment.rationale)
+
     def test_uncertain_and_missing_assessments_do_not_become_failures(self):
         bundle = _bundle("Thank you.")
         plan = _plan()
@@ -406,6 +433,7 @@ class RequirementFindingTests(unittest.TestCase):
                 "transfer.executed_during_call": True,
                 "request.opens_account": True,
                 "account.link_existing_product": False,
+                "policy.requires_identity_challenge": True,
             },
         )
         assessments = [

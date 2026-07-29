@@ -15,6 +15,14 @@ HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[2]
 TRANSCRIPT_ROOT = REPO_ROOT / "data" / "sentence_segments" / "banking"
 LEGACY_ROOT = REPO_ROOT / "ml-services" / "evaluation" / "results"
+SENTIMENT_ROOT = (
+    REPO_ROOT
+    / "ml-services"
+    / "outputs"
+    / "backend"
+    / "sentiment_calls_with_features"
+    / "banking"
+)
 DEFAULT_OUTPUT = REPO_ROOT / "frontend" / "public" / "evaluation-v2"
 DEFAULT_SUMMARY = HERE / "research" / "shadow_rollout_0_1.json"
 
@@ -59,6 +67,10 @@ def main() -> int:
     for transcript_path in sorted(TRANSCRIPT_ROOT.glob("*.json")):
         call_id = transcript_path.stem
         legacy_path = LEGACY_ROOT / f"{call_id}_graph.json"
+        sentiment_path = (
+            SENTIMENT_ROOT
+            / f"{call_id}_backend_sentiment_with_features.json"
+        )
         output = args.output_dir / f"{call_id}.json"
         run = None
         if (
@@ -72,11 +84,21 @@ def main() -> int:
         if run is None:
             run = safe_run_shadow_evaluation(
                 transcript=_load(transcript_path),
+                sentiment=(
+                    _load(sentiment_path)
+                    if sentiment_path.exists()
+                    else None
+                ),
                 legacy_evaluation=(
                     _load(legacy_path) if legacy_path.exists() else None
                 ),
                 transcript_source=str(
                     transcript_path.relative_to(REPO_ROOT)
+                ),
+                sentiment_source=(
+                    str(sentiment_path.relative_to(REPO_ROOT))
+                    if sentiment_path.exists()
+                    else None
                 ),
             )
             output.write_text(

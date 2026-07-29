@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  AudioLines,
   ArrowLeft,
   Check,
   CheckCircle2,
@@ -7,11 +8,12 @@ import {
   CircleHelp,
   Clock3,
   FileQuestion,
+  ListChecks,
+  Mail,
+  Minus,
   Pause,
   Play,
   ShieldCheck,
-  ThumbsDown,
-  ThumbsUp,
   Volume2,
   X,
 } from 'lucide-react';
@@ -91,20 +93,6 @@ function speakerLabel(speaker) {
   return 'Unknown';
 }
 
-function evidenceText(item) {
-  const text = item.text || 'Evidence is linked to the source call.';
-  if (!item.speaker) return text;
-  const prefix = `${speakerLabel(item.speaker).toUpperCase()}:`;
-  return text
-    .split('\n')
-    .map((line) => (
-      line.toUpperCase().startsWith(prefix)
-        ? line.slice(prefix.length).trimStart()
-        : line
-    ))
-    .join(' ');
-}
-
 function unavailableRun(call, shadow) {
   const unsupported = shadow?.status === 'unsupported_domain';
   const failed = shadow?.status === 'failed';
@@ -124,6 +112,14 @@ function unavailableRun(call, shadow) {
       attention_required: false,
       headline: 'Evaluation unavailable',
       summary,
+      manager_questions: [],
+      checklist: [],
+      acoustic_context: {
+        status: 'unavailable',
+        coverage_label: 'Audio support unavailable',
+        conclusion: 'No acoustic evaluation artifact is available.',
+        observations: [],
+      },
       primary_reasons: [],
       additional_reason_count: 0,
       positive_highlights: [],
@@ -147,35 +143,25 @@ function unavailableRun(call, shadow) {
   };
 }
 
-function FeedbackButton({
-  icon: Icon,
-  label,
-  onClick,
-  disabled,
-  tone = 'neutral',
-}) {
-  const tones = {
-    neutral:
-      'border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:bg-slate-900',
-    approve:
-      'border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-600 dark:border-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500',
-    dismiss:
-      'border-slate-300 bg-white text-slate-600 hover:border-red-300 hover:text-red-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:hover:border-red-800 dark:hover:text-red-300',
+function mergeWordTimings(call, timingArtifact) {
+  if (!timingArtifact?.turns?.length) return call;
+  const timedTurns = timingArtifact.turns;
+  return {
+    ...call,
+    turns: (call.turns || []).map((turn, index) => {
+      if (turn.words?.length) return turn;
+      const timed = timedTurns[index];
+      if (
+        !timed
+        || String(timed.speaker).toUpperCase()
+          !== String(turn.speaker).toUpperCase()
+        || Math.abs(Number(timed.start) - Number(turn.start)) > 0.25
+      ) {
+        return turn;
+      }
+      return { ...turn, words: timed.words || [] };
+    }),
   };
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className={classNames(
-        'inline-flex h-9 items-center justify-center gap-2 rounded-md border px-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50',
-        tones[tone],
-      )}
-    >
-      <Icon size={16} aria-hidden="true" />
-      {label}
-    </button>
-  );
 }
 
 function AudioPlayer({
@@ -276,22 +262,98 @@ function StatusSection({ view }) {
   );
 }
 
-function FindingRows({
+function EvidenceLink({
+  evidenceIds,
+  evidenceById,
+  onSeek,
+  compact = false,
+}) {
+  const evidence = evidenceIds
+    .map((evidenceId) => evidenceById.get(evidenceId))
+    .find((item) => item?.seekable);
+  if (!evidence) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => onSeek(evidence.start_seconds)}
+      className={classNames(
+        'inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-sky-700 hover:underline dark:text-sky-400',
+        compact ? 'mt-0' : 'mt-2',
+      )}
+    >
+      <Play size={12} fill="currentColor" aria-hidden="true" />
+      {compact ? fmt(evidence.start_seconds) : `Evidence at ${fmt(evidence.start_seconds)}`}
+    </button>
+  );
+}
+
+const ANSWER_TONES = {
+  yes: 'text-emerald-700 dark:text-emerald-400',
+  no: 'text-red-700 dark:text-red-400',
+  partly: 'text-amber-700 dark:text-amber-400',
+  unclear: 'text-slate-500 dark:text-slate-400',
+};
+
+function ManagerQuestions({ questions, evidenceById, onSeek }) {
+  if (!questions.length) return null;
+  return (
+    <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
+      <h2 className="text-xs font-semibold uppercase text-slate-500">
+        Call assessment
+      </h2>
+      <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
+        {questions.map((item) => (
+          <article key={item.question_id} className="py-3 first:pt-1">
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-sm font-medium leading-5 text-slate-900 dark:text-slate-100">
+                {item.question}
+              </p>
+              <span
+                className={classNames(
+                  'shrink-0 text-xs font-semibold',
+                  ANSWER_TONES[item.answer],
+                )}
+              >
+                {item.answer_label}
+              </span>
+            </div>
+            <p className="mt-1 text-xs leading-5 text-slate-500">
+              {item.summary}
+            </p>
+            <EvidenceLink
+              evidenceIds={item.evidence_ids}
+              evidenceById={evidenceById}
+              onSeek={onSeek}
+            />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FindingSection({
+  title,
   findings,
   evidenceById,
   onSeek,
   onFeedback,
   feedbackBusy,
+  tone,
 }) {
   if (!findings.length) return null;
+  const toneClass = {
+    incorrect: 'text-red-700 dark:text-red-400',
+    missed: 'text-amber-700 dark:text-amber-400',
+    concern: 'text-violet-700 dark:text-violet-400',
+  }[tone];
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
-      <h2 className="text-xs font-semibold uppercase text-slate-500">
-        Why it needs attention
+      <h2 className={classNames('text-xs font-semibold uppercase', toneClass)}>
+        {title}
       </h2>
       <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
         {findings.map((finding) => {
-          const firstEvidence = evidenceById.get(finding.evidence_ids[0]);
           return (
             <article key={finding.finding_id} className="py-4 first:pt-1">
               <div className="flex items-start justify-between gap-3">
@@ -321,16 +383,11 @@ function FindingRows({
                   <X size={16} aria-hidden="true" />
                 </button>
               </div>
-              {firstEvidence?.seekable && (
-                <button
-                  type="button"
-                  onClick={() => onSeek(firstEvidence.start_seconds)}
-                  className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-sky-700 hover:underline dark:text-sky-400"
-                >
-                  <Play size={13} fill="currentColor" aria-hidden="true" />
-                  Hear evidence at {fmt(firstEvidence.start_seconds)}
-                </button>
-              )}
+              <EvidenceLink
+                evidenceIds={finding.evidence_ids}
+                evidenceById={evidenceById}
+                onSeek={onSeek}
+              />
             </article>
           );
         })}
@@ -341,80 +398,37 @@ function FindingRows({
 
 function ActionSection({
   action,
-  onFeedback,
-  feedbackBusy,
-  feedbackStatus,
 }) {
   if (!action) return null;
-  const approval = action.requires_human_approval;
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
-      <p className="text-xs font-semibold uppercase text-slate-500">
-        Next action
-      </p>
-      <div className="mt-3 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
+        <Mail size={15} aria-hidden="true" />
+        Email action
+      </div>
+      <div className="mt-3 flex items-start gap-3">
+        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-400">
+          <Mail size={16} aria-hidden="true" />
+        </span>
         <div>
           <p className="text-sm font-semibold text-slate-950 dark:text-white">
             {action.label}
           </p>
           <p className="mt-1 text-xs text-slate-500">
-            {action.execution_label}
+            {action.execution_label}. Recipient: {action.audience}.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {approval ? (
-            <FeedbackButton
-              icon={Check}
-              label="Approve action"
-              tone="approve"
-              disabled={feedbackBusy}
-              onClick={() =>
-                onFeedback('approve_action', {
-                  action_type: action.action_type,
-                })
-              }
-            />
-          ) : (
-            <FeedbackButton
-              icon={ThumbsUp}
-              label="Mark action complete"
-              tone="approve"
-              disabled={feedbackBusy}
-              onClick={() =>
-                onFeedback('action_completed', {
-                  action_type: action.action_type,
-                })
-              }
-            />
-          )}
-          <FeedbackButton
-            icon={ThumbsDown}
-            label="Dismiss result"
-            tone="dismiss"
-            disabled={feedbackBusy}
-            onClick={() => onFeedback('dismiss_decision')}
-          />
-        </div>
       </div>
-      {feedbackStatus && (
-        <p
-          className="mt-3 text-xs text-slate-500"
-          role="status"
-          aria-live="polite"
-        >
-          {feedbackStatus}
-        </p>
-      )}
     </section>
   );
 }
 
-function PositiveSection({ findings }) {
+function PositiveSection({ findings, evidenceById, onSeek }) {
   if (!findings.length) return null;
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
       <h2 className="text-xs font-semibold uppercase text-slate-500">
-        Handled well
+        Effective moments
       </h2>
       <ul className="mt-3 space-y-3">
         {findings.map((finding) => (
@@ -431,6 +445,11 @@ function PositiveSection({ findings }) {
               <p className="mt-0.5 text-xs leading-5 text-slate-500">
                 {finding.summary}
               </p>
+              <EvidenceLink
+                evidenceIds={finding.evidence_ids}
+                evidenceById={evidenceById}
+                onSeek={onSeek}
+              />
             </div>
           </li>
         ))}
@@ -439,61 +458,121 @@ function PositiveSection({ findings }) {
   );
 }
 
-function EvidenceSection({ evidence, findingById, onSeek }) {
-  if (!evidence.length) return null;
+const CHECK_STATUS = {
+  demonstrated: {
+    label: 'Demonstrated',
+    icon: Check,
+    tone: 'text-emerald-700 dark:text-emerald-400',
+  },
+  incorrect: {
+    label: 'Incorrect',
+    icon: X,
+    tone: 'text-red-700 dark:text-red-400',
+  },
+  not_demonstrated: {
+    label: 'Not demonstrated',
+    icon: Minus,
+    tone: 'text-amber-700 dark:text-amber-400',
+  },
+  unable_to_determine: {
+    label: 'Unable to determine',
+    icon: CircleHelp,
+    tone: 'text-slate-500 dark:text-slate-400',
+  },
+};
+
+function ChecklistSection({ checks, evidenceById, onSeek }) {
+  if (!checks.length) return null;
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
-      <h2 className="text-xs font-semibold uppercase text-slate-500">
-        Key evidence
-      </h2>
-      <div className="relative mt-4 space-y-5 before:absolute before:bottom-2 before:left-[7px] before:top-2 before:w-px before:bg-slate-200 dark:before:bg-slate-800">
-        {evidence.map((item) => {
-          const finding = findingById.get(item.finding_ids[0]);
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
+        <ListChecks size={15} aria-hidden="true" />
+        Applicable checks
+      </div>
+      <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
+        {checks.map((item) => {
+          const config = CHECK_STATUS[item.status] || CHECK_STATUS.unable_to_determine;
+          const Icon = config.icon;
           return (
-            <button
-              key={item.evidence_id}
-              type="button"
-              onClick={() => item.seekable && onSeek(item.start_seconds)}
-              disabled={!item.seekable}
-              className="relative flex w-full items-start gap-3 text-left disabled:cursor-default"
-            >
-              <span
-                className={classNames(
-                  'relative z-10 mt-1 h-[15px] w-[15px] shrink-0 rounded-full border-2 bg-white dark:bg-slate-950',
-                  item.kind === 'audio_support'
-                    ? 'border-violet-500'
-                    : 'border-sky-600',
-                )}
-              />
-              <span className="min-w-0 flex-1">
-                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
-                    {finding?.title || 'Supporting evidence'}
-                  </span>
-                  {item.start_seconds != null && (
-                    <span className="font-mono text-[11px] text-sky-700 dark:text-sky-400">
-                      {fmt(item.start_seconds)}
+            <article key={item.requirement_id} className="py-2.5 first:pt-1">
+              <div className="flex items-start gap-2.5">
+                <Icon
+                  size={16}
+                  className={classNames('mt-0.5 shrink-0', config.tone)}
+                  aria-hidden="true"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start gap-3">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                      {item.title}
+                    </p>
+                    <span className={classNames('ml-auto shrink-0 text-[11px] font-semibold', config.tone)}>
+                      {config.label}
                     </span>
+                    <EvidenceLink
+                      evidenceIds={item.evidence_ids}
+                      evidenceById={evidenceById}
+                      onSeek={onSeek}
+                      compact
+                    />
+                  </div>
+                  {item.status !== 'demonstrated' && !item.promoted && (
+                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                      {item.summary}
+                    </p>
                   )}
-                  {item.kind === 'audio_support' && (
-                    <span className="text-[11px] text-violet-700 dark:text-violet-400">
-                      Audio support
-                    </span>
-                  )}
-                </span>
-                <span className="mt-1 block text-sm leading-6 text-slate-600 dark:text-slate-300">
-                  {item.speaker && (
-                    <strong className="mr-1 font-medium text-slate-800 dark:text-slate-100">
-                      {speakerLabel(item.speaker)}:
-                    </strong>
-                  )}
-                  {evidenceText(item)}
-                </span>
-              </span>
-            </button>
+                </div>
+              </div>
+            </article>
           );
         })}
       </div>
+    </section>
+  );
+}
+
+function AcousticSection({ context, onSeek }) {
+  if (!context) return null;
+  return (
+    <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
+          <AudioLines size={15} aria-hidden="true" />
+          Acoustic support
+        </div>
+        <span className="text-[11px] text-slate-400">
+          {context.coverage_label}
+        </span>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        {context.conclusion}
+      </p>
+      {context.observations.length > 0 && (
+        <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
+          {context.observations.map((item) => (
+            <button
+              key={item.observation_id}
+              type="button"
+              onClick={() => item.start_seconds != null && onSeek(item.start_seconds)}
+              disabled={item.start_seconds == null}
+              className="block w-full py-3 text-left disabled:cursor-default"
+            >
+              <span className="text-xs font-semibold text-violet-700 dark:text-violet-400">
+                {item.label}
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">
+                {item.summary}
+              </span>
+              {item.start_seconds != null && (
+                <span className="mt-1.5 inline-flex items-center gap-1 font-mono text-[11px] text-sky-700 dark:text-sky-400">
+                  <Play size={11} fill="currentColor" aria-hidden="true" />
+                  {fmt(item.start_seconds)}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -621,7 +700,7 @@ function Transcript({
   }, [activeIndex, activeTurnRef]);
 
   return (
-    <section className="min-w-0 bg-slate-50 dark:bg-slate-900">
+    <section className="min-w-0 bg-slate-50 lg:flex lg:h-full lg:flex-col lg:overflow-hidden dark:bg-slate-900">
       <div className="flex h-14 items-center justify-between border-b border-slate-200 px-5 dark:border-slate-800">
         <h2 className="text-sm font-semibold text-slate-900 dark:text-white">
           Conversation
@@ -635,7 +714,7 @@ function Transcript({
       />
       <div
         ref={scrollRef}
-        className="max-h-[calc(100vh-13rem)] overflow-y-auto px-4 py-5 sm:px-6"
+        className="px-4 py-5 sm:px-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto"
       >
         <div className="mx-auto max-w-3xl space-y-5">
           {turns.map((turn, index) => {
@@ -679,7 +758,30 @@ function Transcript({
                       : 'text-slate-600 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white',
                   )}
                 >
-                  {turn.text}
+                  {turn.words?.length
+                    ? turn.words.map((word, wordIndex) => {
+                        const wordActive = (
+                          currentTime >= word.start
+                          && currentTime < word.end
+                        );
+                        return (
+                          <span key={`${word.start}-${wordIndex}`}>
+                            {wordIndex > 0 ? ' ' : ''}
+                            <span
+                              data-word-start={word.start}
+                              data-active={wordActive ? 'true' : 'false'}
+                              className={classNames(
+                                'rounded-sm transition-colors',
+                                wordActive
+                                  && 'bg-sky-200 px-0.5 text-slate-950 dark:bg-sky-700 dark:text-white',
+                              )}
+                            >
+                              {word.word}
+                            </span>
+                          </span>
+                        );
+                      })
+                    : turn.text}
                 </span>
               </button>
             );
@@ -712,12 +814,16 @@ export default function EvaluatorV2CallDetail() {
       fetchEvaluatorArtifact(
         `/evaluation-v2/${encodeURIComponent(callId)}.json`,
       ),
-    ]).then(([call, shadow]) => {
+      fetchEvaluatorArtifact(
+        `/word-timings/${encodeURIComponent(callId)}.json`,
+      ),
+    ]).then(([rawCall, shadow, timingArtifact]) => {
       if (cancelled) return;
-      if (!call) {
+      if (!rawCall) {
         setLoadState('error');
         return;
       }
+      const call = mergeWordTimings(rawCall, timingArtifact);
       setCallData(call);
       setDuration(call.duration || 0);
       const embedded = call.evaluation_v2 || shadow;
@@ -837,18 +943,16 @@ export default function EvaluatorV2CallDetail() {
   }
 
   const view = run.presentation;
-  const allFindings = [
-    ...view.primary_reasons,
-    ...view.positive_highlights,
-    ...view.details.additional_findings,
-    ...view.details.additional_positive_findings,
-  ];
-  const findingById = new Map(
-    allFindings.map((finding) => [finding.finding_id, finding]),
-  );
   const evidenceById = new Map(
-    view.evidence.map((item) => [item.evidence_id, item]),
+    [...view.evidence, ...(view.details.evidence || [])]
+      .map((item) => [item.evidence_id, item]),
   );
+  const incorrect = view.primary_reasons
+    .filter((finding) => finding.outcome === 'incorrect');
+  const missed = view.primary_reasons
+    .filter((finding) => finding.outcome === 'missed');
+  const concerns = view.primary_reasons
+    .filter((finding) => !['incorrect', 'missed'].includes(finding.outcome));
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-slate-100">
@@ -895,11 +999,36 @@ export default function EvaluatorV2CallDetail() {
         onSeek={seek}
       />
 
-      <main className="mx-auto grid w-full max-w-7xl grid-cols-1 lg:grid-cols-[minmax(320px,420px)_minmax(0,1fr)]">
-        <aside className="border-b border-slate-200 bg-white lg:border-b-0 lg:border-r dark:border-slate-800 dark:bg-slate-950">
+      <main className="mx-auto grid w-full max-w-7xl grid-cols-1 lg:h-[calc(100vh-8.25rem)] lg:grid-cols-[minmax(360px,470px)_minmax(0,1fr)] lg:overflow-hidden">
+        <aside className="border-b border-slate-200 bg-white lg:overflow-y-auto lg:border-b-0 lg:border-r dark:border-slate-800 dark:bg-slate-950">
           <StatusSection view={view} />
-          <FindingRows
-            findings={view.primary_reasons}
+          <ManagerQuestions
+            questions={view.manager_questions || []}
+            evidenceById={evidenceById}
+            onSeek={seek}
+          />
+          <FindingSection
+            title="Incorrect handling"
+            tone="incorrect"
+            findings={incorrect}
+            evidenceById={evidenceById}
+            onSeek={seek}
+            onFeedback={submitFeedback}
+            feedbackBusy={feedbackBusy}
+          />
+          <FindingSection
+            title="Missing steps"
+            tone="missed"
+            findings={missed}
+            evidenceById={evidenceById}
+            onSeek={seek}
+            onFeedback={submitFeedback}
+            feedbackBusy={feedbackBusy}
+          />
+          <FindingSection
+            title="Observed concerns"
+            tone="concern"
+            findings={concerns}
             evidenceById={evidenceById}
             onSeek={seek}
             onFeedback={submitFeedback}
@@ -907,16 +1036,30 @@ export default function EvaluatorV2CallDetail() {
           />
           <ActionSection
             action={view.recommended_action}
-            onFeedback={submitFeedback}
-            feedbackBusy={feedbackBusy}
-            feedbackStatus={feedbackStatus}
           />
-          <PositiveSection findings={view.positive_highlights} />
-          <EvidenceSection
-            evidence={view.evidence}
-            findingById={findingById}
+          <PositiveSection
+            findings={view.positive_highlights}
+            evidenceById={evidenceById}
             onSeek={seek}
           />
+          <ChecklistSection
+            checks={view.checklist || []}
+            evidenceById={evidenceById}
+            onSeek={seek}
+          />
+          <AcousticSection
+            context={view.acoustic_context}
+            onSeek={seek}
+          />
+          {feedbackStatus && (
+            <p
+              className="border-b border-slate-200 px-5 py-3 text-xs text-slate-500 dark:border-slate-800"
+              role="status"
+              aria-live="polite"
+            >
+              {feedbackStatus}
+            </p>
+          )}
           <DetailsSection view={view} run={run} />
         </aside>
         <Transcript

@@ -18,6 +18,7 @@ For each call_id with a results/{call_id}_graph.json:
 
 Writes (served statically, fetched at runtime -- not bundled into the JS build):
   frontend/public/calls/{call_id}.json   {call, model, duration, turns, chapters, evaluation}
+  frontend/public/word-timings/{call_id}.json
   frontend/public/calls_index.json       [{call_id, domain, ...summary}, ...]
   frontend/public/audio/{call_id}.mp3
 
@@ -27,13 +28,13 @@ recheck-node bugfix's hand-verified evidence patch.
 
 Usage:  python export_frontend.py
 """
-import os
 import json
+import os
 import shutil
 import subprocess
 
 import paths
-from assemble import load_manifest, DATA
+from assemble import DATA, load_manifest
 from segment import segment
 
 EVAL_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +43,7 @@ RESULTS_DIR_NAME = "results"
 PUBLIC = str(paths.FRONTEND_PUBLIC)
 CALLS_OUT = os.path.join(PUBLIC, "calls")
 AUDIO_OUT = os.path.join(PUBLIC, "audio")
+WORD_TIMINGS_OUT = os.path.join(PUBLIC, "word-timings")
 INDEX_OUT = os.path.join(PUBLIC, "calls_index.json")
 
 DEMO_CALL = "en_CA_Banking_1586889"
@@ -56,19 +58,38 @@ def build_turns(result):
         for w in result.get(key, []):
             if w.get("start") is None:
                 continue
-            merged.append((w["start"], w.get("end", w["start"]), speaker, w["word"]))
+            merged.append(
+                (
+                    w["start"],
+                    w.get("end", w["start"]),
+                    speaker,
+                    w["word"],
+                )
+            )
     merged.sort(key=lambda x: x[0])
 
     turns = []
     cur = None
     for start, end, sp, word in merged:
+        timed_word = {
+            "word": word,
+            "start": round(start, 2),
+            "end": round(end, 2),
+        }
         if cur is None or sp != cur["speaker"]:
             if cur:
                 turns.append(cur)
-            cur = {"speaker": sp, "text": word, "start": start, "end": end}
+            cur = {
+                "speaker": sp,
+                "text": word,
+                "start": start,
+                "end": end,
+                "words": [timed_word],
+            }
         else:
             cur["text"] += " " + word
             cur["end"] = end
+            cur["words"].append(timed_word)
     if cur:
         turns.append(cur)
 
@@ -98,7 +119,7 @@ def merge_audio(agent_wav, customer_wav, out_mp3):
         "ffmpeg", "-y", "-i", agent_wav, "-i", customer_wav,
         "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]",
         "-map", "[a]", "-ac", "2", "-b:a", "128k", out_mp3,
-    ], capture_output=True, text=True)
+    ], capture_output=True, text=True, check=False)
     if proc.returncode != 0:
         print(f"    ffmpeg FAILED for {out_mp3}:\n{proc.stderr[-800:]}")
         return False
@@ -125,7 +146,11 @@ def export_call_artifacts(call_id, meta, out_calls_dir, out_audio_dir):
         result = json.load(f)
     turns = build_turns(result)
 
-    cc, dt, issues = segment(call_id, provider="router", results_dir=RESULTS_DIR_NAME)
+    cc, _duration, issues = segment(
+        call_id,
+        provider="router",
+        results_dir=RESULTS_DIR_NAME,
+    )
     if issues:
         print(f"    chapter issues: {issues}")
     chapters = numeric_chapters(cc.chapters, turns, duration)
@@ -141,6 +166,13 @@ def export_call_artifacts(call_id, meta, out_calls_dir, out_audio_dir):
     os.makedirs(out_calls_dir, exist_ok=True)
     with open(os.path.join(out_calls_dir, f"{call_id}.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
+    os.makedirs(WORD_TIMINGS_OUT, exist_ok=True)
+    with open(
+        os.path.join(WORD_TIMINGS_OUT, f"{call_id}.json"),
+        "w",
+        encoding="utf-8",
+    ) as f:
+        json.dump({"call_id": call_id, "turns": turns}, f, indent=2)
 
     ok = merge_audio(
         os.path.join(DATA, meta["accent"], f"{call_id}_agent.wav"),
@@ -191,9 +223,28 @@ def main():
 
     with open(DEMO_CALL_DATA, encoding="utf-8") as f:
         demo = json.load(f)
+    demo_result_path = os.path.join(
+        DATA,
+        RESULTS_DIR_NAME,
+        manifest[DEMO_CALL]["accent"],
+        DEMO_CALL + ".json",
+    )
+    with open(demo_result_path, encoding="utf-8") as f:
+        demo["turns"] = build_turns(json.load(f))
     os.makedirs(CALLS_OUT, exist_ok=True)
     with open(os.path.join(CALLS_OUT, f"{DEMO_CALL}.json"), "w", encoding="utf-8") as f:
         json.dump(demo, f, indent=2)
+    os.makedirs(WORD_TIMINGS_OUT, exist_ok=True)
+    with open(
+        os.path.join(WORD_TIMINGS_OUT, f"{DEMO_CALL}.json"),
+        "w",
+        encoding="utf-8",
+    ) as f:
+        json.dump(
+            {"call_id": DEMO_CALL, "turns": demo["turns"]},
+            f,
+            indent=2,
+        )
     os.makedirs(AUDIO_OUT, exist_ok=True)
     shutil.copy(DEMO_AUDIO_SRC, os.path.join(AUDIO_OUT, f"{DEMO_CALL}.mp3"))
     index.append(summarize(DEMO_CALL, demo))

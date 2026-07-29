@@ -42,6 +42,7 @@ RECOVERY_SIGNAL_NAME = "acoustic.dynamics.recovery_candidate"
 
 class RequirementVerdict(str, Enum):
     MET = "met"
+    INCORRECT = "incorrect"
     MISSED = "missed"
     UNCERTAIN = "uncertain"
 
@@ -479,16 +480,8 @@ def _requirement_finding(
     category: FindingCategory,
 ) -> Finding:
     severity = _level_severity(requirement.level, polarity)
-    demonstrated = polarity == FindingPolarity.POSITIVE
-    title = (
-        f"{requirement.title} was demonstrated"
-        if demonstrated
-        else f"{requirement.title} was not demonstrated"
-    )
-    summary = (
-        f"The applicable requirement was assessed as "
-        f"{assessment.verdict.value}: {assessment.rationale}"
-    )
+    title = requirement.title
+    summary = assessment.rationale
     return Finding(
         finding_id=_finding_id(polarity, finding_type),
         finding_type=finding_type,
@@ -558,7 +551,10 @@ def _requirement_findings(
 
         category = _requirement_category(requirement)
         if (
-            assessment.verdict == RequirementVerdict.MISSED
+            assessment.verdict in (
+                RequirementVerdict.INCORRECT,
+                RequirementVerdict.MISSED,
+            )
             and requirement.failure_finding_type
         ):
             negative.append(

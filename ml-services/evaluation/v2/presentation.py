@@ -16,6 +16,7 @@ from .schemas import (
     FindingCategory,
     Modality,
     ReliabilityStatus,
+    SignalBundle,
     SourceProvenance,
     Speaker,
     Visibility,
@@ -56,6 +57,33 @@ class EvidencePurpose(str, Enum):
     POSITIVE = "positive"
 
 
+class FindingOutcome(str, Enum):
+    EFFECTIVE = "effective"
+    INCORRECT = "incorrect"
+    MISSED = "missed"
+    OBSERVED_CONCERN = "observed_concern"
+
+
+class ManagerAnswer(str, Enum):
+    YES = "yes"
+    PARTLY = "partly"
+    NO = "no"
+    UNCLEAR = "unclear"
+
+
+class CheckStatus(str, Enum):
+    DEMONSTRATED = "demonstrated"
+    INCORRECT = "incorrect"
+    NOT_DEMONSTRATED = "not_demonstrated"
+    UNABLE_TO_DETERMINE = "unable_to_determine"
+
+
+class AcousticStatus(str, Enum):
+    AVAILABLE = "available"
+    LIMITED = "limited"
+    UNAVAILABLE = "unavailable"
+
+
 class InventoryItem(ContractModel):
     output_id: str = Field(min_length=1, pattern=r"^[a-z0-9_.]+$")
     source_fields: list[str] = Field(min_length=1)
@@ -74,6 +102,52 @@ class PresentedFinding(ContractModel):
     evidence_ids: list[str] = Field(min_length=1)
     counter_evidence_count: int = Field(ge=0)
     reliability_note: str | None = None
+    outcome: FindingOutcome = FindingOutcome.OBSERVED_CONCERN
+
+
+class ManagerQuestion(ContractModel):
+    question_id: str = Field(min_length=1, pattern=r"^[a-z0-9_.]+$")
+    question: str = Field(min_length=1)
+    answer: ManagerAnswer
+    answer_label: str = Field(min_length=1)
+    summary: str = Field(min_length=1)
+    evidence_ids: list[str] = Field(default_factory=list)
+
+
+class PresentedCheck(ContractModel):
+    requirement_id: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    category: FindingCategory
+    status: CheckStatus
+    summary: str = Field(min_length=1)
+    evidence_ids: list[str] = Field(default_factory=list)
+    promoted: bool = False
+
+
+class AcousticObservation(ContractModel):
+    observation_id: str = Field(min_length=1)
+    label: str = Field(min_length=1)
+    summary: str = Field(min_length=1)
+    start_seconds: float | None = Field(default=None, ge=0.0)
+    end_seconds: float | None = Field(default=None, ge=0.0)
+    supporting_only: Literal[True] = True
+
+    @model_validator(mode="after")
+    def validate_time_range(self):
+        if (
+            self.start_seconds is not None
+            and self.end_seconds is not None
+            and self.end_seconds < self.start_seconds
+        ):
+            raise ValueError("acoustic observation has an invalid time range")
+        return self
+
+
+class AcousticContext(ContractModel):
+    status: AcousticStatus
+    coverage_label: str = Field(min_length=1)
+    conclusion: str = Field(min_length=1)
+    observations: list[AcousticObservation] = Field(default_factory=list)
 
 
 class PresentedEvidence(ContractModel):
@@ -109,6 +183,8 @@ class PresentedAction(ContractModel):
     basis_finding_ids: list[str] = Field(min_length=1)
     automation_allowed: bool
     requires_human_approval: bool
+    delivery: Literal["email"] = "email"
+    audience: Literal["manager", "customer"] = "manager"
 
 
 class CompletenessNotice(ContractModel):
@@ -145,6 +221,12 @@ class CallEvaluationView(ContractModel):
     attention_required: bool
     headline: str = Field(min_length=1)
     summary: str = Field(min_length=1)
+    manager_questions: list[ManagerQuestion] = Field(
+        default_factory=list,
+        max_length=4,
+    )
+    checklist: list[PresentedCheck] = Field(default_factory=list)
+    acoustic_context: AcousticContext | None = None
     primary_reasons: list[PresentedFinding] = Field(
         default_factory=list,
         max_length=MAX_PRIMARY_REASONS,
@@ -551,6 +633,43 @@ def _supervisor_order(
     ]
 
 
+def _positive_order(findings: list[Finding]) -> list[Finding]:
+    category_rank = {
+        FindingCategory.OUTCOME: 0,
+        FindingCategory.REQUIRED_CONTROL: 1,
+        FindingCategory.PROCESS: 2,
+        FindingCategory.AGENT_BEHAVIOR: 3,
+        FindingCategory.ESCALATION: 4,
+        FindingCategory.DATA_QUALITY: 5,
+    }
+    return sorted(
+        findings,
+        key=lambda item: (
+            category_rank[item.category],
+            item.display_priority,
+            item.finding_id,
+        ),
+    )
+
+
+def _supervisor_positive_order(
+    findings: list[Finding],
+    selected_ids: list[str],
+) -> list[Finding]:
+    by_id = {item.finding_id: item for item in findings}
+    selected = [
+        by_id[finding_id]
+        for finding_id in selected_ids
+        if finding_id in by_id
+    ]
+    selected_set = {item.finding_id for item in selected}
+    return selected + [
+        item
+        for item in _positive_order(findings)
+        if item.finding_id not in selected_set
+    ]
+
+
 def _verify_supervisor(
     decision: CallDecision,
     supervisor: SupervisorResult | None,
@@ -612,6 +731,26 @@ def _selected_evidence(
     return selected
 
 
+def _finding_outcome(finding: Finding) -> FindingOutcome:
+    if finding.polarity.value == "positive":
+        return FindingOutcome.EFFECTIVE
+    verdict = next(
+        (
+            threshold.value
+            for threshold in finding.detection_rule.thresholds
+            if threshold.signal_name == "assessment.requirement_verdict"
+        ),
+        None,
+    )
+    if verdict == "incorrect":
+        return FindingOutcome.INCORRECT
+    if verdict == "missed":
+        return FindingOutcome.MISSED
+    if finding.category == FindingCategory.ESCALATION:
+        return FindingOutcome.OBSERVED_CONCERN
+    return FindingOutcome.INCORRECT
+
+
 def _presented_finding(
     finding: Finding,
     evidence: list[EvidenceRef],
@@ -628,6 +767,7 @@ def _presented_finding(
         evidence_ids=[item.evidence_id for item in evidence],
         counter_evidence_count=len(finding.counter_evidence),
         reliability_note=reliability_note,
+        outcome=_finding_outcome(finding),
     )
 
 
@@ -684,9 +824,9 @@ def _present_action(decision: CallDecision) -> PresentedAction | None:
     if action.action_type == ActionType.NONE:
         return None
     execution_label = (
-        "Automatic"
+        "Sent automatically after evaluation"
         if action.execution == ActionExecution.AUTOMATIC
-        else "Manager approval required"
+        else "Manager approval required before sending"
     )
     return PresentedAction(
         action_type=action.action_type,
@@ -696,7 +836,333 @@ def _present_action(decision: CallDecision) -> PresentedAction | None:
         basis_finding_ids=action.finding_ids,
         automation_allowed=action.automation_allowed,
         requires_human_approval=action.requires_human_approval,
+        audience=(
+            "customer"
+            if action.action_type == ActionType.CUSTOMER_FOLLOW_UP
+            else "manager"
+        ),
     )
+
+
+def _checklist(
+    decision: CallDecision,
+    promoted_ids: set[str],
+    evidence_preferences: set[str],
+) -> list[PresentedCheck]:
+    findings = [
+        item
+        for item in (
+            decision.triggered_findings + decision.positive_findings
+        )
+        if item.detection_rule.detector
+        == "structured_requirement_assessment"
+        and item.visibility != Visibility.INTERNAL
+    ]
+    rows = []
+    for finding in _ordered(findings):
+        outcome = _finding_outcome(finding)
+        status = {
+            FindingOutcome.EFFECTIVE: CheckStatus.DEMONSTRATED,
+            FindingOutcome.INCORRECT: CheckStatus.INCORRECT,
+            FindingOutcome.MISSED: CheckStatus.NOT_DEMONSTRATED,
+            FindingOutcome.OBSERVED_CONCERN: (
+                CheckStatus.UNABLE_TO_DETERMINE
+            ),
+        }[outcome]
+        evidence = _selected_evidence(
+            finding,
+            evidence_preferences,
+            limit=1,
+        )
+        rows.append(
+            PresentedCheck(
+                requirement_id=finding.applicability.rule_id,
+                title=finding.title,
+                category=finding.category,
+                status=status,
+                summary=finding.summary,
+                evidence_ids=[item.evidence_id for item in evidence],
+                promoted=finding.finding_id in promoted_ids,
+            )
+        )
+    return rows
+
+
+def _signal_value(bundle: SignalBundle, name: str):
+    return next(
+        (
+            signal.value
+            for signal in bundle.signals
+            if signal.name == name
+        ),
+        None,
+    )
+
+
+def _acoustic_context(
+    bundle: SignalBundle | None,
+) -> AcousticContext:
+    if bundle is None:
+        return AcousticContext(
+            status=AcousticStatus.UNAVAILABLE,
+            coverage_label="Audio support unavailable",
+            conclusion=(
+                "The transcript was evaluated without acoustic support."
+            ),
+        )
+    coverage = next(
+        (
+            item
+            for item in bundle.coverage
+            if item.modality == Modality.ACOUSTIC
+            and item.source == "audio_features"
+        ),
+        None,
+    )
+    if coverage is None:
+        coverage = next(
+            (
+                item
+                for item in bundle.coverage
+                if item.modality == Modality.ACOUSTIC
+                and item.source == "emotion_model"
+            ),
+            None,
+        )
+    if coverage is None or coverage.usable_units == 0:
+        return AcousticContext(
+            status=AcousticStatus.UNAVAILABLE,
+            coverage_label="Audio support unavailable",
+            conclusion=(
+                "No reliable acoustic observations were available for this "
+                "call."
+            ),
+        )
+
+    status = (
+        AcousticStatus.AVAILABLE
+        if coverage.coverage_ratio >= 0.5
+        else AcousticStatus.LIMITED
+    )
+    observations = [
+        AcousticObservation(
+            observation_id=episode.episode_id,
+            label="Sustained customer vocal strain",
+            summary=(
+                "Multiple acoustic cues rose together during this interval. "
+                "This supports review of the surrounding conversation but "
+                "does not establish an agent failure on its own."
+            ),
+            start_seconds=episode.start_seconds,
+            end_seconds=episode.end_seconds,
+        )
+        for episode in bundle.episodes
+        if (
+            episode.episode_type == "acoustic.customer_elevation"
+            and episode.speaker == Speaker.CUSTOMER
+            and episode.reliability.status
+            not in (
+                ReliabilityStatus.UNUSABLE,
+                ReliabilityStatus.UNAVAILABLE,
+            )
+        )
+    ]
+    direction = _signal_value(
+        bundle,
+        "acoustic.dynamics.trajectory_direction",
+    )
+    unresolved = _signal_value(
+        bundle,
+        "acoustic.dynamics.unresolved_end_candidate",
+    )
+    if unresolved:
+        conclusion = (
+            "Customer vocal strain remained elevated near the end of the "
+            "call. Read this with the transcript context."
+        )
+    elif direction == "decreasing":
+        conclusion = (
+            "Customer vocal strain eased over the call; the audio supports "
+            "a recovery pattern."
+        )
+    elif observations:
+        conclusion = (
+            "The audio contains sustained customer-strain intervals that "
+            "should be read with the transcript."
+        )
+    else:
+        conclusion = (
+            "No sustained vocal-friction pattern crossed the provisional "
+            "support gate."
+        )
+    return AcousticContext(
+        status=status,
+        coverage_label=(
+            f"Audio support on {coverage.usable_units} of "
+            f"{coverage.expected_units} segments"
+        ),
+        conclusion=conclusion,
+        observations=observations[:3],
+    )
+
+
+def _finding_evidence_ids(findings: list[Finding]) -> list[str]:
+    return list(dict.fromkeys(
+        evidence.evidence_id
+        for finding in findings
+        for evidence in finding.evidence
+    ))[:3]
+
+
+def _question_summary(
+    findings: list[Finding],
+    fallback: str,
+) -> str:
+    if not findings:
+        return fallback
+    return findings[0].summary
+
+
+def _manager_questions(
+    decision: CallDecision,
+    acoustic: AcousticContext,
+) -> list[ManagerQuestion]:
+    all_findings = (
+        decision.triggered_findings + decision.positive_findings
+    )
+    objective = [
+        item
+        for item in all_findings
+        if (
+            item.applicability.rule_id == "request.intent_confirmed"
+            or item.category == FindingCategory.OUTCOME
+        )
+    ]
+    objective_negative = [
+        item for item in objective if item.polarity.value == "negative"
+    ]
+    objective_positive = [
+        item for item in objective if item.polarity.value == "positive"
+    ]
+    if objective_negative:
+        objective_answer = ManagerAnswer.PARTLY
+        objective_label = "Partly"
+    elif objective_positive:
+        objective_answer = ManagerAnswer.YES
+        objective_label = "Yes"
+    else:
+        objective_answer = ManagerAnswer.UNCLEAR
+        objective_label = "Unable to determine"
+
+    workflow = [
+        item
+        for item in all_findings
+        if (
+            item.detection_rule.detector
+            == "structured_requirement_assessment"
+            and item not in objective
+        )
+    ]
+    workflow_negative = [
+        item for item in workflow if item.polarity.value == "negative"
+    ]
+    if any(
+        item.severity.value == "critical"
+        for item in workflow_negative
+    ):
+        workflow_answer = ManagerAnswer.NO
+        workflow_label = "No"
+    elif workflow_negative:
+        workflow_answer = ManagerAnswer.PARTLY
+        workflow_label = "Partly"
+    elif workflow:
+        workflow_answer = ManagerAnswer.YES
+        workflow_label = "Yes"
+    else:
+        workflow_answer = ManagerAnswer.UNCLEAR
+        workflow_label = "Unable to determine"
+
+    friction = [
+        item
+        for item in all_findings
+        if item.category == FindingCategory.ESCALATION
+    ]
+    if friction:
+        friction_answer = ManagerAnswer.YES
+        friction_label = "Concern identified"
+    elif acoustic.status == AcousticStatus.AVAILABLE:
+        friction_answer = ManagerAnswer.NO
+        friction_label = "No concern identified"
+    else:
+        friction_answer = ManagerAnswer.UNCLEAR
+        friction_label = "Unable to determine"
+
+    action = decision.recommended_action
+    needs_action = action.action_type != ActionType.NONE
+    return [
+        ManagerQuestion(
+            question_id="call.objective",
+            question="Did the agent understand and address the objective?",
+            answer=objective_answer,
+            answer_label=objective_label,
+            summary=_question_summary(
+                objective_negative or objective_positive,
+                "The available evidence did not resolve the call objective.",
+            ),
+            evidence_ids=_finding_evidence_ids(objective),
+        ),
+        ManagerQuestion(
+            question_id="call.workflow",
+            question="Did the agent follow the applicable workflow?",
+            answer=workflow_answer,
+            answer_label=workflow_label,
+            summary=(
+                _question_summary(
+                    workflow_negative,
+                    "No applicable workflow checks were available.",
+                )
+                if workflow_negative
+                else (
+                    f"All {len(workflow)} applicable workflow checks were "
+                    "demonstrated."
+                    if workflow
+                    else "No applicable workflow checks were available."
+                )
+            ),
+            evidence_ids=_finding_evidence_ids(workflow),
+        ),
+        ManagerQuestion(
+            question_id="call.friction",
+            question="Did the interaction introduce customer friction?",
+            answer=friction_answer,
+            answer_label=friction_label,
+            summary=_question_summary(
+                friction,
+                acoustic.conclusion,
+            ),
+            evidence_ids=_finding_evidence_ids(friction),
+        ),
+        ManagerQuestion(
+            question_id="call.follow_up",
+            question="Is follow-up, coaching, or customer action required?",
+            answer=(
+                ManagerAnswer.YES if needs_action else ManagerAnswer.NO
+            ),
+            answer_label="Yes" if needs_action else "No",
+            summary=(
+                action.label
+                if needs_action
+                else "No evidence-backed action was triggered."
+            ),
+            evidence_ids=_finding_evidence_ids(
+                [
+                    item
+                    for item in decision.triggered_findings
+                    if item.finding_id in action.finding_ids
+                ]
+            ),
+        ),
+    ]
 
 
 def _completeness_notice(
@@ -727,8 +1193,9 @@ def _completeness_notice(
 def project_call_evaluation(
     decision: CallDecision,
     supervisor: SupervisorResult | None = None,
+    bundle: SignalBundle | None = None,
 ) -> CallEvaluationView:
-    """Project a decision into the minimal call-evaluator page contract."""
+    """Project a decision into the manager-facing call evaluator contract."""
     _verify_supervisor(decision, supervisor)
     controlling_ids = set(
         decision.decision_trace.controlling_finding_ids
@@ -759,12 +1226,13 @@ def project_call_evaluation(
         for item in decision.positive_findings
         if item.visibility != Visibility.INTERNAL
     ]
-    visible_positive = _supervisor_order(
+    visible_positive = _supervisor_positive_order(
         visible_positive,
         supervisor.positive_finding_ids if supervisor else [],
     )
     positive_source = visible_positive[:MAX_POSITIVE_HIGHLIGHTS]
     positive_ids = {item.finding_id for item in positive_source}
+    promoted_ids = primary_ids | positive_ids
     evidence_preferences = set(
         supervisor.evidence_ids if supervisor else []
     )
@@ -875,6 +1343,7 @@ def project_call_evaluation(
         if item.evidence_id not in primary_evidence_ids
     ]
     headline, summary = _copy(decision)
+    acoustic = _acoustic_context(bundle)
     return CallEvaluationView(
         presentation_version=PRESENTATION_VERSION,
         call_id=decision.call_id,
@@ -884,6 +1353,13 @@ def project_call_evaluation(
         attention_required=decision.attention_required,
         headline=headline,
         summary=summary,
+        manager_questions=_manager_questions(decision, acoustic),
+        checklist=_checklist(
+            decision,
+            promoted_ids,
+            evidence_preferences,
+        ),
+        acoustic_context=acoustic,
         primary_reasons=primary,
         additional_reason_count=len(additional_negative),
         positive_highlights=positives,

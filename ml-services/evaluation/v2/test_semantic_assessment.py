@@ -36,7 +36,7 @@ def _bundle():
     })
 
 
-def _plan():
+def _plan(identity_required=False):
     profile = DomainProfile.model_validate_json(
         PROFILE_PATH.read_text(encoding="utf-8")
     )
@@ -48,6 +48,7 @@ def _plan():
             facts={
                 "request.executes_transaction": True,
                 "transfer.executed_during_call": True,
+                "policy.requires_identity_challenge": identity_required,
             },
             selection_method="test",
         ),
@@ -147,48 +148,15 @@ class SemanticAssessmentTests(unittest.TestCase):
 
         self.assertEqual(len(batch.assessments), len(plan.requirements))
 
-    def test_account_identifiers_do_not_satisfy_identity_verification(self):
-        bundle = build_signal_bundle({
-            "call_id": "semantic-test",
-            "domain": "banking",
-            "sentences": [
-                {
-                    "id": "AGENT_001",
-                    "speaker": "AGENT",
-                    "start": 0.0,
-                    "end": 2.0,
-                    "text": "May I have your checking account number?",
-                },
-                {
-                    "id": "CUSTOMER_001",
-                    "speaker": "CUSTOMER",
-                    "start": 2.1,
-                    "end": 4.0,
-                    "text": "It is 123456.",
-                },
-            ],
-        })
+    def test_identity_requirement_is_excluded_without_policy(self):
         plan = _plan()
 
-        batch = assess_requirements(
-            bundle,
-            plan,
-            completion=lambda _system, _user, _tier: (
-                _response(plan),
-                "test-model",
-            ),
-        )
-
-        identity = next(
-            item
-            for item in batch.assessments
-            if item.requirement_id
-            == "security.transaction_identity_verified"
-        )
-        self.assertEqual(identity.verdict.value, "missed")
-        self.assertEqual(
-            identity.evidence[0].segment_ids,
-            ["AGENT_001"],
+        self.assertNotIn(
+            "security.transaction_identity_verified",
+            {
+                requirement.requirement_id
+                for requirement in plan.requirements
+            },
         )
 
     def test_challenge_and_response_can_satisfy_identity_verification(self):
@@ -212,7 +180,7 @@ class SemanticAssessmentTests(unittest.TestCase):
                 },
             ],
         })
-        plan = _plan()
+        plan = _plan(identity_required=True)
 
         batch = assess_requirements(
             bundle,
