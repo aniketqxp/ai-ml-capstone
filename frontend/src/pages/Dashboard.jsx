@@ -65,28 +65,47 @@ function AspectMark({ aspect, label }) {
     ok: {
       Icon: Check,
       label: `${label}: satisfactory`,
-      cls: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+      cls: 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:border-emerald-600 dark:bg-emerald-950 dark:text-emerald-300',
     },
     concern: {
       Icon: TriangleAlert,
       label: `${label}: concern`,
-      cls: 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
+      cls: 'border-red-400 bg-red-50 text-red-700 dark:border-red-700 dark:bg-red-950 dark:text-red-300',
     },
     uncertain: {
       Icon: CircleHelp,
       label: `${label}: insufficient evidence`,
-      cls: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+      cls: 'border-amber-400 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-300',
     },
   }[state];
   const { Icon } = config;
   return (
     <span
-      className={`mx-auto flex h-8 w-8 items-center justify-center rounded-sm border ${config.cls}`}
+      className={`mx-auto flex h-7 w-7 items-center justify-center rounded-full border ${config.cls}`}
       title={aspect?.summary || config.label}
       aria-label={config.label}
     >
-      <Icon className="h-4 w-4" aria-hidden="true" />
+      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
     </span>
+  );
+}
+
+function SignalLegend() {
+  const items = [
+    ['Clear', CircleCheck, 'text-emerald-600 dark:text-emerald-400'],
+    ['Review', TriangleAlert, 'text-red-600 dark:text-red-400'],
+    ['Uncertain', CircleHelp, 'text-amber-600 dark:text-amber-400'],
+    ['Processing', LoaderCircle, 'text-[#1557ff] dark:text-blue-300'],
+  ];
+  return (
+    <div className="flex items-center justify-center gap-5 normal-case sm:gap-7" aria-label="Signal legend">
+      {items.map(([label, Icon, tone]) => (
+        <span key={label} className="inline-flex items-center gap-1.5 whitespace-nowrap text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+          <Icon className={`h-3.5 w-3.5 ${tone}`} aria-hidden="true" />
+          {label}
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -403,7 +422,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="w-full flex-grow p-4 sm:p-6">
+      <main className="w-full flex-grow p-4 sm:p-5">
         {loadError && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{loadError}</p>}
         {!calls && !loadError && <p className="text-sm text-slate-500">Loading calls...</p>}
 
@@ -411,7 +430,7 @@ export default function Dashboard() {
           <>
             <PipelineActivity calls={activeCalls} />
 
-            <section className="mb-5 grid grid-cols-2 border-y border-slate-300 text-sm sm:grid-cols-5 dark:border-slate-700" aria-label="Evaluation summary">
+            <section className="mb-4 grid grid-cols-2 border border-slate-300 text-sm sm:grid-cols-5 dark:border-slate-700" aria-label="Evaluation summary">
               {[
                 [evaluated.length, 'Evaluated', 'text-slate-950 dark:text-white'],
                 [counts.review, 'Review', 'text-red-700 dark:text-red-300'],
@@ -419,14 +438,14 @@ export default function Dashboard() {
                 [counts.ok, 'Clear', 'text-emerald-700 dark:text-emerald-300'],
                 [counts.processing, 'Processing', 'text-[#1557ff] dark:text-blue-300'],
               ].map(([value, label, tone], index) => (
-                <span key={label} className={`px-4 py-3 ${index ? 'border-l border-slate-300 dark:border-slate-700' : ''}`}>
-                  <strong className={`block font-mono text-xl font-semibold ${tone}`}>{value}</strong>
+                <span key={label} className={`px-4 py-4 ${index ? 'border-l border-slate-300 dark:border-slate-700' : ''}`}>
+                  <strong className={`block font-mono text-2xl font-semibold ${tone}`}>{value}</strong>
                   <span className="mt-0.5 block text-[10px] font-bold uppercase text-slate-500">{label}</span>
                 </span>
               ))}
             </section>
 
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div className="mb-3 flex min-h-10 flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="inline-flex rounded-sm border border-slate-300 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-950" aria-label="Call visibility">
                   {[
@@ -472,17 +491,22 @@ export default function Dashboard() {
             </div>
 
             <div className="overflow-x-auto border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950">
-              <table className="w-full min-w-[980px] text-sm">
+              <table className="w-full min-w-[1120px] table-fixed text-sm">
                 <thead>
-                  <tr className="border-b border-slate-300 bg-slate-100 text-left text-[11px] uppercase text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                    <th className="w-11 px-3 py-3"><span className="sr-only">Select</span></th>
-                    <th className="px-3 py-3 font-semibold">Call</th>
+                  <tr className="bg-slate-100 text-left text-[11px] uppercase text-slate-600 dark:bg-slate-900 dark:text-slate-300">
+                    <th rowSpan={2} className="w-[4%] border-b border-r border-slate-300 px-3 py-3 dark:border-slate-700"><span className="sr-only">Select</span></th>
+                    <th rowSpan={2} className="w-[30%] border-b border-r border-slate-300 px-4 py-3 font-semibold dark:border-slate-700">Call</th>
                     {ASPECTS.map(([key, label]) => (
-                      <th key={key} className="w-24 px-3 py-3 text-center font-semibold">{label}</th>
+                      <th key={key} className="w-[10%] px-3 pb-1 pt-3 text-center font-semibold">{label}</th>
                     ))}
-                    <th className="w-24 px-3 py-3 text-center font-semibold">Concerns</th>
-                    <th className="w-28 px-3 py-3 font-semibold">Result</th>
-                    <th className="w-36 px-3 py-3 text-center font-semibold">Status</th>
+                    <th rowSpan={2} className="w-[8%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Concerns</th>
+                    <th rowSpan={2} className="w-[9%] border-b border-l border-slate-300 px-3 py-3 font-semibold dark:border-slate-700">Result</th>
+                    <th rowSpan={2} className="w-[9%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Status</th>
+                  </tr>
+                  <tr className="border-b border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-900">
+                    <th colSpan={4} className="px-3 pb-3 pt-1">
+                      <SignalLegend />
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -497,7 +521,7 @@ export default function Dashboard() {
                     const result = callResult(call);
                     return (
                       <tr key={call.call_id} className="border-b border-slate-200 transition-colors last:border-0 hover:bg-blue-50/60 dark:border-slate-800 dark:hover:bg-blue-950/20">
-                        <td className="px-3 py-3 text-center">
+                        <td className={`border-l-4 px-3 py-3 text-center ${result === 'review' ? 'border-l-red-500' : 'border-l-transparent'}`}>
                           {selectable && (
                             <input
                               type="checkbox"
@@ -508,7 +532,7 @@ export default function Dashboard() {
                             />
                           )}
                         </td>
-                        <td className="px-3 py-3">
+                        <td className="border-r border-slate-200 px-4 py-3 dark:border-slate-800">
                           {call.evaluation_available ? (
                             <Link to={`/calls/${call.call_id}`} className="font-mono text-xs font-bold text-[#1557ff] hover:underline dark:text-blue-300">
                               {call.call_id}
@@ -525,7 +549,7 @@ export default function Dashboard() {
                             {call.evaluation_available ? <AspectMark aspect={call.aspects?.[key]} label={label} /> : <span className="text-slate-300">-</span>}
                           </td>
                         ))}
-                        <td className="px-3 py-3 text-center">
+                        <td className="border-l border-slate-200 px-3 py-3 text-center dark:border-slate-800">
                           {call.evaluation_available ? (
                             <span className={`inline-flex items-center justify-center gap-1.5 font-mono font-semibold ${(call.concern_count || 0) > 0 ? 'text-red-700 dark:text-red-300' : 'text-slate-500'}`}>
                               {call.concern_count || 0}
@@ -535,8 +559,8 @@ export default function Dashboard() {
                             </span>
                           ) : <span className="text-slate-300">-</span>}
                         </td>
-                        <td className="px-3 py-3"><ResultBadge result={result} /></td>
-                        <td className="px-3 py-3 text-center"><StatusMark call={call} /></td>
+                        <td className="border-l border-slate-200 px-3 py-3 dark:border-slate-800"><ResultBadge result={result} /></td>
+                        <td className="border-l border-slate-200 px-3 py-3 text-center dark:border-slate-800"><StatusMark call={call} /></td>
                       </tr>
                     );
                   })}
