@@ -273,6 +273,55 @@ test('restores word-level playback highlighting', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('resizes desktop analysis and chapter panels within their limits', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => {
+    localStorage.removeItem('evaluator-v2:analysis-width');
+    localStorage.removeItem('evaluator-v2:chapters-width');
+  });
+  await page.goto(CALL_PATH);
+
+  const analysisPanel = page.locator('#analysis-panel');
+  const analysisHandle = page.getByRole('separator', {
+    name: 'Resize analysis panel',
+  });
+  const analysisBefore = await analysisPanel.boundingBox();
+  const analysisGrip = await analysisHandle.boundingBox();
+  expect(analysisBefore).not.toBeNull();
+  expect(analysisGrip).not.toBeNull();
+  await page.mouse.move(
+    analysisGrip.x + analysisGrip.width / 2,
+    analysisGrip.y + analysisGrip.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    analysisGrip.x + analysisGrip.width / 2 + 72,
+    analysisGrip.y + analysisGrip.height / 2,
+  );
+  await page.mouse.up();
+  const analysisAfter = await analysisPanel.boundingBox();
+  expect(analysisAfter.width).toBeGreaterThan(analysisBefore.width);
+  expect(analysisAfter.width).toBeLessThanOrEqual(620);
+
+  const chaptersPanel = page.locator('#chapters-panel');
+  const chaptersHandle = page.getByRole('separator', {
+    name: 'Resize chapters panel',
+  });
+  const chaptersBefore = await chaptersPanel.boundingBox();
+  await chaptersHandle.focus();
+  await chaptersHandle.press('ArrowLeft');
+  const chaptersAfter = await chaptersPanel.boundingBox();
+  expect(chaptersAfter.width).toBeGreaterThan(chaptersBefore.width);
+  expect(chaptersAfter.width).toBeLessThanOrEqual(300);
+
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(overflow).toBe(false);
+});
+
 test('fits the v2 call page on a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.route('**/evaluation-v2/en_CA_Banking_1586889.json', (route) =>
@@ -280,6 +329,12 @@ test('fits the v2 call page on a mobile viewport', async ({ page }) => {
   );
   await page.goto(CALL_PATH);
   await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole('separator', { name: 'Resize analysis panel' }),
+  ).toBeHidden();
+  await expect(
+    page.getByRole('separator', { name: 'Resize chapters panel' }),
+  ).toBeHidden();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth,
   );

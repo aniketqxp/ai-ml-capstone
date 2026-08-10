@@ -7,6 +7,7 @@ import {
   ChevronDown,
   CircleHelp,
   FileQuestion,
+  GripVertical,
   ListChecks,
   Mail,
   Minus,
@@ -62,6 +63,107 @@ const STATE_COPY = {
 
 function classNames(...values) {
   return values.filter(Boolean).join(' ');
+}
+
+function useResizableWidth({ initial, min, max, storageKey, invert = false }) {
+  const resolveMax = useCallback(
+    () => Math.max(min, typeof max === 'function' ? max() : max),
+    [max, min],
+  );
+  const clamp = useCallback(
+    (value) => Math.min(resolveMax(), Math.max(min, value)),
+    [min, resolveMax],
+  );
+  const [width, setWidth] = useState(() => {
+    try {
+      const saved = Number(window.localStorage.getItem(storageKey));
+      return clamp(Number.isFinite(saved) && saved > 0 ? saved : initial);
+    } catch {
+      return clamp(initial);
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(storageKey, String(width));
+    } catch {
+      // Resizing still works when browser storage is unavailable.
+    }
+  }, [storageKey, width]);
+
+  useEffect(() => {
+    const constrain = () => setWidth((value) => clamp(value));
+    window.addEventListener('resize', constrain);
+    return () => window.removeEventListener('resize', constrain);
+  }, [clamp]);
+
+  const startResize = useCallback((event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    const originX = event.clientX;
+    const originWidth = width;
+    const previousCursor = document.body.style.cursor;
+    const previousSelection = document.body.style.userSelect;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    const move = (moveEvent) => {
+      const delta = (moveEvent.clientX - originX) * (invert ? -1 : 1);
+      setWidth(clamp(originWidth + delta));
+    };
+    const stop = () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', stop);
+      document.body.style.cursor = previousCursor;
+      document.body.style.userSelect = previousSelection;
+    };
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', stop);
+  }, [clamp, invert, width]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === 'Home') {
+      setWidth(clamp(initial));
+      return;
+    }
+    const physicalDelta = event.key === 'ArrowRight' ? 16 : -16;
+    setWidth((value) => clamp(
+      value + physicalDelta * (invert ? -1 : 1),
+    ));
+  }, [clamp, initial, invert]);
+
+  return {
+    width,
+    min,
+    max: resolveMax(),
+    startResize,
+    handleKeyDown,
+    reset: () => setWidth(clamp(initial)),
+  };
+}
+
+function ResizeHandle({ label, controls, resize }) {
+  return (
+    <div
+      role="separator"
+      aria-label={label}
+      aria-controls={controls}
+      aria-orientation="vertical"
+      aria-valuemin={resize.min}
+      aria-valuemax={resize.max}
+      aria-valuenow={Math.round(resize.width)}
+      tabIndex={0}
+      onPointerDown={resize.startResize}
+      onKeyDown={resize.handleKeyDown}
+      onDoubleClick={resize.reset}
+      title="Drag to resize. Double-click to reset."
+      className="group relative hidden cursor-col-resize items-center justify-center bg-slate-100 text-slate-400 outline-none transition hover:bg-blue-50 hover:text-[#1557ff] focus:bg-blue-50 focus:text-[#1557ff] lg:flex dark:bg-slate-900 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
+    >
+      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-slate-300 group-hover:bg-[#1557ff] group-focus:bg-[#1557ff] dark:bg-slate-700" />
+      <GripVertical size={13} className="relative z-10" aria-hidden="true" />
+    </div>
+  );
 }
 
 function usefulSupportingCopy(value) {
@@ -963,11 +1065,9 @@ function ChapterSidebar({
   if (!chapters.length) return null;
   return (
     <nav
+      id="chapters-panel"
       aria-label="Call chapters"
-      className={classNames(
-        'order-first w-full min-w-0 max-w-full overflow-hidden border-b border-slate-200 bg-white transition-[width] duration-200 lg:order-none lg:h-full lg:border-b-0 lg:border-l dark:border-slate-800 dark:bg-slate-950',
-        open ? 'lg:w-56' : 'lg:w-14',
-      )}
+      className="order-first w-full min-w-0 max-w-full overflow-hidden border-b border-slate-200 bg-white lg:order-none lg:h-full lg:border-b-0 lg:border-l dark:border-slate-800 dark:bg-slate-950"
     >
       <div className="flex h-12 items-center justify-between border-b border-slate-200 px-3 dark:border-slate-800">
         {open && (
@@ -1062,6 +1162,13 @@ function Transcript({
   scrollRef,
 }) {
   const [chaptersOpen, setChaptersOpen] = useState(true);
+  const chapterResize = useResizableWidth({
+    initial: 224,
+    min: 176,
+    max: 300,
+    storageKey: 'evaluator-v2:chapters-width',
+    invert: true,
+  });
   const activeIndex = useMemo(() => {
     let active = -1;
     for (let index = 0; index < turns.length; index += 1) {
@@ -1091,13 +1198,16 @@ function Transcript({
 
   return (
     <section className="min-w-0 bg-white lg:h-full lg:overflow-hidden dark:bg-slate-950">
-      <div className={classNames(
-        'grid grid-cols-[minmax(0,1fr)] lg:h-full',
-        chaptersOpen
-          ? 'lg:grid-cols-[minmax(0,1fr)_14rem]'
-          : 'lg:grid-cols-[minmax(0,1fr)_3.5rem]',
-      )}>
-        <div className="min-w-0 lg:flex lg:min-h-0 lg:flex-col">
+      <div
+        style={{ '--chapters-width': `${chapterResize.width}px` }}
+        className={classNames(
+          'grid grid-cols-[minmax(0,1fr)] lg:h-full',
+          chaptersOpen
+            ? 'lg:grid-cols-[minmax(0,1fr)_10px_var(--chapters-width)]'
+            : 'lg:grid-cols-[minmax(0,1fr)_3.5rem]',
+        )}
+      >
+        <div id="conversation-panel" className="min-w-0 lg:flex lg:min-h-0 lg:flex-col">
           <div className="flex min-h-12 items-center justify-between border-b border-slate-200 px-5 dark:border-slate-800">
             <div className="min-w-0">
               <h2 className="text-sm font-bold text-slate-950 dark:text-white">
@@ -1225,6 +1335,13 @@ function Transcript({
             </div>
           </div>
         </div>
+        {chaptersOpen && (
+          <ResizeHandle
+            label="Resize chapters panel"
+            controls="chapters-panel"
+            resize={chapterResize}
+          />
+        )}
         <ChapterSidebar
           chapters={chapters}
           currentTime={currentTime}
@@ -1254,6 +1371,16 @@ export default function EvaluatorV2CallDetail() {
   const [feedbackStatus, setFeedbackStatus] = useState('');
   const [emailBusy, setEmailBusy] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const analysisMax = useCallback(() => {
+    if (window.innerWidth < 1024) return 620;
+    return Math.min(620, window.innerWidth - 650);
+  }, []);
+  const analysisResize = useResizableWidth({
+    initial: 500,
+    min: 340,
+    max: analysisMax,
+    storageKey: 'evaluator-v2:analysis-width',
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -1482,8 +1609,14 @@ export default function EvaluatorV2CallDetail() {
         onSeek={seek}
       />
 
-      <main className="grid w-full grid-cols-1 lg:h-[calc(100vh-9.25rem)] lg:grid-cols-[minmax(360px,36%)_minmax(0,1fr)] lg:overflow-hidden">
-        <aside className="border-b border-slate-300 bg-white lg:overflow-y-auto lg:border-b-0 lg:border-r dark:border-slate-700 dark:bg-slate-950">
+      <main
+        style={{ '--analysis-width': `${analysisResize.width}px` }}
+        className="grid w-full grid-cols-1 lg:h-[calc(100vh-9.25rem)] lg:grid-cols-[var(--analysis-width)_10px_minmax(0,1fr)] lg:overflow-hidden"
+      >
+        <aside
+          id="analysis-panel"
+          className="border-b border-slate-300 bg-white lg:overflow-y-auto lg:border-b-0 lg:border-r dark:border-slate-700 dark:bg-slate-950"
+        >
           <StatusSection view={view} />
           <ManagerQuestions
             questions={view.manager_questions || []}
@@ -1544,6 +1677,11 @@ export default function EvaluatorV2CallDetail() {
           )}
           <DetailsSection view={view} run={run} />
         </aside>
+        <ResizeHandle
+          label="Resize analysis panel"
+          controls="analysis-panel"
+          resize={analysisResize}
+        />
         <Transcript
           turns={callData.turns || []}
           chapters={callData.chapters || []}
