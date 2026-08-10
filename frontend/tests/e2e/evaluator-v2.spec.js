@@ -91,7 +91,7 @@ function attentionFixture() {
       question: 'Did the interaction introduce customer friction?',
       answer: 'unclear',
       answer_label: 'Unable to determine',
-      summary: 'Audio support was limited.',
+      summary: '2 customer segments matched a high-precision explicit-text rule.',
       evidence_ids: [],
     },
     {
@@ -177,11 +177,11 @@ test('renders a complete evidence-gated evaluation', async ({ page }) => {
   await expect(page.getByText('Voice & sentiment')).toBeVisible();
   await expect(page.getByText('Pauses', { exact: true })).toBeVisible();
   await expect(page.getByText('13.3%', { exact: true })).toBeVisible();
-  await expect(page.getByText('positive', { exact: true }).first()).toBeVisible();
   expect(
     await page.locator('.turn-bubble').first()
-      .getByText('positive', { exact: true }).count(),
+      .locator('[data-sentiment="positive"]').count(),
   ).toBeGreaterThan(1);
+  await expect(page.getByText('positive', { exact: true })).toHaveCount(0);
   await expect(
     page.getByRole('navigation', { name: 'Call chapters' }),
   ).toBeVisible();
@@ -226,6 +226,15 @@ test('renders layered attention, evidence, and email action', async ({
   });
   await page.goto(CALL_PATH);
   await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText('One evidence-backed finding requires review.', { exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText(
+      '2 customer segments matched a high-precision explicit-text rule.',
+      { exact: true },
+    ),
+  ).toHaveCount(0);
   await expect(
     page.getByRole('heading', {
       name: 'Transfer amount confirmed incorrectly',

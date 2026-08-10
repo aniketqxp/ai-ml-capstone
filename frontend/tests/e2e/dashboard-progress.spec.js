@@ -176,8 +176,11 @@ test('allows a completed call to be deliberately run again', async ({
   );
 
   await page.goto('/');
-  await expect(page.getByText('Sentiment', { exact: true })).toBeVisible();
-  await expect(page.getByText('Voice signals', { exact: true })).toBeVisible();
+  const legend = page.getByLabel('Signal legend');
+  await expect(legend).toBeVisible();
+  expect(await legend.evaluate((element) => element.closest('table') === null)).toBe(true);
+  await expect(page.getByText('Sentiment', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Voice signals', { exact: true })).toHaveCount(0);
   await expect(page.locator('tbody tr').first()).toContainText(PUBLIC_CALL_ID);
   await page.getByRole('checkbox', {
     name: `Select ${PUBLIC_CALL_ID}`,

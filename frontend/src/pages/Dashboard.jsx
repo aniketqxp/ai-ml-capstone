@@ -388,8 +388,6 @@ export default function Dashboard() {
     uncertain: evaluated.filter((call) => call.result === 'uncertain').length,
     ok: evaluated.filter((call) => call.result === 'ok').length,
     processing: activeCalls.length,
-    sentiment: evaluated.filter((call) => call.sentiment_available).length,
-    voice: evaluated.filter((call) => call.has_audio_features).length,
   };
 
   const sorted = useMemo(() => {
@@ -434,14 +432,12 @@ export default function Dashboard() {
           <>
             <PipelineActivity calls={activeCalls} />
 
-            <section className="mb-4 grid grid-cols-2 border border-slate-300 text-sm sm:grid-cols-4 xl:grid-cols-7 dark:border-slate-700" aria-label="Evaluation summary">
+            <section className="mb-4 grid grid-cols-2 border border-slate-300 text-sm sm:grid-cols-5 dark:border-slate-700" aria-label="Evaluation summary">
               {[
                 [evaluated.length, 'Evaluated', 'text-slate-950 dark:text-white'],
                 [counts.review, 'Review', 'text-red-700 dark:text-red-300'],
                 [counts.uncertain, 'Uncertain', 'text-amber-700 dark:text-amber-300'],
                 [counts.ok, 'Clear', 'text-emerald-700 dark:text-emerald-300'],
-                [counts.sentiment, 'Sentiment', 'text-violet-700 dark:text-violet-300'],
-                [counts.voice, 'Voice signals', 'text-cyan-700 dark:text-cyan-300'],
                 [counts.processing, 'Processing', 'text-[#1557ff] dark:text-blue-300'],
               ].map(([value, label, tone], index) => (
                 <span key={label} className={`border-b border-slate-300 px-4 py-4 dark:border-slate-700 ${index ? 'border-l' : ''}`}>
@@ -481,38 +477,36 @@ export default function Dashboard() {
                   <option value="processing">Processing</option>
                 </select>
               </div>
-              <button
-                type="button"
-                onClick={analyzeSelected}
-                disabled={!selected.size || submitting}
-                className="inline-flex h-9 min-w-36 items-center justify-center gap-2 rounded bg-[#1557ff] px-4 text-sm font-bold text-white transition hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                {submitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
-                {submitting
-                  ? 'Queueing'
-                  : selected.size
-                    ? `Analyze ${selected.size} ${selected.size === 1 ? 'call' : 'calls'}`
-                    : 'Analyze'}
-              </button>
+              <div className="flex flex-wrap items-center gap-5">
+                <SignalLegend />
+                <button
+                  type="button"
+                  onClick={analyzeSelected}
+                  disabled={!selected.size || submitting}
+                  className="inline-flex h-9 min-w-36 items-center justify-center gap-2 rounded bg-[#1557ff] px-4 text-sm font-bold text-white transition hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {submitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+                  {submitting
+                    ? 'Queueing'
+                    : selected.size
+                      ? `Analyze ${selected.size} ${selected.size === 1 ? 'call' : 'calls'}`
+                      : 'Analyze'}
+                </button>
+              </div>
             </div>
 
             <div className="overflow-x-auto border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950">
               <table className="w-full min-w-[1120px] table-fixed text-sm">
                 <thead>
                   <tr className="bg-slate-100 text-left text-[11px] uppercase text-slate-600 dark:bg-slate-900 dark:text-slate-300">
-                    <th rowSpan={2} className="w-[4%] border-b border-r border-slate-300 px-3 py-3 dark:border-slate-700"><span className="sr-only">Select</span></th>
-                    <th rowSpan={2} className="w-[30%] border-b border-r border-slate-300 px-4 py-3 font-semibold dark:border-slate-700">Call</th>
+                    <th className="w-[4%] border-b border-r border-slate-300 px-3 py-3 dark:border-slate-700"><span className="sr-only">Select</span></th>
+                    <th className="w-[30%] border-b border-r border-slate-300 px-4 py-3 font-semibold dark:border-slate-700">Call</th>
                     {ASPECTS.map(([key, label]) => (
-                      <th key={key} className="w-[10%] px-3 pb-1 pt-3 text-center font-semibold">{label}</th>
+                      <th key={key} className="w-[10%] border-b border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">{label}</th>
                     ))}
-                    <th rowSpan={2} className="w-[8%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Concerns</th>
-                    <th rowSpan={2} className="w-[9%] border-b border-l border-slate-300 px-3 py-3 font-semibold dark:border-slate-700">Result</th>
-                    <th rowSpan={2} className="w-[9%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Status</th>
-                  </tr>
-                  <tr className="border-b border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-900">
-                    <th colSpan={4} className="px-3 pb-3 pt-1">
-                      <SignalLegend />
-                    </th>
+                    <th className="w-[8%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Concerns</th>
+                    <th className="w-[9%] border-b border-l border-slate-300 px-3 py-3 font-semibold dark:border-slate-700">Result</th>
+                    <th className="w-[9%] border-b border-l border-slate-300 px-3 py-3 text-center font-semibold dark:border-slate-700">Status</th>
                   </tr>
                 </thead>
                 <tbody>
