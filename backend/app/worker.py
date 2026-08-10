@@ -327,7 +327,11 @@ def _run_job(job_id):
 
         from app.pipeline_bridge import get_process_call
         process_call = get_process_call()
-        artifacts = process_call(spec, progress=progress)
+        artifacts = process_call(
+            spec,
+            progress=progress,
+            enable_acoustic=True,
+        )
 
         _set(db, job, stage="uploading")
         keys = _upload_artifacts(public_id, artifacts)
