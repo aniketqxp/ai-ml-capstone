@@ -9,6 +9,7 @@ Run test from ml-services:
     python -m src.test_emotion_predictor
 """
 
+import os
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -98,6 +99,10 @@ class EmotionPredictor:
     @staticmethod
     def _get_device() -> torch.device:
         """Select the best available device."""
+        requested = os.environ.get("ACOUSTIC_DEVICE", "auto").strip().lower()
+        if requested != "auto":
+            return torch.device(requested)
+
         if torch.cuda.is_available():
             return torch.device("cuda")
 
