@@ -12,6 +12,8 @@ import {
   Mail,
   Minus,
   Pause,
+  PanelRightClose,
+  PanelRightOpen,
   Play,
   ShieldCheck,
   Volume2,
@@ -25,6 +27,7 @@ import {
   useState,
 } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import WaveSurfer from 'wavesurfer.js';
 
 import { apiUrl } from '../api';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -34,26 +37,26 @@ const STATE_COPY = {
   needs_attention: {
     label: 'Needs attention',
     icon: AlertTriangle,
-    tone: 'border-red-300 bg-red-50 text-red-900 dark:border-red-900 dark:bg-red-950/40 dark:text-red-100',
-    iconTone: 'text-red-600 dark:text-red-400',
+    tone: 'border-red-800 bg-red-700 text-white dark:border-red-500 dark:bg-red-700 dark:text-white',
+    iconTone: 'text-white',
   },
   no_attention_finding: {
     label: 'No review finding identified',
     icon: ShieldCheck,
-    tone: 'border-emerald-300 bg-emerald-50 text-emerald-950 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100',
-    iconTone: 'text-emerald-600 dark:text-emerald-400',
+    tone: 'border-emerald-800 bg-emerald-700 text-white dark:border-emerald-500 dark:bg-emerald-700 dark:text-white',
+    iconTone: 'text-white',
   },
   evaluation_incomplete: {
     label: 'Evaluation incomplete',
     icon: FileQuestion,
-    tone: 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100',
-    iconTone: 'text-amber-600 dark:text-amber-400',
+    tone: 'border-amber-600 bg-amber-400 text-slate-950 dark:border-amber-400 dark:bg-amber-400 dark:text-slate-950',
+    iconTone: 'text-slate-950',
   },
   evaluation_unavailable: {
     label: 'Evaluation unavailable',
     icon: FileQuestion,
-    tone: 'border-slate-300 bg-slate-50 text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100',
-    iconTone: 'text-slate-500',
+    tone: 'border-slate-800 bg-slate-800 text-white dark:border-slate-600 dark:bg-slate-800 dark:text-white',
+    iconTone: 'text-white',
   },
 };
 
@@ -173,17 +176,41 @@ function AudioPlayer({
   onToggle,
   onSeek,
 }) {
-  const progress = duration ? (currentTime / duration) * 100 : 0;
+  const waveformRef = useRef(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    const container = waveformRef.current;
+    if (!audio || !container) return undefined;
+
+    const wavesurfer = WaveSurfer.create({
+      container,
+      media: audio,
+      height: 52,
+      waveColor: '#cbd5e1',
+      progressColor: '#1557ff',
+      cursorColor: '#1557ff',
+      cursorWidth: 2,
+      barWidth: 2,
+      barGap: 2,
+      barRadius: 2,
+      normalize: true,
+      interact: false,
+    });
+
+    return () => wavesurfer.destroy();
+  }, [audioRef, callId]);
+
   return (
     <section
       aria-label="Call audio"
       className="border-y border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
+      <div className="flex w-full items-center gap-3 px-4 py-3 sm:gap-4 sm:px-5">
         <button
           type="button"
           onClick={onToggle}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-[#1557ff] text-white transition duration-200 hover:bg-blue-700 active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1557ff]"
           title={isPlaying ? 'Pause call' : 'Play call'}
           aria-label={isPlaying ? 'Pause call' : 'Play call'}
         >
@@ -193,12 +220,14 @@ function AudioPlayer({
             <Play size={18} fill="currentColor" className="ml-0.5" />
           )}
         </button>
-        <Volume2
-          size={17}
-          className="hidden shrink-0 text-slate-400 sm:block"
-          aria-hidden="true"
-        />
-        <div className="min-w-0 flex-1">
+        <div className="hidden items-center gap-3 sm:flex">
+          <Volume2 size={18} className="text-slate-700 dark:text-slate-300" aria-hidden="true" />
+          <span className="w-20 font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
+            {fmt(currentTime)} / {fmt(duration)}
+          </span>
+        </div>
+        <div className="relative min-w-0 flex-1 py-1">
+          <div ref={waveformRef} className="pointer-events-none h-[52px] w-full" aria-hidden="true" />
           <input
             type="range"
             min="0"
@@ -206,22 +235,13 @@ function AudioPlayer({
             step="0.1"
             value={Math.min(currentTime, duration || 0)}
             onChange={(event) => onSeek(Number(event.target.value))}
-            className="w-full accent-slate-900 dark:accent-white"
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
             aria-label="Seek through call"
           />
-          <div className="mt-0.5 flex justify-between font-mono text-xs text-slate-500">
+          <div className="pointer-events-none absolute inset-x-0 -bottom-1 flex justify-between font-mono text-[10px] text-slate-400 sm:hidden">
             <span>{fmt(currentTime)}</span>
             <span>{fmt(duration)}</span>
           </div>
-        </div>
-        <div
-          className="hidden h-1.5 w-20 overflow-hidden rounded-full bg-slate-200 md:block dark:bg-slate-800"
-          aria-hidden="true"
-        >
-          <div
-            className="h-full bg-slate-800 dark:bg-slate-200"
-            style={{ width: `${progress}%` }}
-          />
         </div>
         <audio
           ref={audioRef}
@@ -237,7 +257,7 @@ function StatusSection({ view }) {
   const config = STATE_COPY[view.state] || STATE_COPY.evaluation_incomplete;
   const Icon = config.icon;
   return (
-    <section className={classNames('border-b px-5 py-5', config.tone)}>
+    <section className={classNames('verdict-reveal border-b px-5 py-4', config.tone)}>
       <div className="flex items-start gap-3">
         <Icon
           size={22}
@@ -245,11 +265,11 @@ function StatusSection({ view }) {
           aria-hidden="true"
         />
         <div className="min-w-0">
-          <p className="text-base font-semibold">{config.label}</p>
-          <p className="mt-1 max-w-2xl text-sm leading-6 opacity-80">
+          <p className="text-sm font-bold">{config.label}</p>
+          <p className="mt-1 max-w-2xl text-xs leading-5 opacity-85">
             {view.summary}
           </p>
-          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium opacity-75">
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-semibold opacity-80">
             <span className="inline-flex items-center gap-1.5">
               <Clock3 size={14} aria-hidden="true" />
               {view.evaluation_status.replaceAll('_', ' ')}
@@ -277,7 +297,7 @@ function EvidenceLink({
       type="button"
       onClick={() => onSeek(evidence.start_seconds)}
       className={classNames(
-        'inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-sky-700 hover:underline dark:text-sky-400',
+        'inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-[#1557ff] transition hover:text-blue-800 hover:underline dark:text-blue-300',
         compact ? 'mt-0' : 'mt-2',
       )}
     >
@@ -297,34 +317,32 @@ const ANSWER_TONES = {
 function ManagerQuestions({ questions, evidenceById, onSeek }) {
   if (!questions.length) return null;
   return (
-    <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
-      <h2 className="text-xs font-semibold uppercase text-slate-500">
+    <section className="border-b border-slate-300 px-5 py-5 dark:border-slate-700">
+      <h2 className="text-xs font-bold uppercase text-slate-950 dark:text-white">
         Call assessment
       </h2>
-      <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
-        {questions.map((item) => (
-          <article key={item.question_id} className="py-3 first:pt-1">
-            <div className="flex items-start justify-between gap-3">
-              <p className="text-sm font-medium leading-5 text-slate-900 dark:text-slate-100">
+      <div className="mt-3 divide-y divide-slate-300 dark:divide-slate-700">
+        {questions.map((item, index) => (
+          <article key={item.question_id} className="grid grid-cols-[2rem_minmax(0,1fr)_auto] gap-x-3 py-4 first:pt-1">
+            <span className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-950 font-mono text-sm font-bold text-white dark:bg-white dark:text-slate-950">
+              {index + 1}
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold leading-5 text-slate-950 dark:text-white">
                 {item.question}
               </p>
-              <span
-                className={classNames(
-                  'shrink-0 text-xs font-semibold',
-                  ANSWER_TONES[item.answer],
-                )}
-              >
-                {item.answer_label}
-              </span>
+              <p className="mt-1 text-xs leading-5 text-slate-500">
+                {item.summary}
+              </p>
+              <EvidenceLink
+                evidenceIds={item.evidence_ids}
+                evidenceById={evidenceById}
+                onSeek={onSeek}
+              />
             </div>
-            <p className="mt-1 text-xs leading-5 text-slate-500">
-              {item.summary}
-            </p>
-            <EvidenceLink
-              evidenceIds={item.evidence_ids}
-              evidenceById={evidenceById}
-              onSeek={onSeek}
-            />
+            <span className={classNames('pt-1 text-xs font-bold uppercase', ANSWER_TONES[item.answer])}>
+              {item.answer_label}
+            </span>
           </article>
         ))}
       </div>
@@ -345,7 +363,7 @@ function FindingSection({
   const toneClass = {
     incorrect: 'text-red-700 dark:text-red-400',
     missed: 'text-amber-700 dark:text-amber-400',
-    concern: 'text-violet-700 dark:text-violet-400',
+    concern: 'text-rose-700 dark:text-rose-400',
   }[tone];
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
@@ -430,29 +448,37 @@ function PositiveSection({ findings, evidenceById, onSeek }) {
       <h2 className="text-xs font-semibold uppercase text-slate-500">
         Effective moments
       </h2>
-      <ul className="mt-3 space-y-3">
-        {findings.map((finding) => (
-          <li key={finding.finding_id} className="flex items-start gap-2.5">
-            <CheckCircle2
-              size={17}
-              className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"
-              aria-hidden="true"
-            />
-            <div>
-              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                {finding.title}
-              </p>
-              <p className="mt-0.5 text-xs leading-5 text-slate-500">
-                {finding.summary}
-              </p>
-              <EvidenceLink
-                evidenceIds={finding.evidence_ids}
-                evidenceById={evidenceById}
-                onSeek={onSeek}
+      <ul className="relative mt-3 space-y-4 before:absolute before:bottom-3 before:left-[8px] before:top-3 before:w-px before:bg-emerald-200 dark:before:bg-emerald-900">
+        {findings.map((finding) => {
+          const evidence = finding.evidence_ids
+            .map((evidenceId) => evidenceById.get(evidenceId))
+            .find((item) => item?.seekable);
+          return (
+            <li key={finding.finding_id} className="relative grid grid-cols-[1.1rem_3rem_minmax(0,1fr)] items-start gap-2.5">
+              <CheckCircle2
+                size={18}
+                className="relative z-10 mt-0.5 shrink-0 bg-white text-emerald-600 dark:bg-slate-950 dark:text-emerald-400"
+                aria-hidden="true"
               />
-            </div>
-          </li>
-        ))}
+              <span className="pt-0.5 font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                {evidence ? fmt(evidence.start_seconds) : '--:--'}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-slate-950 dark:text-white">
+                  {finding.title}
+                </p>
+                <p className="mt-0.5 text-xs leading-5 text-slate-500">
+                  {finding.summary}
+                </p>
+                <EvidenceLink
+                  evidenceIds={finding.evidence_ids}
+                  evidenceById={evidenceById}
+                  onSeek={onSeek}
+                />
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
@@ -619,7 +645,13 @@ function DetailsSection({ view, run }) {
   );
 }
 
-function ChapterNavigation({ chapters, currentTime, onSeek }) {
+function ChapterSidebar({
+  chapters,
+  currentTime,
+  onSeek,
+  open,
+  onToggle,
+}) {
   const activeIndex = useMemo(() => {
     let active = 0;
     for (let index = 0; index < chapters.length; index += 1) {
@@ -630,46 +662,69 @@ function ChapterNavigation({ chapters, currentTime, onSeek }) {
   }, [chapters, currentTime]);
 
   if (!chapters.length) return null;
-  const active = chapters[activeIndex];
-
   return (
     <nav
       aria-label="Call chapters"
-      className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
+      className={classNames(
+        'order-first w-full min-w-0 max-w-full overflow-hidden border-b border-slate-200 bg-white transition-[width] duration-200 lg:order-none lg:h-full lg:border-b-0 lg:border-l dark:border-slate-800 dark:bg-slate-950',
+        open ? 'lg:w-56' : 'lg:w-14',
+      )}
     >
-      <div className="overflow-x-auto">
-        <ol className="flex min-w-max">
+      <div className="flex h-12 items-center justify-between border-b border-slate-200 px-3 dark:border-slate-800">
+        {open && (
+          <span className="text-xs font-bold uppercase text-slate-950 dark:text-white">
+            Chapters
+          </span>
+        )}
+        <button
+          type="button"
+          onClick={onToggle}
+          className="ml-auto flex h-8 w-8 items-center justify-center rounded text-slate-500 transition hover:bg-slate-100 hover:text-[#1557ff] dark:hover:bg-slate-900"
+          title={open ? 'Collapse chapters' : 'Expand chapters'}
+          aria-label={open ? 'Collapse chapters' : 'Expand chapters'}
+          aria-expanded={open}
+        >
+          {open ? <PanelRightClose size={17} /> : <PanelRightOpen size={17} />}
+        </button>
+      </div>
+      {open && (
+        <ol className="chapter-list flex gap-1 overflow-x-auto p-2 lg:block lg:h-[calc(100%-3rem)] lg:overflow-y-auto lg:overflow-x-hidden lg:p-0">
           {chapters.map((chapter, index) => {
             const selected = index === activeIndex;
             return (
-              <li key={`${chapter.index}-${chapter.start}`}>
+              <li key={`${chapter.index}-${chapter.start}`} className="min-w-44 lg:min-w-0">
                 <button
                   type="button"
                   onClick={() => onSeek(chapter.start)}
                   aria-current={selected ? 'step' : undefined}
                   className={classNames(
-                    'h-16 w-40 border-b-2 px-4 text-left transition sm:w-44',
+                    'relative flex min-h-16 w-full items-start gap-3 border-l-2 px-3 py-3 text-left transition duration-200',
                     selected
-                      ? 'border-sky-600 bg-sky-50/70 dark:bg-sky-950/30'
-                      : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-900',
+                      ? 'border-[#1557ff] bg-blue-50 text-[#1557ff] dark:bg-blue-950/30 dark:text-blue-300'
+                      : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white',
                   )}
                 >
-                  <span className="block truncate text-xs font-semibold text-slate-800 dark:text-slate-200">
-                    {chapter.label}
+                  <span className={classNames(
+                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-mono text-[11px] font-bold',
+                    selected
+                      ? 'border-[#1557ff] bg-[#1557ff] text-white'
+                      : 'border-slate-300 text-slate-500 dark:border-slate-700',
+                  )}>
+                    {index + 1}
                   </span>
-                  <span className="mt-1 block font-mono text-[11px] text-slate-400">
-                    {fmt(chapter.start)}
+                  <span className="min-w-0">
+                    <span className="block text-xs font-semibold leading-4">
+                      {chapter.label}
+                    </span>
+                    <span className="mt-1 block font-mono text-[10px] opacity-70">
+                      {fmt(chapter.start)}
+                    </span>
                   </span>
                 </button>
               </li>
             );
           })}
         </ol>
-      </div>
-      {active?.summary && (
-        <p className="border-t border-slate-100 px-5 py-2 text-xs leading-5 text-slate-500 dark:border-slate-900">
-          {active.summary}
-        </p>
       )}
     </nav>
   );
@@ -683,6 +738,7 @@ function Transcript({
   activeTurnRef,
   scrollRef,
 }) {
+  const [chaptersOpen, setChaptersOpen] = useState(true);
   const activeIndex = useMemo(() => {
     let active = -1;
     for (let index = 0; index < turns.length; index += 1) {
@@ -694,99 +750,125 @@ function Transcript({
 
   useEffect(() => {
     activeTurnRef.current?.scrollIntoView({
-      behavior: 'smooth',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth',
       block: 'nearest',
     });
   }, [activeIndex, activeTurnRef]);
 
+  const activeChapter = useMemo(() => {
+    let current = chapters[0];
+    for (const chapter of chapters) {
+      if (currentTime >= chapter.start) current = chapter;
+      else break;
+    }
+    return current;
+  }, [chapters, currentTime]);
+
   return (
-    <section className="min-w-0 bg-slate-50 lg:flex lg:h-full lg:flex-col lg:overflow-hidden dark:bg-slate-900">
-      <div className="flex h-14 items-center justify-between border-b border-slate-200 px-5 dark:border-slate-800">
-        <h2 className="text-sm font-semibold text-slate-900 dark:text-white">
-          Conversation
-        </h2>
-        <span className="text-xs text-slate-500">{turns.length} turns</span>
-      </div>
-      <ChapterNavigation
-        chapters={chapters}
-        currentTime={currentTime}
-        onSeek={onSeek}
-      />
-      <div
-        ref={scrollRef}
-        className="px-4 py-5 sm:px-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto"
-      >
-        <div className="mx-auto max-w-3xl space-y-5">
-          {turns.map((turn, index) => {
-            const active = index === activeIndex;
-            const agent = String(turn.speaker).toUpperCase() === 'AGENT';
-            return (
-              <button
-                key={`${turn.start}-${index}`}
-                ref={active ? activeTurnRef : null}
-                type="button"
-                onClick={() => onSeek(turn.start)}
-                className={classNames(
-                  'group block w-full border-l-2 py-1 pl-4 text-left transition',
-                  active
-                    ? agent
-                      ? 'border-sky-600'
-                      : 'border-emerald-600'
-                    : 'border-transparent hover:border-slate-300 dark:hover:border-slate-700',
-                )}
-              >
-                <span className="flex items-center gap-2">
-                  <span
-                    className={classNames(
-                      'text-xs font-semibold',
-                      agent
-                        ? 'text-sky-700 dark:text-sky-400'
-                        : 'text-emerald-700 dark:text-emerald-400',
-                    )}
+    <section className="min-w-0 bg-white lg:h-full lg:overflow-hidden dark:bg-slate-950">
+      <div className={classNames(
+        'grid grid-cols-[minmax(0,1fr)] lg:h-full',
+        chaptersOpen
+          ? 'lg:grid-cols-[minmax(0,1fr)_14rem]'
+          : 'lg:grid-cols-[minmax(0,1fr)_3.5rem]',
+      )}>
+        <div className="min-w-0 lg:flex lg:min-h-0 lg:flex-col">
+          <div className="flex min-h-12 items-center justify-between border-b border-slate-200 px-5 dark:border-slate-800">
+            <div className="min-w-0">
+              <h2 className="text-sm font-bold text-slate-950 dark:text-white">
+                Conversation
+              </h2>
+              {activeChapter?.summary && (
+                <p className="mt-0.5 truncate text-[11px] text-slate-500">
+                  {activeChapter.summary}
+                </p>
+              )}
+            </div>
+            <span className="ml-4 shrink-0 font-mono text-[11px] text-slate-500">
+              {turns.length} turns
+            </span>
+          </div>
+          <div
+            ref={scrollRef}
+            className="bg-slate-50 px-4 py-5 sm:px-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto dark:bg-slate-900"
+          >
+            <div className="mx-auto max-w-4xl space-y-3">
+              {turns.map((turn, index) => {
+                const active = index === activeIndex;
+                const agent = String(turn.speaker).toUpperCase() === 'AGENT';
+                return (
+                  <div
+                    key={`${turn.start}-${index}`}
+                    className={classNames('flex', agent ? 'justify-start' : 'justify-end')}
                   >
-                    {speakerLabel(turn.speaker)}
-                  </span>
-                  <span className="font-mono text-[11px] text-slate-400">
-                    {fmt(turn.start)}
-                  </span>
-                </span>
-                <span
-                  className={classNames(
-                    'mt-1.5 block text-sm leading-6',
-                    active
-                      ? 'text-slate-950 dark:text-white'
-                      : 'text-slate-600 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white',
-                  )}
-                >
-                  {turn.words?.length
-                    ? turn.words.map((word, wordIndex) => {
-                        const wordActive = (
-                          currentTime >= word.start
-                          && currentTime < word.end
-                        );
-                        return (
-                          <span key={`${word.start}-${wordIndex}`}>
-                            {wordIndex > 0 ? ' ' : ''}
-                            <span
-                              data-word-start={word.start}
-                              data-active={wordActive ? 'true' : 'false'}
-                              className={classNames(
-                                'rounded-sm transition-colors',
-                                wordActive
-                                  && 'bg-sky-200 px-0.5 text-slate-950 dark:bg-sky-700 dark:text-white',
-                              )}
-                            >
-                              {word.word}
-                            </span>
-                          </span>
-                        );
-                      })
-                    : turn.text}
-                </span>
-              </button>
-            );
-          })}
+                    <button
+                      ref={active ? activeTurnRef : null}
+                      type="button"
+                      onClick={() => onSeek(turn.start)}
+                      className={classNames(
+                        'turn-bubble group block w-fit max-w-[92%] border px-4 py-3 text-left transition duration-200 sm:max-w-[82%]',
+                        agent
+                          ? 'rounded-[8px_8px_8px_2px] border-blue-200 bg-blue-50 text-slate-900 dark:border-blue-900 dark:bg-blue-950/35 dark:text-slate-100'
+                          : 'rounded-[8px_8px_2px_8px] border-emerald-200 bg-emerald-50 text-slate-900 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-slate-100',
+                        active && (agent
+                          ? 'turn-focus-agent border-[#1557ff] ring-1 ring-[#1557ff]'
+                          : 'turn-focus-customer border-emerald-600 ring-1 ring-emerald-600'),
+                      )}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className={classNames(
+                          'text-xs font-bold',
+                          agent ? 'text-[#1557ff] dark:text-blue-300' : 'text-emerald-700 dark:text-emerald-300',
+                        )}>
+                          {speakerLabel(turn.speaker)}
+                        </span>
+                        <span className="font-mono text-[10px] text-slate-400">
+                          {fmt(turn.start)}
+                        </span>
+                      </span>
+                      <span className="mt-1.5 block text-sm leading-6 text-slate-700 dark:text-slate-200">
+                        {turn.words?.length
+                          ? turn.words.map((word, wordIndex) => {
+                              const wordActive = (
+                                currentTime >= word.start
+                                && currentTime < word.end
+                              );
+                              return (
+                                <span key={`${word.start}-${wordIndex}`}>
+                                  {wordIndex > 0 ? ' ' : ''}
+                                  <span
+                                    data-word-start={word.start}
+                                    data-active={wordActive ? 'true' : 'false'}
+                                    className={classNames(
+                                      'rounded-sm transition-colors duration-150',
+                                      wordActive && (agent
+                                        ? 'bg-blue-200 px-0.5 text-blue-950 dark:bg-blue-700 dark:text-white'
+                                        : 'bg-emerald-200 px-0.5 text-emerald-950 dark:bg-emerald-700 dark:text-white'),
+                                    )}
+                                  >
+                                    {word.word}
+                                  </span>
+                                </span>
+                              );
+                            })
+                          : turn.text}
+                      </span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
+        <ChapterSidebar
+          chapters={chapters}
+          currentTime={currentTime}
+          onSeek={onSeek}
+          open={chaptersOpen}
+          onToggle={() => setChaptersOpen((value) => !value)}
+        />
       </div>
     </section>
   );
@@ -956,22 +1038,22 @@ export default function EvaluatorV2CallDetail() {
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-slate-100">
-      <header className="bg-white dark:bg-slate-950">
-        <div className="mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+        <div className="flex min-h-[68px] w-full items-center justify-between gap-4 px-4 py-3 sm:px-5">
           <div className="flex min-w-0 items-center gap-3">
             <Link
               to="/"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:hover:bg-slate-900 dark:hover:text-white"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-[#1557ff] text-white transition duration-200 hover:bg-blue-700 active:scale-[0.97]"
               title="All calls"
               aria-label="All calls"
             >
               <ArrowLeft size={18} />
             </Link>
             <div className="min-w-0">
-              <h1 className="truncate text-sm font-semibold">{callData.call}</h1>
+              <h1 className="truncate text-base font-bold sm:text-lg">{callData.call}</h1>
               <p className="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
                 <span>{fmt(callData.duration || duration)}</span>
-                <span aria-hidden="true">/</span>
+                <span aria-hidden="true">&bull;</span>
                 <span>Call evaluation</span>
               </p>
             </div>
@@ -999,8 +1081,8 @@ export default function EvaluatorV2CallDetail() {
         onSeek={seek}
       />
 
-      <main className="mx-auto grid w-full max-w-7xl grid-cols-1 lg:h-[calc(100vh-8.25rem)] lg:grid-cols-[minmax(360px,470px)_minmax(0,1fr)] lg:overflow-hidden">
-        <aside className="border-b border-slate-200 bg-white lg:overflow-y-auto lg:border-b-0 lg:border-r dark:border-slate-800 dark:bg-slate-950">
+      <main className="grid w-full grid-cols-1 lg:h-[calc(100vh-9.25rem)] lg:grid-cols-[minmax(360px,36%)_minmax(0,1fr)] lg:overflow-hidden">
+        <aside className="border-b border-slate-300 bg-white lg:overflow-y-auto lg:border-b-0 lg:border-r dark:border-slate-700 dark:bg-slate-950">
           <StatusSection view={view} />
           <ManagerQuestions
             questions={view.manager_questions || []}

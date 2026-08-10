@@ -81,7 +81,7 @@ function AspectMark({ aspect, label }) {
   const { Icon } = config;
   return (
     <span
-      className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full border ${config.cls}`}
+      className={`mx-auto flex h-8 w-8 items-center justify-center rounded-sm border ${config.cls}`}
       title={aspect?.summary || config.label}
       aria-label={config.label}
     >
@@ -125,7 +125,7 @@ function ResultBadge({ result }) {
   }[result];
   const { Icon } = config;
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded border px-2 py-1 text-xs font-semibold ${config.cls}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-sm border px-2 py-1 text-xs font-bold ${config.cls}`}>
       <Icon className={`h-3.5 w-3.5 ${result === 'processing' ? 'animate-spin' : ''}`} aria-hidden="true" />
       {config.label}
     </span>
@@ -138,12 +138,12 @@ function ProcessingStatus({ call }) {
   return (
     <div className="w-32" title={`Processing: ${label}`}>
       <div className="mb-1 flex items-center justify-between gap-2 text-[11px]">
-        <span className="truncate font-medium text-indigo-700 dark:text-indigo-300">{label}</span>
+        <span className="truncate font-semibold text-[#1557ff] dark:text-blue-300">{label}</span>
         <span className="font-mono text-slate-500">{percent}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-700">
         <div
-          className="h-full bg-indigo-600 transition-[width] duration-500"
+          className="h-full bg-[#1557ff] transition-[width] duration-500"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -204,9 +204,9 @@ function PipelineStep({ step }) {
     <li className="min-w-0">
       <div className="flex items-center gap-2">
         <span className={[
-          'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border',
+          'flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border',
           completed && 'border-emerald-600 bg-emerald-600 text-white',
-          active && 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-100 dark:bg-indigo-950 dark:text-indigo-300 dark:ring-indigo-900',
+          active && 'border-[#1557ff] bg-blue-50 text-[#1557ff] ring-2 ring-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:ring-blue-900',
           failed && 'border-red-600 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
           skipped && 'border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-700 dark:bg-slate-800',
           step.state === 'pending' && 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-950',
@@ -216,6 +216,7 @@ function PipelineStep({ step }) {
         <span className={`truncate text-[11px] font-medium ${active || completed ? 'text-slate-800 dark:text-slate-100' : 'text-slate-400'}`}>
           {step.label}
         </span>
+        {skipped && <span className="sr-only">skipped</span>}
       </div>
     </li>
   );
@@ -224,7 +225,7 @@ function PipelineStep({ step }) {
 function PipelineActivity({ calls }) {
   if (!calls.length) return null;
   return (
-    <section className="mb-5" aria-labelledby="pipeline-activity-title">
+    <section className="mb-5" aria-label="Pipeline activity">
       <div className="mb-2 flex items-center justify-between">
         <h2 id="pipeline-activity-title" className="text-sm font-semibold text-slate-900 dark:text-white">
           Processing
@@ -233,16 +234,18 @@ function PipelineActivity({ calls }) {
       </div>
       <div className="space-y-2">
         {calls.map((call) => (
-          <article key={call.db_call_id} className="rounded-lg border border-indigo-100 bg-white p-4 shadow-sm dark:border-indigo-900 dark:bg-slate-950">
+          <article key={call.db_call_id} className="border border-slate-300 border-l-4 border-l-[#1557ff] bg-white p-4 dark:border-slate-700 dark:border-l-blue-400 dark:bg-slate-950">
             <div className="flex items-center justify-between gap-4">
               <p className="truncate font-mono text-sm font-semibold">{call.call_id}</p>
-              <p className="shrink-0 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
-                {call.pipeline?.current_stage_label || call.stage || 'Queued'} · {call.pipeline?.percent || 0}%
+              <p className="shrink-0 text-xs font-bold text-[#1557ff] dark:text-blue-300">
+                <span>{call.pipeline?.current_stage_label || call.stage || 'Queued'}</span>
+                <span aria-hidden="true"> / </span>
+                <span>{call.pipeline?.percent || 0}%</span>
               </p>
             </div>
             <div className="mt-3 h-1.5 overflow-hidden rounded-sm bg-slate-200 dark:bg-slate-800">
               <div
-                className="h-full bg-indigo-600 transition-[width] duration-500"
+                className="h-full bg-[#1557ff] transition-[width] duration-500"
                 style={{ width: `${call.pipeline?.percent || 0}%` }}
               />
             </div>
@@ -384,18 +387,23 @@ export default function Dashboard() {
   const paged = sorted.slice((pageSafe - 1) * PAGE_SIZE, pageSafe * PAGE_SIZE);
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
-      <header className="border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-800 dark:bg-slate-950">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
-          <div>
-            <h1 className="text-xl font-bold text-indigo-700 dark:text-indigo-300">Call Evaluation</h1>
-            <p className="mt-0.5 text-sm text-slate-500">Evidence-backed review across four operational questions</p>
+    <div className="flex min-h-screen flex-col bg-white text-slate-950 dark:bg-slate-950 dark:text-slate-100">
+      <header className="border-b border-slate-300 bg-white px-4 py-4 sm:px-6 dark:border-slate-700 dark:bg-slate-950">
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded bg-[#1557ff] text-white" aria-hidden="true">
+              <AudioLines size={22} />
+            </span>
+            <div>
+              <h1 className="text-xl font-bold text-slate-950 dark:text-white">Call evaluation</h1>
+              <p className="mt-0.5 text-sm text-slate-500">Review queue and evidence status</p>
+            </div>
           </div>
           <ThemeToggle />
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-7xl flex-grow p-6">
+      <main className="w-full flex-grow p-4 sm:p-6">
         {loadError && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{loadError}</p>}
         {!calls && !loadError && <p className="text-sm text-slate-500">Loading calls...</p>}
 
@@ -403,17 +411,24 @@ export default function Dashboard() {
           <>
             <PipelineActivity calls={activeCalls} />
 
-            <section className="mb-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-slate-200 py-3 text-sm dark:border-slate-800" aria-label="Evaluation summary">
-              <span><strong className="font-mono text-slate-900 dark:text-white">{evaluated.length}</strong> <span className="text-slate-500">evaluated</span></span>
-              <span><strong className="font-mono text-red-700 dark:text-red-300">{counts.review}</strong> <span className="text-slate-500">review</span></span>
-              <span><strong className="font-mono text-amber-700 dark:text-amber-300">{counts.uncertain}</strong> <span className="text-slate-500">uncertain</span></span>
-              <span><strong className="font-mono text-emerald-700 dark:text-emerald-300">{counts.ok}</strong> <span className="text-slate-500">OK</span></span>
-              <span><strong className="font-mono text-indigo-700 dark:text-indigo-300">{counts.processing}</strong> <span className="text-slate-500">processing</span></span>
+            <section className="mb-5 grid grid-cols-2 border-y border-slate-300 text-sm sm:grid-cols-5 dark:border-slate-700" aria-label="Evaluation summary">
+              {[
+                [evaluated.length, 'Evaluated', 'text-slate-950 dark:text-white'],
+                [counts.review, 'Review', 'text-red-700 dark:text-red-300'],
+                [counts.uncertain, 'Uncertain', 'text-amber-700 dark:text-amber-300'],
+                [counts.ok, 'Clear', 'text-emerald-700 dark:text-emerald-300'],
+                [counts.processing, 'Processing', 'text-[#1557ff] dark:text-blue-300'],
+              ].map(([value, label, tone], index) => (
+                <span key={label} className={`px-4 py-3 ${index ? 'border-l border-slate-300 dark:border-slate-700' : ''}`}>
+                  <strong className={`block font-mono text-xl font-semibold ${tone}`}>{value}</strong>
+                  <span className="mt-0.5 block text-[10px] font-bold uppercase text-slate-500">{label}</span>
+                </span>
+              ))}
             </section>
 
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="inline-flex rounded-md border border-slate-200 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-950" aria-label="Call visibility">
+                <div className="inline-flex rounded-sm border border-slate-300 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-950" aria-label="Call visibility">
                   {[
                     ['evaluated', 'Evaluated'],
                     ['all', 'All calls'],
@@ -422,7 +437,7 @@ export default function Dashboard() {
                       key={value}
                       type="button"
                       onClick={() => setView(value)}
-                      className={`rounded px-3 py-1.5 text-xs font-semibold ${view === value ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                      className={`rounded-sm px-3 py-1.5 text-xs font-bold ${view === value ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950' : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'}`}
                     >
                       {label}
                     </button>
@@ -431,7 +446,7 @@ export default function Dashboard() {
                 <select
                   value={resultFilter}
                   onChange={(event) => setResultFilter(event.target.value)}
-                  className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-600 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300"
+                  className="h-8 rounded-sm border border-slate-300 bg-white px-2 text-xs font-semibold text-slate-600 outline-none focus:border-[#1557ff] dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300"
                   aria-label="Filter by result"
                 >
                   <option value="all">All results</option>
@@ -445,17 +460,21 @@ export default function Dashboard() {
                 type="button"
                 onClick={analyzeSelected}
                 disabled={!selected.size || submitting}
-                className="inline-flex h-9 min-w-36 items-center justify-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-9 min-w-36 items-center justify-center gap-2 rounded bg-[#1557ff] px-4 text-sm font-bold text-white transition hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {submitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
-                {submitting ? 'Queueing' : `Analyze ${selected.size || ''}`.trim()}
+                {submitting
+                  ? 'Queueing'
+                  : selected.size
+                    ? `Analyze ${selected.size} ${selected.size === 1 ? 'call' : 'calls'}`
+                    : 'Analyze'}
               </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+            <div className="overflow-x-auto border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950">
               <table className="w-full min-w-[980px] text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50/80 text-left text-[11px] uppercase text-slate-500 dark:border-slate-800 dark:bg-slate-900/70">
+                  <tr className="border-b border-slate-300 bg-slate-100 text-left text-[11px] uppercase text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
                     <th className="w-11 px-3 py-3"><span className="sr-only">Select</span></th>
                     <th className="px-3 py-3 font-semibold">Call</th>
                     {ASPECTS.map(([key, label]) => (
@@ -477,7 +496,7 @@ export default function Dashboard() {
                     const selectable = !active && call.evaluation_supported;
                     const result = callResult(call);
                     return (
-                      <tr key={call.call_id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/70 dark:hover:bg-slate-900/60">
+                      <tr key={call.call_id} className="border-b border-slate-200 transition-colors last:border-0 hover:bg-blue-50/60 dark:border-slate-800 dark:hover:bg-blue-950/20">
                         <td className="px-3 py-3 text-center">
                           {selectable && (
                             <input
@@ -485,20 +504,20 @@ export default function Dashboard() {
                               checked={selected.has(call.db_call_id)}
                               onChange={() => toggleSelected(call.db_call_id)}
                               aria-label={`Select ${call.call_id}`}
-                              className="h-4 w-4 accent-indigo-600"
+                              className="h-4 w-4 accent-[#1557ff]"
                             />
                           )}
                         </td>
                         <td className="px-3 py-3">
                           {call.evaluation_available ? (
-                            <Link to={`/calls/${call.call_id}`} className="font-mono text-xs font-semibold text-indigo-700 hover:underline dark:text-indigo-300">
+                            <Link to={`/calls/${call.call_id}`} className="font-mono text-xs font-bold text-[#1557ff] hover:underline dark:text-blue-300">
                               {call.call_id}
                             </Link>
                           ) : (
                             <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">{call.call_id}</span>
                           )}
                           <p className="mt-1 text-[11px] capitalize text-slate-400">
-                            {call.domain} · {call.accent} · {fmt(call.duration || 0)}
+                            {call.domain} / {call.accent} / {fmt(call.duration || 0)}
                           </p>
                         </td>
                         {ASPECTS.map(([key, label]) => (
@@ -511,7 +530,7 @@ export default function Dashboard() {
                             <span className={`inline-flex items-center justify-center gap-1.5 font-mono font-semibold ${(call.concern_count || 0) > 0 ? 'text-red-700 dark:text-red-300' : 'text-slate-500'}`}>
                               {call.concern_count || 0}
                               {call.audio_warning && (
-                                <AudioLines className="h-4 w-4 text-indigo-600" title="Audio supports a surfaced warning" aria-label="Audio supports a surfaced warning" />
+                                <AudioLines className="h-4 w-4 text-[#1557ff]" title="Audio supports a surfaced warning" aria-label="Audio supports a surfaced warning" />
                               )}
                             </span>
                           ) : <span className="text-slate-300">-</span>}
@@ -529,9 +548,9 @@ export default function Dashboard() {
                     {(pageSafe - 1) * PAGE_SIZE + 1}-{Math.min(pageSafe * PAGE_SIZE, sorted.length)} of {sorted.length}
                   </span>
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setPage((value) => Math.max(1, value - 1))} disabled={pageSafe === 1} className="rounded border border-slate-200 px-2.5 py-1.5 disabled:opacity-40 dark:border-slate-700">Previous</button>
+                    <button type="button" onClick={() => setPage((value) => Math.max(1, value - 1))} disabled={pageSafe === 1} className="rounded-sm border border-slate-300 px-2.5 py-1.5 font-semibold disabled:opacity-40 dark:border-slate-700">Previous</button>
                     <span className="font-mono text-slate-500">{pageSafe}/{totalPages}</span>
-                    <button type="button" onClick={() => setPage((value) => Math.min(totalPages, value + 1))} disabled={pageSafe === totalPages} className="rounded border border-slate-200 px-2.5 py-1.5 disabled:opacity-40 dark:border-slate-700">Next</button>
+                    <button type="button" onClick={() => setPage((value) => Math.min(totalPages, value + 1))} disabled={pageSafe === totalPages} className="rounded-sm border border-slate-300 px-2.5 py-1.5 font-semibold disabled:opacity-40 dark:border-slate-700">Next</button>
                   </div>
                 </div>
               )}
