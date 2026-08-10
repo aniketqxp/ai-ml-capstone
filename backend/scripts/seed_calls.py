@@ -10,9 +10,9 @@ Call rows are matched by public_call_id in call_metadata.
   python backend/scripts/seed_calls.py                # all calls in public/calls
   python backend/scripts/seed_calls.py --only en_CA_Banking_1586889 ...
 """
-import sys
-import json
 import argparse
+import json
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -20,13 +20,16 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "backend"))
 
 from dotenv import load_dotenv
+
 load_dotenv(REPO / ".env")
 
+from app import storage
 from app.database import SessionLocal, init_db
 from app.models import Agent, Call, EvaluationRun
-from app import storage
 
 PUBLIC = REPO / "frontend" / "public"
+DATA = REPO / "data" / "na_testset"
+MANIFEST = DATA / "manifest.json"
 CALLS = PUBLIC / "calls"
 AUDIO = PUBLIC / "audio"
 SEG = PUBLIC / "sentence_segments"
@@ -46,7 +49,13 @@ def get_or_create_agent(db):
     return a
 
 
-def upload_artifacts(cid):
+def _source_wav(relative_path):
+    if not relative_path:
+        return None
+    return DATA / Path(relative_path.replace("\\", "/"))
+
+
+def upload_artifacts(cid, manifest_row=None):
     """Upload every present artifact for a call; return the storage key map."""
     keys = {}
     pairs = [
@@ -56,8 +65,21 @@ def upload_artifacts(cid):
         (SENT / f"{cid}.json", f"sentiment/{cid}.json", "application/json"),
         (EVAL_V2 / f"{cid}.json", f"evaluation-v2/{cid}.json", "application/json"),
     ]
+    if manifest_row:
+        pairs.extend([
+            (
+                _source_wav(manifest_row.get("agent_wav")),
+                f"uploads/{cid}/agent.wav",
+                "audio/wav",
+            ),
+            (
+                _source_wav(manifest_row.get("customer_wav")),
+                f"uploads/{cid}/customer.wav",
+                "audio/wav",
+            ),
+        ])
     for local, key, ctype in pairs:
-        if local.exists():
+        if local and local.exists():
             storage.upload_file(key, str(local), ctype)
             keys[key.split("/", 1)[0]] = key
     return keys
@@ -74,6 +96,8 @@ def main():
     init_db()
     index = json.loads(INDEX.read_text(encoding="utf-8")) if INDEX.exists() else []
     summaries = {s["call_id"]: s for s in index}
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    manifest_rows = {row["call_id"]: row for row in manifest}
 
     call_files = sorted(CALLS.glob("*.json"))
     if args.only:
@@ -92,7 +116,7 @@ def main():
         accent = (summary or {}).get("accent") or ev_meta.get("accent")
         duration = (summary or {}).get("duration") or call_json.get("duration")
 
-        keys = upload_artifacts(cid)
+        keys = upload_artifacts(cid, manifest_rows.get(cid))
 
         meta = {"public_call_id": cid, "domain": domain, "accent": accent,
                 "index_summary": summary, "artifact_keys": keys}
