@@ -464,7 +464,29 @@ function FindingSection({
   );
 }
 
-function ActionSection({ action, notification, busy, onSend }) {
+function EmailActionPopover({ action, notification, busy, error, onSend }) {
+  const [open, setOpen] = useState(false);
+  const popoverRef = useRef(null);
+  const triggerRef = useRef(null);
+  useEffect(() => {
+    if (!open) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    const closeOnOutsideClick = (event) => {
+      if (
+        !popoverRef.current?.contains(event.target)
+        && !triggerRef.current?.contains(event.target)
+      ) setOpen(false);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+    };
+  }, [open]);
+
   if (!action) return null;
   const sent = notification?.status === 'sent';
   const awaiting = notification?.status === 'awaiting_approval';
@@ -475,24 +497,45 @@ function ActionSection({ action, notification, busy, onSend }) {
     failed: 'Delivery failed',
     disabled: 'Email disabled',
   }[notification?.status];
+  const statusTone = sent
+    ? 'bg-emerald-400'
+    : notification?.status === 'failed'
+      ? 'bg-red-400'
+      : notification?.status
+        ? 'bg-amber-300'
+        : 'bg-white/80';
+  const recipient = notification?.recipient || action.audience;
   return (
-    <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
-      <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
-        <Mail size={15} aria-hidden="true" />
-        Email action
-      </div>
-      <div className="mt-3 flex items-start gap-3">
-        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-400">
-          <Mail size={16} aria-hidden="true" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-slate-950 dark:text-white">
+    <div className="fixed bottom-5 right-5 z-50 sm:bottom-6 sm:right-6">
+      {open && (
+        <section
+          ref={popoverRef}
+          id="email-action-popover"
+          role="dialog"
+          aria-label="Email action"
+          className="absolute bottom-16 right-0 w-[min(22rem,calc(100vw-2.5rem))] rounded-lg border border-slate-300 bg-white p-4 shadow-2xl dark:border-slate-700 dark:bg-slate-950"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-sm font-bold text-slate-950 dark:text-white">
+              Email action
+            </h2>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="flex h-8 w-8 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-950 dark:hover:bg-slate-800 dark:hover:text-white"
+              aria-label="Close email action"
+              title="Close"
+            >
+              <X size={16} aria-hidden="true" />
+            </button>
+          </div>
+          <p className="mt-3 text-sm font-semibold text-slate-950 dark:text-white">
             {action.label}
           </p>
-          <p className="mt-1 text-xs text-slate-500">
-            {action.execution_label}. Recipient: {action.audience}.
+          <p className="mt-1 truncate text-xs text-slate-500" title={recipient}>
+            To: <span className="capitalize">{recipient}</span>
           </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-3 dark:border-slate-800">
             {statusLabel && (
               <span className={classNames(
                 'text-xs font-semibold',
@@ -506,7 +549,7 @@ function ActionSection({ action, notification, busy, onSend }) {
                 type="button"
                 onClick={onSend}
                 disabled={busy}
-                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1557ff] px-3 text-xs font-bold text-white transition hover:bg-blue-700 disabled:opacity-50"
+                className="ml-auto inline-flex h-9 items-center gap-1.5 rounded bg-[#1557ff] px-3 text-xs font-bold text-white transition hover:bg-blue-700 disabled:opacity-50"
               >
                 <Send size={13} aria-hidden="true" />
                 {busy
@@ -517,14 +560,33 @@ function ActionSection({ action, notification, busy, onSend }) {
               </button>
             )}
           </div>
-          {notification?.error && (
-            <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-              {notification.error}
+          {(notification?.error || error) && (
+            <p className="mt-3 border-t border-slate-200 pt-3 text-xs leading-5 text-red-600 dark:border-slate-800 dark:text-red-400">
+              {notification?.error || error}
             </p>
           )}
-        </div>
-      </div>
-    </section>
+        </section>
+      )}
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#1557ff] text-white shadow-lg transition hover:bg-blue-700 hover:shadow-xl active:scale-95"
+        aria-label="Open email action"
+        title="Email action"
+        aria-expanded={open}
+        aria-controls="email-action-popover"
+      >
+        <Mail size={21} aria-hidden="true" />
+        <span
+          className={classNames(
+            'absolute right-0.5 top-0.5 h-3 w-3 rounded-full border-2 border-[#1557ff]',
+            statusTone,
+          )}
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   );
 }
 
@@ -1191,6 +1253,7 @@ export default function EvaluatorV2CallDetail() {
   const [feedbackBusy, setFeedbackBusy] = useState(false);
   const [feedbackStatus, setFeedbackStatus] = useState('');
   const [emailBusy, setEmailBusy] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -1319,7 +1382,7 @@ export default function EvaluatorV2CallDetail() {
   const sendEmail = useCallback(async () => {
     if (!run?.decision_sha256) return;
     setEmailBusy(true);
-    setFeedbackStatus('');
+    setEmailError('');
     try {
       const response = await fetch(
         apiUrl(`/calls/${encodeURIComponent(callId)}/email`),
@@ -1335,11 +1398,8 @@ export default function EvaluatorV2CallDetail() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.detail || 'Email could not be sent');
       setEmailNotification(result);
-      setFeedbackStatus(result.status === 'sent'
-        ? 'Email sent.'
-        : 'Email action updated.');
     } catch (error) {
-      setFeedbackStatus(error.message || 'Email could not be sent.');
+      setEmailError(error.message || 'Email could not be sent.');
     } finally {
       setEmailBusy(false);
     }
@@ -1463,12 +1523,6 @@ export default function EvaluatorV2CallDetail() {
             onFeedback={submitFeedback}
             feedbackBusy={feedbackBusy}
           />
-          <ActionSection
-            action={view.recommended_action}
-            notification={emailNotification}
-            busy={emailBusy}
-            onSend={sendEmail}
-          />
           <PositiveSection
             findings={view.positive_highlights}
             evidenceById={evidenceById}
@@ -1499,6 +1553,13 @@ export default function EvaluatorV2CallDetail() {
           scrollRef={scrollRef}
         />
       </main>
+      <EmailActionPopover
+        action={view.recommended_action}
+        notification={emailNotification}
+        busy={emailBusy}
+        error={emailError}
+        onSend={sendEmail}
+      />
     </div>
   );
 }

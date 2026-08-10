@@ -242,7 +242,11 @@ test('renders layered attention, evidence, and email action', async ({
   ).toBeVisible();
   await expect(page.getByText('Incorrect handling')).toBeVisible();
   await expect(page.getByText('Effective moments')).toBeVisible();
-  await expect(page.getByText('Email action')).toBeVisible();
+  const emailTrigger = page.getByRole('button', { name: 'Open email action' });
+  await expect(emailTrigger).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'Email action' })).toHaveCount(0);
+  await emailTrigger.click();
+  await expect(page.getByRole('dialog', { name: 'Email action' })).toBeVisible();
   await expect(
     page.getByText('Email manager review summary').last(),
   ).toBeVisible();
