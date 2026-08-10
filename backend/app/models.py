@@ -79,8 +79,8 @@ class EmailNotification(Base):
         nullable=False,
     )
     public_call_id = Column(String(100), nullable=False, index=True)
-    decision_sha256 = Column(String(64), nullable=False)
-    action_type = Column(String(80), nullable=False)
+    action_id = Column(String(50), nullable=False)
+    action_type = Column(String(50), nullable=False)
     audience = Column(String(20), nullable=False)
     recipient = Column(String(320), nullable=False)
     sender = Column(String(320), nullable=False)
@@ -88,6 +88,7 @@ class EmailNotification(Base):
     body = Column(Text)
     status = Column(String(30), nullable=False)
     error = Column(Text)
+    llm_generated = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     sent_at = Column(DateTime)
 

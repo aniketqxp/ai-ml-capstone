@@ -152,12 +152,13 @@ def process_recommended_email(
             notification_key=key,
             call_id=call.call_id,
             public_call_id=public_call_id,
-            decision_sha256=decision_sha256,
+            action_id=str(action.get("action_id") or action_type)[:50],
             action_type=action_type,
             audience=audience,
             recipient=recipient,
             sender=sender,
             status="pending",
+            llm_generated=False,
         )
         db.add(record)
 

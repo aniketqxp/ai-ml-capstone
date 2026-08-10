@@ -45,7 +45,6 @@ PIPELINE_STAGES = (
         "id": "acoustic",
         "label": "Audio signals",
         "worker_stages": {"acoustic"},
-        "feature_flag": "ENABLE_ACOUSTIC",
     },
     {
         "id": "evaluation",
