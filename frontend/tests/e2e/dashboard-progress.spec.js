@@ -60,6 +60,8 @@ function catalogCall(overrides = {}) {
     checklist_total: 0,
     acoustic_status: null,
     acoustic_coverage: null,
+    sentiment_available: false,
+    has_audio_features: false,
     status: 'processing',
     stage: 'evaluating_v2_requirements',
     error: null,
@@ -123,6 +125,8 @@ test('allows a completed call to be deliberately run again', async ({
           checklist_total: 8,
           acoustic_status: 'limited',
           acoustic_coverage: 'Audio support on 71 of 152 segments',
+          sentiment_available: true,
+          has_audio_features: true,
           status: 'succeeded',
           stage: 'done',
           pipeline: pipeline('ready', 100),
@@ -172,6 +176,8 @@ test('allows a completed call to be deliberately run again', async ({
   );
 
   await page.goto('/');
+  await expect(page.getByText('Sentiment', { exact: true })).toBeVisible();
+  await expect(page.getByText('Voice signals', { exact: true })).toBeVisible();
   await expect(page.locator('tbody tr').first()).toContainText(PUBLIC_CALL_ID);
   await page.getByRole('checkbox', {
     name: `Select ${PUBLIC_CALL_ID}`,

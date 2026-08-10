@@ -388,6 +388,8 @@ export default function Dashboard() {
     uncertain: evaluated.filter((call) => call.result === 'uncertain').length,
     ok: evaluated.filter((call) => call.result === 'ok').length,
     processing: activeCalls.length,
+    sentiment: evaluated.filter((call) => call.sentiment_available).length,
+    voice: evaluated.filter((call) => call.has_audio_features).length,
   };
 
   const sorted = useMemo(() => {
@@ -432,15 +434,17 @@ export default function Dashboard() {
           <>
             <PipelineActivity calls={activeCalls} />
 
-            <section className="mb-4 grid grid-cols-2 border border-slate-300 text-sm sm:grid-cols-5 dark:border-slate-700" aria-label="Evaluation summary">
+            <section className="mb-4 grid grid-cols-2 border border-slate-300 text-sm sm:grid-cols-4 xl:grid-cols-7 dark:border-slate-700" aria-label="Evaluation summary">
               {[
                 [evaluated.length, 'Evaluated', 'text-slate-950 dark:text-white'],
                 [counts.review, 'Review', 'text-red-700 dark:text-red-300'],
                 [counts.uncertain, 'Uncertain', 'text-amber-700 dark:text-amber-300'],
                 [counts.ok, 'Clear', 'text-emerald-700 dark:text-emerald-300'],
+                [counts.sentiment, 'Sentiment', 'text-violet-700 dark:text-violet-300'],
+                [counts.voice, 'Voice signals', 'text-cyan-700 dark:text-cyan-300'],
                 [counts.processing, 'Processing', 'text-[#1557ff] dark:text-blue-300'],
               ].map(([value, label, tone], index) => (
-                <span key={label} className={`px-4 py-4 ${index ? 'border-l border-slate-300 dark:border-slate-700' : ''}`}>
+                <span key={label} className={`border-b border-slate-300 px-4 py-4 dark:border-slate-700 ${index ? 'border-l' : ''}`}>
                   <strong className={`block font-mono text-2xl font-semibold ${tone}`}>{value}</strong>
                   <span className="mt-0.5 block text-[10px] font-bold uppercase text-slate-500">{label}</span>
                 </span>

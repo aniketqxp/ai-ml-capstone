@@ -8,6 +8,7 @@ from typing import Literal
 
 from app import storage, worker
 from app.database import get_db
+from app.sentiment_payloads import load_signal_overviews
 from app.models import (
     Call,
     EmailNotification,
@@ -461,6 +462,7 @@ async def ingest_call(
 def get_catalog(db: Session = Depends(get_db)):
     """Return calls with evaluator-native state and live worker progress."""
     rows = db.query(Call).order_by(Call.created_at.desc()).all()
+    signal_overviews = load_signal_overviews(db)
     catalog = []
     for call in rows:
         meta = dict(call.call_metadata or {})
@@ -483,6 +485,7 @@ def get_catalog(db: Session = Depends(get_db)):
             "accent": summary.get("accent") or meta.get("accent"),
             "duration": summary.get("duration") or call.duration_seconds,
             **evaluation,
+            **signal_overviews.get(public_id, {}),
             "status": (
                 job.status
                 if active or (job and job.status == "failed")

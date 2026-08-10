@@ -13,6 +13,7 @@ bandwidth. calls_index is built live from the Call rows' index_summary.
 from app import storage
 from app.database import get_db
 from app.models import Call
+from app.sentiment_payloads import build_sentiment_payload
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
 from sqlalchemy.orm import Session
@@ -46,12 +47,13 @@ def sentence_segments(call_id: str):
 
 
 @router.get("/sentiment/{call_id}.json")
-def sentiment(call_id: str):
-    # optional overlay -> empty (not 404) so CallDetail degrades to plain turns
+def sentiment(call_id: str, db: Session = Depends(get_db)):
+    stored = None
     try:
-        return JSONResponse(storage.stream_json(f"sentiment/{call_id}.json"))
+        stored = storage.stream_json(f"sentiment/{call_id}.json")
     except FileNotFoundError:
-        return JSONResponse({"segments": []})
+        pass
+    return JSONResponse(build_sentiment_payload(db, call_id, stored))
 
 
 @router.get("/evaluation-v2/{call_id}.json")

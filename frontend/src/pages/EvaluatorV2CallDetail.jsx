@@ -112,28 +112,38 @@ function threeClassSentiment(segment) {
 }
 
 function attachSentiment(turns, sentiment) {
-  const segments = sentiment?.segments || [];
-  const bySeqId = new Map(
-    segments.map((segment) => [Number(segment.seq_id), segment]),
-  );
-  return (turns || []).map((turn, index) => {
-    const seqId = Number(turn.seq_id ?? turn.i ?? index) + (
-      turn.seq_id == null ? 1 : 0
-    );
-    const direct = bySeqId.get(seqId);
-    const overlap = direct || segments.find((segment) => (
-      String(segment.speaker || '').toUpperCase()
-        === String(turn.speaker || '').toUpperCase()
-      && Math.abs(Number(segment.start_time ?? segment.start) - Number(turn.start)) < 0.35
+  const normalized = (sentiment?.segments || [])
+    .map((segment) => ({
+      ...segment,
+      start: Number(segment.start_time ?? segment.start),
+      end: Number(segment.end_time ?? segment.end),
+      className: segment.processing_status === 'success'
+        ? threeClassSentiment(segment)
+        : null,
+    }))
+    .filter((segment) => Number.isFinite(segment.start))
+    .sort((a, b) => a.start - b.start);
+
+  return (turns || []).map((turn, index, allTurns) => {
+    const start = Number(turn.start);
+    const wordEnd = turn.words?.length
+      ? Number(turn.words[turn.words.length - 1].end)
+      : null;
+    const nextStart = Number(allTurns[index + 1]?.start);
+    const end = Number.isFinite(Number(turn.end))
+      ? Number(turn.end)
+      : Number.isFinite(wordEnd)
+        ? wordEnd
+        : Number.isFinite(nextStart)
+          ? nextStart
+          : start + 30;
+    const speaker = String(turn.speaker || '').toUpperCase();
+    const matches = normalized.filter((segment) => (
+      String(segment.speaker || '').toUpperCase() === speaker
+      && segment.start < end + 0.2
+      && (Number.isFinite(segment.end) ? segment.end : segment.start) > start - 0.2
     ));
-    if (!overlap || overlap.processing_status !== 'success') return turn;
-    return {
-      ...turn,
-      sentiment: {
-        ...overlap,
-        className: threeClassSentiment(overlap),
-      },
-    };
+    return matches.length ? { ...turn, sentimentSegments: matches } : turn;
   });
 }
 
@@ -635,42 +645,178 @@ function ChecklistSection({ checks, evidenceById, onSeek }) {
   );
 }
 
-function AcousticSection({ context, summary, onSeek }) {
-  if (!context) return null;
+const SIGNAL_MODES = {
+  escalation: {
+    label: 'Escalation',
+    key: 'escalation_score',
+    format: (value) => `${Math.round(value * 100)}%`,
+  },
+  volume: {
+    label: 'Volume',
+    key: 'volume_db_mean',
+    format: (value) => `${value.toFixed(1)} dB`,
+  },
+  pitch: {
+    label: 'Pitch',
+    key: 'pitch_mean_hz',
+    format: (value) => `${Math.round(value)} Hz`,
+  },
+  pace: {
+    label: 'Pace',
+    key: 'speech_rate_words_per_minute',
+    format: (value) => `${Math.round(value)} wpm`,
+  },
+};
+
+function signalValue(point, key) {
+  const direct = point?.[key];
+  const nested = point?.audio_features?.[key];
+  const value = Number(direct ?? nested);
+  return Number.isFinite(value) ? value : null;
+}
+
+function VoiceSignalSection({ context, sentiment, currentTime, onSeek }) {
+  const [mode, setMode] = useState('escalation');
+  const summary = sentiment?.audio_feature_summary || {};
+  const callSummary = sentiment?.call_summary || {};
+  const series = sentiment?.dashboard_audio_feature_series || [];
+  if (!context && !series.length) return null;
+
   const metrics = [
-    ['Pace', summary?.average_speech_rate_wpm, 'wpm', 0],
-    ['Pauses', summary?.average_pause_ratio != null
+    ['Sentiment', callSummary.dominant_sentiment, ''],
+    ['Emotion', callSummary.dominant_emotion, ''],
+    ['Peak escalation', callSummary.max_escalation_score != null
+      ? Math.round(Number(callSummary.max_escalation_score) * 100) : null, '%'],
+    ['Pace', summary.average_speech_rate_wpm, ' wpm', 0],
+    ['Pauses', summary.average_pause_ratio != null
       ? Number(summary.average_pause_ratio) * 100 : null, '%', 1],
-    ['Pitch', summary?.average_pitch_hz, 'Hz', 0],
-    ['Volume', summary?.average_volume_db, 'dB', 1],
-  ].filter(([, value]) => Number.isFinite(Number(value)));
+    ['Pitch', summary.average_pitch_hz, ' Hz', 0],
+    ['Volume', summary.average_volume_db, ' dB', 1],
+    ['Energy', summary.average_energy, '', 3],
+  ].filter(([, value]) => value !== null && value !== undefined && value !== '');
+  const signal = SIGNAL_MODES[mode];
+  const plotted = series
+    .map((point) => ({
+      ...point,
+      start: Number(point.start_time ?? point.start),
+      value: signalValue(point, signal.key),
+      sentimentClass: threeClassSentiment(point),
+    }))
+    .filter((point) => Number.isFinite(point.start) && point.value !== null);
+  const values = plotted.map((point) => point.value);
+  const min = values.length ? Math.min(...values) : 0;
+  const max = values.length ? Math.max(...values) : 1;
+  const range = max - min || 1;
+  const distribution = callSummary.sentiment_distribution || {};
+  const distributionTotal = Object.values(distribution)
+    .reduce((total, value) => total + Number(value || 0), 0);
+
   return (
-    <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
+    <section className="border-b border-slate-300 px-5 py-5 dark:border-slate-700">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
+        <h2 className="flex items-center gap-2 text-xs font-bold uppercase text-slate-950 dark:text-white">
           <AudioLines size={15} aria-hidden="true" />
-          Acoustic support
-        </div>
-        <span className="text-[11px] text-slate-400">
-          {context.coverage_label}
+          Voice &amp; sentiment
+        </h2>
+        <span className="font-mono text-[10px] text-slate-400">
+          {summary.total_segments_with_audio_features || series.length} segments
         </span>
       </div>
-      <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
-        {context.conclusion}
-      </p>
       {metrics.length > 0 && (
-        <dl className="mt-4 grid grid-cols-2 border border-slate-200 dark:border-slate-800">
-          {metrics.map(([label, value, unit, digits]) => (
-            <div key={label} className="border-b border-r border-slate-200 px-3 py-2 last:border-b-0 dark:border-slate-800">
+        <dl className="mt-3 grid grid-cols-2 border-y border-slate-200 dark:border-slate-800">
+          {metrics.map(([label, value, unit, digits = null], index) => (
+            <div key={label} className={classNames(
+              'px-3 py-2.5',
+              index % 2 === 0 && 'border-r border-slate-200 dark:border-slate-800',
+              index < metrics.length - 2 && 'border-b border-slate-200 dark:border-slate-800',
+            )}>
               <dt className="text-[10px] font-semibold uppercase text-slate-400">{label}</dt>
-              <dd className="mt-0.5 font-mono text-xs font-bold text-slate-800 dark:text-slate-100">
-                {Number(value).toFixed(digits)} {unit}
+              <dd className="mt-0.5 truncate text-xs font-bold capitalize text-slate-800 dark:text-slate-100">
+                {digits === null ? value : Number(value).toFixed(digits)}{unit}
               </dd>
             </div>
           ))}
         </dl>
       )}
-      {context.observations.length > 0 && (
+      {distributionTotal > 0 && (
+        <div className="mt-4">
+          <div className="flex h-2 overflow-hidden rounded-sm" aria-label="Sentiment distribution">
+            {['Positive', 'Neutral', 'Negative'].map((label) => {
+              const value = Number(distribution[label] || 0);
+              if (!value) return null;
+              return (
+                <span
+                  key={label}
+                  title={`${label}: ${value}`}
+                  className={{
+                    Positive: 'bg-emerald-500',
+                    Neutral: 'bg-slate-400',
+                    Negative: 'bg-rose-500',
+                  }[label]}
+                  style={{ width: `${(value / distributionTotal) * 100}%` }}
+                />
+              );
+            })}
+          </div>
+          <div className="mt-1.5 flex justify-between text-[10px] font-semibold text-slate-500">
+            {['Positive', 'Neutral', 'Negative'].map((label) => (
+              <span key={label}>{label} {distribution[label] || 0}</span>
+            ))}
+          </div>
+        </div>
+      )}
+      {plotted.length > 0 && (
+        <div className="mt-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="inline-flex border border-slate-200 p-0.5 dark:border-slate-700" aria-label="Voice signal timeline">
+              {Object.entries(SIGNAL_MODES).map(([key, option]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setMode(key)}
+                  className={classNames(
+                    'px-2 py-1 text-[10px] font-bold transition',
+                    mode === key
+                      ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                      : 'text-slate-500 hover:text-slate-950 dark:hover:text-white',
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            <span className="text-[10px] text-slate-400">Click to play</span>
+          </div>
+          <div className="mt-2 flex h-16 items-end gap-px border-b border-slate-300 dark:border-slate-700">
+            {plotted.map((point, index) => (
+              <button
+                key={`${point.start}-${index}`}
+                type="button"
+                onClick={() => onSeek(point.start)}
+                title={`${fmt(point.start)} | ${signal.format(point.value)} | ${point.sentimentClass}`}
+                aria-label={`${signal.label} at ${fmt(point.start)}: ${signal.format(point.value)}`}
+                className={classNames(
+                  'min-w-px flex-1 transition-opacity hover:opacity-60',
+                  point.sentimentClass === 'positive' && 'bg-emerald-500',
+                  point.sentimentClass === 'neutral' && 'bg-slate-400',
+                  point.sentimentClass === 'negative' && 'bg-rose-500',
+                  currentTime >= point.start
+                    && currentTime < Number(plotted[index + 1]?.start ?? point.start + 1)
+                    && 'ring-2 ring-[#1557ff] ring-offset-1',
+                )}
+                style={{ height: `${18 + ((point.value - min) / range) * 82}%` }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {context?.conclusion && context.status !== 'unavailable' && (
+        <p className="mt-3 text-xs leading-5 text-slate-500">
+          <span className="font-semibold text-slate-700 dark:text-slate-300">Evaluator interpretation: </span>
+          {context.conclusion}
+        </p>
+      )}
+      {context?.observations?.length > 0 && (
         <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
           {context.observations.map((item) => (
             <button
@@ -827,6 +973,30 @@ function ChapterSidebar({
   );
 }
 
+function TimedWords({ words, text, currentTime, agent }) {
+  if (!words?.length) return text;
+  return words.map((word, wordIndex) => {
+    const wordActive = currentTime >= word.start && currentTime < word.end;
+    return (
+      <span key={`${word.start}-${wordIndex}`}>
+        {wordIndex > 0 ? ' ' : ''}
+        <span
+          data-word-start={word.start}
+          data-active={wordActive ? 'true' : 'false'}
+          className={classNames(
+            'rounded-sm transition-colors duration-150',
+            wordActive && (agent
+              ? 'bg-blue-200 px-0.5 text-blue-950 dark:bg-blue-700 dark:text-white'
+              : 'bg-emerald-200 px-0.5 text-emerald-950 dark:bg-emerald-700 dark:text-white'),
+          )}
+        >
+          {word.word}
+        </span>
+      </span>
+    );
+  });
+}
+
 function Transcript({
   turns,
   chapters,
@@ -895,30 +1065,14 @@ function Transcript({
               {turns.map((turn, index) => {
                 const active = index === activeIndex;
                 const agent = String(turn.speaker).toUpperCase() === 'AGENT';
-                const sentiment = turn.sentiment?.className;
-                const sentimentTone = {
-                  positive: 'bg-emerald-600 text-white',
-                  neutral: 'bg-slate-500 text-white',
-                  negative: 'bg-rose-600 text-white',
-                }[sentiment];
-                const audio = turn.sentiment?.audio_features || {};
-                const sentimentTitle = [
-                  turn.sentiment?.dominant_emotion
-                    ? `Emotion: ${turn.sentiment.dominant_emotion}` : null,
-                  audio.speech_rate_words_per_minute != null
-                    ? `Pace: ${Math.round(audio.speech_rate_words_per_minute)} wpm` : null,
-                  audio.pause_ratio != null
-                    ? `Pauses: ${Math.round(audio.pause_ratio * 100)}%` : null,
-                ].filter(Boolean).join(' · ');
+                const sentenceSegments = turn.sentimentSegments || [];
                 return (
                   <div
                     key={`${turn.start}-${index}`}
                     className={classNames('flex', agent ? 'justify-start' : 'justify-end')}
                   >
-                    <button
+                    <div
                       ref={active ? activeTurnRef : null}
-                      type="button"
-                      onClick={() => onSeek(turn.start)}
                       className={classNames(
                         'turn-bubble group block w-fit max-w-[92%] border px-4 py-3 text-left transition duration-200 sm:max-w-[82%]',
                         agent
@@ -939,43 +1093,74 @@ function Transcript({
                         <span className="font-mono text-[10px] text-slate-400">
                           {fmt(turn.start)}
                         </span>
-                        {sentiment && (
-                          <span
-                            className={`ml-auto rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase ${sentimentTone}`}
-                            title={sentimentTitle}
-                          >
-                            {sentiment}
-                          </span>
-                        )}
                       </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-slate-700 dark:text-slate-200">
-                        {turn.words?.length
-                          ? turn.words.map((word, wordIndex) => {
-                              const wordActive = (
-                                currentTime >= word.start
-                                && currentTime < word.end
-                              );
-                              return (
-                                <span key={`${word.start}-${wordIndex}`}>
-                                  {wordIndex > 0 ? ' ' : ''}
-                                  <span
-                                    data-word-start={word.start}
-                                    data-active={wordActive ? 'true' : 'false'}
-                                    className={classNames(
-                                      'rounded-sm transition-colors duration-150',
-                                      wordActive && (agent
-                                        ? 'bg-blue-200 px-0.5 text-blue-950 dark:bg-blue-700 dark:text-white'
-                                        : 'bg-emerald-200 px-0.5 text-emerald-950 dark:bg-emerald-700 dark:text-white'),
-                                    )}
-                                  >
-                                    {word.word}
-                                  </span>
+                      {sentenceSegments.length ? (
+                        <span className="mt-1.5 block divide-y divide-slate-900/10 dark:divide-white/10">
+                          {sentenceSegments.map((segment, segmentIndex) => {
+                            const audio = segment.audio_features || {};
+                            const sentimentTone = {
+                              positive: 'bg-emerald-600 text-white',
+                              neutral: 'bg-slate-500 text-white',
+                              negative: 'bg-rose-600 text-white',
+                            }[segment.className];
+                            const sentenceWords = (turn.words || []).filter((word) => (
+                              Number(word.start) < Number(segment.end) + 0.08
+                              && Number(word.end) > Number(segment.start) - 0.08
+                            ));
+                            const sentimentTitle = [
+                              segment.dominant_emotion
+                                ? `Emotion: ${segment.dominant_emotion}` : null,
+                              segment.escalation_score != null
+                                ? `Escalation: ${Math.round(segment.escalation_score * 100)}%` : null,
+                              audio.speech_rate_words_per_minute != null
+                                ? `Pace: ${Math.round(audio.speech_rate_words_per_minute)} wpm` : null,
+                              audio.pause_ratio != null
+                                ? `Pauses: ${Math.round(audio.pause_ratio * 100)}%` : null,
+                              audio.pitch_mean_hz != null
+                                ? `Pitch: ${Math.round(audio.pitch_mean_hz)} Hz` : null,
+                              audio.volume_db_mean != null
+                                ? `Volume: ${Number(audio.volume_db_mean).toFixed(1)} dB` : null,
+                            ].filter(Boolean).join(' | ');
+                            return (
+                              <button
+                                key={`${segment.segment_index ?? segment.start}-${segmentIndex}`}
+                                type="button"
+                                onClick={() => onSeek(segment.start)}
+                                className="flex w-full items-start gap-2 py-2 text-left first:pt-0 last:pb-0"
+                                title={sentimentTitle || 'Play this sentence'}
+                              >
+                                <span className="min-w-0 flex-1 text-sm leading-6 text-slate-700 dark:text-slate-200">
+                                  <TimedWords
+                                    words={sentenceWords}
+                                    text={segment.text}
+                                    currentTime={currentTime}
+                                    agent={agent}
+                                  />
                                 </span>
-                              );
-                            })
-                          : turn.text}
-                      </span>
-                    </button>
+                                {segment.className && (
+                                  <span className={`mt-1 shrink-0 rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase ${sentimentTone}`}>
+                                    {segment.className}
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => onSeek(turn.start)}
+                          className="mt-1.5 block w-full text-left text-sm leading-6 text-slate-700 dark:text-slate-200"
+                        >
+                          <TimedWords
+                            words={turn.words}
+                            text={turn.text}
+                            currentTime={currentTime}
+                            agent={agent}
+                          />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -1249,6 +1434,12 @@ export default function EvaluatorV2CallDetail() {
             evidenceById={evidenceById}
             onSeek={seek}
           />
+          <VoiceSignalSection
+            context={view.acoustic_context}
+            sentiment={sentimentData}
+            currentTime={currentTime}
+            onSeek={seek}
+          />
           <FindingSection
             title="Incorrect handling"
             tone="incorrect"
@@ -1290,11 +1481,6 @@ export default function EvaluatorV2CallDetail() {
           <ChecklistSection
             checks={view.checklist || []}
             evidenceById={evidenceById}
-            onSeek={seek}
-          />
-          <AcousticSection
-            context={view.acoustic_context}
-            summary={sentimentData?.audio_feature_summary}
             onSeek={seek}
           />
           {feedbackStatus && (

@@ -9,7 +9,18 @@ const FIXTURE = path.resolve(
   HERE,
   '../../public/evaluation-v2/en_CA_Banking_1586889.json',
 );
+const SENTIMENT_FIXTURE = path.resolve(
+  HERE,
+  '../../../ml-services/outputs/backend/sentiment_calls_with_features/banking/en_CA_Banking_1586889_backend_sentiment_with_features.json',
+);
 const CALL_PATH = '/calls/en_CA_Banking_1586889';
+
+test.beforeEach(async ({ page }) => {
+  const sentiment = JSON.parse(fs.readFileSync(SENTIMENT_FIXTURE, 'utf-8'));
+  await page.route('**/sentiment/en_CA_Banking_1586889.json', (route) =>
+    route.fulfill({ json: sentiment }),
+  );
+});
 
 function captureBrowserErrors(page) {
   const errors = [];
@@ -163,8 +174,14 @@ test('renders a complete evidence-gated evaluation', async ({ page }) => {
   await expect(page.getByText('Effective moments')).toBeVisible();
   await expect(page.getByText('Call assessment')).toBeVisible();
   await expect(page.getByText('Applicable checks')).toBeVisible();
-  await expect(page.getByText('Acoustic support')).toBeVisible();
+  await expect(page.getByText('Voice & sentiment')).toBeVisible();
+  await expect(page.getByText('Pauses', { exact: true })).toBeVisible();
+  await expect(page.getByText('13.3%', { exact: true })).toBeVisible();
   await expect(page.getByText('positive', { exact: true }).first()).toBeVisible();
+  expect(
+    await page.locator('.turn-bubble').first()
+      .getByText('positive', { exact: true }).count(),
+  ).toBeGreaterThan(1);
   await expect(
     page.getByRole('navigation', { name: 'Call chapters' }),
   ).toBeVisible();

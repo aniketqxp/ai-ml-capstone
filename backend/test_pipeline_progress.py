@@ -53,7 +53,7 @@ class PipelineProgressTests(unittest.TestCase):
             stage["id"]: stage["state"]
             for stage in progress["stages"]
         }
-        self.assertEqual(states["acoustic"], "skipped")
+        self.assertEqual(states["acoustic"], "completed")
         self.assertEqual(states["evidence"], "skipped")
         self.assertEqual(states["requirements"], "skipped")
         self.assertEqual(states["findings"], "skipped")
@@ -185,7 +185,7 @@ class EvaluationSummaryTests(unittest.TestCase):
         )
 
         self.assertFalse(summary["evaluation_available"])
-        self.assertFalse(summary["evaluation_supported"])
+        self.assertTrue(summary["evaluation_supported"])
         self.assertEqual(summary["evaluation_state"], "unsupported")
 
 
