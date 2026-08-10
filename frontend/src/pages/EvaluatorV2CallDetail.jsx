@@ -15,6 +15,7 @@ import {
   PanelRightClose,
   PanelRightOpen,
   Play,
+  Send,
   ShieldCheck,
   Volume2,
   X,
@@ -94,6 +95,46 @@ function speakerLabel(speaker) {
   if (String(speaker).toUpperCase() === 'AGENT') return 'Agent';
   if (String(speaker).toUpperCase() === 'CUSTOMER') return 'Customer';
   return 'Unknown';
+}
+
+function threeClassSentiment(segment) {
+  const value = String(
+    segment?.sentiment_class || segment?.sentiment || '',
+  ).toLowerCase();
+  if (['positive', 'negative', 'neutral'].includes(value)) return value;
+  const emotion = String(segment?.dominant_emotion || '').toLowerCase();
+  if (['happy', 'happiness', 'calm'].includes(emotion)) return 'positive';
+  if (
+    ['anger', 'angry', 'fear', 'sad', 'sadness', 'disgust', 'anxiety', 'stress']
+      .includes(emotion)
+  ) return 'negative';
+  return 'neutral';
+}
+
+function attachSentiment(turns, sentiment) {
+  const segments = sentiment?.segments || [];
+  const bySeqId = new Map(
+    segments.map((segment) => [Number(segment.seq_id), segment]),
+  );
+  return (turns || []).map((turn, index) => {
+    const seqId = Number(turn.seq_id ?? turn.i ?? index) + (
+      turn.seq_id == null ? 1 : 0
+    );
+    const direct = bySeqId.get(seqId);
+    const overlap = direct || segments.find((segment) => (
+      String(segment.speaker || '').toUpperCase()
+        === String(turn.speaker || '').toUpperCase()
+      && Math.abs(Number(segment.start_time ?? segment.start) - Number(turn.start)) < 0.35
+    ));
+    if (!overlap || overlap.processing_status !== 'success') return turn;
+    return {
+      ...turn,
+      sentiment: {
+        ...overlap,
+        className: threeClassSentiment(overlap),
+      },
+    };
+  });
 }
 
 function unavailableRun(call, shadow) {
@@ -414,10 +455,17 @@ function FindingSection({
   );
 }
 
-function ActionSection({
-  action,
-}) {
+function ActionSection({ action, notification, busy, onSend }) {
   if (!action) return null;
+  const sent = notification?.status === 'sent';
+  const awaiting = notification?.status === 'awaiting_approval';
+  const statusLabel = {
+    sent: 'Email sent',
+    awaiting_approval: 'Awaiting approval',
+    configuration_required: 'Email setup required',
+    failed: 'Delivery failed',
+    disabled: 'Email disabled',
+  }[notification?.status];
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
       <div className="flex items-center gap-2 text-xs font-semibold uppercase text-slate-500">
@@ -428,13 +476,43 @@ function ActionSection({
         <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-400">
           <Mail size={16} aria-hidden="true" />
         </span>
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-slate-950 dark:text-white">
             {action.label}
           </p>
           <p className="mt-1 text-xs text-slate-500">
             {action.execution_label}. Recipient: {action.audience}.
           </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {statusLabel && (
+              <span className={classNames(
+                'text-xs font-semibold',
+                sent ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400',
+              )}>
+                {statusLabel}
+              </span>
+            )}
+            {!sent && (
+              <button
+                type="button"
+                onClick={onSend}
+                disabled={busy}
+                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1557ff] px-3 text-xs font-bold text-white transition hover:bg-blue-700 disabled:opacity-50"
+              >
+                <Send size={13} aria-hidden="true" />
+                {busy
+                  ? 'Sending...'
+                  : awaiting || action.requires_human_approval
+                    ? 'Approve and send'
+                    : 'Send email'}
+              </button>
+            )}
+          </div>
+          {notification?.error && (
+            <p className="mt-2 text-xs text-red-600 dark:text-red-400">
+              {notification.error}
+            </p>
+          )}
         </div>
       </div>
     </section>
@@ -557,8 +635,15 @@ function ChecklistSection({ checks, evidenceById, onSeek }) {
   );
 }
 
-function AcousticSection({ context, onSeek }) {
+function AcousticSection({ context, summary, onSeek }) {
   if (!context) return null;
+  const metrics = [
+    ['Pace', summary?.average_speech_rate_wpm, 'wpm', 0],
+    ['Pauses', summary?.average_pause_ratio != null
+      ? Number(summary.average_pause_ratio) * 100 : null, '%', 1],
+    ['Pitch', summary?.average_pitch_hz, 'Hz', 0],
+    ['Volume', summary?.average_volume_db, 'dB', 1],
+  ].filter(([, value]) => Number.isFinite(Number(value)));
   return (
     <section className="border-b border-slate-200 px-5 py-5 dark:border-slate-800">
       <div className="flex items-center justify-between gap-3">
@@ -573,6 +658,18 @@ function AcousticSection({ context, onSeek }) {
       <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
         {context.conclusion}
       </p>
+      {metrics.length > 0 && (
+        <dl className="mt-4 grid grid-cols-2 border border-slate-200 dark:border-slate-800">
+          {metrics.map(([label, value, unit, digits]) => (
+            <div key={label} className="border-b border-r border-slate-200 px-3 py-2 last:border-b-0 dark:border-slate-800">
+              <dt className="text-[10px] font-semibold uppercase text-slate-400">{label}</dt>
+              <dd className="mt-0.5 font-mono text-xs font-bold text-slate-800 dark:text-slate-100">
+                {Number(value).toFixed(digits)} {unit}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
       {context.observations.length > 0 && (
         <div className="mt-3 divide-y divide-slate-200 dark:divide-slate-800">
           {context.observations.map((item) => (
@@ -798,6 +895,21 @@ function Transcript({
               {turns.map((turn, index) => {
                 const active = index === activeIndex;
                 const agent = String(turn.speaker).toUpperCase() === 'AGENT';
+                const sentiment = turn.sentiment?.className;
+                const sentimentTone = {
+                  positive: 'bg-emerald-600 text-white',
+                  neutral: 'bg-slate-500 text-white',
+                  negative: 'bg-rose-600 text-white',
+                }[sentiment];
+                const audio = turn.sentiment?.audio_features || {};
+                const sentimentTitle = [
+                  turn.sentiment?.dominant_emotion
+                    ? `Emotion: ${turn.sentiment.dominant_emotion}` : null,
+                  audio.speech_rate_words_per_minute != null
+                    ? `Pace: ${Math.round(audio.speech_rate_words_per_minute)} wpm` : null,
+                  audio.pause_ratio != null
+                    ? `Pauses: ${Math.round(audio.pause_ratio * 100)}%` : null,
+                ].filter(Boolean).join(' · ');
                 return (
                   <div
                     key={`${turn.start}-${index}`}
@@ -827,6 +939,14 @@ function Transcript({
                         <span className="font-mono text-[10px] text-slate-400">
                           {fmt(turn.start)}
                         </span>
+                        {sentiment && (
+                          <span
+                            className={`ml-auto rounded-sm px-1.5 py-0.5 text-[9px] font-bold uppercase ${sentimentTone}`}
+                            title={sentimentTitle}
+                          >
+                            {sentiment}
+                          </span>
+                        )}
                       </span>
                       <span className="mt-1.5 block text-sm leading-6 text-slate-700 dark:text-slate-200">
                         {turn.words?.length
@@ -881,12 +1001,15 @@ export default function EvaluatorV2CallDetail() {
   const scrollRef = useRef(null);
   const [callData, setCallData] = useState(null);
   const [run, setRun] = useState(null);
+  const [sentimentData, setSentimentData] = useState(null);
+  const [emailNotification, setEmailNotification] = useState(null);
   const [loadState, setLoadState] = useState('loading');
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [feedbackBusy, setFeedbackBusy] = useState(false);
   const [feedbackStatus, setFeedbackStatus] = useState('');
+  const [emailBusy, setEmailBusy] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -899,14 +1022,22 @@ export default function EvaluatorV2CallDetail() {
       fetchEvaluatorArtifact(
         `/word-timings/${encodeURIComponent(callId)}.json`,
       ),
-    ]).then(([rawCall, shadow, timingArtifact]) => {
+      fetchOptionalJson(`/sentiment/${encodeURIComponent(callId)}.json`),
+      fetchOptionalJson(`/calls/${encodeURIComponent(callId)}/email`),
+    ]).then(([rawCall, shadow, timingArtifact, sentiment, emailState]) => {
       if (cancelled) return;
       if (!rawCall) {
         setLoadState('error');
         return;
       }
-      const call = mergeWordTimings(rawCall, timingArtifact);
+      const timedCall = mergeWordTimings(rawCall, timingArtifact);
+      const call = {
+        ...timedCall,
+        turns: attachSentiment(timedCall.turns, sentiment),
+      };
       setCallData(call);
+      setSentimentData(sentiment);
+      setEmailNotification(emailState?.notifications?.[0] || null);
       setDuration(call.duration || 0);
       const embedded = call.evaluation_v2 || shadow;
       if (
@@ -1003,6 +1134,35 @@ export default function EvaluatorV2CallDetail() {
     },
     [callId, run],
   );
+
+  const sendEmail = useCallback(async () => {
+    if (!run?.decision_sha256) return;
+    setEmailBusy(true);
+    setFeedbackStatus('');
+    try {
+      const response = await fetch(
+        apiUrl(`/calls/${encodeURIComponent(callId)}/email`),
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            decision_sha256: run.decision_sha256,
+            approve: true,
+          }),
+        },
+      );
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.detail || 'Email could not be sent');
+      setEmailNotification(result);
+      setFeedbackStatus(result.status === 'sent'
+        ? 'Email sent.'
+        : 'Email action updated.');
+    } catch (error) {
+      setFeedbackStatus(error.message || 'Email could not be sent.');
+    } finally {
+      setEmailBusy(false);
+    }
+  }, [callId, run]);
 
   if (loadState === 'loading') {
     return (
@@ -1118,6 +1278,9 @@ export default function EvaluatorV2CallDetail() {
           />
           <ActionSection
             action={view.recommended_action}
+            notification={emailNotification}
+            busy={emailBusy}
+            onSend={sendEmail}
           />
           <PositiveSection
             findings={view.positive_highlights}
@@ -1131,6 +1294,7 @@ export default function EvaluatorV2CallDetail() {
           />
           <AcousticSection
             context={view.acoustic_context}
+            summary={sentimentData?.audio_feature_summary}
             onSeek={seek}
           />
           {feedbackStatus && (

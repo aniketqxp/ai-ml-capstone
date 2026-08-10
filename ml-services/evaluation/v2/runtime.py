@@ -15,6 +15,7 @@ from .decisions import DECISION_POLICY_VERSION, build_call_decision
 from .domain_profiles import (
     DomainProfile,
     ProfileSelection,
+    load_general_service_profile,
     resolve_domain_plan,
 )
 from .findings import (
@@ -142,6 +143,14 @@ def _profile() -> DomainProfile:
     )
 
 
+def _general_selection(call_id: str) -> ProfileSelection:
+    return ProfileSelection(
+        call_id=call_id,
+        intent_ids=["service.general_request"],
+        selection_method="general_service_fallback",
+    )
+
+
 def _known_selections() -> dict[str, ProfileSelection]:
     payload = json.loads(SELECTIONS_PATH.read_text(encoding="utf-8"))
     return {
@@ -260,24 +269,13 @@ def run_shadow_evaluation(
         raise ValueError("transcript call_id is required")
     domain = str(transcript.get("domain") or "").strip().lower()
     proxy = legacy_attention_proxy(legacy_evaluation)
-    if domain != "banking":
-        return _unavailable(
-            call_id=call_id,
-            status=ShadowRunStatus.UNSUPPORTED_DOMAIN,
-            limitation=f"no_v2_domain_profile:{domain or 'unknown'}",
-            legacy_proxy=proxy,
-        )
-
     selection = _selection(call_id, profile_selection)
-    if selection is None:
-        return _unavailable(
-            call_id=call_id,
-            status=ShadowRunStatus.PROFILE_SELECTION_UNAVAILABLE,
-            limitation="grounded_profile_selection_missing",
-            legacy_proxy=proxy,
-        )
-
-    profile = _profile()
+    uses_general_profile = domain != "banking" or selection is None
+    if uses_general_profile:
+        profile = load_general_service_profile()
+        selection = _general_selection(call_id)
+    else:
+        profile = _profile()
     plan = resolve_domain_plan(profile, selection)
     report("evaluating_v2_signals")
     bundle = build_signal_bundle(
@@ -309,6 +307,8 @@ def run_shadow_evaluation(
         "research_domain_profile",
         "bounded_supervisor_not_run",
     ]
+    if uses_general_profile:
+        limitations.append("general_service_profile_not_domain_compliance")
     if assessment_batch is None:
         limitations.append("semantic_requirement_assessments_missing")
     if not sentiment:

@@ -274,6 +274,10 @@ def load_banking_profile() -> DomainProfile:
     return load_domain_profile(PROFILE_DIR / "banking_v1.json")
 
 
+def load_general_service_profile() -> DomainProfile:
+    return load_domain_profile(PROFILE_DIR / "general_service_v1.json")
+
+
 def _validate_selection(
     profile: DomainProfile,
     selection: ProfileSelection,

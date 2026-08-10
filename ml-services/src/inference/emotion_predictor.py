@@ -15,10 +15,24 @@ from typing import Dict, Optional
 import numpy as np
 import torch
 from transformers import Wav2Vec2ForSequenceClassification, Wav2Vec2Processor
-from src.inference.escalation_score import calculate_audio_escalation_score
 
-from src.data.audio_dataset import DEFAULT_SAMPLE_RATE, load_audio_file, resolve_audio_path
-from src.features.inference_audio_features import extract_audio_feature_summary
+from src.data.audio_dataset import (
+    DEFAULT_SAMPLE_RATE,
+    load_audio_file,
+    resolve_audio_path,
+)
+from src.features.inference_audio_features import (
+    extract_audio_feature_summary,
+    map_raw_features_to_summary,
+)
+from src.inference.escalation_score import calculate_audio_escalation_score
+from src.inference.sentiment_timeline import (
+    TimelineConfig,
+    build_sentiment_timeline,
+    calculate_audio_sentiment_shift,
+    calculate_emotional_volatility,
+    find_peak_emotion,
+)
 from src.sentiment_config import IntensityLevel, SentimentShift
 from src.sentiment_schema import (
     AudioSentimentResult,
@@ -30,14 +44,6 @@ from src.sentiment_schema import (
     is_uncertain_prediction,
     seconds_to_timestamp,
 )
-from src.inference.sentiment_timeline import (
-    TimelineConfig,
-    build_sentiment_timeline,
-    calculate_audio_sentiment_shift,
-    calculate_emotional_volatility,
-    find_peak_emotion,
-)
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ML_SERVICES_ROOT = PROJECT_ROOT / "ml-services"
@@ -217,6 +223,7 @@ class EmotionPredictor:
         audio_path: Path,
         call_id: str = "CALL_TEST_001",
         build_timeline: bool = True,
+        raw_audio_features=None,
     ) -> AudioSentimentResult:
         """
         Analyze one audio file and return the official sentiment result.
@@ -234,7 +241,11 @@ class EmotionPredictor:
         dominant_emotion = probabilities.dominant_emotion()
         overall_sentiment = infer_overall_sentiment(probabilities)
 
-        audio_feature_summary = extract_audio_feature_summary(audio_path)
+        audio_feature_summary = (
+            map_raw_features_to_summary(raw_audio_features)
+            if raw_audio_features is not None
+            else extract_audio_feature_summary(audio_path)
+        )
 
         sentiment_timeline = []
         emotional_volatility = IntensityLevel.LOW
@@ -255,6 +266,7 @@ class EmotionPredictor:
                     min_segment_duration_seconds=1.0,
                     max_duration_seconds=self.max_duration_seconds,
                 ),
+                single_window_probabilities=raw_probabilities,
             )
 
             emotional_volatility = calculate_emotional_volatility(sentiment_timeline)

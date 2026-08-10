@@ -12,6 +12,7 @@ from sqlalchemy import (
     SmallInteger,
     String,
     Text,
+    UniqueConstraint,
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import relationship
@@ -55,6 +56,40 @@ class Job(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     call = relationship("Call", back_populates="jobs")
+
+
+class EmailNotification(Base):
+    __tablename__ = "email_notifications"
+    __table_args__ = (
+        UniqueConstraint(
+            "notification_key",
+            name="uq_email_notification_key",
+        ),
+    )
+
+    notification_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    notification_key = Column(String(64), nullable=False)
+    call_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("calls.call_id"),
+        nullable=False,
+    )
+    public_call_id = Column(String(100), nullable=False, index=True)
+    decision_sha256 = Column(String(64), nullable=False)
+    action_type = Column(String(80), nullable=False)
+    audience = Column(String(20), nullable=False)
+    recipient = Column(String(320), nullable=False)
+    sender = Column(String(320), nullable=False)
+    subject = Column(String(300))
+    body = Column(Text)
+    status = Column(String(30), nullable=False)
+    error = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    sent_at = Column(DateTime)
 
 class Transcript(Base):
     __tablename__ = "transcripts"

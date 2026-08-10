@@ -164,6 +164,7 @@ test('renders a complete evidence-gated evaluation', async ({ page }) => {
   await expect(page.getByText('Call assessment')).toBeVisible();
   await expect(page.getByText('Applicable checks')).toBeVisible();
   await expect(page.getByText('Acoustic support')).toBeVisible();
+  await expect(page.getByText('positive', { exact: true }).first()).toBeVisible();
   await expect(
     page.getByRole('navigation', { name: 'Call chapters' }),
   ).toBeVisible();
@@ -191,6 +192,21 @@ test('renders layered attention, evidence, and email action', async ({
   await page.route('**/calls/en_CA_Banking_1586889/feedback', (route) =>
     route.fulfill({ json: {} }),
   );
+  await page.route('**/calls/en_CA_Banking_1586889/email', async (route) => {
+    if (route.request().method() === 'POST') {
+      await route.fulfill({
+        json: {
+          status: 'sent',
+          audience: 'manager',
+          recipient: 'manager@example.com',
+          subject: 'Manager review',
+          sent_at: '2026-08-10T12:00:00',
+        },
+      });
+      return;
+    }
+    await route.fulfill({ json: { notifications: [] } });
+  });
   await page.goto(CALL_PATH);
   await expect(page.getByText('Needs attention', { exact: true })).toBeVisible();
   await expect(
@@ -204,6 +220,8 @@ test('renders layered attention, evidence, and email action', async ({
   await expect(
     page.getByText('Email manager review summary').last(),
   ).toBeVisible();
+  await page.getByRole('button', { name: 'Send email' }).click();
+  await expect(page.getByText('Email sent', { exact: true })).toBeVisible();
   expect(errors).toEqual([]);
 });
 

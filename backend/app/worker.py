@@ -26,6 +26,7 @@ from app import storage
 from app.database import SessionLocal
 from app.models import (
     Call,
+    CallAudioSummary,
     Evaluation,
     EvaluationRun,
     Job,
@@ -202,15 +203,48 @@ def _write_db_rows(db, call, job, public_id, artifacts):
             db.add(SentimentSegment(
                 call_id=public_id, segment_index=i,
                 segment_key=f"{public_id}_{s.get('seq_id')}",
-                seq_id=s.get("seq_id"), sentiment=s.get("sentiment"),
+                seq_id=s.get("seq_id"), speaker=s.get("speaker"),
+                start_time=s.get("start_time"), end_time=s.get("end_time"),
+                text=s.get("text"),
+                sentiment=s.get("sentiment_class") or s.get("sentiment"),
                 dominant_emotion=s.get("dominant_emotion"),
                 escalation_score=s.get("escalation_score"),
                 processing_status=s.get("processing_status"),
+                audio_features=s.get("audio_features"),
+                has_audio_features=bool(s.get("audio_features")),
+                audio_feature_version=sent.get("audio_feature_version"),
                 domain=artifacts.get("domain"),
                 model_version=model_version))
             if s.get("escalation_score") is not None:
                 scores.append(s["escalation_score"])
         max_escalation = max(scores) if scores else None
+        db.query(CallAudioSummary).filter(
+            CallAudioSummary.call_id == public_id
+        ).delete()
+        db.add(CallAudioSummary(
+            call_id=public_id,
+            domain=artifacts.get("domain"),
+            model_version=model_version,
+            has_audio_features=bool(sent.get("has_audio_features")),
+            audio_feature_version=sent.get("audio_feature_version"),
+            audio_feature_match_summary={
+                "matched_segments": sum(
+                    bool(row.get("audio_features"))
+                    for row in sent.get("segments", [])
+                ),
+                "total_sentiment_segments": len(sent.get("segments", [])),
+            },
+            dashboard_audio_feature_series=sent.get(
+                "dashboard_audio_feature_series"
+            ),
+            call_summary={
+                **(sent.get("call_summary") or {}),
+                "audio_features": sent.get("audio_feature_summary") or {},
+                "speaker_audio_features": sent.get(
+                    "speaker_audio_feature_summary"
+                ) or {},
+            },
+        ))
 
     # evaluation: full graph.json as the scorecard, tier -> 0-10 risk
     with open(p["evaluation"], encoding="utf-8") as f:
@@ -300,6 +334,22 @@ def _run_job(job_id):
 
         _set(db, job, stage="persisting")
         _write_db_rows(db, call, job, public_id, artifacts)
+
+        _set(db, job, stage="notifying")
+        try:
+            from app.email_notifications import process_recommended_email
+
+            shadow = artifacts.get("evaluation_v2")
+            if shadow:
+                process_recommended_email(
+                    db,
+                    call,
+                    public_id,
+                    shadow,
+                    approved=False,
+                )
+        except Exception as exc:
+            print(f"[worker] email action unavailable: {type(exc).__name__}: {exc}")
 
         summary = artifacts.get("index_summary") or {}
         meta["index_summary"] = summary

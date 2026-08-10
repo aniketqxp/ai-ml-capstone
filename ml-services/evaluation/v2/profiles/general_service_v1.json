@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "profile_id": "general-service-v1",
+  "version": "1.0.0",
+  "domain": "general_service",
+  "status": "research",
+  "jurisdiction_scope": [
+    "domain-neutral customer-service interactions"
+  ],
+  "disclaimer": "This profile evaluates common service-handling behaviours. It does not claim domain-specific regulatory or organizational compliance.",
+  "policy_sources": [
+    {
+      "source_id": "project.general_service_baseline",
+      "authority": "project_policy",
+      "title": "General service evaluation baseline",
+      "reference": "cross-domain call evaluation design",
+      "notes": "Defines common request, process, interaction, and outcome behaviours used when no domain-specific profile is available."
+    }
+  ],
+  "intents": [
+    {
+      "intent_id": "service.general_request",
+      "title": "General customer-service request",
+      "description": "The customer contacts an organization for information, assistance, or completion of a service request.",
+      "selection_guidance": [
+        "Use when a more specific validated domain profile is not available."
+      ]
+    }
+  ],
+  "facts": [],
+  "requirements": [
+    {
+      "requirement_id": "request.intent_confirmed",
+      "title": "Request understood",
+      "business_definition": "The agent demonstrates an accurate understanding of what the customer is asking for before moving into the solution.",
+      "level": "required",
+      "evidence_expectations": [
+        "The agent restates, confirms, or responds specifically to the customer's request."
+      ],
+      "policy_source_ids": [
+        "project.general_service_baseline"
+      ],
+      "failure_finding_type": "request.intent_not_confirmed",
+      "positive_finding_type": "request.intent_confirmed",
+      "category": "process",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "process.explanation_and_accuracy",
+      "title": "Process explained accurately",
+      "business_definition": "The agent gives a clear and internally consistent explanation of the process, information, or action relevant to the request.",
+      "level": "required",
+      "evidence_expectations": [
+        "The agent explains the relevant process or information without a material contradiction.",
+        "Any customer action needed to continue is stated clearly."
+      ],
+      "policy_source_ids": [
+        "project.general_service_baseline"
+      ],
+      "failure_finding_type": "process.explanation_incomplete",
+      "positive_finding_type": "process.explanation_clear",
+      "category": "process",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "interaction.agent_identification",
+      "title": "Agent identified the service context",
+      "business_definition": "The opening makes it clear that the customer has reached an agent representing the relevant organization or service.",
+      "level": "supportive",
+      "evidence_expectations": [
+        "The agent identifies themselves, the organization, or the service context near the beginning of the call."
+      ],
+      "policy_source_ids": [
+        "project.general_service_baseline"
+      ],
+      "failure_finding_type": "experience.identification_missing",
+      "positive_finding_type": "experience.agent_identification",
+      "category": "service",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "interaction.customer_concerns_addressed",
+      "title": "Customer concerns addressed",
+      "business_definition": "The agent acknowledges and responds to material questions, constraints, or concerns raised by the customer.",
+      "level": "required",
+      "evidence_expectations": [
+        "Material customer concerns receive a relevant response rather than being ignored or dismissed."
+      ],
+      "policy_source_ids": [
+        "project.general_service_baseline"
+      ],
+      "failure_finding_type": "experience.concern_not_addressed",
+      "positive_finding_type": "experience.concern_addressed",
+      "category": "service",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": []
+    },
+    {
+      "requirement_id": "outcome.summary_and_next_steps",
+      "title": "Outcome and next steps clear",
+      "business_definition": "The close of the call makes clear what was resolved, what remains open, and what happens next.",
+      "level": "required",
+      "evidence_expectations": [
+        "The agent states the outcome or current status of the request.",
+        "Any remaining next step, owner, or timeframe is explained when applicable."
+      ],
+      "policy_source_ids": [
+        "project.general_service_baseline"
+      ],
+      "failure_finding_type": "outcome.next_steps_missing",
+      "positive_finding_type": "outcome.summary_and_next_steps",
+      "category": "outcome",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": []
+    }
+  ],
+  "workflow_branches": [
+    {
+      "branch_id": "service.general",
+      "title": "General service workflow",
+      "applies_to_intents": [
+        "service.general_request"
+      ],
+      "conditions": [],
+      "steps": [
+        {
+          "step_id": "service.request",
+          "requirement_id": "request.intent_confirmed",
+          "sequence": 1
+        },
+        {
+          "step_id": "service.identification",
+          "requirement_id": "interaction.agent_identification",
+          "sequence": 2
+        },
+        {
+          "step_id": "service.process",
+          "requirement_id": "process.explanation_and_accuracy",
+          "sequence": 3
+        },
+        {
+          "step_id": "service.concerns",
+          "requirement_id": "interaction.customer_concerns_addressed",
+          "sequence": 4
+        },
+        {
+          "step_id": "service.outcome",
+          "requirement_id": "outcome.summary_and_next_steps",
+          "sequence": 5
+        }
+      ]
+    }
+  ]
+}

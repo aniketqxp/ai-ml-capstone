@@ -11,6 +11,7 @@ import {
   CloudUpload,
   FileAudio,
   LoaderCircle,
+  Mail,
   Minus,
   Play,
   ScanText,
@@ -41,6 +42,7 @@ const STAGE_ICONS = {
   decision: ShieldCheck,
   presentation: BrainCircuit,
   publish: CloudUpload,
+  notify: Mail,
   ready: CircleCheck,
 };
 const RESULT_ORDER = {

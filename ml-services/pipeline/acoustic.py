@@ -1,44 +1,30 @@
-"""
-Acoustic sentiment stage (gated).
+"""Per-sentence sentiment and interpretable voice features."""
+from __future__ import annotations
 
-Runs Clara's wav2vec2 call-center emotion model over each sentence segment and
-emits the SIMPLE per-seq_id schema that `fusion.load_acoustic()` joins against
-the segmentation:
-
-  {call_id, model_version, segments:[{seq_id, sentiment, dominant_emotion,
-                                      escalation_score, processing_status}, ...]}
-
-Fidelity note (correctness-critical): fusion's escalation tiers (late_mean >=
-0.30 review, >= 0.50 escalate) were FITTED on the 22-call batch, which was
-produced by `run_timestamped_sentiment.py` calling `analyze_audio(clip)` PER
-SENTENCE with the default `build_timeline=True`. We reproduce that call exactly
-(default build_timeline) so a fresh call's escalation_score lands on the same
-distribution the thresholds assume. Changing build_timeline or the per-sentence
-granularity would silently bias the tiers.
-
-Weights come from the public HF repo (cached by huggingface_hub), overridable
-with ACOUSTIC_MODEL_DIR. Any unavailability raises AcousticUnavailable; the
-orchestrator catches it and lets the graph fuse text-only.
-"""
+import hashlib
+import json
+import math
 import os
 import tempfile
+import threading
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_MODEL_REPO = "clarayoussef/wav2vec2-callcenter-emotion-v5"
-MIN_SEG_S = 1.0   # matches run_timestamped_sentiment.py --min-segment-seconds
+MIN_SEG_S = 1.0
+CACHE_VERSION = "acoustic-segment-v4"
 
 
 class AcousticUnavailable(RuntimeError):
-    """Model weights, deps, or predictor could not be loaded."""
+    """Model weights, dependencies, or the predictor could not be loaded."""
 
 
-def _enum(v):
-    """Enum -> its string value; pass through plain strings/None."""
-    return v.value if hasattr(v, "value") else v
+def _enum(value):
+    return value.value if hasattr(value, "value") else value
 
 
 def resolve_model_dir():
-    """Local dir override (ACOUSTIC_MODEL_DIR), else download the hub repo."""
     local = os.environ.get("ACOUSTIC_MODEL_DIR")
     if local:
         if not Path(local).exists():
@@ -47,93 +33,326 @@ def resolve_model_dir():
     repo = os.environ.get("ACOUSTIC_MODEL_REPO", DEFAULT_MODEL_REPO)
     try:
         from huggingface_hub import snapshot_download
-        # HF_TOKEN in the environment is honored automatically if the repo
-        # is ever made private; the default repo is public.
-        return snapshot_download(repo_id=repo)
-    except Exception as e:
-        raise AcousticUnavailable(f"could not fetch acoustic model {repo}: {e}")
+
+        try:
+            return snapshot_download(repo_id=repo, local_files_only=True)
+        except Exception:
+            return snapshot_download(repo_id=repo)
+    except Exception as exc:
+        raise AcousticUnavailable(
+            f"could not fetch acoustic model {repo}: {exc}"
+        ) from exc
 
 
 _PREDICTOR = None
+_PREDICTOR_INIT_LOCK = threading.Lock()
 
 
 def _get_predictor():
-    """Lazy singleton EmotionPredictor (loads weights once per process)."""
     global _PREDICTOR
     if _PREDICTOR is None:
-        try:
-            from src.inference.emotion_predictor import EmotionPredictor
-        except Exception as e:                       # missing torch/transformers/src
-            raise AcousticUnavailable(f"emotion predictor import failed: {e}")
-        try:
-            _PREDICTOR = EmotionPredictor(model_dir=resolve_model_dir())
-        except AcousticUnavailable:
-            raise
-        except Exception as e:
-            raise AcousticUnavailable(f"emotion predictor init failed: {e}")
+        with _PREDICTOR_INIT_LOCK:
+            if _PREDICTOR is None:
+                try:
+                    from src.inference.emotion_predictor import EmotionPredictor
+
+                    _PREDICTOR = EmotionPredictor(model_dir=resolve_model_dir())
+                except AcousticUnavailable:
+                    raise
+                except Exception as exc:
+                    raise AcousticUnavailable(
+                        f"emotion predictor init failed: {exc}"
+                    ) from exc
     return _PREDICTOR
 
 
-def analyze_call(call_id, segmentation, agent_wav, customer_wav):
-    """
-    Per-sentence acoustic sentiment for one call.
+def _three_class_sentiment(result) -> str:
+    sentiment = str(_enum(result.overall_audio_sentiment) or "").lower()
+    if sentiment in {"positive", "negative", "neutral"}:
+        return sentiment
+    emotion = str(_enum(result.dominant_emotion) or "").lower()
+    if emotion in {"happy", "happiness", "calm"}:
+        return "positive"
+    if emotion in {
+        "anger",
+        "angry",
+        "fear",
+        "sad",
+        "sadness",
+        "disgust",
+        "anxiety",
+        "stress",
+    }:
+        return "negative"
+    return "neutral"
 
-    `segmentation` is the `segment_transcript()` dict; each sentence carries
-    seq_id, speaker (AGENT/CUSTOMER), start, end (seconds). Slices the matching
-    speaker channel per sentence and runs the emotion model. Returns the simple
-    fusion-ready dict described in the module docstring.
-    """
+
+def _cache_path(call_id, sentence, clip):
+    from paths import DATA_ROOT
+
+    digest = hashlib.sha256()
+    digest.update(CACHE_VERSION.encode())
+    digest.update(os.environ.get("ACOUSTIC_MODEL_REPO", DEFAULT_MODEL_REPO).encode())
+    digest.update(str(call_id).encode())
+    digest.update(
+        json.dumps(
+            {
+                "seq_id": sentence.get("seq_id"),
+                "speaker": sentence.get("speaker"),
+                "start": sentence.get("start"),
+                "end": sentence.get("end"),
+                "text": sentence.get("text"),
+            },
+            sort_keys=True,
+        ).encode()
+    )
+    digest.update(clip.tobytes())
+    directory = DATA_ROOT / "acoustic_segment_cache"
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory / f"{digest.hexdigest()}.json"
+
+
+def _save_cache(path, row):
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(row), encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def _audio_features(raw, categorical, text):
+    duration = max(raw.duration_seconds, 1e-6)
+    word_count = len((text or "").split())
+    speech_rate = word_count / duration * 60
+    pause_ratio = raw.total_silence_duration_seconds / duration
+    pitch_mean = float(raw.pitch_mean)
+    rms_mean = float(raw.rms_mean)
+    return {
+        **categorical,
+        "duration_seconds": round(raw.duration_seconds, 4),
+        "pitch_mean_hz": round(pitch_mean, 4),
+        "pitch_std_hz": round(float(raw.pitch_std), 4),
+        "rms_energy_mean": round(rms_mean, 6),
+        "rms_energy_std": round(float(raw.rms_std), 6),
+        "volume_db_mean": round(20 * math.log10(max(rms_mean, 1e-9)), 4),
+        "total_pause_duration_seconds": round(
+            raw.total_silence_duration_seconds, 4
+        ),
+        "longest_pause_seconds": round(raw.longest_silence_seconds, 4),
+        "pause_count": raw.pause_count,
+        "pause_ratio": round(pause_ratio, 4),
+        "speech_rate_words_per_minute": round(speech_rate, 2),
+        "word_count": word_count,
+        "audio_quality_flags": {
+            "very_short_segment": raw.duration_seconds < 1.5,
+            "low_energy_segment": rms_mean < 0.005,
+            "missing_pitch": pitch_mean <= 0,
+            "unrealistic_speech_rate": speech_rate < 40 or speech_rate > 260,
+        },
+    }
+
+
+def _average(rows, key):
+    values = [
+        row["audio_features"].get(key)
+        for row in rows
+        if isinstance(row.get("audio_features"), dict)
+        and isinstance(row["audio_features"].get(key), (int, float))
+    ]
+    return round(sum(values) / len(values), 4) if values else None
+
+
+def _feature_summary(rows):
+    return {
+        "average_pitch_hz": _average(rows, "pitch_mean_hz"),
+        "average_volume_db": _average(rows, "volume_db_mean"),
+        "average_pause_ratio": _average(rows, "pause_ratio"),
+        "average_speech_rate_wpm": _average(
+            rows, "speech_rate_words_per_minute"
+        ),
+    }
+
+
+def _speaker_summaries(rows):
+    grouped = defaultdict(list)
+    for row in rows:
+        grouped[row.get("speaker") or "UNKNOWN"].append(row)
+    summaries = {}
+    for speaker, speaker_rows in grouped.items():
+        sentiments = Counter(
+            row.get("sentiment_class")
+            for row in speaker_rows
+            if row.get("sentiment_class")
+        )
+        summaries[speaker.lower()] = {
+            "total_segments": len(speaker_rows),
+            "dominant_sentiment": (
+                sentiments.most_common(1)[0][0] if sentiments else None
+            ),
+            **_feature_summary(speaker_rows),
+        }
+    return summaries
+
+
+def analyze_call(
+    call_id,
+    segmentation,
+    agent_wav,
+    customer_wav,
+    progress=None,
+):
+    """Analyze each sentence against the matching speaker channel."""
     import soundfile as sf
-    predictor = _get_predictor()
+    from src.features.inference_audio_features import extract_raw_audio_features
 
-    # preload each channel once; slice in-memory per sentence
+    predictor = _get_predictor()
     channels = {}
     for speaker, wav in (("AGENT", agent_wav), ("CUSTOMER", customer_wav)):
-        data, sr = sf.read(str(wav), dtype="float32")
+        data, sample_rate = sf.read(str(wav), dtype="float32")
         if data.ndim > 1:
             data = data.mean(axis=1)
-        channels[speaker] = (data, sr)
+        channels[speaker] = (data, sample_rate)
 
     rows = []
-    for s in segmentation["sentences"]:
-        seq_id = s["seq_id"]
-        speaker = s.get("speaker")
-        start, end = float(s["start"]), float(s["end"])
-
+    sentences = segmentation["sentences"]
+    total = len(sentences)
+    for index, sentence in enumerate(sentences):
+        if progress:
+            progress(index, total)
+        seq_id = sentence["seq_id"]
+        speaker = sentence.get("speaker")
+        start = float(sentence["start"])
+        end = float(sentence["end"])
+        base = {
+            "seq_id": seq_id,
+            "segment_index": index + 1,
+            "segment_key": f"{call_id}_{index + 1:04d}",
+            "speaker": speaker,
+            "start_time": start,
+            "end_time": end,
+            "text": sentence.get("text"),
+        }
         if end - start < MIN_SEG_S or speaker not in channels:
-            rows.append({"seq_id": seq_id, "processing_status": "skipped_too_short"})
+            rows.append({**base, "processing_status": "skipped_too_short"})
             continue
 
-        data, sr = channels[speaker]
-        clip = data[int(start * sr): int(end * sr)]
+        data, sample_rate = channels[speaker]
+        clip = data[int(start * sample_rate) : int(end * sample_rate)]
         if clip.size == 0:
-            rows.append({"seq_id": seq_id, "processing_status": "skipped_too_short"})
+            rows.append({**base, "processing_status": "skipped_too_short"})
             continue
 
-        tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
-        tmp.close()
+        cache_path = _cache_path(call_id, sentence, clip)
+        if cache_path.exists():
+            try:
+                rows.append(json.loads(cache_path.read_text(encoding="utf-8")))
+                continue
+            except (OSError, ValueError):
+                pass
+
+        temporary = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+        temporary.close()
         try:
-            sf.write(tmp.name, clip, sr)
-            # default build_timeline=True -- see module fidelity note
-            res = predictor.analyze_audio(Path(tmp.name), call_id=call_id)
-            rows.append({
-                "seq_id": seq_id,
-                "sentiment": _enum(res.overall_audio_sentiment),
-                "dominant_emotion": _enum(res.dominant_emotion),
-                "escalation_score": round(float(res.audio_escalation_score), 4),
-                "processing_status": res.processing_status or "success",
-            })
-        except Exception as e:
-            rows.append({"seq_id": seq_id, "processing_status": f"error: {e}"[:120]})
+            sf.write(temporary.name, clip, sample_rate)
+            raw = extract_raw_audio_features(Path(temporary.name))
+            result = predictor.analyze_audio(
+                Path(temporary.name),
+                call_id=call_id,
+                raw_audio_features=raw,
+            )
+            detail = result.model_dump(mode="json")
+            row = {
+                **base,
+                "sentiment": _enum(result.overall_audio_sentiment),
+                "sentiment_class": _three_class_sentiment(result),
+                "dominant_emotion": _enum(result.dominant_emotion),
+                "escalation_score": round(float(result.audio_escalation_score), 4),
+                "confidence_level": _enum(result.confidence_level),
+                "prediction_confidence": result.prediction_confidence,
+                "emotion_confidence": result.prediction_confidence,
+                "sentiment_confidence": result.prediction_confidence,
+                "negative_emotion_probability": result.negative_emotion_probability,
+                "audio_features": _audio_features(
+                    raw,
+                    detail.get("audio_features") or {},
+                    sentence.get("text"),
+                ),
+                "processing_status": result.processing_status or "success",
+            }
+            rows.append(row)
+            _save_cache(cache_path, row)
+        except Exception as exc:
+            rows.append(
+                {**base, "processing_status": f"error: {exc}"[:120]}
+            )
         finally:
             try:
-                os.unlink(tmp.name)
+                os.unlink(temporary.name)
             except OSError:
                 pass
 
-    # record the repo id (stable, machine-independent) -- NOT
-    # config._name_or_path, which resolves to the local HF cache dir and would
-    # leak an absolute user path into an uploaded artifact
-    model_version = os.environ.get("ACOUSTIC_MODEL_REPO", DEFAULT_MODEL_REPO)
+    if progress:
+        progress(total, total)
 
-    return {"call_id": call_id, "model_version": model_version, "segments": rows}
+    successful = [
+        row for row in rows if row.get("processing_status") == "success"
+    ]
+    sentiment_counts = Counter(
+        row.get("sentiment_class")
+        for row in successful
+        if row.get("sentiment_class")
+    )
+    emotion_counts = Counter(
+        row.get("dominant_emotion")
+        for row in successful
+        if row.get("dominant_emotion")
+    )
+    scores = [
+        row["escalation_score"]
+        for row in successful
+        if row.get("escalation_score") is not None
+    ]
+    return {
+        "call_id": call_id,
+        "domain": segmentation.get("domain"),
+        "model_version": os.environ.get(
+            "ACOUSTIC_MODEL_REPO", DEFAULT_MODEL_REPO
+        ),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "has_audio_features": any(
+            isinstance(row.get("audio_features"), dict) for row in successful
+        ),
+        "audio_feature_version": "runtime-v2",
+        "segments": rows,
+        "call_summary": {
+            "total_segments": len(rows),
+            "successful_segments": len(successful),
+            "skipped_segments": len(rows) - len(successful),
+            "dominant_sentiment": (
+                sentiment_counts.most_common(1)[0][0]
+                if sentiment_counts
+                else None
+            ),
+            "dominant_emotion": (
+                emotion_counts.most_common(1)[0][0] if emotion_counts else None
+            ),
+            "average_escalation_score": (
+                round(sum(scores) / len(scores), 6) if scores else None
+            ),
+            "max_escalation_score": round(max(scores), 6) if scores else None,
+            "sentiment_distribution": dict(sentiment_counts),
+            "emotion_distribution": dict(emotion_counts),
+        },
+        "audio_feature_summary": _feature_summary(successful),
+        "speaker_audio_feature_summary": _speaker_summaries(successful),
+        "dashboard_audio_feature_series": [
+            {
+                "seq_id": row.get("seq_id"),
+                "speaker": row.get("speaker"),
+                "start_time": row.get("start_time"),
+                "end_time": row.get("end_time"),
+                "sentiment": row.get("sentiment_class"),
+                "dominant_emotion": row.get("dominant_emotion"),
+                **(row.get("audio_features") or {}),
+            }
+            for row in successful
+        ],
+    }

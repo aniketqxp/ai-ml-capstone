@@ -143,26 +143,33 @@ class ShadowRuntimeTests(unittest.TestCase):
             run.limitations,
         )
 
-    def test_unsupported_domain_is_recorded(self):
+    def test_non_banking_domain_uses_general_service_profile(self):
         run = run_shadow_evaluation(
-            transcript=_transcript(domain="health")
+            transcript=_transcript(domain="health"),
+            run_semantic_assessor=False,
         )
 
         self.assertEqual(
             run.status,
-            ShadowRunStatus.UNSUPPORTED_DOMAIN,
+            ShadowRunStatus.SUCCEEDED,
         )
-        self.assertIsNone(run.decision)
+        self.assertEqual(run.profile_id, "general-service-v1")
+        self.assertIn(
+            "general_service_profile_not_domain_compliance",
+            run.limitations,
+        )
 
-    def test_unknown_banking_call_requires_profile_selection(self):
+    def test_unknown_banking_call_uses_general_service_profile(self):
         run = run_shadow_evaluation(
-            transcript=_transcript(call_id="new-banking-call")
+            transcript=_transcript(call_id="new-banking-call"),
+            run_semantic_assessor=False,
         )
 
         self.assertEqual(
             run.status,
-            ShadowRunStatus.PROFILE_SELECTION_UNAVAILABLE,
+            ShadowRunStatus.SUCCEEDED,
         )
+        self.assertEqual(run.profile_id, "general-service-v1")
 
     def test_incomplete_v2_is_not_compared_to_legacy_attention(self):
         legacy = {

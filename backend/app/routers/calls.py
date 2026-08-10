@@ -10,6 +10,7 @@ from app import storage, worker
 from app.database import get_db
 from app.models import (
     Call,
+    EmailNotification,
     Evaluation,
     EvaluationFeedback,
     EvaluationRun,
@@ -90,6 +91,11 @@ PIPELINE_STAGES = (
         "worker_stages": {"exporting", "uploading", "persisting"},
     },
     {
+        "id": "notify",
+        "label": "Deliver action",
+        "worker_stages": {"notifying"},
+    },
+    {
         "id": "ready",
         "label": "Ready",
         "worker_stages": {"done"},
@@ -134,6 +140,11 @@ class EvaluationFeedbackRequest(BaseModel):
                 f"{self.feedback_type} requires action_type"
             )
         return self
+
+
+class EmailActionRequest(BaseModel):
+    decision_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    approve: bool = False
 
 
 def _latest_job(db, call_id):
@@ -260,7 +271,7 @@ def _evaluation_summary(public_id, domain, run=None):
             "unable_to_determine",
         )
     }
-    evaluator_supported = str(domain or "").lower() == "banking"
+    evaluator_supported = bool(str(domain or "").strip())
 
     if available:
         state = presentation.get("state") or (
@@ -676,6 +687,53 @@ def record_evaluation_feedback(
         "feedback_type": feedback.feedback_type,
         "created_at": feedback.created_at.isoformat(),
     }
+
+
+@router.get("/{public_call_id}/email")
+def get_email_status(
+    public_call_id: str,
+    db: Session = Depends(get_db),
+):
+    from app.email_notifications import serialize_notification
+
+    records = (
+        db.query(EmailNotification)
+        .filter(EmailNotification.public_call_id == public_call_id)
+        .order_by(EmailNotification.created_at.desc())
+        .all()
+    )
+    return {
+        "notifications": [serialize_notification(record) for record in records]
+    }
+
+
+@router.post("/{public_call_id}/email")
+def send_recommended_email(
+    public_call_id: str,
+    payload: EmailActionRequest,
+    db: Session = Depends(get_db),
+):
+    from app.email_notifications import process_recommended_email
+
+    call = _call_by_public_id(db, public_call_id)
+    if not call:
+        raise HTTPException(status_code=404, detail="call not found")
+    run = _latest_v2_run(db, public_call_id)
+    if not run or run.status != "succeeded":
+        raise HTTPException(status_code=409, detail="evaluation is not ready")
+    if run.decision_sha256 != payload.decision_sha256:
+        raise HTTPException(status_code=409, detail="evaluation has changed")
+    result = process_recommended_email(
+        db,
+        call,
+        public_call_id,
+        dict(run.payload or {}),
+        approved=payload.approve,
+    )
+    if result is None:
+        raise HTTPException(status_code=409, detail="no email action is recommended")
+    db.commit()
+    return result
 
 
 @router.get("/{public_call_id}/feedback")
