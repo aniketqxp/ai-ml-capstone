@@ -30,7 +30,7 @@ PIPELINE_STAGES = (
     {
         "id": "queued",
         "label": "Queued",
-        "worker_stages": {"uploaded", "starting"},
+        "worker_stages": {"uploaded", "force_uploaded", "starting"},
     },
     {
         "id": "transcript",
@@ -553,7 +553,11 @@ def analyze_calls(payload: AnalyzeRequest, db: Session = Depends(get_db)):
             })
             continue
 
-        job = Job(call_id=call_id, status="queued", stage="uploaded")
+        job = Job(
+            call_id=call_id,
+            status="queued",
+            stage="force_uploaded" if payload.force else "uploaded",
+        )
         db.add(job)
         db.flush()
         jobs.append({

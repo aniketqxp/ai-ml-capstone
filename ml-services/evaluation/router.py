@@ -7,8 +7,8 @@ Routing policy is DERIVED FROM benchmark.py results, not guessed:
        [4,4,3,4,2]); high evidence fidelity; conservative.
   - fallback = sambanova/Meta-Llama-3.3-70B-Instruct
        fastest (2.6s), best raw fidelity (75%), perfectly conservative.
-  - safety   = github/gpt-4o-mini
-       always-on free baseline, reliable JSON.
+  - safety   = openai/gpt-4o-mini
+       independent third provider, used only after both primary tiers fail.
 
 DeepSeek-V3.1 was EXCLUDED: 50% evidence fidelity = fabricates quotes, the worst
 failure mode for a compliance system.
@@ -19,7 +19,8 @@ for free. On a 429/timeout/error the call transparently drops to the next tier.
 Public API mirrors llm_client.chat_json so extract.py can swap to routing with a
 one-line change:  chat_json_routed(system, user) -> json string
 """
-import os, logging
+import logging
+import os
 from env_util import load_env
 load_env()
 
@@ -43,8 +44,8 @@ def _model_list():
          "litellm_params": {"model": "sambanova/Meta-Llama-3.3-70B-Instruct",
                             "api_key": os.environ.get("SAMBANOVA_API_KEY")}},
         {"model_name": "qa-safety",
-         "litellm_params": {"model": "github/gpt-4o-mini",
-                            "api_key": os.environ.get("GITHUB_TOKEN")}},
+         "litellm_params": {"model": "openai/gpt-4o-mini",
+                            "api_key": os.environ.get("OPENAI_API_KEY")}},
     ]
 
 # strict priority: primary -> fallback -> safety
@@ -101,7 +102,9 @@ def chat_json_routed(system, user, temperature=0.1, max_tokens=4000,
 
 # ── Self-test ─────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    import json, time, argparse
+    import argparse
+    import json
+    import time
     ap = argparse.ArgumentParser()
     ap.add_argument("--test-fallback", action="store_true",
                     help="break the primary to prove fallback fires")
@@ -128,8 +131,8 @@ if __name__ == "__main__":
                  "litellm_params": {"model": "sambanova/Meta-Llama-3.3-70B-Instruct",
                                     "api_key": os.environ.get("SAMBANOVA_API_KEY")}},
                 {"model_name": "qa-safety",
-                 "litellm_params": {"model": "github/gpt-4o-mini",
-                                    "api_key": os.environ.get("GITHUB_TOKEN")}},
+                 "litellm_params": {"model": "openai/gpt-4o-mini",
+                                    "api_key": os.environ.get("OPENAI_API_KEY")}},
             ],
             fallbacks=[{"qa-primary": ["qa-fallback", "qa-safety"]}],
             num_retries=1, timeout=90,

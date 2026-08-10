@@ -119,7 +119,13 @@ def _publish_index(call_id, summary):
     _write(idx, index)
 
 
-def process_call(spec, *, progress=_noop, enable_acoustic=None):
+def process_call(
+    spec,
+    *,
+    progress=_noop,
+    enable_acoustic=None,
+    reuse_transcript=True,
+):
     """
     Run the full pipeline for one call.
 
@@ -144,7 +150,11 @@ def process_call(spec, *, progress=_noop, enable_acoustic=None):
     # uploads carry unique call_ids, so this never wrongly reuses another call)
     progress("transcribing")
     transcript_path = paths.NA_TESTSET / RESULTS_DIR_NAME / accent / f"{call_id}.json"
-    if transcript_path.exists() and transcript_path.stat().st_size > 0:
+    if (
+        reuse_transcript
+        and transcript_path.exists()
+        and transcript_path.stat().st_size > 0
+    ):
         print(f"  [transcribe] reusing existing transcript {transcript_path.name}")
         result = json.loads(transcript_path.read_text(encoding="utf-8"))
     else:

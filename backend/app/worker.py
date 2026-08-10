@@ -306,6 +306,12 @@ def _run_job(job_id):
         job = db.query(Job).filter(Job.job_id == _uuid(job_id)).first()
         if not job:
             return
+        if job.status not in {"queued", "processing"}:
+            print(
+                f"[worker] skipped duplicate queue entry {job_id} "
+                f"({job.status})"
+            )
+            return
         call = db.query(Call).filter(Call.call_id == job.call_id).first()
         meta = dict(call.call_metadata or {}) if call else {}
         public_id = meta.get("public_call_id")
@@ -315,6 +321,7 @@ def _run_job(job_id):
                  error="call has no public_call_id; not an ingest-pipeline call")
             return
 
+        force_transcription = job.stage == "force_uploaded"
         _set(db, job, status="processing", stage="starting", error="")
 
         agent_wav, customer_wav = _ensure_local_wavs(public_id, meta)
@@ -331,6 +338,7 @@ def _run_job(job_id):
             spec,
             progress=progress,
             enable_acoustic=True,
+            reuse_transcript=not force_transcription,
         )
 
         _set(db, job, stage="uploading")

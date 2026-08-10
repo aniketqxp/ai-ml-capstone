@@ -37,6 +37,15 @@ class PipelineProgressTests(unittest.TestCase):
             "Assess requirements",
         )
 
+    def test_forced_transcription_starts_in_the_queue(self):
+        progress = _pipeline_progress(
+            _job("queued", "force_uploaded")
+        )
+
+        self.assertEqual(progress["current_stage_id"], "queued")
+        self.assertEqual(progress["percent"], 0)
+        self.assertEqual(progress["stages"][0]["state"], "active")
+
     def test_disabled_optional_stages_are_marked_skipped(self):
         with patch.dict(
             os.environ,
